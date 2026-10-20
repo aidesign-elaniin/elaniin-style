@@ -2,14 +2,14 @@
 
 > Instructions for a non-technical user. Paste everything inside the code block into
 > Claude (claude.ai chat, Claude Code, or any agent). Claude will run the install and
-> verify it for you. The Netlify URL is filled in once the site is live.
+> verify it for you.
 
 ```
 I want you to install the "Elaniin Style" skill on my machine and confirm it works.
 
 Steps:
 1. Run this command in a terminal and show me the result:
-   curl -fsSL https://TU-netlify.app/install.sh | bash
+   curl -fsSL https://elaniin-style.netlify.app/install.sh | bash
 2. If the command fails because of network or permissions, tell me exactly what failed
    and give me the manual alternative:
    git clone https://github.com/danielpineda-elaniin/elaniin-style.git

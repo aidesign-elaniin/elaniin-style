@@ -3,7 +3,7 @@
 #
 # Two modes:
 #   1) Local:  run from a cloned repo (or with SOURCE_DIR set) — copies files directly.
-#   2) Piped:  curl -fsSL https://<netlify-site>/install.sh | bash
+#   2) Piped:  curl -fsSL https://elaniin-style.netlify.app/install.sh | bash
 #              — downloads the release ZIP for TAG from GitHub, then copies.
 #
 # Flags:
@@ -17,7 +17,6 @@ set -euo pipefail
 
 REPO="danielpineda-elaniin/elaniin-style"
 TAG="${ELANIN_TAG:-v1.0.2}"
-NETLIFY_BASE="${ELANIN_NETLIFY:-https://TU-netlify.app}"
 SKILL_NAME="elaniin-style"
 
 # ---------- i18n ----------
@@ -75,7 +74,8 @@ if [ -z "$SOURCE_DIR" ]; then
     exit 1
   fi
   unzip -q "$zip_path" -d "$tmpdir"
-  SOURCE_DIR="$(find "$tmpdir" -maxdepth 1 -type d -name '*_*' | head -n1)"
+  # codeload has used both `repo-tag` and `repo_tag` folder names — locate by content
+  SOURCE_DIR="$(dirname "$(find "$tmpdir" -maxdepth 2 -type d -path "*/skills/${SKILL_NAME}" | head -n1)")"
   if [ -z "$SOURCE_DIR" ] || [ ! -f "${SOURCE_DIR}/skills/${SKILL_NAME}/SKILL.md" ]; then
     log "$MSG_NO_NET"
     rm -rf "$tmpdir"

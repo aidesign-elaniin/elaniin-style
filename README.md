@@ -31,11 +31,8 @@ Copy & paste into Claude. / Copia y pega en Claude:
 The prompt tells Claude to run: / El prompt le indica a Claude que ejecute:
 
 ```bash
-curl -fsSL https://TU-netlify.app/install.sh | bash
+curl -fsSL https://elaniin-style.netlify.app/install.sh | bash
 ```
-
-> Replace `TU-netlify.app` with the live Netlify URL once deployed.
-> Reemplaza `TU-netlify.app` con la URL real de Netlify al desplegar.
 
 ### Option B — Manual / Opción B — Manual
 
