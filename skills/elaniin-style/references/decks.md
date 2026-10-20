@@ -54,7 +54,9 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 ## Reglas de slide
 
 - **Logo oficial siempre:** cover y closing con `main-isologo` (claro) o `white-isologo`
-  (oscuro). Nunca el nombre escrito como texto.
+  (oscuro). Nunca el nombre escrito como texto. El `<svg>` consumidor lleva
+  `viewBox="0 0 364.43 81.38"` o el logo queda centrado en una caja de 300px y aparenta
+  estar indentado (ver SKILL.md §7a). Favicon: `assets/favicon.svg` oficial.
 - **Una idea por slide.** Si necesita más de ~40 palabras, son dos slides.
 - **Tipografía:** título h2/display-lg; cuerpo lead o body-lg; labels mono-label uppercase.
 - **Hairlines** para tablas y grid; nunca cajas con sombra pesada.

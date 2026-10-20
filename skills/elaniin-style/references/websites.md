@@ -28,6 +28,8 @@ dominante por pieza.
 
 - **Logo oficial siempre:** nav y footer con `main-isologo-elaniin.svg` en superficies
   claras y `white-isologo-elaniin.svg` en oscuras. Nunca el wordmark escrito como texto.
+  El `<svg>` consumidor lleva `viewBox="0 0 364.43 81.38"` (si no, el logo aparenta
+  indentado; ver SKILL.md §7a). Favicon: `assets/favicon.svg` oficial.
 - **Vivo por defecto:** spotlight reactivo al mouse en el hero (+ textura sutil),
   card glow que sigue al cursor, microinteracciones en botones y links.
   Ver `motion.md` §Living surfaces. Obligatorio en toda landing.

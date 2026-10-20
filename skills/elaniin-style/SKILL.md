@@ -180,6 +180,13 @@ bilingüe de `references/search-keywords.md`.
 - Wordmark solo: `logotipo-elaniin.svg` (oscuro) / `white-logotipo-elaniin.svg` (blanco).
 - En HTML autocontenido: incrustar una vez como `<symbol id="elaniin-logo">` /
   `<symbol id="elaniin-logo-white">` y usar `<svg><use href="#elaniin-logo"/></svg>`.
+- **Alineación (obligatorio):** el `<svg>` consumidor DEBE llevar el `viewBox` del asset
+  (`0 0 364.43 81.38` isologo · `0 0 281.45 75.91` wordmark). Sin `viewBox`, el browser
+  usa 300px de ancho por defecto y el logo queda **centrado** en esa caja (aparenta
+  indentado respecto al contenido de la izquierda). Correcto:
+  `<svg class="h-7 w-auto" viewBox="0 0 364.43 81.38" aria-label="Elaniin"><use href="#elaniin-logo"/></svg>`
+- **Favicon:** usar siempre `assets/favicon.svg` oficial (ícono blanco sobre cuadro azul
+  redondeado #1054FF). Nunca un cuadro azul genérico sin ícono, ni el ícono suelto.
 - **Prohibido** escribir "elaniin" como texto en lugar del logo.
 
 ### 7b · Texturas reactivas al mouse + microanimaciones (siempre)
