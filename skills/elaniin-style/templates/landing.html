@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elaniin — Landing template</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style type="text/tailwindcss">
+@theme {
+  --color-*: initial; --radius-*: initial; --shadow-*: initial; --breakpoint-*: initial; --font-*: initial; --text-*: initial; --ease-*: initial;
+  --breakpoint-md: 48rem; --breakpoint-lg: 64rem; --breakpoint-xl: 80rem;
+  --color-elevate-blue: #1054ff; --color-inspire-grey: #f0f0f3; --color-excellence-blue: #01172e; --color-elaniin-black: #141414; --color-dynamic-blue: #4d75fd; --color-white: #ffffff; --color-transparent: transparent; --color-current: currentColor;
+  --color-blue-100: #d7e2f8; --color-blue-200: #b9cefb; --color-blue-300: #6a9aff; --color-blue-400: #4d75fd; --color-blue-500: #1054ff; --color-blue-600: #0848cc; --color-blue-700: #023ca0; --color-blue-800: #022b63; --color-blue-900: #01172e; --color-blue-tint-50: #e7eeff; --color-blue-active-dark: #010f20;
+  --color-text-primary: #141414; --color-text-secondary: #4a4d57; --color-text-muted: #656873; --color-text-link: #1054ff; --color-text-link-hover: #0848cc; --color-text-on-dark: #ffffff; --color-text-on-dark-secondary: #a9b8cc; --color-text-on-dark-muted: #8ea0b8; --color-text-on-dark-accent: #7b9bff; --color-text-disabled: #8c8f9b;
+  --color-surface-page: #ffffff; --color-surface-subtle: #f0f0f3; --color-surface-card: #ffffff; --color-surface-dark: #01172e; --color-surface-dark-alt: #141414; --color-surface-code: #01172e;
+  --color-border-default: #e4e4ea; --color-border-strong: #d3d4dc; --color-border-input: #8c8f9b; --color-border-ink: #141414; --color-border-on-dark: rgba(255,255,255,0.12); --color-border-on-dark-strong: rgba(255,255,255,0.24); --color-surface-dark-card: rgba(255,255,255,0.04);
+  --color-success-text: #136c42; --color-success-bg: #e3f4ea; --color-success-border: #b6e0c8; --color-success-dot: #1f9d61;
+  --color-warning-text: #8a5300; --color-warning-bg: #fff3d9; --color-warning-border: #f2d58f; --color-warning-dot: #b87700;
+  --color-error-text: #a3201f; --color-error-bg: #fde7e7; --color-error-border: #f1b5b5; --color-error-dot: #d6322f;
+  --color-info-text: #0848cc; --color-info-bg: #e7eeff; --color-info-border: #b9cefb; --color-info-dot: #1054ff;
+  --color-neutral-text: #4a4d57; --color-neutral-bg: #f0f0f3; --color-neutral-border: #e4e4ea; --color-neutral-dot: #8c8f9b;
+  --font-display: "Instrument Sans","Helvetica Neue",Arial,sans-serif; --font-text: "DM Sans","Helvetica Neue",Arial,sans-serif; --font-mono: "Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --text-display-xl: clamp(40px,6.25vw - 8px,72px); --text-display-xl--line-height: 1; --text-display-xl--letter-spacing: -0.035em;
+  --text-display-lg: clamp(36px,3.906vw + 6px,56px); --text-display-lg--line-height: 1.04; --text-display-lg--letter-spacing: -0.03em;
+  --text-h1: clamp(32px,3.125vw + 8px,48px); --text-h1--line-height: 1.08; --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(28px,1.562vw + 16px,36px); --text-h2--line-height: 1.12; --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(22px,1.172vw + 13px,28px); --text-h3--line-height: 1.2; --text-h3--letter-spacing: -0.02em;
+  --text-h4: clamp(20px,0.3906vw + 17px,22px); --text-h4--line-height: 1.25; --text-h4--letter-spacing: -0.015em;
+  --text-lead: clamp(18px,0.3906vw + 15px,20px); --text-lead--line-height: 1.5; --text-lead--letter-spacing: -0.005em;
+  --text-body-lg: clamp(17px,0.1953vw + 15.5px,18px); --text-body-lg--line-height: 1.55;
+  --text-body: 16px; --text-body--line-height: 1.5; --text-body-sm: 14px; --text-body-sm--line-height: 1.5; --text-caption: 13px; --text-caption--line-height: 1.4;
+  --text-button: 14px; --text-button--line-height: 1; --text-button-lg: 16px; --text-button-lg--line-height: 1;
+  --radius-button: 6px; --radius-input: 6px; --radius-tag: 6px; --radius-card: 12px; --radius-media: 12px; --radius-menu: 8px; --radius-modal: 16px; --radius-full: 9999px;
+  --shadow-card-rest: 0 0 1px rgba(1,30,61,0.03),0 1px 2px rgba(1,30,61,0.06); --shadow-menu: 0 8px 24px -8px rgba(1,30,61,0.18),0 0 0 1px rgba(1,30,61,0.06); --shadow-product: 0 30px 45px -30px rgba(1,30,61,0.25),0 18px 36px -18px rgba(0,0,0,0.1); --shadow-focus: 0 0 0 2px #ffffff,0 0 0 4px #1054ff; --shadow-focus-on-dark: 0 0 0 2px #01172e,0 0 0 4px #7b9bff;
+  --ease-standard: cubic-bezier(0.4,0,0.2,1); --ease-emphasized: cubic-bezier(0.25,1,0.5,1);
+}
+@utility mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
+@utility container-site { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: var(--gutter, 48px); }
+@utility section-y { padding-block: var(--section-y, 96px); }
+@utility pad-card { padding: var(--card-padding, 32px); }
+@utility focus-ring { &:focus-visible { outline: 2px solid transparent; box-shadow: var(--shadow-focus); } }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@utility rise { animation: rise 500ms var(--ease-emphasized) both; animation-delay: calc(var(--i, 0) * 60ms); @media (prefers-reduced-motion: reduce) { animation: none; } }
+</style>
+<style>
+  :root { --gutter: 48px; --section-y: 96px; --card-padding: 32px; color-scheme: light; }
+  @media (max-width: 1023px) { :root { --gutter: 32px; --section-y: 72px; } }
+  @media (max-width: 767px) { :root { --gutter: 20px; --section-y: 56px; --card-padding: 24px; } }
+  body { background: #fff; color: #141414; font-family: "DM Sans","Helvetica Neue",Arial,sans-serif; font-size: 16px; line-height: 1.5; overflow-x: clip; }
+  ::selection { background: #b9cefb; color: #01172e; }
+  :focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1054ff; border-radius: 6px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .rise { animation: none; } }
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-[6px] focus:border focus:border-[#e4e4ea] focus:shadow-[var(--shadow-menu)]">Skip to content</a>
+
+<!-- NAV -->
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-[#e4e4ea]">
+  <div class="container-site flex h-16 items-center justify-between" style="--gutter:48px">
+    <a href="#" class="font-[family-name:var(--font-display)] font-medium text-[20px] tracking-[-0.02em] text-[#141414]">elaniin</a>
+    <nav class="hidden md:flex items-center gap-8 text-[14px] text-[#4a4d57]">
+      <a href="#features" class="hover:text-[#141414] transition-colors duration-200">Features</a>
+      <a href="#product" class="hover:text-[#141414] transition-colors duration-200">Product</a>
+      <a href="#stats" class="hover:text-[#141414] transition-colors duration-200">Results</a>
+      <a href="#" class="ml-2 inline-flex h-10 items-center rounded-[6px] border border-[#141414] px-4 text-[14px] font-[family-name:var(--font-display)] font-medium text-[#141414] hover:bg-[#f0f0f3] transition-colors duration-200">Contact sales</a>
+    </nav>
+    <a href="#" class="md:hidden inline-flex h-10 items-center rounded-[6px] bg-[#1054ff] px-4 text-[14px] font-[family-name:var(--font-display)] font-medium text-white">Start</a>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="section-y" style="--section-y:112px">
+    <div class="container-site" style="--gutter:48px">
+      <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">Digital product studio</p>
+      <h1 class="mt-4 max-w-[16ch] font-[family-name:var(--font-display)] font-medium text-display-xl text-[#141414] rise" style="--i:1">We design products people actually use</h1>
+      <p class="mt-6 max-w-[56ch] text-lead text-[#4a4d57] rise" style="--i:2">Strategy, design and engineering for teams that ship. From zero-to-one products to full platform redesigns — in weeks, not quarters.</p>
+      <div class="mt-10 flex flex-wrap items-center gap-4 rise" style="--i:3">
+        <a href="#" class="inline-flex h-12 items-center rounded-[6px] bg-[#1054ff] px-6 text-[16px] font-[family-name:var(--font-display)] font-medium text-white hover:bg-[#0848cc] active:bg-[#023ca0] transition-colors duration-200">Start a project</a>
+        <a href="#product" class="inline-flex h-12 items-center rounded-[6px] px-2 text-[16px] font-[family-name:var(--font-display)] font-medium text-[#1054ff] hover:text-[#0848cc] transition-colors duration-200">See the work →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="border-y border-[#e4e4ea] bg-[#f0f0f3]">
+    <div class="container-site py-10 flex flex-wrap items-center justify-between gap-8" style="--gutter:48px">
+      <p class="mono-label text-[13px] text-[#656873]">Trusted by</p>
+      <div class="flex flex-wrap items-center gap-10 font-[family-name:var(--font-display)] font-medium text-[18px] text-[#8c8f9b]">
+        <span>NORTHWIND</span><span>ACME LABS</span><span>VOLTA</span><span>HELIOS</span><span>KITE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="section-y">
+    <div class="container-site" style="--gutter:48px">
+      <div class="grid gap-6 md:grid-cols-3 border-t border-[#e4e4ea]">
+        <div class="border-b border-[#e4e4ea] pb-10 pt-8 md:border-r md:pr-8 last:md:border-r-0 rise" style="--i:0">
+          <p class="mono-label text-[13px] text-[#1054ff]">01 — Discover</p>
+          <h3 class="mt-4 font-[family-name:var(--font-display)] font-medium text-h3 text-[#141414]">Find the real problem</h3>
+          <p class="mt-3 max-w-[40ch] text-[16px] text-[#4a4d57]">Research, interviews and data audits that surface what actually blocks growth — before a single screen is drawn.</p>
+        </div>
+        <div class="border-b border-[#e4e4ea] pb-10 pt-8 md:border-r md:px-8 last:md:border-r-0 rise" style="--i:1">
+          <p class="mono-label text-[13px] text-[#1054ff]">02 — Design</p>
+          <h3 class="mt-4 font-[family-name:var(--font-display)] font-medium text-h3 text-[#141414]">Ship interfaces that convert</h3>
+          <p class="mt-3 max-w-[40ch] text-[16px] text-[#4a4d57]">Product design, design systems and prototypes built for engineering handoff, not for dribbble.</p>
+        </div>
+        <div class="border-b border-[#e4e4ea] pb-10 pt-8 rise" style="--i:2">
+          <p class="mono-label text-[13px] text-[#1054ff]">03 — Build</p>
+          <h3 class="mt-4 font-[family-name:var(--font-display)] font-medium text-h3 text-[#141414]">Engineering that keeps pace</h3>
+          <p class="mt-3 max-w-[40ch] text-[16px] text-[#4a4d57]">Front-end and full-stack teams that implement the design system pixel-true, with accessibility built in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT (dark band) -->
+  <section id="product" class="section-y bg-[#01172e] text-white">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-2" style="--gutter:48px">
+      <div class="rise" style="--i:0">
+        <p class="mono-label text-[13px] text-[#7b9bff]">The platform</p>
+        <h2 class="mt-4 max-w-[20ch] font-[family-name:var(--font-display)] font-medium text-h2 text-white">One workspace for the whole product cycle</h2>
+        <p class="mt-5 max-w-[56ch] text-lead text-[#a9b8cc]">Research, specs, designs and analytics in a single source of truth your whole team can trust.</p>
+        <ul class="mt-8 space-y-4 text-[16px] text-[#a9b8cc]">
+          <li class="flex items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#1054ff]"></span>Live metrics tied to design decisions</li>
+          <li class="flex items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#1054ff]"></span>Design-system tokens synced to code</li>
+          <li class="flex items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#1054ff]"></span>Role-based access and audit trails</li>
+        </ul>
+        <a href="#" class="mt-10 inline-flex h-12 items-center rounded-[6px] bg-[#1054ff] px-6 text-[16px] font-[family-name:var(--font-display)] font-medium text-white hover:bg-[#0848cc] transition-colors duration-200">Explore the platform</a>
+      </div>
+      <div class="rise" style="--i:1">
+        <div class="rounded-[12px] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.04)] p-6 shadow-[var(--shadow-product)]">
+          <div class="flex items-center justify-between border-b border-[rgba(255,255,255,0.12)] pb-4">
+            <span class="mono-label text-[13px] text-[#8ea0b8]">Overview</span>
+            <span class="mono-label text-[13px] text-[#7b9bff]">+18.4%</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 py-6">
+            <div><p class="mono-label text-[13px] text-[#8ea0b8]">MRR</p><p class="mt-1 font-[family-name:var(--font-display)] font-medium text-[28px] text-white tabular-nums">$48.2k</p></div>
+            <div><p class="mono-label text-[13px] text-[#8ea0b8]">Users</p><p class="mt-1 font-[family-name:var(--font-display)] font-medium text-[28px] text-white tabular-nums">12,408</p></div>
+            <div><p class="mono-label text-[13px] text-[#8ea0b8]">NPS</p><p class="mt-1 font-[family-name:var(--font-display)] font-medium text-[28px] text-white tabular-nums">62</p></div>
+          </div>
+          <svg viewBox="0 0 320 80" class="w-full h-20" aria-hidden="true">
+            <polyline fill="none" stroke="#1054ff" stroke-width="2" points="0,60 40,55 80,58 120,40 160,42 200,28 240,30 280,14 320,10" />
+            <polyline fill="rgba(16,84,255,0.12)" stroke="none" points="0,80 0,60 40,55 80,58 120,40 160,42 200,28 240,30 280,14 320,10 320,80" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats" class="section-y">
+    <div class="container-site" style="--gutter:48px">
+      <div class="grid gap-8 border-y border-[#e4e4ea] py-12 md:grid-cols-4">
+        <div class="rise" style="--i:0"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg text-[#141414] tabular-nums">120+</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Products shipped</p></div>
+        <div class="rise" style="--i:1"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg text-[#141414] tabular-nums">4.9</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Client rating</p></div>
+        <div class="rise" style="--i:2"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg text-[#141414] tabular-nums">38%</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Avg. conversion lift</p></div>
+        <div class="rise" style="--i:3"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg text-[#141414] tabular-nums">6 wks</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Time to first release</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="section-y bg-[#f0f0f3]">
+    <div class="container-site max-w-[860px]" style="--gutter:48px">
+      <blockquote class="rise">
+        <p class="font-[family-name:var(--font-display)] font-medium text-h2 text-[#141414]">“They didn’t just redesign our product — they changed how we make decisions about it.”</p>
+        <footer class="mt-6 flex items-center gap-4">
+          <div class="h-10 w-10 rounded-full bg-[#d7e2f8]"></div>
+          <div>
+            <p class="text-[14px] font-medium text-[#141414]">María Fernández</p>
+            <p class="mono-label text-[13px] text-[#656873]">VP Product, Volta</p>
+          </div>
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-y bg-[#01172e] text-white">
+    <div class="container-site text-center" style="--gutter:48px">
+      <h2 class="mx-auto max-w-[20ch] font-[family-name:var(--font-display)] font-medium text-h2 text-white rise">Ready to build something people love?</h2>
+      <p class="mx-auto mt-5 max-w-[56ch] text-lead text-[#a9b8cc] rise" style="--i:1">Tell us about your product. We’ll come back within two business days with a plan.</p>
+      <a href="#" class="mt-10 inline-flex h-12 items-center rounded-[6px] bg-[#1054ff] px-8 text-[16px] font-[family-name:var(--font-display)] font-medium text-white hover:bg-[#0848cc] transition-colors duration-200 rise" style="--i:2">Start a project</a>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-[#141414] text-white">
+  <div class="container-site py-16" style="--gutter:48px">
+    <div class="grid gap-10 border-b border-[rgba(255,255,255,0.12)] pb-12 md:grid-cols-4">
+      <div>
+        <p class="font-[family-name:var(--font-display)] font-medium text-[20px]">elaniin</p>
+        <p class="mt-3 max-w-[28ch] text-[14px] text-[#8ea0b8]">Digital product studio. Strategy, design and engineering.</p>
+      </div>
+      <div>
+        <p class="mono-label text-[13px] text-[#8ea0b8]">Company</p>
+        <ul class="mt-4 space-y-2 text-[14px] text-[#a9b8cc]"><li><a href="#" class="hover:text-white transition-colors duration-200">About</a></li><li><a href="#" class="hover:text-white transition-colors duration-200">Careers</a></li><li><a href="#" class="hover:text-white transition-colors duration-200">Contact</a></li></ul>
+      </div>
+      <div>
+        <p class="mono-label text-[13px] text-[#8ea0b8]">Services</p>
+        <ul class="mt-4 space-y-2 text-[14px] text-[#a9b8cc]"><li><a href="#" class="hover:text-white transition-colors duration-200">Product design</a></li><li><a href="#" class="hover:text-white transition-colors duration-200">Engineering</a></li><li><a href="#" class="hover:text-white transition-colors duration-200">Research</a></li></ul>
+      </div>
+      <div>
+        <p class="mono-label text-[13px] text-[#8ea0b8]">Legal</p>
+        <ul class="mt-4 space-y-2 text-[14px] text-[#a9b8cc]"><li><a href="#" class="hover:text-white transition-colors duration-200">Privacy</a></li><li><a href="#" class="hover:text-white transition-colors duration-200">Terms</a></li></ul>
+      </div>
+    </div>
+    <p class="mono-label mt-8 text-[13px] text-[#8ea0b8]">© 2026 Elaniin. All rights reserved.</p>
+  </div>
+</footer>
+</body>
+</html>

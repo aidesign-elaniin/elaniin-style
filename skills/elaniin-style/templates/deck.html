@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elaniin — Deck template</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style type="text/tailwindcss">
+@theme {
+  --color-*: initial; --radius-*: initial; --shadow-*: initial; --breakpoint-*: initial; --font-*: initial; --text-*: initial; --ease-*: initial;
+  --color-elevate-blue: #1054ff; --color-inspire-grey: #f0f0f3; --color-excellence-blue: #01172e; --color-elaniin-black: #141414; --color-dynamic-blue: #4d75fd; --color-white: #ffffff;
+  --color-blue-100: #d7e2f8; --color-blue-200: #b9cefb; --color-blue-300: #6a9aff; --color-blue-500: #1054ff; --color-blue-600: #0848cc; --color-blue-900: #01172e; --color-blue-tint-50: #e7eeff;
+  --color-text-primary: #141414; --color-text-secondary: #4a4d57; --color-text-muted: #656873; --color-text-on-dark-secondary: #a9b8cc; --color-text-on-dark-muted: #8ea0b8; --color-text-on-dark-accent: #7b9bff;
+  --color-border-default: #e4e4ea; --color-border-strong: #d3d4dc; --color-border-on-dark: rgba(255,255,255,0.12);
+  --font-display: "Instrument Sans","Helvetica Neue",Arial,sans-serif; --font-text: "DM Sans","Helvetica Neue",Arial,sans-serif; --font-mono: "Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --text-display-xl: clamp(40px,6.25vw - 8px,72px); --text-display-xl--line-height: 1; --text-display-xl--letter-spacing: -0.035em;
+  --text-display-lg: clamp(36px,3.906vw + 6px,56px); --text-display-lg--line-height: 1.04; --text-display-lg--letter-spacing: -0.03em;
+  --text-h2: clamp(28px,1.562vw + 16px,36px); --text-h2--line-height: 1.12; --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(22px,1.172vw + 13px,28px); --text-h3--line-height: 1.2; --text-h3--letter-spacing: -0.02em;
+  --text-lead: clamp(18px,0.3906vw + 15px,20px); --text-lead--line-height: 1.5; --text-lead--letter-spacing: -0.005em;
+  --ease-standard: cubic-bezier(0.4,0,0.2,1); --ease-emphasized: cubic-bezier(0.25,1,0.5,1);
+}
+@utility mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 500ms cubic-bezier(0.25,1,0.5,1) both; animation-delay: calc(var(--i, 0) * 60ms); }
+@media (prefers-reduced-motion: reduce) { .rise { animation: none; } .slide { transition: none !important; } }
+</style>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: #141414; color: #141414; font-family: "DM Sans","Helvetica Neue",Arial,sans-serif; overflow: hidden; }
+  ::selection { background: #b9cefb; color: #01172e; }
+  :focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px #141414, 0 0 0 4px #7b9bff; }
+  .stage { position: fixed; inset: 0; display: grid; place-items: center; }
+  .deck { position: relative; width: 1280px; height: 720px; transform-origin: center; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; padding: 80px 96px; background: #fff; opacity: 0; transform: translateY(8px); transition: opacity 250ms cubic-bezier(0.4,0,0.2,1), transform 250ms cubic-bezier(0.4,0,0.2,1); }
+  .slide.active { display: flex; opacity: 1; transform: none; }
+  .slide.dark { background: #01172e; color: #fff; }
+  .slide.grey { background: #f0f0f3; }
+  .nav-dots { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+  .nav-dots button { width: 8px; height: 8px; border-radius: 9999px; border: 0; background: rgba(255,255,255,0.35); cursor: pointer; padding: 0; }
+  .nav-dots button[aria-current="true"] { background: #1054ff; }
+  .counter { position: fixed; bottom: 16px; right: 24px; font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.5); z-index: 10; }
+</style>
+</head>
+<body>
+<a href="#deck" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-[6px]">Skip to deck</a>
+
+<div class="stage">
+  <div class="deck" id="deck" role="region" aria-roledescription="deck" aria-label="Presentation">
+
+    <!-- 1 · COVER -->
+    <section class="slide active" aria-label="Slide 1">
+      <div class="flex h-full flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="font-[family-name:var(--font-display)] font-medium text-[22px] tracking-[-0.02em]">elaniin</span>
+          <span class="mono-label text-[13px] text-[#656873]">Series A · October 2026</span>
+        </div>
+        <div>
+          <h1 class="rise max-w-[14ch] font-[family-name:var(--font-display)] font-medium text-display-xl" style="--i:0">Acme: the operating system for modern logistics</h1>
+          <p class="rise mt-6 max-w-[56ch] text-lead text-[#4a4d57]" style="--i:1">Investor presentation · Confidential</p>
+        </div>
+        <div class="h-3 w-64 rise" style="--i:2; background: linear-gradient(90deg,#d7e2f8 0 12.5%,#b9cefb 12.5% 25%,#6a9aff 25% 37.5%,#1054ff 37.5% 50%,#0848cc 50% 62.5%,#023ca0 62.5% 75%,#022b63 75% 87.5%,#01172e 87.5% 100%)"></div>
+      </div>
+    </section>
+
+    <!-- 2 · PROBLEM -->
+    <section class="slide grey" aria-label="Slide 2">
+      <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">01 — The problem</p>
+      <h2 class="rise mt-4 max-w-[20ch] font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">Logistics runs on spreadsheets and hope</h2>
+      <ul class="mt-12 grid gap-8 md:grid-cols-3">
+        <li class="rise border-t border-[#d3d4dc] pt-6" style="--i:2">
+          <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular">67%</p>
+          <p class="mt-2 text-[16px] text-[#4a4d57]">of mid-market shippers still plan routes manually.</p>
+        </li>
+        <li class="rise border-t border-[#d3d4dc] pt-6" style="--i:3">
+          <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular">$1.2T</p>
+          <p class="mt-2 text-[16px] text-[#4a4d57]">lost annually to empty miles and idle capacity.</p>
+        </li>
+        <li class="rise border-t border-[#d3d4dc] pt-6" style="--i:4">
+          <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular">11 days</p>
+          <p class="mt-2 text-[16px] text-[#4a4d57]">average lag between shipment events and billing.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 3 · SOLUTION -->
+    <section class="slide" aria-label="Slide 3">
+      <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">02 — The solution</p>
+      <h2 class="rise mt-4 max-w-[22ch] font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">One platform from quote to cash</h2>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <div class="rise rounded-[12px] border border-[#e4e4ea] p-8" style="--i:2">
+          <span class="mono-label text-[13px] text-[#1054ff]">Plan</span>
+          <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">AI route optimization</h3>
+          <p class="mt-2 text-[15px] text-[#4a4d57]">Live constraints, cost and ETA in a single planner.</p>
+        </div>
+        <div class="rise rounded-[12px] border border-[#e4e4ea] p-8" style="--i:3">
+          <span class="mono-label text-[13px] text-[#1054ff]">Track</span>
+          <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Event-grade telemetry</h3>
+          <p class="mt-2 text-[15px] text-[#4a4d57]">Every handoff captured, no driver apps required.</p>
+        </div>
+        <div class="rise rounded-[12px] border border-[#141414] p-8" style="--i:4">
+          <span class="mono-label text-[13px] text-[#1054ff]">Bill</span>
+          <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Instant invoicing</h3>
+          <p class="mt-2 text-[15px] text-[#4a4d57]">Proof-of-delivery to paid invoice in under an hour.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · PRODUCT (dark) -->
+    <section class="slide dark" aria-label="Slide 4">
+      <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">03 — Product</p>
+      <h2 class="rise mt-4 max-w-[20ch] font-[family-name:var(--font-display)] font-medium text-display-lg text-white" style="--i:1">The control tower your ops team actually opens</h2>
+      <div class="rise mt-12 flex-1 rounded-[12px] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.04)] p-8" style="--i:2">
+        <div class="grid grid-cols-4 gap-6">
+          <div><p class="mono-label text-[13px] text-[#8ea0b8]">On-time</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">96.4%</p></div>
+          <div><p class="mono-label text-[13px] text-[#8ea0b8]">Cost / mile</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">$1.82</p></div>
+          <div><p class="mono-label text-[13px] text-[#8ea0b8]">Empty miles</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">4.1%</p></div>
+          <div><p class="mono-label text-[13px] text-[#8ea0b8]">Time to invoice</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">48m</p></div>
+        </div>
+        <svg viewBox="0 0 1000 200" class="mt-10 w-full" aria-hidden="true">
+          <polyline fill="none" stroke="#1054ff" stroke-width="3" points="0,160 100,150 200,155 300,120 400,125 500,90 600,95 700,60 800,55 900,30 1000,25"/>
+          <polyline fill="rgba(16,84,255,0.15)" stroke="none" points="0,200 0,160 100,150 200,155 300,120 400,125 500,90 600,95 700,60 800,55 900,30 1000,25 1000,200"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 5 · TRACTION -->
+    <section class="slide" aria-label="Slide 5">
+      <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">04 — Traction</p>
+      <h2 class="rise mt-4 font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">$4.8M ARR, growing 22% MoM</h2>
+      <div class="mt-12 grid grid-cols-4 gap-8 border-y border-[#e4e4ea] py-10">
+        <div class="rise" style="--i:2"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">$4.8M</p><p class="mono-label mt-2 text-[13px] text-[#656873]">ARR</p></div>
+        <div class="rise" style="--i:3"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">142</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Customers</p></div>
+        <div class="rise" style="--i:4"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">128%</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Net revenue retention</p></div>
+        <div class="rise" style="--i:5"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">11 mo</p><p class="mono-label mt-2 text-[13px] text-[#656873]">CAC payback</p></div>
+      </div>
+    </section>
+
+    <!-- 6 · ASK -->
+    <section class="slide dark" aria-label="Slide 6">
+      <div class="flex h-full flex-col justify-between">
+        <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">The ask</p>
+        <div>
+          <h2 class="rise max-w-[18ch] font-[family-name:var(--font-display)] font-medium text-display-xl text-white" style="--i:1">Raising $18M Series A</h2>
+          <div class="rise mt-12 grid max-w-[900px] grid-cols-3 gap-8 border-t border-[rgba(255,255,255,0.12)] pt-8" style="--i:2">
+            <div><p class="mono-label text-[13px] text-[#8ea0b8]">Go-to-market</p><p class="mt-2 text-[16px] text-white">45% — sales + partnerships</p></div>
+            <div><p class="mono-label text-[13px] text-[#8ea0b8]">Product</p><p class="mt-2 text-[16px] text-white">35% — platform + AI</p></div>
+            <div><p class="mono-label text-[13px] text-[#8ea0b8]">Ops</p><p class="mt-2 text-[16px] text-white">20% — team + tooling</p></div>
+          </div>
+        </div>
+        <p class="rise text-[14px] text-[#8ea0b8]" style="--i:3">founders@acme.com · acme.com</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<nav class="nav-dots" id="dots" aria-label="Slides"></nav>
+<div class="counter" id="counter" aria-live="polite">Slide 1 / 6</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var deck = document.getElementById('deck');
+  var dots = document.getElementById('dots');
+  var counter = document.getElementById('counter');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function scaleDeck() {
+    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.94;
+    deck.style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', scaleDeck);
+  scaleDeck();
+
+  slides.forEach(function (_, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    b.addEventListener('click', function () { go(i); });
+    dots.appendChild(b);
+  });
+  var dotBtns = Array.prototype.slice.call(dots.children);
+
+  function retriggerRise(slide) {
+    if (reduce) return;
+    slide.querySelectorAll('.rise').forEach(function (el) {
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+    });
+  }
+
+  function go(n) {
+    if (n < 0 || n >= total) return;
+    slides[idx].classList.remove('active');
+    idx = n;
+    slides[idx].classList.add('active');
+    retriggerRise(slides[idx]);
+    dotBtns.forEach(function (d, i) { d.setAttribute('aria-current', i === idx ? 'true' : 'false'); });
+    counter.textContent = 'Slide ' + (idx + 1) + ' / ' + total;
+    history.replaceState(null, '', '#' + (idx + 1));
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(idx + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(idx - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+  });
+
+  var startX = null;
+  document.addEventListener('touchstart', function (e) { startX = e.changedTouches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (startX === null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) { dx < 0 ? go(idx + 1) : go(idx - 1); }
+    startX = null;
+  }, { passive: true });
+
+  var h = parseInt(location.hash.replace('#', ''), 10);
+  if (h >= 1 && h <= total) { idx = 0; go(h - 1); } else { go(0); }
+})();
+</script>
+</body>
+</html>

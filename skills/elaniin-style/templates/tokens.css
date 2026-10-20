@@ -1,0 +1,271 @@
+/*
+  Elaniin tokens — single source of truth.
+  Extracted from the Elaniin 2027 site (DESIGN.md v1.45).
+  Usage:
+    - Tailwind v4 project: @import "tailwindcss"; then paste this file (or import it) as your only theme.
+    - Claude Artifacts / standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4
+      and paste this file's contents inside a <style type="text/tailwindcss"> block.
+  The default Tailwind palette, radii, shadows and breakpoints are reset on purpose:
+  only the tokens below exist, so a stray `bg-blue-500` simply does not compile.
+*/
+
+@theme {
+  /* ---------- reset defaults ---------- */
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --ease-*: initial;
+
+  /* ---------- breakpoints: tablet 768 / desktop 1024 / wide 1280 ---------- */
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* ---------- color: brand ---------- */
+  --color-elevate-blue: #1054ff;     /* DETAIL accent only (buttons, links, focus, active, symbol) */
+  --color-inspire-grey: #f0f0f3;
+  --color-excellence-blue: #01172e;  /* the strong color: dark bands, case stages, CTA, footer, code */
+  --color-elaniin-black: #141414;
+  --color-dynamic-blue: #4d75fd;     /* non-text accents only */
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* ---------- color: blue ramp ---------- */
+  --color-blue-100: #d7e2f8;
+  --color-blue-200: #b9cefb;
+  --color-blue-300: #6a9aff;
+  --color-blue-400: #4d75fd;
+  --color-blue-500: #1054ff;
+  --color-blue-600: #0848cc;
+  --color-blue-700: #023ca0;
+  --color-blue-800: #022b63;
+  --color-blue-900: #01172e;
+  --color-blue-tint-50: #e7eeff;
+  --color-blue-active-dark: #010f20;
+
+  /* ---------- color: text ---------- */
+  --color-text-primary: #141414;
+  --color-text-secondary: #4a4d57;
+  --color-text-muted: #656873;
+  --color-text-link: #1054ff;
+  --color-text-link-hover: #0848cc;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-secondary: #a9b8cc;
+  --color-text-on-dark-muted: #8ea0b8;
+  --color-text-on-dark-accent: #7b9bff;
+  --color-text-disabled: #8c8f9b;
+
+  /* ---------- color: surface ---------- */
+  --color-surface-page: #ffffff;
+  --color-surface-subtle: #f0f0f3;
+  --color-surface-card: #ffffff;
+  --color-surface-dark: #01172e;
+  --color-surface-dark-alt: #141414;
+  --color-surface-code: #01172e;
+
+  /* ---------- color: border ---------- */
+  --color-border-default: #e4e4ea;
+  --color-border-strong: #d3d4dc;
+  --color-border-input: #8c8f9b;
+  --color-border-ink: #141414;
+  --color-border-on-dark: rgba(255, 255, 255, 0.12);
+  --color-border-on-dark-strong: rgba(255, 255, 255, 0.24);
+  --color-surface-dark-card: rgba(255, 255, 255, 0.04);
+
+  /* ---------- color: status (state only, never decoration) ---------- */
+  --color-success-text: #136c42; --color-success-bg: #e3f4ea; --color-success-border: #b6e0c8; --color-success-dot: #1f9d61;
+  --color-warning-text: #8a5300; --color-warning-bg: #fff3d9; --color-warning-border: #f2d58f; --color-warning-dot: #b87700;
+  --color-error-text: #a3201f;   --color-error-bg: #fde7e7;   --color-error-border: #f1b5b5;   --color-error-dot: #d6322f;
+  --color-info-text: #0848cc;    --color-info-bg: #e7eeff;    --color-info-border: #b9cefb;    --color-info-dot: #1054ff;
+  --color-neutral-text: #4a4d57; --color-neutral-bg: #f0f0f3; --color-neutral-border: #e4e4ea; --color-neutral-dot: #8c8f9b;
+
+  /* ---------- typography: families ---------- */
+  --font-display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---------- typography: scale (fluid between mobile and desktop values) ---------- */
+  --text-display-xl: clamp(40px, 6.25vw - 8px, 72px);
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-h1: clamp(32px, 3.125vw + 8px, 48px);
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(28px, 1.562vw + 16px, 36px);
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(22px, 1.172vw + 13px, 28px);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h4: clamp(20px, 0.3906vw + 17px, 22px);
+  --text-h4--line-height: 1.25;
+  --text-h4--letter-spacing: -0.015em;
+  --text-lead: clamp(18px, 0.3906vw + 15px, 20px);
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.005em;
+  --text-body-lg: clamp(17px, 0.1953vw + 15.5px, 18px);
+  --text-body-lg--line-height: 1.55;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.5;
+  --text-caption: 13px;
+  --text-caption--line-height: 1.4;
+  --text-code: 13px;
+  --text-code--line-height: 1.63;
+  --text-button: 14px;
+  --text-button--line-height: 1;
+  --text-button-lg: 16px;
+  --text-button-lg--line-height: 1;
+
+  /* ---------- radius ---------- */
+  --radius-button: 6px;
+  --radius-input: 6px;
+  --radius-tag: 6px;
+  --radius-card: 12px;
+  --radius-media: 12px;
+  --radius-code: 12px;
+  --radius-menu: 8px;
+  --radius-modal: 16px;
+  --radius-tooltip: 6px;
+  --radius-device: 32px;
+  --radius-module: 2px;
+  --radius-full: 9999px;
+
+  /* ---------- shadow ---------- */
+  --shadow-none: none;
+  --shadow-card-rest: 0 0 1px rgba(1, 30, 61, 0.03), 0 1px 2px rgba(1, 30, 61, 0.06);
+  --shadow-menu: 0 8px 24px -8px rgba(1, 30, 61, 0.18), 0 0 0 1px rgba(1, 30, 61, 0.06);
+  --shadow-product: 0 30px 45px -30px rgba(1, 30, 61, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.1);
+  --shadow-focus: 0 0 0 2px #ffffff, 0 0 0 4px #1054ff;
+  --shadow-focus-on-dark: 0 0 0 2px #01172e, 0 0 0 4px #7b9bff;
+
+  /* ---------- motion ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+:root {
+  color-scheme: light;
+
+  /* layout */
+  --container-max: 1280px;
+  --gutter: 48px;
+  --grid-gap: 24px;
+  --nav-height: 64px;
+  --section-y: 96px;
+  --section-y-statement: 128px;
+  --section-y-compact: 64px;
+  --card-padding: 32px;
+
+  /* motion durations */
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --dur-reveal: 500ms;
+  --reveal-distance: 16px;
+  --reveal-stagger: 60ms;
+
+  /* the only gradient: stepped blue motif */
+  --blue-steps: linear-gradient(90deg, #d7e2f8 0 12.5%, #b9cefb 12.5% 25%, #6a9aff 25% 37.5%, #1054ff 37.5% 50%, #0848cc 50% 62.5%, #023ca0 62.5% 75%, #022b63 75% 87.5%, #01172e 87.5% 100%);
+}
+
+@media (max-width: 1023px) {
+  :root { --gutter: 32px; --section-y: 72px; --section-y-statement: 96px; --section-y-compact: 48px; }
+}
+@media (max-width: 767px) {
+  :root { --gutter: 20px; --grid-gap: 16px; --section-y: 56px; --section-y-statement: 72px; --section-y-compact: 40px; --card-padding: 24px; }
+}
+
+/* ---------- utilities ---------- */
+@utility mono-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@utility section-y {
+  padding-block: var(--section-y);
+}
+@utility section-y-statement {
+  padding-block: var(--section-y-statement);
+}
+@utility section-y-compact {
+  padding-block: var(--section-y-compact);
+}
+@utility pad-card {
+  padding: var(--card-padding);
+}
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+  }
+}
+@utility focus-ring-on-dark {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus-on-dark);
+  }
+}
+
+/* Entrance animation in plain CSS: runs without waiting for hydration. Stagger with style={{ "--i": n }}. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@utility rise {
+  animation: rise var(--dur-reveal) var(--ease-emphasized) both;
+  animation-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* ---------- base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+  body {
+    background: var(--color-surface-page);
+    color: var(--color-text-primary);
+    font-family: var(--font-text);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-blue-200);
+    color: var(--color-excellence-blue);
+  }
+  :focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-button);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}

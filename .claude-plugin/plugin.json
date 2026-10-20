@@ -1,0 +1,22 @@
+{
+  "name": "elaniin-style",
+  "version": "1.0.0",
+  "description": "Elaniin design system as a skill. Produces decks, dashboards & reports, websites & landings in the Elaniin style, and develops the Elaniin 2027 site. Bilingüe EN/ES.",
+  "author": {
+    "name": "Elaniin",
+    "url": "https://elaniin.com"
+  },
+  "homepage": "https://github.com/danielpineda-elaniin/elaniin-style",
+  "repository": "https://github.com/danielpineda-elaniin/elaniin-style",
+  "license": "MIT",
+  "keywords": [
+    "elaniin",
+    "design-system",
+    "brand",
+    "landing-page",
+    "dashboard",
+    "pitch-deck",
+    "tailwind",
+    "motion"
+  ]
+}

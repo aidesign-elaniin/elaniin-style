@@ -1,0 +1,53 @@
+# Websites & Landings / Sitios y Landings
+
+> Template base: `templates/landing.html` (Tailwind CDN v4 + `@theme` inline, autocontenido).
+> Arquetipos de sección y ritmo editorial Elaniin.
+
+## Arquetipo de landing Elaniin
+
+Ritmo de superficies (blanco → grey → navy), hairlines como estructura, un solo gesto
+dominante por pieza.
+
+```
+1. Nav              — 64px, hairline inferior, logo a la izq, links, CTA secundario.
+2. Hero             — blanco. Display-xl (max ~20ch), lead (56ch), 1 CTA primario + 1 secundario.
+                      Opcional: producto/UI shot con sombra `product`. Nada de fondo azul.
+3. Social proof     — grey o blanco, hairline top. Logos en mono/gris, no multicolor.
+4. Features / value — grid hairline 2–3 columnas. Cada celda: label mono (eyebrow), h3, body.
+                      O bento grid con 1 celda destacada en excellence-blue.
+5. Product / case   — banda oscura excellence-blue opcional con texto on-dark + screenshot.
+6. Data / stats     — 3–4 números grandes (display), captions mono-label.
+7. Testimonial      — grey. Cita lead, nombre caption, sin estrellas.
+8. Pricing (si hay) — hairline cards, la recomendada con borde ink o tag "Most popular".
+9. CTA final        — banda excellence-blue. H2 + botón primario (elevate-blue) + glow motif
+                      opcional (diagonal stripes, solo transform).
+10. Footer          — excellence-blue o elaniin-black. Columnas, mono-labels, hairlines on-dark.
+```
+
+## Reglas de composición
+
+- **Hairlines dividen, no decoran.** `border-default #E4E4EA` en blanco/grey;
+  `border-on-dark rgba(255,255,255,0.12)` en navy.
+- **Measure:** body 68ch, lead 56ch, headings 20ch. Nunca texto full-width.
+- **elevate-blue:** un CTA primario por grupo de acción; links en texto; focus; un estado
+  activo. Si la página "se ve azul", sobra azul.
+- **Imágenes:** product shots con `shadow-product`; iconos lineales 1.5px stroke, no emojis.
+- **Gradientes:** prohibidos salvo el stepped blue motif (`--blue-steps`).
+- **Sombras:** solo `card-rest`, `menu`, `product`. Nunca sombras grandes difusas.
+- **Tipografía display:** Instrument Sans 500, tracking negativo en headings grandes.
+
+## Sección por defecto (copy bilingüe)
+
+Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
+- Eyebrow (mono-label uppercase): categoría.
+- H2: beneficio concreto, no "Our features".
+- Body: una idea, ≤2 líneas.
+- CTA: verbo + objeto ("Start free trial" / "Prueba gratis"), no "Submit".
+
+## Checklist específico de landing
+
+- [ ] Hero legible en <3s: qué es, para quién, qué hacer.
+- [ ] Un solo CTA primario visible por viewport.
+- [ ] Ritmo de fondos alternado, no 10 secciones blancas seguidas.
+- [ ] Mobile: hero sin recortes, CTAs full-width, grid colapsa a 1 col.
+- [ ] Footer completo (no placeholder).

@@ -1,0 +1,29 @@
+{
+  "name": "elaniin-style-marketplace",
+  "owner": {
+    "name": "Elaniin",
+    "url": "https://github.com/danielpineda-elaniin"
+  },
+  "plugins": [
+    {
+      "name": "elaniin-style",
+      "source": "./",
+      "description": "Elaniin design system as a skill: decks, dashboards & reports, websites & landings, and Elaniin site development. Bilingüe EN/ES.",
+      "author": {
+        "name": "Elaniin",
+        "url": "https://elaniin.com"
+      },
+      "license": "MIT",
+      "keywords": [
+        "elaniin",
+        "design-system",
+        "brand",
+        "landing-page",
+        "dashboard",
+        "pitch-deck",
+        "tailwind",
+        "motion"
+      ]
+    }
+  ]
+}
