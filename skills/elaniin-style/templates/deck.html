@@ -10,50 +10,708 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style type="text/tailwindcss">
+/*
+  Elaniin tokens — single source of truth (DESIGN.md v1.45 · Tailwind v4).
+
+  CONTRACT — Tailwind-first API:
+    1. Every design value lives in @theme (or in :root when it is a layout/duration
+       var consumed by a utility — theme keys alone do NOT generate duration-* utilities).
+    2. Every named CSS resource is an @utility. Raw class selectors inside plain
+       <style> blocks are forbidden: they are invisible to the utility API.
+    3. Animations are tokens: --animate-* + @keyframes inside @theme, so `animate-*`
+       utilities exist — and every motion utility honors prefers-reduced-motion itself.
+    4. Durations are named: instant 100 · fast 150 · base 200 · slow 300 · reveal 500.
+       Use `duration-base`, never `duration-200`.
+
+  USAGE:
+    - Tailwind v4 project: include tailwindcss first, then this file (or paste it).
+       (Never spell out the import directive inside this comment: mentioning it
+       anywhere in the block breaks @tailwindcss/browser.)
+    - Standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4 and paste
+      this file inside a <style type="text/tailwindcss"> block (templates embed a copy —
+      keep both in sync when editing).
+  Defaults (palette/radii/shadows/breakpoints) are reset on purpose: only the tokens
+  below exist, so a stray `bg-blue-500` simply does not compile.
+*/
+
 @theme {
-  --color-*: initial; --radius-*: initial; --shadow-*: initial; --breakpoint-*: initial; --font-*: initial; --text-*: initial; --ease-*: initial;
-  --color-elevate-blue: #1054ff; --color-inspire-grey: #f0f0f3; --color-excellence-blue: #01172e; --color-elaniin-black: #141414; --color-dynamic-blue: #4d75fd; --color-white: #ffffff;
-  --color-blue-100: #d7e2f8; --color-blue-200: #b9cefb; --color-blue-300: #6a9aff; --color-blue-500: #1054ff; --color-blue-600: #0848cc; --color-blue-900: #01172e; --color-blue-tint-50: #e7eeff;
-  --color-text-primary: #141414; --color-text-secondary: #4a4d57; --color-text-muted: #656873; --color-text-on-dark-secondary: #a9b8cc; --color-text-on-dark-muted: #8ea0b8; --color-text-on-dark-accent: #7b9bff;
-  --color-border-default: #e4e4ea; --color-border-strong: #d3d4dc; --color-border-on-dark: rgba(255,255,255,0.12);
-  --font-display: "Instrument Sans","Helvetica Neue",Arial,sans-serif; --font-text: "DM Sans","Helvetica Neue",Arial,sans-serif; --font-mono: "Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
-  --text-display-xl: clamp(40px,6.25vw - 8px,72px); --text-display-xl--line-height: 1; --text-display-xl--letter-spacing: -0.035em;
-  --text-display-lg: clamp(36px,3.906vw + 6px,56px); --text-display-lg--line-height: 1.04; --text-display-lg--letter-spacing: -0.03em;
-  --text-h2: clamp(28px,1.562vw + 16px,36px); --text-h2--line-height: 1.12; --text-h2--letter-spacing: -0.025em;
-  --text-h3: clamp(22px,1.172vw + 13px,28px); --text-h3--line-height: 1.2; --text-h3--letter-spacing: -0.02em;
-  --text-lead: clamp(18px,0.3906vw + 15px,20px); --text-lead--line-height: 1.5; --text-lead--letter-spacing: -0.005em;
-  --ease-standard: cubic-bezier(0.4,0,0.2,1); --ease-emphasized: cubic-bezier(0.25,1,0.5,1);
+  /* ---------- reset defaults ---------- */
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --ease-*: initial;
+
+  /* ---------- breakpoints: tablet 768 / desktop 1024 / wide 1280 ---------- */
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* ---------- color: brand ---------- */
+  --color-elevate-blue: #1054ff;     /* DETAIL accent only (buttons, links, focus, active, symbol) */
+  --color-inspire-grey: #f0f0f3;
+  --color-excellence-blue: #01172e;  /* the strong color: dark bands, case stages, CTA, footer, code */
+  --color-elaniin-black: #141414;
+  --color-dynamic-blue: #4d75fd;     /* non-text accents only */
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* ---------- color: blue ramp ---------- */
+  --color-blue-100: #d7e2f8;
+  --color-blue-200: #b9cefb;
+  --color-blue-300: #6a9aff;
+  --color-blue-400: #4d75fd;
+  --color-blue-500: #1054ff;
+  --color-blue-600: #0848cc;
+  --color-blue-700: #023ca0;
+  --color-blue-800: #022b63;
+  --color-blue-900: #01172e;
+  --color-blue-tint-50: #e7eeff;
+  --color-blue-active-dark: #010f20;
+
+  /* ---------- color: text ---------- */
+  --color-text-primary: #141414;
+  --color-text-secondary: #4a4d57;
+  --color-text-muted: #656873;
+  --color-text-link: #1054ff;
+  --color-text-link-hover: #0848cc;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-secondary: #a9b8cc;
+  --color-text-on-dark-muted: #8ea0b8;
+  --color-text-on-dark-accent: #7b9bff;
+  --color-text-disabled: #8c8f9b;
+
+  /* ---------- color: surface ---------- */
+  --color-surface-page: #ffffff;
+  --color-surface-subtle: #f0f0f3;
+  --color-surface-card: #ffffff;
+  --color-surface-dark: #01172e;
+  --color-surface-dark-alt: #141414;
+  --color-surface-code: #01172e;
+
+  /* ---------- color: border ---------- */
+  --color-border-default: #e4e4ea;
+  --color-border-strong: #d3d4dc;
+  --color-border-input: #8c8f9b;
+  --color-border-ink: #141414;
+  --color-border-on-dark: rgba(255, 255, 255, 0.12);
+  --color-border-on-dark-strong: rgba(255, 255, 255, 0.24);
+  --color-surface-dark-card: rgba(255, 255, 255, 0.04);
+
+  /* ---------- color: status (state only, never decoration) ---------- */
+  --color-success-text: #136c42; --color-success-bg: #e3f4ea; --color-success-border: #b6e0c8; --color-success-dot: #1f9d61;
+  --color-warning-text: #8a5300; --color-warning-bg: #fff3d9; --color-warning-border: #f2d58f; --color-warning-dot: #b87700;
+  --color-error-text: #a3201f;   --color-error-bg: #fde7e7;   --color-error-border: #f1b5b5;   --color-error-dot: #d6322f;
+  --color-info-text: #0848cc;    --color-info-bg: #e7eeff;    --color-info-border: #b9cefb;    --color-info-dot: #1054ff;
+  --color-neutral-text: #4a4d57; --color-neutral-bg: #f0f0f3; --color-neutral-border: #e4e4ea; --color-neutral-dot: #8c8f9b;
+
+  /* ---------- typography: families ---------- */
+  --font-display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---------- typography: scale (fluid between mobile and desktop values) ---------- */
+  --text-display-xl: clamp(40px, 6.25vw - 8px, 72px);
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-h1: clamp(32px, 3.125vw + 8px, 48px);
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(28px, 1.562vw + 16px, 36px);
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(22px, 1.172vw + 13px, 28px);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h4: clamp(20px, 0.3906vw + 17px, 22px);
+  --text-h4--line-height: 1.25;
+  --text-h4--letter-spacing: -0.015em;
+  --text-lead: clamp(18px, 0.3906vw + 15px, 20px);
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.005em;
+  --text-body-lg: clamp(17px, 0.1953vw + 15.5px, 18px);
+  --text-body-lg--line-height: 1.55;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.5;
+  --text-caption: 13px;
+  --text-caption--line-height: 1.4;
+  --text-code: 13px;
+  --text-code--line-height: 1.63;
+  --text-button: 14px;
+  --text-button--line-height: 1;
+  --text-button-lg: 16px;
+  --text-button-lg--line-height: 1;
+
+  /* ---------- radius ---------- */
+  --radius-button: 6px;
+  --radius-input: 6px;
+  --radius-tag: 6px;
+  --radius-card: 12px;
+  --radius-media: 12px;
+  --radius-code: 12px;
+  --radius-menu: 8px;
+  --radius-modal: 16px;
+  --radius-tooltip: 6px;
+  --radius-device: 32px;
+  --radius-module: 2px;
+  --radius-full: 9999px;
+
+  /* ---------- shadow ---------- */
+  --shadow-none: none;
+  --shadow-card-rest: 0 0 1px rgba(1, 30, 61, 0.03), 0 1px 2px rgba(1, 30, 61, 0.06);
+  --shadow-menu: 0 8px 24px -8px rgba(1, 30, 61, 0.18), 0 0 0 1px rgba(1, 30, 61, 0.06);
+  --shadow-product: 0 30px 45px -30px rgba(1, 30, 61, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.1);
+  --shadow-focus: 0 0 0 2px #ffffff, 0 0 0 4px #1054ff;
+  --shadow-focus-on-dark: 0 0 0 2px #01172e, 0 0 0 4px #7b9bff;
+
+  /* ---------- motion: easings ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---------- motion: animation tokens (each generates an animate-* utility) ---------- */
+  --animate-rise: rise var(--dur-reveal) var(--ease-emphasized) both;
+  --animate-draw-line: draw-line 1.6s var(--ease-emphasized) 0.25s both;
+  --animate-float-chip: float-chip 4s ease-in-out infinite;
+  --animate-typing-dot: typing-dot 0.9s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 0.9s linear infinite;
+  --animate-ping-soft: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-sheen: sheen 5s linear infinite;
+
+  /* ---------- motion: keyframes (paired with the tokens above) ---------- */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(var(--reveal-distance)); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes draw-line {
+    from { stroke-dashoffset: var(--len, 1200); }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes float-chip {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes typing-dot {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50% { transform: translateY(-3px); opacity: 1; }
+  }
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes ping-soft {
+    0% { transform: scale(1); opacity: 0.8; }
+    75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes sheen {
+    from { transform: translate3d(-140%, 0, 0); }
+    to { transform: translate3d(420%, 0, 0); }
+  }
 }
-@utility mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
-@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-.rise { animation: rise 500ms cubic-bezier(0.25,1,0.5,1) both; animation-delay: calc(var(--i, 0) * 60ms); }
-@keyframes draw-line { from { stroke-dashoffset: var(--len, 1200); } to { stroke-dashoffset: 0; } }
-.draw-line { stroke-dasharray: var(--len, 1200); animation: draw-line 1.6s cubic-bezier(0.25,1,0.5,1) 0.25s both; }
-@media (prefers-reduced-motion: reduce) { .rise, .draw-line { animation: none !important; } .draw-line { stroke-dashoffset: 0; } .slide { transition: none !important; } }
-</style>
-<style>
-  :root { color-scheme: light; }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body { margin: 0; background: #141414; color: #141414; font-family: "DM Sans","Helvetica Neue",Arial,sans-serif; overflow: hidden; }
-  ::selection { background: #b9cefb; color: #01172e; }
-  :focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px #141414, 0 0 0 4px #7b9bff; }
-  .stage { position: fixed; inset: 0; display: grid; place-items: center; }
-  .deck { position: relative; width: 1280px; height: 720px; transform-origin: center; flex-shrink: 0; }
-  .slide { position: absolute; inset: 0; display: none; flex-direction: column; padding: 72px 88px; background: #fff; overflow: hidden; opacity: 0; transform: translateY(8px); transition: opacity 250ms cubic-bezier(0.4,0,0.2,1), transform 250ms cubic-bezier(0.4,0,0.2,1); }
-  .slide.active { display: flex; opacity: 1; transform: none; }
-  .slide.dark { background: #01172e; color: #fff; }
-  .slide.grey { background: #f0f0f3; }
-  .slide-spot { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(480px circle at var(--sx, 75%) var(--sy, 25%), rgba(77,117,253,0.08), transparent 60%); }
-  .slide.dark .slide-spot { background: radial-gradient(480px circle at var(--sx, 75%) var(--sy, 25%), rgba(123,155,255,0.10), transparent 60%); }
-  .nav-dots { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
-  .nav-dots button { width: 8px; height: 8px; border-radius: 9999px; border: 0; background: rgba(255,255,255,0.35); cursor: pointer; padding: 0; transition: background 150ms, transform 150ms; }
-  .nav-dots button:hover { transform: scale(1.3); }
-  .nav-dots button[aria-current="true"] { background: #1054ff; }
-  .hud { position: fixed; top: 16px; right: 20px; display: flex; align-items: center; gap: 12px; z-index: 10; color: rgba(255,255,255,0.55); font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .hud button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 6px 10px; font: inherit; cursor: pointer; transition: background 150ms, color 150ms; }
-  .hud button:hover { background: rgba(255,255,255,0.14); color: #fff; }
-  @media (prefers-reduced-motion: reduce) { .slide-spot { display: none; } }
+
+:root {
+  color-scheme: light;
+
+  /* layout */
+  --container-max: 1280px;
+  --gutter: 48px;
+  --grid-gap: 24px;
+  --nav-height: 64px;
+  --section-y: 96px;
+  --section-y-statement: 128px;
+  --section-y-compact: 64px;
+  --card-padding: 32px;
+
+  /* motion durations — consumed by the duration-* utilities (see contract §4) */
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --dur-reveal: 500ms;
+  --reveal-distance: 16px;
+  --reveal-stagger: 60ms;
+
+  /* the only gradient: stepped blue motif */
+  --blue-steps: linear-gradient(90deg, #d7e2f8 0 12.5%, #b9cefb 12.5% 25%, #6a9aff 25% 37.5%, #1054ff 37.5% 50%, #0848cc 50% 62.5%, #023ca0 62.5% 75%, #022b63 75% 87.5%, #01172e 87.5% 100%);
+}
+
+@media (max-width: 1023px) {
+  :root { --gutter: 32px; --section-y: 72px; --section-y-statement: 96px; --section-y-compact: 48px; }
+}
+@media (max-width: 767px) {
+  :root { --gutter: 20px; --grid-gap: 16px; --section-y: 56px; --section-y-statement: 72px; --section-y-compact: 40px; --card-padding: 24px; }
+}
+
+/* ---------- utilities: layout & type ---------- */
+@utility mono-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@utility section-y {
+  padding-block: var(--section-y);
+}
+@utility section-y-statement {
+  padding-block: var(--section-y-statement);
+}
+@utility section-y-compact {
+  padding-block: var(--section-y-compact);
+}
+@utility pad-card {
+  padding: var(--card-padding);
+}
+
+/* ---------- utilities: focus ---------- */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+  }
+}
+@utility focus-ring-on-dark {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus-on-dark);
+  }
+}
+
+/* ---------- utilities: named durations (contract §4) ---------- */
+@utility duration-instant { transition-duration: var(--dur-instant); }
+@utility duration-fast { transition-duration: var(--dur-fast); }
+@utility duration-base { transition-duration: var(--dur-base); }
+@utility duration-slow { transition-duration: var(--dur-slow); }
+@utility duration-reveal { transition-duration: var(--dur-reveal); }
+
+/* ---------- utilities: entrance ---------- */
+/* Time-based entrance: runs without waiting for hydration. Stagger with style="--i: n". */
+@utility rise {
+  animation: var(--animate-rise);
+  animation-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Scroll entrance (vanilla counterpart of the site's Reveal): hidden only when JS is
+   on (html.js), revealed by IntersectionObserver adding .is-visible. */
+@utility reveal {
+  transition: opacity var(--dur-reveal) var(--ease-emphasized), transform var(--dur-reveal) var(--ease-emphasized);
+  transition-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  html.js &:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js &:not(.is-visible),
+    & {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+/* SVG line draw: pair with style="--len: <path length>". */
+@utility draw-line {
+  stroke-dasharray: var(--len, 1200);
+  animation: var(--animate-draw-line);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- utilities: surfaces ---------- */
+@utility spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(600px circle at var(--mx, 70%) var(--my, 20%), rgba(77, 117, 253, 0.07), transparent 62%);
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+@utility card-glow {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 50%), rgba(16, 84, 255, 0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* ---------- utilities: interactions ---------- */
+@utility nav-link {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 100%;
+    background: var(--color-elevate-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
+  }
+}
+@utility btn-arrow {
+  &:active {
+    transform: scale(0.98);
+  }
+  & svg {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover svg,
+  &:focus-visible svg {
+    transform: translateX(4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & svg {
+      transition: none;
+    }
+  }
+}
+@utility lift {
+  transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-menu);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+@utility row-hover {
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+/* ---------- utilities: living mockups (loops) ---------- */
+/* 3-dot typing indicator. Markup: <span class="typing-dots"><i></i><i></i><i></i></span> */
+@utility typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  & > i {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: currentColor;
+    animation: var(--animate-typing-dot);
+  }
+  & > i:nth-child(2) { animation-delay: 0.12s; }
+  & > i:nth-child(3) { animation-delay: 0.24s; }
+  @media (prefers-reduced-motion: reduce) {
+    & > i {
+      animation: none;
+      opacity: 0.6;
+    }
+  }
+}
+/* Gentle vertical float for decorative chips. */
+@utility float-chip {
+  animation: var(--animate-float-chip);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Tiny spinner. Markup: <span class="spinner"></span> */
+@utility spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-default);
+  border-top-color: var(--color-elevate-blue);
+  animation: var(--animate-spin-slow);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Live-data dot with soft ping. Markup: <span class="live-dot"></span> */
+@utility live-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-success-dot);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    background: var(--color-success-dot);
+    animation: var(--animate-ping-soft);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}
+
+/* ---------- base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+  body {
+    background: var(--color-surface-page);
+    color: var(--color-text-primary);
+    font-family: var(--font-text);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-blue-200);
+    color: var(--color-excellence-blue);
+  }
+  :focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-button);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}
+/* ---------- deck-only: animation token for the phone mockup loop ---------- */
+@theme {
+  --animate-phone-swipe: phone-swipe 9s var(--ease-standard) infinite;
+  @keyframes phone-swipe {
+    0%, 24% { transform: translateX(0); }
+    31%, 55% { transform: translateX(-100%); }
+    62%, 86% { transform: translateX(-200%); }
+    93%, 100% { transform: translateX(-300%); }
+  }
+}
+
+/* ---------- deck-only: presentation chrome ---------- */
+@utility stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+@utility deck {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  transform-origin: center;
+  flex-shrink: 0;
+}
+@utility slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  padding: 72px 88px;
+  background: var(--color-surface-page);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard);
+  &.active {
+    display: flex;
+    opacity: 1;
+    transform: none;
+  }
+  &.dark {
+    background: var(--color-excellence-blue);
+    color: var(--color-text-on-dark);
+  }
+  &.grey {
+    background: var(--color-surface-subtle);
+  }
+  &.dark .slide-spot {
+    background: radial-gradient(480px circle at var(--sx, 75%) var(--sy, 25%), rgba(123, 155, 255, 0.1), transparent 60%);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+@utility slide-spot {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(480px circle at var(--sx, 75%) var(--sy, 25%), rgba(77, 117, 253, 0.08), transparent 60%);
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+@utility nav-dots {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  & button {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    border: 0;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard);
+  }
+  & button:hover {
+    transform: scale(1.3);
+  }
+  & button[aria-current="true"] {
+    background: var(--color-elevate-blue);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & button {
+      transition: none;
+    }
+  }
+}
+@utility hud {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  & button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: var(--radius-button);
+    padding: 6px 10px;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+  }
+  & button:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--color-text-on-dark);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & button {
+      transition: none;
+    }
+  }
+}
+
+/* ---------- deck-only: phone mockup (living loop) ---------- */
+@utility phone-frame {
+  position: relative;
+  width: 240px;
+  height: 384px;
+  padding: 10px;
+  border-radius: var(--radius-device);
+  background: var(--color-elaniin-black);
+  box-shadow: var(--shadow-product);
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.25);
+    z-index: 3;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    background: rgba(255, 255, 255, 0.06);
+    animation: var(--animate-sheen);
+    pointer-events: none;
+    z-index: 2;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+@utility phone-track {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  animation: var(--animate-phone-swipe);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* ---------- deck-only: dark letterbox base overrides ---------- */
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    background: var(--color-elaniin-black);
+    overflow: hidden;
+  }
+}
 </style>
 </head>
 <body>
@@ -61,7 +719,7 @@
 <symbol id="elaniin-logo" viewBox="0 0 364.43 81.38"><defs><style>.uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413{fill:#141414;}.uuid-0571ab0d-4279-482c-ba13-b56705a88b78{fill:#1054ff;}</style></defs><g id="uuid-6c66203c-0ba6-4869-9542-1fb1cd232807"><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></symbol>
 <symbol id="elaniin-logo-white" viewBox="0 0 364.43 81.38"><defs><style>.uuid-0182cc41-29a0-4b21-9199-223efa245f4d{fill:#f0f0f3;}.uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd{fill:#141414;}.uuid-9e86be49-452b-4f62-b4fb-53b71208d740{fill:#1054ff;}</style></defs><g id="uuid-74b0c51a-cb41-4dbb-a49b-f5c490671e0d"><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></symbol>
 </svg>
-<a href="#deck" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-[6px]">Skip to deck</a>
+<a href="#deck" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-button">Skip to deck</a>
 
 <div class="stage">
   <div class="deck" id="deck" role="region" aria-roledescription="deck" aria-label="Presentation">
@@ -72,13 +730,13 @@
       <div class="relative flex h-full min-h-0 flex-col justify-between">
         <div class="flex items-center justify-between">
           <svg class="h-8 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo"/></svg>
-          <span class="mono-label text-[13px] text-[#656873]">Series A · October 2026</span>
+          <span class="mono-label text-caption text-text-muted">Series A · October 2026</span>
         </div>
         <div class="min-w-0">
-          <h1 class="rise max-w-[15ch] break-words font-[family-name:var(--font-display)] font-medium text-display-xl" style="--i:0">Acme: the operating system for modern logistics</h1>
-          <p class="rise mt-6 max-w-[56ch] text-lead text-[#4a4d57]" style="--i:1">Investor presentation · Confidential</p>
+          <h1 class="rise max-w-[15ch] break-words font-display font-medium text-display-xl" style="--i:0">Acme: the operating system for modern logistics</h1>
+          <p class="rise mt-6 max-w-[56ch] text-lead text-text-secondary" style="--i:1">Investor presentation · Confidential</p>
         </div>
-        <div class="rise h-3 w-64" style="--i:2; background: linear-gradient(90deg,#d7e2f8 0 12.5%,#b9cefb 12.5% 25%,#6a9aff 25% 37.5%,#1054ff 37.5% 50%,#0848cc 50% 62.5%,#023ca0 62.5% 75%,#022b63 75% 87.5%,#01172e 87.5% 100%)"></div>
+        <div class="rise h-3 w-64" style="--i:2; background: var(--blue-steps)"></div>
       </div>
     </section>
 
@@ -86,20 +744,20 @@
     <section class="slide grey" aria-label="Slide 2">
       <div class="slide-spot" aria-hidden="true"></div>
       <div class="relative flex h-full min-h-0 flex-col">
-        <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">01 — The problem</p>
-        <h2 class="rise mt-4 max-w-[22ch] break-words font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">Logistics runs on spreadsheets and hope</h2>
+        <p class="mono-label text-caption text-text-muted rise" style="--i:0">01 — The problem</p>
+        <h2 class="rise mt-4 max-w-[22ch] break-words font-display font-medium text-display-lg" style="--i:1">Logistics runs on spreadsheets and hope</h2>
         <div class="mt-12 grid grid-cols-3 gap-8">
-          <div class="rise min-w-0 border-t border-[#d3d4dc] pt-6" style="--i:2">
-            <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular-nums" data-count="67" data-suffix="%">67%</p>
-            <p class="mt-2 break-words text-[16px] text-[#4a4d57]">of mid-market shippers still plan routes manually.</p>
+          <div class="rise min-w-0 border-t border-border-strong pt-6" style="--i:2">
+            <p class="font-display font-medium text-h2 tabular-nums" data-count="67" data-suffix="%">67%</p>
+            <p class="mt-2 break-words text-body text-text-secondary">of mid-market shippers still plan routes manually.</p>
           </div>
-          <div class="rise min-w-0 border-t border-[#d3d4dc] pt-6" style="--i:3">
-            <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular-nums" data-count="1.2" data-prefix="$" data-suffix="T" data-decimals="1">$1.2T</p>
-            <p class="mt-2 break-words text-[16px] text-[#4a4d57]">lost annually to empty miles and idle capacity.</p>
+          <div class="rise min-w-0 border-t border-border-strong pt-6" style="--i:3">
+            <p class="font-display font-medium text-h2 tabular-nums" data-count="1.2" data-prefix="$" data-suffix="T" data-decimals="1">$1.2T</p>
+            <p class="mt-2 break-words text-body text-text-secondary">lost annually to empty miles and idle capacity.</p>
           </div>
-          <div class="rise min-w-0 border-t border-[#d3d4dc] pt-6" style="--i:4">
-            <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular-nums" data-count="11" data-suffix=" days">11 days</p>
-            <p class="mt-2 break-words text-[16px] text-[#4a4d57]">average lag between shipment events and billing.</p>
+          <div class="rise min-w-0 border-t border-border-strong pt-6" style="--i:4">
+            <p class="font-display font-medium text-h2 tabular-nums" data-count="11" data-suffix=" days">11 days</p>
+            <p class="mt-2 break-words text-body text-text-secondary">average lag between shipment events and billing.</p>
           </div>
         </div>
       </div>
@@ -109,23 +767,23 @@
     <section class="slide" aria-label="Slide 3">
       <div class="slide-spot" aria-hidden="true"></div>
       <div class="relative flex h-full min-h-0 flex-col">
-        <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">02 — The solution</p>
-        <h2 class="rise mt-4 max-w-[24ch] break-words font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">One platform from quote to cash</h2>
+        <p class="mono-label text-caption text-text-muted rise" style="--i:0">02 — The solution</p>
+        <h2 class="rise mt-4 max-w-[24ch] break-words font-display font-medium text-display-lg" style="--i:1">One platform from quote to cash</h2>
         <div class="mt-10 grid min-h-0 flex-1 grid-cols-3 gap-6">
-          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-[12px] border border-[#e4e4ea] p-8" style="--i:2">
-            <span class="mono-label text-[13px] text-[#1054ff]">Plan</span>
-            <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">AI route optimization</h3>
-            <p class="mt-2 break-words text-[15px] text-[#4a4d57]">Live constraints, cost and ETA in a single planner.</p>
+          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-card border border-border-default p-8" style="--i:2">
+            <span class="mono-label text-caption text-elevate-blue">Plan</span>
+            <h3 class="mt-3 font-display font-medium text-h3">AI route optimization</h3>
+            <p class="mt-2 break-words text-body-sm text-text-secondary">Live constraints, cost and ETA in a single planner.</p>
           </div>
-          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-[12px] border border-[#e4e4ea] p-8" style="--i:3">
-            <span class="mono-label text-[13px] text-[#1054ff]">Track</span>
-            <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Event-grade telemetry</h3>
-            <p class="mt-2 break-words text-[15px] text-[#4a4d57]">Every handoff captured, no driver apps required.</p>
+          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-card border border-border-default p-8" style="--i:3">
+            <span class="mono-label text-caption text-elevate-blue">Track</span>
+            <h3 class="mt-3 font-display font-medium text-h3">Event-grade telemetry</h3>
+            <p class="mt-2 break-words text-body-sm text-text-secondary">Every handoff captured, no driver apps required.</p>
           </div>
-          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-[12px] border border-[#141414] p-8" style="--i:4">
-            <span class="mono-label text-[13px] text-[#1054ff]">Bill</span>
-            <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Instant invoicing</h3>
-            <p class="mt-2 break-words text-[15px] text-[#4a4d57]">Proof-of-delivery to paid invoice in under an hour.</p>
+          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-card border border-border-ink p-8" style="--i:4">
+            <span class="mono-label text-caption text-elevate-blue">Bill</span>
+            <h3 class="mt-3 font-display font-medium text-h3">Instant invoicing</h3>
+            <p class="mt-2 break-words text-body-sm text-text-secondary">Proof-of-delivery to paid invoice in under an hour.</p>
           </div>
         </div>
       </div>
@@ -136,16 +794,16 @@
       <div class="slide-spot" aria-hidden="true"></div>
       <div class="relative flex h-full min-h-0 flex-col">
         <div class="flex items-center justify-between">
-          <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">03 — Product</p>
+          <p class="mono-label text-caption text-text-on-dark-accent rise" style="--i:0">03 — Product</p>
           <svg class="h-6 w-auto opacity-90" role="img" aria-label="Elaniin"><use href="#elaniin-logo-white"/></svg>
         </div>
-        <h2 class="rise mt-4 max-w-[24ch] break-words font-[family-name:var(--font-display)] font-medium text-display-lg text-white" style="--i:1">The control tower your ops team actually opens</h2>
-        <div class="rise card-glow relative mt-8 min-h-0 flex-1 overflow-hidden rounded-[12px] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.04)] p-8" style="--i:2">
+        <h2 class="rise mt-4 max-w-[24ch] break-words font-display font-medium text-display-lg text-white" style="--i:1">The control tower your ops team actually opens</h2>
+        <div class="rise card-glow relative mt-8 min-h-0 flex-1 overflow-hidden rounded-card border border-border-on-dark bg-surface-dark-card p-8" style="--i:2">
           <div class="grid grid-cols-4 gap-6">
-            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">On-time</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="96.4" data-suffix="%" data-decimals="1">96.4%</p></div>
-            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Cost / mile</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="1.82" data-prefix="$" data-decimals="2">$1.82</p></div>
-            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Empty miles</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="4.1" data-suffix="%" data-decimals="1">4.1%</p></div>
-            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Time to invoice</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="48" data-suffix="m">48m</p></div>
+            <div class="min-w-0"><p class="mono-label text-caption text-text-on-dark-muted">On-time</p><p class="mt-2 font-display font-medium text-[40px] leading-none text-white tabular-nums" data-count="96.4" data-suffix="%" data-decimals="1">96.4%</p></div>
+            <div class="min-w-0"><p class="mono-label text-caption text-text-on-dark-muted">Cost / mile</p><p class="mt-2 font-display font-medium text-[40px] leading-none text-white tabular-nums" data-count="1.82" data-prefix="$" data-decimals="2">$1.82</p></div>
+            <div class="min-w-0"><p class="mono-label text-caption text-text-on-dark-muted">Empty miles</p><p class="mt-2 font-display font-medium text-[40px] leading-none text-white tabular-nums" data-count="4.1" data-suffix="%" data-decimals="1">4.1%</p></div>
+            <div class="min-w-0"><p class="mono-label text-caption text-text-on-dark-muted">Time to invoice</p><p class="mt-2 font-display font-medium text-[40px] leading-none text-white tabular-nums" data-count="48" data-suffix="m">48m</p></div>
           </div>
           <svg viewBox="0 0 1000 200" class="absolute bottom-8 left-8 w-[calc(100%-4rem)] max-h-[45%]" aria-hidden="true">
             <polyline fill="rgba(16,84,255,0.15)" stroke="none" points="0,200 0,160 100,150 200,155 300,120 400,125 500,90 600,95 700,60 800,55 900,30 1000,25 1000,200"/>
@@ -155,38 +813,131 @@
       </div>
     </section>
 
-    <!-- 5 · TRACTION -->
+    <!-- 5 · APP -->
     <section class="slide" aria-label="Slide 5">
       <div class="slide-spot" aria-hidden="true"></div>
       <div class="relative flex h-full min-h-0 flex-col">
-        <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">04 — Traction</p>
-        <h2 class="rise mt-4 break-words font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">$4.8M ARR, growing 22% MoM</h2>
-        <div class="mt-12 grid grid-cols-4 gap-8 border-y border-[#e4e4ea] py-12">
-          <div class="rise min-w-0" style="--i:2"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="4.8" data-prefix="$" data-suffix="M" data-decimals="1">$4.8M</p><p class="mono-label mt-2 text-[13px] text-[#656873]">ARR</p></div>
-          <div class="rise min-w-0" style="--i:3"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="142">142</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Customers</p></div>
-          <div class="rise min-w-0" style="--i:4"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="128" data-suffix="%">128%</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Net revenue retention</p></div>
-          <div class="rise min-w-0" style="--i:5"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="11" data-suffix=" mo">11 mo</p><p class="mono-label mt-2 text-[13px] text-[#656873]">CAC payback</p></div>
+        <p class="mono-label text-caption text-text-muted rise" style="--i:0">04 — The app</p>
+        <h2 class="rise mt-4 max-w-[24ch] break-words font-display font-medium text-display-lg" style="--i:1">Your operation, in every pocket</h2>
+        <div class="mt-8 grid min-h-0 flex-1 grid-cols-2 items-center gap-12">
+          <div class="rise min-w-0" style="--i:2">
+            <ul class="space-y-4 text-body text-text-secondary">
+              <li class="flex items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue"></span>Live routes with driver ETAs and exception alerts</li>
+              <li class="flex items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue"></span>Proof-of-delivery capture that syncs when back online</li>
+              <li class="flex items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue"></span>Dispatch chat with instant quotes and status updates</li>
+            </ul>
+            <p class="mono-label mt-8 text-caption text-text-muted">iOS · Android · Offline-first</p>
+          </div>
+          <div class="rise relative flex justify-center" style="--i:3">
+            <div class="phone-frame" aria-hidden="true">
+              <div class="phone-track">
+                <!-- screen 1 · routes -->
+                <div class="w-full min-w-0 shrink-0 grow-0 basis-full overflow-hidden rounded-[20px] bg-white p-4 text-text-primary">
+                  <p class="mono-label text-caption text-text-muted">Routes · Today</p>
+                  <div class="mt-3 space-y-2">
+                    <div class="rounded-card border border-border-default p-3">
+                      <p class="font-display font-medium text-body-sm">North loop</p>
+                      <p class="mono-label mt-1 text-caption text-success-text">14 stops · on time</p>
+                    </div>
+                    <div class="rounded-card border border-border-default p-3">
+                      <p class="font-display font-medium text-body-sm">Harbor run</p>
+                      <p class="mono-label mt-1 text-caption text-warning-text">9 stops · 1 delay</p>
+                    </div>
+                    <div class="rounded-card border border-border-default p-3">
+                      <p class="font-display font-medium text-body-sm">Airport express</p>
+                      <p class="mono-label mt-1 text-caption text-text-muted">6 stops · scheduled</p>
+                    </div>
+                  </div>
+                  <div class="mono-label mt-4 flex items-center justify-between border-t border-border-default pt-3 text-caption text-text-muted">
+                    <span>Plan</span><span class="text-elevate-blue">Track</span><span>Bill</span>
+                  </div>
+                </div>
+                <!-- screen 2 · live -->
+                <div class="w-full min-w-0 shrink-0 grow-0 basis-full overflow-hidden rounded-[20px] bg-white p-4 text-text-primary">
+                  <p class="mono-label text-caption text-text-muted">Harbor run · Live</p>
+                  <div class="relative mt-3 h-[210px] overflow-hidden rounded-card bg-inspire-grey">
+                    <svg viewBox="0 0 200 210" class="absolute inset-0 h-full w-full" aria-hidden="true">
+                      <polyline fill="none" stroke="#b9cefb" stroke-width="3" points="20,190 62,140 96,152 134,84 180,46"/>
+                      <circle cx="20" cy="190" r="7" fill="#1054ff"/>
+                      <circle cx="180" cy="46" r="7" fill="#01172e"/>
+                    </svg>
+                  </div>
+                  <div class="mt-3 flex items-center gap-2 text-caption text-text-secondary"><span class="spinner" aria-hidden="true"></span>Optimizing ETA…</div>
+                  <p class="mono-label mt-2 text-caption text-text-muted">Truck 07 · 12 min out</p>
+                </div>
+                <!-- screen 3 · dispatch -->
+                <div class="w-full min-w-0 shrink-0 grow-0 basis-full overflow-hidden rounded-[20px] bg-white p-4 text-text-primary">
+                  <p class="mono-label text-caption text-text-muted">Dispatch</p>
+                  <div class="mt-3 space-y-2">
+                    <div class="ml-auto max-w-[85%] rounded-card rounded-tr-[4px] bg-blue-tint-50 p-3 text-body-sm">Can we add a stop on Harbor run?</div>
+                    <div class="max-w-[85%] rounded-card rounded-tl-[4px] bg-inspire-grey p-3 text-body-sm">Done — stop 10 added, ETA recalculated.</div>
+                    <div class="inline-flex items-center rounded-card rounded-tl-[4px] bg-inspire-grey px-3 py-3 text-text-muted">
+                      <span class="typing-dots"><i></i><i></i><i></i></span>
+                    </div>
+                  </div>
+                  <div class="mono-label mt-4 rounded-full border border-border-default px-3 py-2 text-caption text-text-muted">Message…</div>
+                </div>
+                <!-- screen 1 clone · seamless loop -->
+                <div class="w-full min-w-0 shrink-0 grow-0 basis-full overflow-hidden rounded-[20px] bg-white p-4 text-text-primary">
+                  <p class="mono-label text-caption text-text-muted">Routes · Today</p>
+                  <div class="mt-3 space-y-2">
+                    <div class="rounded-card border border-border-default p-3">
+                      <p class="font-display font-medium text-body-sm">North loop</p>
+                      <p class="mono-label mt-1 text-caption text-success-text">14 stops · on time</p>
+                    </div>
+                    <div class="rounded-card border border-border-default p-3">
+                      <p class="font-display font-medium text-body-sm">Harbor run</p>
+                      <p class="mono-label mt-1 text-caption text-warning-text">9 stops · 1 delay</p>
+                    </div>
+                    <div class="rounded-card border border-border-default p-3">
+                      <p class="font-display font-medium text-body-sm">Airport express</p>
+                      <p class="mono-label mt-1 text-caption text-text-muted">6 stops · scheduled</p>
+                    </div>
+                  </div>
+                  <div class="mono-label mt-4 flex items-center justify-between border-t border-border-default pt-3 text-caption text-text-muted">
+                    <span>Plan</span><span class="text-elevate-blue">Track</span><span>Bill</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="float-chip mono-label absolute right-0 top-10 rounded-button border border-border-default bg-white px-3 py-1.5 text-caption text-text-primary shadow-menu" aria-hidden="true">ETA · 12 min</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 6 · ASK -->
-    <section class="slide dark" aria-label="Slide 6">
+    <!-- 6 · TRACTION -->
+    <section class="slide" aria-label="Slide 6">
+      <div class="slide-spot" aria-hidden="true"></div>
+      <div class="relative flex h-full min-h-0 flex-col">
+        <p class="mono-label text-caption text-text-muted rise" style="--i:0">05 — Traction</p>
+        <h2 class="rise mt-4 break-words font-display font-medium text-display-lg" style="--i:1">$4.8M ARR, growing 22% MoM</h2>
+        <div class="mt-12 grid grid-cols-4 gap-8 border-y border-border-default py-12">
+          <div class="rise min-w-0" style="--i:2"><p class="font-display font-medium text-display-lg tabular-nums" data-count="4.8" data-prefix="$" data-suffix="M" data-decimals="1">$4.8M</p><p class="mono-label mt-2 text-caption text-text-muted">ARR</p></div>
+          <div class="rise min-w-0" style="--i:3"><p class="font-display font-medium text-display-lg tabular-nums" data-count="142">142</p><p class="mono-label mt-2 text-caption text-text-muted">Customers</p></div>
+          <div class="rise min-w-0" style="--i:4"><p class="font-display font-medium text-display-lg tabular-nums" data-count="128" data-suffix="%">128%</p><p class="mono-label mt-2 text-caption text-text-muted">Net revenue retention</p></div>
+          <div class="rise min-w-0" style="--i:5"><p class="font-display font-medium text-display-lg tabular-nums" data-count="11" data-suffix=" mo">11 mo</p><p class="mono-label mt-2 text-caption text-text-muted">CAC payback</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · ASK -->
+    <section class="slide dark" aria-label="Slide 7">
       <div class="slide-spot" aria-hidden="true"></div>
       <div class="relative flex h-full min-h-0 flex-col justify-between">
         <div class="flex items-center justify-between">
-          <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">The ask</p>
+          <p class="mono-label text-caption text-text-on-dark-accent rise" style="--i:0">The ask</p>
           <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo-white"/></svg>
         </div>
         <div class="min-w-0">
-          <h2 class="rise max-w-[16ch] break-words font-[family-name:var(--font-display)] font-medium text-display-xl text-white" style="--i:1">Raising $18M Series A</h2>
-          <div class="rise mt-10 grid max-w-[960px] grid-cols-3 gap-8 border-t border-[rgba(255,255,255,0.12)] pt-8" style="--i:2">
-            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Go-to-market</p><p class="mt-2 break-words text-[16px] text-white">45% — sales + partnerships</p></div>
-            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Product</p><p class="mt-2 break-words text-[16px] text-white">35% — platform + AI</p></div>
-            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Ops</p><p class="mt-2 break-words text-[16px] text-white">20% — team + tooling</p></div>
+          <h2 class="rise max-w-[16ch] break-words font-display font-medium text-display-xl text-white" style="--i:1">Raising $18M Series A</h2>
+          <div class="rise mt-10 grid max-w-[960px] grid-cols-3 gap-8 border-t border-border-on-dark pt-8" style="--i:2">
+            <div class="min-w-0"><p class="mono-label text-caption text-text-on-dark-muted">Go-to-market</p><p class="mt-2 break-words text-body text-white">45% — sales + partnerships</p></div>
+            <div class="min-w-0"><p class="mono-label text-caption text-text-on-dark-muted">Product</p><p class="mt-2 break-words text-body text-white">35% — platform + AI</p></div>
+            <div class="min-w-0"><p class="mono-label text-caption text-text-on-dark-muted">Ops</p><p class="mt-2 break-words text-body text-white">20% — team + tooling</p></div>
           </div>
         </div>
-        <p class="rise text-[14px] text-[#8ea0b8]" style="--i:3">founders@acme.com · acme.com</p>
+        <p class="rise text-body-sm text-text-on-dark-muted" style="--i:3">founders@acme.com · acme.com</p>
       </div>
     </section>
 
@@ -195,7 +946,7 @@
 
 <nav class="nav-dots" id="dots" aria-label="Slides"></nav>
 <div class="hud">
-  <span id="counter" aria-live="polite">Slide 1 / 6</span>
+  <span id="counter" aria-live="polite">Slide 1 / 7</span>
   <button type="button" id="fsBtn" aria-label="Toggle fullscreen">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M8 21H3v-5m13 5h5v-5"/></svg>
     Full

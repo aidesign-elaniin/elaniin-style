@@ -64,6 +64,9 @@ En reportes ejecutivos (no dashboards operativos) se permite una banda excellenc
 - **Vivo por defecto:** microinteracciones obligatorias — KPIs con count-up al entrar en
   viewport, charts cuyo trazo se dibuje una vez, card glow al hover, filas de tabla con
   respuesta de hover. Ver `motion.md` §Living surfaces. Un dashboard plano no es Elaniin.
+- **Living loop:** ≥1 dato vivo por dashboard (KPI en deriva cada 7s + redibujado del
+  chart, `live-dot` en el header, todo gated por IntersectionObserver y estático bajo
+  reduced-motion) — `motion.md` §Living mockups. CSS: `references/tailwind-api.md`.
 - **Anti-overflow:** `min-w-0` en children de grid; tablas en `overflow-x-auto`;
   `break-words` en nombres largos; KPI numbers con `tabular-nums` y sin `nowrap` forzado.
 - **Fondo de página:** blanco o inspire-grey, nunca navy en dashboards densos.
@@ -80,3 +83,5 @@ En reportes ejecutivos (no dashboards operativos) se permite una banda excellenc
 - [ ] Estados vacíos, loading, error diseñados.
 - [ ] Tabla usable con teclado; charts con aria-label descriptivo.
 - [ ] Mobile sin pérdida crítica de datos.
+- [ ] ≥1 dato vivo (deriva de KPI + redibujado del chart + `live-dot`): pausa fuera de
+      pantalla; con reduced-motion el valor queda fijo en su estado final.

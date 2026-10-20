@@ -1,12 +1,25 @@
 /*
-  Elaniin tokens — single source of truth.
-  Extracted from the Elaniin 2027 site (DESIGN.md v1.45).
-  Usage:
-    - Tailwind v4 project: @import "tailwindcss"; then paste this file (or import it) as your only theme.
-    - Claude Artifacts / standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4
-      and paste this file's contents inside a <style type="text/tailwindcss"> block.
-  The default Tailwind palette, radii, shadows and breakpoints are reset on purpose:
-  only the tokens below exist, so a stray `bg-blue-500` simply does not compile.
+  Elaniin tokens — single source of truth (DESIGN.md v1.45 · Tailwind v4).
+
+  CONTRACT — Tailwind-first API:
+    1. Every design value lives in @theme (or in :root when it is a layout/duration
+       var consumed by a utility — theme keys alone do NOT generate duration-* utilities).
+    2. Every named CSS resource is an @utility. Raw class selectors inside plain
+       <style> blocks are forbidden: they are invisible to the utility API.
+    3. Animations are tokens: --animate-* + @keyframes inside @theme, so `animate-*`
+       utilities exist — and every motion utility honors prefers-reduced-motion itself.
+    4. Durations are named: instant 100 · fast 150 · base 200 · slow 300 · reveal 500.
+       Use `duration-base`, never `duration-200`.
+
+  USAGE:
+    - Tailwind v4 project: include tailwindcss first, then this file (or paste it).
+       (Never spell out the import directive inside this comment: mentioning it
+       anywhere in the block breaks @tailwindcss/browser.)
+    - Standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4 and paste
+      this file inside a <style type="text/tailwindcss"> block (templates embed a copy —
+      keep both in sync when editing).
+  Defaults (palette/radii/shadows/breakpoints) are reset on purpose: only the tokens
+  below exist, so a stray `bg-blue-500` simply does not compile.
 */
 
 @theme {
@@ -147,9 +160,47 @@
   --shadow-focus: 0 0 0 2px #ffffff, 0 0 0 4px #1054ff;
   --shadow-focus-on-dark: 0 0 0 2px #01172e, 0 0 0 4px #7b9bff;
 
-  /* ---------- motion ---------- */
+  /* ---------- motion: easings ---------- */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-emphasized: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---------- motion: animation tokens (each generates an animate-* utility) ---------- */
+  --animate-rise: rise var(--dur-reveal) var(--ease-emphasized) both;
+  --animate-draw-line: draw-line 1.6s var(--ease-emphasized) 0.25s both;
+  --animate-float-chip: float-chip 4s ease-in-out infinite;
+  --animate-typing-dot: typing-dot 0.9s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 0.9s linear infinite;
+  --animate-ping-soft: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-sheen: sheen 5s linear infinite;
+
+  /* ---------- motion: keyframes (paired with the tokens above) ---------- */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(var(--reveal-distance)); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes draw-line {
+    from { stroke-dashoffset: var(--len, 1200); }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes float-chip {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes typing-dot {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50% { transform: translateY(-3px); opacity: 1; }
+  }
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes ping-soft {
+    0% { transform: scale(1); opacity: 0.8; }
+    75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes sheen {
+    from { transform: translate3d(-140%, 0, 0); }
+    to { transform: translate3d(420%, 0, 0); }
+  }
 }
 
 :root {
@@ -165,7 +216,7 @@
   --section-y-compact: 64px;
   --card-padding: 32px;
 
-  /* motion durations */
+  /* motion durations — consumed by the duration-* utilities (see contract §4) */
   --dur-instant: 100ms;
   --dur-fast: 150ms;
   --dur-base: 200ms;
@@ -185,7 +236,7 @@
   :root { --gutter: 20px; --grid-gap: 16px; --section-y: 56px; --section-y-statement: 72px; --section-y-compact: 40px; --card-padding: 24px; }
 }
 
-/* ---------- utilities ---------- */
+/* ---------- utilities: layout & type ---------- */
 @utility mono-label {
   font-family: var(--font-mono);
   text-transform: uppercase;
@@ -209,6 +260,8 @@
 @utility pad-card {
   padding: var(--card-padding);
 }
+
+/* ---------- utilities: focus ---------- */
 @utility focus-ring {
   &:focus-visible {
     outline: 2px solid transparent;
@@ -222,22 +275,208 @@
   }
 }
 
-/* Entrance animation in plain CSS: runs without waiting for hydration. Stagger with style={{ "--i": n }}. */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(var(--reveal-distance));
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
+/* ---------- utilities: named durations (contract §4) ---------- */
+@utility duration-instant { transition-duration: var(--dur-instant); }
+@utility duration-fast { transition-duration: var(--dur-fast); }
+@utility duration-base { transition-duration: var(--dur-base); }
+@utility duration-slow { transition-duration: var(--dur-slow); }
+@utility duration-reveal { transition-duration: var(--dur-reveal); }
+
+/* ---------- utilities: entrance ---------- */
+/* Time-based entrance: runs without waiting for hydration. Stagger with style="--i: n". */
 @utility rise {
-  animation: rise var(--dur-reveal) var(--ease-emphasized) both;
+  animation: var(--animate-rise);
   animation-delay: calc(var(--i, 0) * var(--reveal-stagger));
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
+/* Scroll entrance (vanilla counterpart of the site's Reveal): hidden only when JS is
+   on (html.js), revealed by IntersectionObserver adding .is-visible. */
+@utility reveal {
+  transition: opacity var(--dur-reveal) var(--ease-emphasized), transform var(--dur-reveal) var(--ease-emphasized);
+  transition-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  html.js &:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js &:not(.is-visible),
+    & {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+/* SVG line draw: pair with style="--len: <path length>". */
+@utility draw-line {
+  stroke-dasharray: var(--len, 1200);
+  animation: var(--animate-draw-line);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- utilities: surfaces ---------- */
+@utility spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(600px circle at var(--mx, 70%) var(--my, 20%), rgba(77, 117, 253, 0.07), transparent 62%);
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+@utility card-glow {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 50%), rgba(16, 84, 255, 0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* ---------- utilities: interactions ---------- */
+@utility nav-link {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 100%;
+    background: var(--color-elevate-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
+  }
+}
+@utility btn-arrow {
+  &:active {
+    transform: scale(0.98);
+  }
+  & svg {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover svg,
+  &:focus-visible svg {
+    transform: translateX(4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & svg {
+      transition: none;
+    }
+  }
+}
+@utility lift {
+  transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-menu);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+@utility row-hover {
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+/* ---------- utilities: living mockups (loops) ---------- */
+/* 3-dot typing indicator. Markup: <span class="typing-dots"><i></i><i></i><i></i></span> */
+@utility typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  & > i {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: currentColor;
+    animation: var(--animate-typing-dot);
+  }
+  & > i:nth-child(2) { animation-delay: 0.12s; }
+  & > i:nth-child(3) { animation-delay: 0.24s; }
+  @media (prefers-reduced-motion: reduce) {
+    & > i {
+      animation: none;
+      opacity: 0.6;
+    }
+  }
+}
+/* Gentle vertical float for decorative chips. */
+@utility float-chip {
+  animation: var(--animate-float-chip);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Tiny spinner. Markup: <span class="spinner"></span> */
+@utility spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-default);
+  border-top-color: var(--color-elevate-blue);
+  animation: var(--animate-spin-slow);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Live-data dot with soft ping. Markup: <span class="live-dot"></span> */
+@utility live-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-success-dot);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    background: var(--color-success-dot);
+    animation: var(--animate-ping-soft);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
   }
 }
 

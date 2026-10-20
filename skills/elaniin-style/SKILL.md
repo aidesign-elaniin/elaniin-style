@@ -90,12 +90,18 @@ Apply tokens strictly. See `references/tokens.md`. Rules that break most often:
 ### Phase 3 — Motion / Movimiento
 Use the ladder: CSS `rise` keyframes first; `motion` only for interaction choreography.
 Never block content on animation. Always respect `prefers-reduced-motion`.
+Every deliverable ships **≥1 living loop** (pipeline CI on landings, live KPI on
+dashboards, phone screens swiping on decks) — see `references/motion.md` §Living mockups.
 See `references/motion.md`.
 
 ### Phase 4 — Delivery / Entrega
 - **Deck / dashboard / landing (standalone):** one self-contained HTML file, Tailwind CDN
   v4 + `@theme` inline from `templates/tokens.css`. No external files except Google Fonts
   and the Tailwind CDN.
+- **All CSS goes through the Tailwind-first API** of `templates/tokens.css`: values in
+  `@theme`/`:root`, every named resource an `@utility`, animations as `--animate-*` +
+  keyframes in `@theme`, durations via `duration-*` (never `duration-200`). Raw class
+  selectors are forbidden. Class → token inventory: `references/tailwind-api.md`.
 - **Elaniin site:** follow `references/site-dev.md` (Next.js 16, motion 14).
 - Always include: focus rings, hover/active/disabled states, mobile layout, reduced-motion.
 
@@ -141,7 +147,8 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 | ease-emphasized | `cubic-bezier(0.25,1,0.5,1)` | Entrances, reveals |
 | reveal | 500ms / 16px up | Standard entrance |
 
-Full map in `references/tokens.md`; copy-paste source in `templates/tokens.css`.
+Full map in `references/tokens.md`; copy-paste source in `templates/tokens.css`;
+**class → token → value inventory (Tailwind API) in `references/tailwind-api.md`**.
 
 ---
 
@@ -235,6 +242,10 @@ Before delivering, verify:
 - [ ] Type scale, measure, and families correct.
 - [ ] Hairline borders for structure; shadows only on cards/menus/product shots.
 - [ ] Motion: CSS ladder first; reduced-motion respected; content never blocked.
+- [ ] **≥1 living loop running** (pipeline / live KPI / phone swipe): pauses off-screen,
+      static end-state under reduced-motion. `motion.md` §Living mockups.
+- [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
+      `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] Focus rings, hover/active/disabled states present.
 - [ ] Mobile layout considered; targets ≥44px.
 - [ ] All copy in the user's language.

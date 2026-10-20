@@ -16,7 +16,7 @@
 set -euo pipefail
 
 REPO="danielpineda-elaniin/elaniin-style"
-TAG="${ELANIN_TAG:-v1.0.2}"
+TAG="${ELANIN_TAG:-v1.0.3}"
 SKILL_NAME="elaniin-style"
 
 # ---------- i18n ----------

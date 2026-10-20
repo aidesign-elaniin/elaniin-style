@@ -100,6 +100,49 @@ card.addEventListener('pointermove', (e) => {
 - El spotlight no compite con el contenido: opacidad ≤ 8%, detrás del texto (`z-index` bajo).
 - En Artifacts: la escalera CSS + JS inline basta; `motion` solo si hay coreografía compleja.
 
+## Living mockups (loops) / Mockups vivos (loops)
+
+**Obligatorio: cada template lleva ≥1 mockup en loop** — un fragmento de UI que corre
+solo, da la impresión de producto vivo y se detiene cuando nadie lo mira.
+
+### Técnica A · CSS loop infinito (preferida)
+- `@keyframes` + `--animate-*` **dentro de `@theme`** (así nace la utility `animate-*`);
+  la utility que consume la animación declara su **propio** override
+  `@media (prefers-reduced-motion: reduce) { animation: none }`.
+- Solo `transform`/`opacity`; el loop nunca compite con el texto (esquina, fondo,
+  `aria-hidden="true"`).
+- Inventario: `typing-dots` (burbujas de chat), `float-chip` (badge ETA flotante),
+  `spinner`, `live-dot` (ping de dato en vivo), `sheen` (brillo del phone-frame),
+  `phone-track` (swipe de pantallas en el deck).
+
+### Técnica B · JS clock gated por IntersectionObserver
+- rAF o `setInterval` que **solo corre** cuando el bloque está en viewport
+  (threshold ≥ 0.3) y se **pausa al salir** (cancelAnimationFrame / clearInterval);
+  así ninguna demo consume CPU en segundo plano.
+- Bajo `reduce`: **no se crea el clock** — se pinta el estado final
+  (`data-state="done"`, status `Deployed ✓`, valor KPI ya formateado).
+- Dedupe de renders: solo aplicar cambios cuando cambia la fase/valor (nada de
+  re-escribir el DOM en cada tick).
+- Uso actual: **landing** → reloj de pipeline CI (Build→Test→Review→Deploy,
+  `PERIOD 7000ms / STEP 1400ms`, rAF, pausable); **dashboard** → KPI vivo
+  (drift `+0.1…0.7k` cada 7s con tween + re-trigger de `draw-line` en el chart).
+
+### Reduce → estado final
+| Técnica | Bajo `prefers-reduced-motion: reduce` |
+|---|---|
+| A · CSS loop | `animation: none` → último estado estático |
+| B · JS clock | sin interval; dibujar estado final (done / valor exacto) |
+
+### Por template
+| Template | Loop vivo | Técnica |
+|---|---|---|
+| `templates/landing.html` | Sección *How we ship*: pipeline CI con nodos y status | B (utility `pipeline`) |
+| `templates/dashboard.html` | `live-dot` + Revenue en deriva + redibujado del chart | B + A (el punto) |
+| `templates/deck.html` | Phone de 4 pantallas swiping + chip ETA + spinner/typing | A (utility `phone-track`) |
+
+Ver también: `references/tailwind-api.md` (inventario de clases) y el contrato
+"todo recurso = `@theme`/`@utility`" del encabezado de `templates/tokens.css`.
+
 ## Ejemplo CSS (Artifacts / standalone)
 
 ```css

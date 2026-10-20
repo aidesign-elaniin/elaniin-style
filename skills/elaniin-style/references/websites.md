@@ -33,6 +33,9 @@ dominante por pieza.
 - **Vivo por defecto:** spotlight reactivo al mouse en el hero (+ textura sutil),
   card glow que sigue al cursor, microinteracciones en botones y links.
   Ver `motion.md` §Living surfaces. Obligatorio en toda landing.
+- **Living loop:** ≥1 mockup en loop por landing (pipeline CI con la utility `pipeline`,
+  reloj pausable por IntersectionObserver) — `motion.md` §Living mockups. Todo el CSS sale
+  del API `@theme`/`@utility` (ver `references/tailwind-api.md`).
 - **Hairlines dividen, no decoran.** `border-default #E4E4EA` en blanco/grey;
   `border-on-dark rgba(255,255,255,0.12)` en navy.
 - **Measure:** body 68ch, lead 56ch, headings 20ch. Nunca texto full-width.
@@ -58,6 +61,8 @@ Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
 - [ ] Logo oficial en nav y footer (variante según superficie), nunca texto.
 - [ ] Hero legible en <3s: qué es, para quién, qué hacer.
 - [ ] Spotlight reactivo + card glow + microinteracciones activos (y off con reduced-motion).
+- [ ] ≥1 living loop activo (pipeline CI u otro mockup en loop): pausa fuera de pantalla,
+      estado final estático con reduced-motion.
 - [ ] Un solo CTA primario visible por viewport.
 - [ ] Ritmo de fondos alternado, no 10 secciones blancas seguidas.
 - [ ] Cero overflow: mobile sin recortes, CTAs full-width, grid colapsa a 1 col.

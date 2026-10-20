@@ -65,6 +65,9 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 - **Números:** grandes, `tabular-nums`, con unidad y período.
 - **Vivo:** spotlight reactivo por slide + microinteracciones (ver `motion.md` §Living
   surfaces). Los charts se dibujan al activar el slide; los números hacen count-up.
+- **Living loop:** ≥1 mockup en loop por deck (phone de pantallas swiping con la utility
+  `phone-track`, chip ETA flotante, spinner/typing — CSS puro, estático bajo
+  reduced-motion) — `motion.md` §Living mockups. CSS: `references/tailwind-api.md`.
 - **Imágenes:** producto real o abstracto neutro; nunca stock sonriente.
 - **Sin:** clip-art, emojis como iconos, word-art, transiciones con zoom/rotación.
 
@@ -88,3 +91,5 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 - [ ] Ask claro (monto, uso, contacto) en slide destacada.
 - [ ] Navegación por teclado y print/PDF funcionando.
 - [ ] reduced-motion respetado.
+- [ ] ≥1 mockup en loop (phone swipe, chip flotante o spinner): CSS puro, `aria-hidden`,
+      estático con reduced-motion.
