@@ -59,6 +59,13 @@ En reportes ejecutivos (no dashboards operativos) se permite una banda excellenc
 
 ## Reglas
 
+- **Logo oficial:** sidebar/topbar con `main-isologo-elaniin.svg` (superficie clara).
+  Nunca el nombre escrito como texto.
+- **Vivo por defecto:** microinteracciones obligatorias — KPIs con count-up al entrar en
+  viewport, charts cuyo trazo se dibuje una vez, card glow al hover, filas de tabla con
+  respuesta de hover. Ver `motion.md` §Living surfaces. Un dashboard plano no es Elaniin.
+- **Anti-overflow:** `min-w-0` en children de grid; tablas en `overflow-x-auto`;
+  `break-words` en nombres largos; KPI numbers con `tabular-nums` y sin `nowrap` forzado.
 - **Fondo de página:** blanco o inspire-grey, nunca navy en dashboards densos.
 - **elevate-blue:** indicadores activos, primera serie, badges info. No más.
 - **Sombras:** casi ninguna; hairlines dan estructura. Menús/tooltips: `menu`.

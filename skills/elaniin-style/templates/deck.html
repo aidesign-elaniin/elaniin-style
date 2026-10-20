@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Elaniin — Deck template</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231054FF'/%3E%3C/svg%3E" />
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,7 +27,9 @@
 @utility mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 .rise { animation: rise 500ms cubic-bezier(0.25,1,0.5,1) both; animation-delay: calc(var(--i, 0) * 60ms); }
-@media (prefers-reduced-motion: reduce) { .rise { animation: none; } .slide { transition: none !important; } }
+@keyframes draw-line { from { stroke-dashoffset: var(--len, 1200); } to { stroke-dashoffset: 0; } }
+.draw-line { stroke-dasharray: var(--len, 1200); animation: draw-line 1.6s cubic-bezier(0.25,1,0.5,1) 0.25s both; }
+@media (prefers-reduced-motion: reduce) { .rise, .draw-line { animation: none !important; } .draw-line { stroke-dashoffset: 0; } .slide { transition: none !important; } }
 </style>
 <style>
   :root { color-scheme: light; }
@@ -36,18 +39,28 @@
   ::selection { background: #b9cefb; color: #01172e; }
   :focus-visible { outline: 2px solid transparent; box-shadow: 0 0 0 2px #141414, 0 0 0 4px #7b9bff; }
   .stage { position: fixed; inset: 0; display: grid; place-items: center; }
-  .deck { position: relative; width: 1280px; height: 720px; transform-origin: center; }
-  .slide { position: absolute; inset: 0; display: none; flex-direction: column; padding: 80px 96px; background: #fff; opacity: 0; transform: translateY(8px); transition: opacity 250ms cubic-bezier(0.4,0,0.2,1), transform 250ms cubic-bezier(0.4,0,0.2,1); }
+  .deck { position: relative; width: 1280px; height: 720px; transform-origin: center; flex-shrink: 0; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; padding: 72px 88px; background: #fff; overflow: hidden; opacity: 0; transform: translateY(8px); transition: opacity 250ms cubic-bezier(0.4,0,0.2,1), transform 250ms cubic-bezier(0.4,0,0.2,1); }
   .slide.active { display: flex; opacity: 1; transform: none; }
   .slide.dark { background: #01172e; color: #fff; }
   .slide.grey { background: #f0f0f3; }
-  .nav-dots { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
-  .nav-dots button { width: 8px; height: 8px; border-radius: 9999px; border: 0; background: rgba(255,255,255,0.35); cursor: pointer; padding: 0; }
+  .slide-spot { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(480px circle at var(--sx, 75%) var(--sy, 25%), rgba(77,117,253,0.08), transparent 60%); }
+  .slide.dark .slide-spot { background: radial-gradient(480px circle at var(--sx, 75%) var(--sy, 25%), rgba(123,155,255,0.10), transparent 60%); }
+  .nav-dots { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+  .nav-dots button { width: 8px; height: 8px; border-radius: 9999px; border: 0; background: rgba(255,255,255,0.35); cursor: pointer; padding: 0; transition: background 150ms, transform 150ms; }
+  .nav-dots button:hover { transform: scale(1.3); }
   .nav-dots button[aria-current="true"] { background: #1054ff; }
-  .counter { position: fixed; bottom: 16px; right: 24px; font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.5); z-index: 10; }
+  .hud { position: fixed; top: 16px; right: 20px; display: flex; align-items: center; gap: 12px; z-index: 10; color: rgba(255,255,255,0.55); font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .hud button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 6px 10px; font: inherit; cursor: pointer; transition: background 150ms, color 150ms; }
+  .hud button:hover { background: rgba(255,255,255,0.14); color: #fff; }
+  @media (prefers-reduced-motion: reduce) { .slide-spot { display: none; } }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="elaniin-logo" viewBox="0 0 364.43 81.38"><defs><style>.uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413{fill:#141414;}.uuid-0571ab0d-4279-482c-ba13-b56705a88b78{fill:#1054ff;}</style></defs><g id="uuid-6c66203c-0ba6-4869-9542-1fb1cd232807"><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></symbol>
+<symbol id="elaniin-logo-white" viewBox="0 0 364.43 81.38"><defs><style>.uuid-0182cc41-29a0-4b21-9199-223efa245f4d{fill:#f0f0f3;}.uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd{fill:#141414;}.uuid-9e86be49-452b-4f62-b4fb-53b71208d740{fill:#1054ff;}</style></defs><g id="uuid-74b0c51a-cb41-4dbb-a49b-f5c490671e0d"><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></symbol>
+</svg>
 <a href="#deck" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-[6px]">Skip to deck</a>
 
 <div class="stage">
@@ -55,102 +68,122 @@
 
     <!-- 1 · COVER -->
     <section class="slide active" aria-label="Slide 1">
-      <div class="flex h-full flex-col justify-between">
+      <div class="slide-spot" aria-hidden="true"></div>
+      <div class="relative flex h-full min-h-0 flex-col justify-between">
         <div class="flex items-center justify-between">
-          <span class="font-[family-name:var(--font-display)] font-medium text-[22px] tracking-[-0.02em]">elaniin</span>
+          <svg class="h-8 w-auto" role="img" aria-label="Elaniin"><use href="#elaniin-logo"/></svg>
           <span class="mono-label text-[13px] text-[#656873]">Series A · October 2026</span>
         </div>
-        <div>
-          <h1 class="rise max-w-[14ch] font-[family-name:var(--font-display)] font-medium text-display-xl" style="--i:0">Acme: the operating system for modern logistics</h1>
+        <div class="min-w-0">
+          <h1 class="rise max-w-[15ch] break-words font-[family-name:var(--font-display)] font-medium text-display-xl" style="--i:0">Acme: the operating system for modern logistics</h1>
           <p class="rise mt-6 max-w-[56ch] text-lead text-[#4a4d57]" style="--i:1">Investor presentation · Confidential</p>
         </div>
-        <div class="h-3 w-64 rise" style="--i:2; background: linear-gradient(90deg,#d7e2f8 0 12.5%,#b9cefb 12.5% 25%,#6a9aff 25% 37.5%,#1054ff 37.5% 50%,#0848cc 50% 62.5%,#023ca0 62.5% 75%,#022b63 75% 87.5%,#01172e 87.5% 100%)"></div>
+        <div class="rise h-3 w-64" style="--i:2; background: linear-gradient(90deg,#d7e2f8 0 12.5%,#b9cefb 12.5% 25%,#6a9aff 25% 37.5%,#1054ff 37.5% 50%,#0848cc 50% 62.5%,#023ca0 62.5% 75%,#022b63 75% 87.5%,#01172e 87.5% 100%)"></div>
       </div>
     </section>
 
     <!-- 2 · PROBLEM -->
     <section class="slide grey" aria-label="Slide 2">
-      <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">01 — The problem</p>
-      <h2 class="rise mt-4 max-w-[20ch] font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">Logistics runs on spreadsheets and hope</h2>
-      <ul class="mt-12 grid gap-8 md:grid-cols-3">
-        <li class="rise border-t border-[#d3d4dc] pt-6" style="--i:2">
-          <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular">67%</p>
-          <p class="mt-2 text-[16px] text-[#4a4d57]">of mid-market shippers still plan routes manually.</p>
-        </li>
-        <li class="rise border-t border-[#d3d4dc] pt-6" style="--i:3">
-          <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular">$1.2T</p>
-          <p class="mt-2 text-[16px] text-[#4a4d57]">lost annually to empty miles and idle capacity.</p>
-        </li>
-        <li class="rise border-t border-[#d3d4dc] pt-6" style="--i:4">
-          <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular">11 days</p>
-          <p class="mt-2 text-[16px] text-[#4a4d57]">average lag between shipment events and billing.</p>
-        </li>
-      </ul>
+      <div class="slide-spot" aria-hidden="true"></div>
+      <div class="relative flex h-full min-h-0 flex-col">
+        <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">01 — The problem</p>
+        <h2 class="rise mt-4 max-w-[22ch] break-words font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">Logistics runs on spreadsheets and hope</h2>
+        <div class="mt-12 grid grid-cols-3 gap-8">
+          <div class="rise min-w-0 border-t border-[#d3d4dc] pt-6" style="--i:2">
+            <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular-nums" data-count="67" data-suffix="%">67%</p>
+            <p class="mt-2 break-words text-[16px] text-[#4a4d57]">of mid-market shippers still plan routes manually.</p>
+          </div>
+          <div class="rise min-w-0 border-t border-[#d3d4dc] pt-6" style="--i:3">
+            <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular-nums" data-count="1.2" data-prefix="$" data-suffix="T" data-decimals="1">$1.2T</p>
+            <p class="mt-2 break-words text-[16px] text-[#4a4d57]">lost annually to empty miles and idle capacity.</p>
+          </div>
+          <div class="rise min-w-0 border-t border-[#d3d4dc] pt-6" style="--i:4">
+            <p class="font-[family-name:var(--font-display)] font-medium text-h2 tabular-nums" data-count="11" data-suffix=" days">11 days</p>
+            <p class="mt-2 break-words text-[16px] text-[#4a4d57]">average lag between shipment events and billing.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 3 · SOLUTION -->
     <section class="slide" aria-label="Slide 3">
-      <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">02 — The solution</p>
-      <h2 class="rise mt-4 max-w-[22ch] font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">One platform from quote to cash</h2>
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        <div class="rise rounded-[12px] border border-[#e4e4ea] p-8" style="--i:2">
-          <span class="mono-label text-[13px] text-[#1054ff]">Plan</span>
-          <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">AI route optimization</h3>
-          <p class="mt-2 text-[15px] text-[#4a4d57]">Live constraints, cost and ETA in a single planner.</p>
-        </div>
-        <div class="rise rounded-[12px] border border-[#e4e4ea] p-8" style="--i:3">
-          <span class="mono-label text-[13px] text-[#1054ff]">Track</span>
-          <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Event-grade telemetry</h3>
-          <p class="mt-2 text-[15px] text-[#4a4d57]">Every handoff captured, no driver apps required.</p>
-        </div>
-        <div class="rise rounded-[12px] border border-[#141414] p-8" style="--i:4">
-          <span class="mono-label text-[13px] text-[#1054ff]">Bill</span>
-          <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Instant invoicing</h3>
-          <p class="mt-2 text-[15px] text-[#4a4d57]">Proof-of-delivery to paid invoice in under an hour.</p>
+      <div class="slide-spot" aria-hidden="true"></div>
+      <div class="relative flex h-full min-h-0 flex-col">
+        <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">02 — The solution</p>
+        <h2 class="rise mt-4 max-w-[24ch] break-words font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">One platform from quote to cash</h2>
+        <div class="mt-10 grid min-h-0 flex-1 grid-cols-3 gap-6">
+          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-[12px] border border-[#e4e4ea] p-8" style="--i:2">
+            <span class="mono-label text-[13px] text-[#1054ff]">Plan</span>
+            <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">AI route optimization</h3>
+            <p class="mt-2 break-words text-[15px] text-[#4a4d57]">Live constraints, cost and ETA in a single planner.</p>
+          </div>
+          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-[12px] border border-[#e4e4ea] p-8" style="--i:3">
+            <span class="mono-label text-[13px] text-[#1054ff]">Track</span>
+            <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Event-grade telemetry</h3>
+            <p class="mt-2 break-words text-[15px] text-[#4a4d57]">Every handoff captured, no driver apps required.</p>
+          </div>
+          <div class="card-glow rise flex min-w-0 flex-col overflow-hidden rounded-[12px] border border-[#141414] p-8" style="--i:4">
+            <span class="mono-label text-[13px] text-[#1054ff]">Bill</span>
+            <h3 class="mt-3 font-[family-name:var(--font-display)] font-medium text-h3">Instant invoicing</h3>
+            <p class="mt-2 break-words text-[15px] text-[#4a4d57]">Proof-of-delivery to paid invoice in under an hour.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- 4 · PRODUCT (dark) -->
     <section class="slide dark" aria-label="Slide 4">
-      <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">03 — Product</p>
-      <h2 class="rise mt-4 max-w-[20ch] font-[family-name:var(--font-display)] font-medium text-display-lg text-white" style="--i:1">The control tower your ops team actually opens</h2>
-      <div class="rise mt-12 flex-1 rounded-[12px] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.04)] p-8" style="--i:2">
-        <div class="grid grid-cols-4 gap-6">
-          <div><p class="mono-label text-[13px] text-[#8ea0b8]">On-time</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">96.4%</p></div>
-          <div><p class="mono-label text-[13px] text-[#8ea0b8]">Cost / mile</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">$1.82</p></div>
-          <div><p class="mono-label text-[13px] text-[#8ea0b8]">Empty miles</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">4.1%</p></div>
-          <div><p class="mono-label text-[13px] text-[#8ea0b8]">Time to invoice</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] text-white tabular">48m</p></div>
+      <div class="slide-spot" aria-hidden="true"></div>
+      <div class="relative flex h-full min-h-0 flex-col">
+        <div class="flex items-center justify-between">
+          <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">03 — Product</p>
+          <svg class="h-6 w-auto opacity-90" role="img" aria-label="Elaniin"><use href="#elaniin-logo-white"/></svg>
         </div>
-        <svg viewBox="0 0 1000 200" class="mt-10 w-full" aria-hidden="true">
-          <polyline fill="none" stroke="#1054ff" stroke-width="3" points="0,160 100,150 200,155 300,120 400,125 500,90 600,95 700,60 800,55 900,30 1000,25"/>
-          <polyline fill="rgba(16,84,255,0.15)" stroke="none" points="0,200 0,160 100,150 200,155 300,120 400,125 500,90 600,95 700,60 800,55 900,30 1000,25 1000,200"/>
-        </svg>
+        <h2 class="rise mt-4 max-w-[24ch] break-words font-[family-name:var(--font-display)] font-medium text-display-lg text-white" style="--i:1">The control tower your ops team actually opens</h2>
+        <div class="rise card-glow relative mt-8 min-h-0 flex-1 overflow-hidden rounded-[12px] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.04)] p-8" style="--i:2">
+          <div class="grid grid-cols-4 gap-6">
+            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">On-time</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="96.4" data-suffix="%" data-decimals="1">96.4%</p></div>
+            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Cost / mile</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="1.82" data-prefix="$" data-decimals="2">$1.82</p></div>
+            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Empty miles</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="4.1" data-suffix="%" data-decimals="1">4.1%</p></div>
+            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Time to invoice</p><p class="mt-2 font-[family-name:var(--font-display)] font-medium text-[40px] leading-none text-white tabular-nums" data-count="48" data-suffix="m">48m</p></div>
+          </div>
+          <svg viewBox="0 0 1000 200" class="absolute bottom-8 left-8 w-[calc(100%-4rem)] max-h-[45%]" aria-hidden="true">
+            <polyline fill="rgba(16,84,255,0.15)" stroke="none" points="0,200 0,160 100,150 200,155 300,120 400,125 500,90 600,95 700,60 800,55 900,30 1000,25 1000,200"/>
+            <polyline class="draw-line" style="--len:1300" fill="none" stroke="#1054ff" stroke-width="3" points="0,160 100,150 200,155 300,120 400,125 500,90 600,95 700,60 800,55 900,30 1000,25"/>
+          </svg>
+        </div>
       </div>
     </section>
 
     <!-- 5 · TRACTION -->
     <section class="slide" aria-label="Slide 5">
-      <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">04 — Traction</p>
-      <h2 class="rise mt-4 font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">$4.8M ARR, growing 22% MoM</h2>
-      <div class="mt-12 grid grid-cols-4 gap-8 border-y border-[#e4e4ea] py-10">
-        <div class="rise" style="--i:2"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">$4.8M</p><p class="mono-label mt-2 text-[13px] text-[#656873]">ARR</p></div>
-        <div class="rise" style="--i:3"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">142</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Customers</p></div>
-        <div class="rise" style="--i:4"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">128%</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Net revenue retention</p></div>
-        <div class="rise" style="--i:5"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular">11 mo</p><p class="mono-label mt-2 text-[13px] text-[#656873]">CAC payback</p></div>
+      <div class="slide-spot" aria-hidden="true"></div>
+      <div class="relative flex h-full min-h-0 flex-col">
+        <p class="mono-label text-[13px] text-[#656873] rise" style="--i:0">04 — Traction</p>
+        <h2 class="rise mt-4 break-words font-[family-name:var(--font-display)] font-medium text-display-lg" style="--i:1">$4.8M ARR, growing 22% MoM</h2>
+        <div class="mt-12 grid grid-cols-4 gap-8 border-y border-[#e4e4ea] py-12">
+          <div class="rise min-w-0" style="--i:2"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="4.8" data-prefix="$" data-suffix="M" data-decimals="1">$4.8M</p><p class="mono-label mt-2 text-[13px] text-[#656873]">ARR</p></div>
+          <div class="rise min-w-0" style="--i:3"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="142">142</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Customers</p></div>
+          <div class="rise min-w-0" style="--i:4"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="128" data-suffix="%">128%</p><p class="mono-label mt-2 text-[13px] text-[#656873]">Net revenue retention</p></div>
+          <div class="rise min-w-0" style="--i:5"><p class="font-[family-name:var(--font-display)] font-medium text-display-lg tabular-nums" data-count="11" data-suffix=" mo">11 mo</p><p class="mono-label mt-2 text-[13px] text-[#656873]">CAC payback</p></div>
+        </div>
       </div>
     </section>
 
     <!-- 6 · ASK -->
     <section class="slide dark" aria-label="Slide 6">
-      <div class="flex h-full flex-col justify-between">
-        <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">The ask</p>
-        <div>
-          <h2 class="rise max-w-[18ch] font-[family-name:var(--font-display)] font-medium text-display-xl text-white" style="--i:1">Raising $18M Series A</h2>
-          <div class="rise mt-12 grid max-w-[900px] grid-cols-3 gap-8 border-t border-[rgba(255,255,255,0.12)] pt-8" style="--i:2">
-            <div><p class="mono-label text-[13px] text-[#8ea0b8]">Go-to-market</p><p class="mt-2 text-[16px] text-white">45% — sales + partnerships</p></div>
-            <div><p class="mono-label text-[13px] text-[#8ea0b8]">Product</p><p class="mt-2 text-[16px] text-white">35% — platform + AI</p></div>
-            <div><p class="mono-label text-[13px] text-[#8ea0b8]">Ops</p><p class="mt-2 text-[16px] text-white">20% — team + tooling</p></div>
+      <div class="slide-spot" aria-hidden="true"></div>
+      <div class="relative flex h-full min-h-0 flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <p class="mono-label text-[13px] text-[#7b9bff] rise" style="--i:0">The ask</p>
+          <svg class="h-7 w-auto" role="img" aria-label="Elaniin"><use href="#elaniin-logo-white"/></svg>
+        </div>
+        <div class="min-w-0">
+          <h2 class="rise max-w-[16ch] break-words font-[family-name:var(--font-display)] font-medium text-display-xl text-white" style="--i:1">Raising $18M Series A</h2>
+          <div class="rise mt-10 grid max-w-[960px] grid-cols-3 gap-8 border-t border-[rgba(255,255,255,0.12)] pt-8" style="--i:2">
+            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Go-to-market</p><p class="mt-2 break-words text-[16px] text-white">45% — sales + partnerships</p></div>
+            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Product</p><p class="mt-2 break-words text-[16px] text-white">35% — platform + AI</p></div>
+            <div class="min-w-0"><p class="mono-label text-[13px] text-[#8ea0b8]">Ops</p><p class="mt-2 break-words text-[16px] text-white">20% — team + tooling</p></div>
           </div>
         </div>
         <p class="rise text-[14px] text-[#8ea0b8]" style="--i:3">founders@acme.com · acme.com</p>
@@ -161,7 +194,13 @@
 </div>
 
 <nav class="nav-dots" id="dots" aria-label="Slides"></nav>
-<div class="counter" id="counter" aria-live="polite">Slide 1 / 6</div>
+<div class="hud">
+  <span id="counter" aria-live="polite">Slide 1 / 6</span>
+  <button type="button" id="fsBtn" aria-label="Toggle fullscreen">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M8 21H3v-5m13 5h5v-5"/></svg>
+    Full
+  </button>
+</div>
 
 <script>
 (function () {
@@ -171,14 +210,19 @@
   var deck = document.getElementById('deck');
   var dots = document.getElementById('dots');
   var counter = document.getElementById('counter');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function scaleDeck() {
-    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.94;
+    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.96;
     deck.style.transform = 'scale(' + s + ')';
   }
   window.addEventListener('resize', scaleDeck);
   scaleDeck();
+
+  document.getElementById('fsBtn').addEventListener('click', function () {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function () {});
+    else document.exitFullscreen();
+  });
 
   slides.forEach(function (_, i) {
     var b = document.createElement('button');
@@ -188,6 +232,31 @@
     dots.appendChild(b);
   });
   var dotBtns = Array.prototype.slice.call(dots.children);
+
+  function fmt(n, dec) { return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
+  function countUp(el) {
+    var target = parseFloat(el.dataset.count), dec = parseInt(el.dataset.decimals || '0', 10);
+    var pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+    if (reduce) { el.textContent = pre + fmt(target, dec) + suf; return; }
+    var t0 = null, dur = 1000;
+    function step(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      el.textContent = pre + fmt(target * (1 - Math.pow(1 - p, 3)), dec) + suf;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  function activate(slide) {
+    slide.querySelectorAll('[data-count]').forEach(countUp);
+    if (!reduce) {
+      slide.querySelectorAll('.draw-line').forEach(function (el) {
+        el.style.animation = 'none';
+        void el.getBoundingClientRect();
+        el.style.animation = '';
+      });
+    }
+  }
 
   function retriggerRise(slide) {
     if (reduce) return;
@@ -204,9 +273,29 @@
     idx = n;
     slides[idx].classList.add('active');
     retriggerRise(slides[idx]);
+    activate(slides[idx]);
     dotBtns.forEach(function (d, i) { d.setAttribute('aria-current', i === idx ? 'true' : 'false'); });
     counter.textContent = 'Slide ' + (idx + 1) + ' / ' + total;
     history.replaceState(null, '', '#' + (idx + 1));
+  }
+
+  if (!reduce) {
+    addEventListener('mousemove', function (e) {
+      var x = (e.clientX / window.innerWidth * 100).toFixed(1) + '%';
+      var y = (e.clientY / window.innerHeight * 100).toFixed(1) + '%';
+      document.querySelectorAll('.slide-spot').forEach(function (el) {
+        el.style.setProperty('--sx', x);
+        el.style.setProperty('--sy', y);
+      });
+    }, { passive: true });
+
+    document.querySelectorAll('.card-glow').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--cx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--cy', (e.clientY - r.top) + 'px');
+      });
+    });
   }
 
   document.addEventListener('keydown', function (e) {
@@ -214,6 +303,7 @@
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(idx - 1); }
     else if (e.key === 'Home') { e.preventDefault(); go(0); }
     else if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+    else if (e.key === 'f' || e.key === 'F') { document.getElementById('fsBtn').click(); }
   });
 
   var startX = null;

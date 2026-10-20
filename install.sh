@@ -16,7 +16,7 @@
 set -euo pipefail
 
 REPO="danielpineda-elaniin/elaniin-style"
-TAG="${ELANIIIN_TAG:-v1.0.0}"
+TAG="${ELANIN_TAG:-v1.0.1}"
 NETLIFY_BASE="${ELANIN_NETLIFY:-https://TU-netlify.app}"
 SKILL_NAME="elaniin-style"
 

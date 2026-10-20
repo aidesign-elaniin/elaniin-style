@@ -26,13 +26,20 @@ dominante por pieza.
 
 ## Reglas de composición
 
+- **Logo oficial siempre:** nav y footer con `main-isologo-elaniin.svg` en superficies
+  claras y `white-isologo-elaniin.svg` en oscuras. Nunca el wordmark escrito como texto.
+- **Vivo por defecto:** spotlight reactivo al mouse en el hero (+ textura sutil),
+  card glow que sigue al cursor, microinteracciones en botones y links.
+  Ver `motion.md` §Living surfaces. Obligatorio en toda landing.
 - **Hairlines dividen, no decoran.** `border-default #E4E4EA` en blanco/grey;
   `border-on-dark rgba(255,255,255,0.12)` en navy.
 - **Measure:** body 68ch, lead 56ch, headings 20ch. Nunca texto full-width.
 - **elevate-blue:** un CTA primario por grupo de acción; links en texto; focus; un estado
   activo. Si la página "se ve azul", sobra azul.
+- **Anti-overflow:** grid/flex children con `min-w-0`; `break-words` en títulos largos;
+  `overflow-hidden` en cards con media; verificar mobile sin recortes.
 - **Imágenes:** product shots con `shadow-product`; iconos lineales 1.5px stroke, no emojis.
-- **Gradientes:** prohibidos salvo el stepped blue motif (`--blue-steps`).
+- **Gradientes:** prohibidos salvo el stepped blue motif (`--blue-steps`) y el spotlight.
 - **Sombras:** solo `card-rest`, `menu`, `product`. Nunca sombras grandes difusas.
 - **Tipografía display:** Instrument Sans 500, tracking negativo en headings grandes.
 
@@ -46,8 +53,10 @@ Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
 
 ## Checklist específico de landing
 
+- [ ] Logo oficial en nav y footer (variante según superficie), nunca texto.
 - [ ] Hero legible en <3s: qué es, para quién, qué hacer.
+- [ ] Spotlight reactivo + card glow + microinteracciones activos (y off con reduced-motion).
 - [ ] Un solo CTA primario visible por viewport.
 - [ ] Ritmo de fondos alternado, no 10 secciones blancas seguidas.
-- [ ] Mobile: hero sin recortes, CTAs full-width, grid colapsa a 1 col.
+- [ ] Cero overflow: mobile sin recortes, CTAs full-width, grid colapsa a 1 col.
 - [ ] Footer completo (no placeholder).

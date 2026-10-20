@@ -89,6 +89,7 @@ Después de instalar + reiniciar la sesión, pide en EN o ES:
 ```
 skills/elaniin-style/
 ├── SKILL.md              # pipeline 5 fases, routing, UX core
+├── assets/               # logos oficiales Elaniin (isologo dark/white, wordmarks, favicon)
 ├── references/           # tokens, methodology, motion, ux-a11y,
 │                         # websites, dashboards, decks, site-dev,
 │                         # visual-references, search-keywords
@@ -99,6 +100,16 @@ install.sh / uninstall.sh
 prompts/                  # prompts de instalación EN y ES
 .claude-plugin/           # marketplace.json + plugin.json
 ```
+
+## Non-negotiables / No negociables
+
+- **Logo oficial siempre** (`assets/`), nunca el brand como texto.
+- **Cero overflow:** decks full-screen 16:9 con canvas fijo y `overflow:hidden`;
+  nada se corta en viewport, slides ni cards.
+- **Siempre vivo:** textura/spotlight reactivo al mouse + microinteracciones
+  (card glow, count-up, chart draw, botones con flecha) en cada propuesta;
+  todo se apaga con `prefers-reduced-motion`.
+
 
 ---
 

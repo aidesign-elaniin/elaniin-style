@@ -38,11 +38,29 @@
   flechas cuando aplique. Cierra con `Esc`; devuelve foco al trigger.
 - Skip-link "Skip to content / Saltar al contenido" en páginas largas.
 
+## Anti-overflow (Tailwind + UX) — obligatorio
+
+Nada se corta. Nada desborda. Aplica a viewport, slides y cards:
+
+| Regla | Cómo |
+|---|---|
+| Canvas fijo (deck) | `.slide { overflow: hidden }` + `transform: scale()`; **cero clases responsive dentro** |
+| Grid/flex children | `min-w-0` (ancho) y `min-h-0` (alto) siempre que contengan texto/media |
+| Texto largo | `break-words`; `line-clamp-*` para copy secundario; headings con `max-w-[Nch]` |
+| Cards con media | `overflow-hidden` + altura controlada; el interno no crece más que la card |
+| Tablas anchas | wrapper `overflow-x-auto` |
+| Imágenes/SVG | `max-w-full h-auto`; SVG charts con `viewBox` + `w-full` |
+| Viewport general | `overflow-x: clip` en body; nada con `width: 100vw` dentro de containers con padding |
+
+Verificación previa a entrega: revisar cada slide/viewport a tamaño real; ningún
+elemento cortado, ningún scroll interno no deseado.
+
 ## Reduced motion
 
 - `<MotionConfig reducedMotion="user">` en el raíz del sitio.
-- CSS: `@media (prefers-reduced-motion: reduce)` anula `rise`, `glow-scroll`, y cualquier
-  transform/transition no esencial. El contenido queda completo y estático.
+- CSS: `@media (prefers-reduced-motion: reduce)` anula `rise`, `glow-scroll`, el
+  **spotlight reactivo**, el card glow, los count-ups y cualquier transform/transition no
+  esencial. El contenido queda completo y estático.
 - Nunca relies en animación para comunicar estado (usar color + icono + texto).
 
 ## Touch & responsive

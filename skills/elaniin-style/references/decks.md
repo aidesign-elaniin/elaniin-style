@@ -5,11 +5,31 @@
 
 ## Formato
 
-- **16:9**, lienzo `1280×720` escalado con `transform: scale()` al viewport.
+- **16:9 full-screen siempre.** Lienzo fijo `1280×720` escalado con `transform: scale()`
+  al viewport (`Math.min(vw/1280, vh/720) × 0.94`). El deck ocupa la pantalla completa;
+  el navegador en modo presentación es el caso base.
 - Un slide por `<section class="slide">`. Navegación: ←/→, swipe, dots, `hash #3`.
-- Autocontenido: Tailwind CDN + `@theme` inline (`tokens.css`) + Google Fonts.
-- Motion: revelar contenido del slide activo con `rise` + stagger; transición de slide
-  200–300ms; `prefers-reduced-motion` → crossfade instantáneo.
+- Autocontenido: Tailwind CDN + `@theme` inline (`tokens.css`) + Google Fonts + logos
+  oficiales incrustados como `<symbol>` (`assets/`).
+- Motion: spotlight reactivo por slide + `rise` stagger al activar; transición 200–300ms;
+  `prefers-reduced-motion` → crossfade instantáneo sin transforms.
+
+## Anti-overflow (obligatorio — el bug más común)
+
+Un slide que recorta contenido es un slide roto. Reglas duras:
+
+1. **`.slide { overflow: hidden; }`** — red de seguridad; nada sale del canvas.
+2. **Cero clases responsive dentro del deck.** El canvas siempre mide 1280px de ancho:
+   usar `grid-cols-3` (NO `md:grid-cols-3`), tamaños fijos, `w-[…]`. Los breakpoints de
+   Tailwind miran el viewport, no el canvas, y rompen el layout al escalar.
+3. **Presupuesto de contenido por slide:** alto útil = `720 − 2×padding(80) = 560px`.
+   Eyebrow (~20) + título (hasta ~120) + cuerpo/grid (hasta ~360) deben caber.
+   Si no cabe: reducir copy, bajar un step tipográfico, o partir en dos slides.
+4. **Grid/flex children:** `min-w-0` + `min-h-0`; cards con `overflow-hidden` y
+   altura igualitaria (`items-stretch` / `h-full`).
+5. **Texto:** `break-words`; sin `whitespace-nowrap` en frases; headings `max-w-[…ch]`.
+6. **Verificación:** abrir el deck a pantalla completa y revisar slide por slide antes
+   de entregar. Ningún elemento cortado, ningún scroll interno.
 
 ## Estructura narrativa (pitch estándar)
 
@@ -33,12 +53,16 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 
 ## Reglas de slide
 
+- **Logo oficial siempre:** cover y closing con `main-isologo` (claro) o `white-isologo`
+  (oscuro). Nunca el nombre escrito como texto.
 - **Una idea por slide.** Si necesita más de ~40 palabras, son dos slides.
 - **Tipografía:** título h2/display-lg; cuerpo lead o body-lg; labels mono-label uppercase.
 - **Hairlines** para tablas y grid; nunca cajas con sombra pesada.
 - **elevate-blue:** datos principales, subrayados, un acento por slide como máximo.
 - **Navy:** slides de peso (problema fuerte, demo, ask). Alternar ritmo claro/oscuro.
 - **Números:** grandes, `tabular-nums`, con unidad y período.
+- **Vivo:** spotlight reactivo por slide + microinteracciones (ver `motion.md` §Living
+  surfaces). Los charts se dibujan al activar el slide; los números hacen count-up.
 - **Imágenes:** producto real o abstracto neutro; nunca stock sonriente.
 - **Sin:** clip-art, emojis como iconos, word-art, transiciones con zoom/rotación.
 
@@ -52,6 +76,10 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 
 ## Checklist de deck
 
+- [ ] Full-screen 16:9; revisado slide por slide sin ningún elemento cortado.
+- [ ] Cero clases responsive dentro del deck; `.slide { overflow: hidden }`.
+- [ ] Logo oficial en cover y closing (variante según superficie).
+- [ ] Spotlight reactivo + microinteracciones (chart draw, count-up, stagger).
 - [ ] 10–14 slides; ritmo claro/oscuro alternado.
 - [ ] Cada slide, una sola idea, copy en el idioma del usuario.
 - [ ] Números con unidad, período y fuente cuando aplique.

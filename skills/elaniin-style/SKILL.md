@@ -105,15 +105,25 @@ See `references/motion.md`.
 
 Non-negotiables (full detail in `references/ux-a11y.md`):
 
-1. **Focus is always visible.** `focus-ring` utility; white inner + elevate-blue outer on
+1. **Official logo always.** Never render the brand as plain text. Use the official SVG
+   assets in `assets/`: `main-isologo-elaniin.svg` (symbol + wordmark) on light surfaces,
+   `white-isologo-elaniin.svg` on dark surfaces; wordmarks (`logotipo-elaniin.svg` /
+   `white-logotipo-elaniin.svg`) when the symbol is not needed. Inline as `<symbol>` +
+   `<use>`, never a text fallback.
+2. **No overflow, ever.** Content must never spill the viewport, a slide, or a card.
+   Enforce in Tailwind: `overflow-hidden` on fixed canvases, `min-w-0` on grid/flex
+   children, `break-words` on long strings, explicit height budgets. See §7.
+3. **Focus is always visible.** `focus-ring` utility; white inner + elevate-blue outer on
    light, excellence-blue + `#7B9BFF` on dark.
-2. **Every interactive element has 4 states:** rest, hover, active, disabled. Buttons carry
+4. **Every interactive element has 4 states:** rest, hover, active, disabled. Buttons carry
    a loading state that preserves width.
-3. **Contrast:** body text ≥ 4.5:1; borders-for-inputs use `--color-border-input` (3.22:1).
-4. **Reduced motion:** `prefers-reduced-motion: reduce` disables `rise`, glow, and all
-   `motion` transforms. Content must be fully readable with zero animation.
-5. **Touch targets:** ≥ 44×44px.
-6. **Language:** produce all UI copy in the user's language (EN or ES). Never mix.
+5. **Contrast:** body text ≥ 4.5:1; borders-for-inputs use `--color-border-input` (3.22:1).
+6. **Reduced motion:** `prefers-reduced-motion: reduce` disables `rise`, glow, spotlight
+   textures, and all `motion` transforms. Content must be fully readable with zero animation.
+7. **Touch targets:** ≥ 44×44px.
+8. **Language:** produce all UI copy in the user's language (EN or ES). Never mix.
+9. **Alive by default.** Every deliverable includes (a) a mouse-reactive texture/spotlight
+   and (b) microinteractions — see §7. Static, lifeless compositions are not Elaniin.
 
 ---
 
@@ -161,10 +171,57 @@ bilingüe de `references/search-keywords.md`.
 
 ---
 
+## 7 · Mandatory liveliness & overflow rules / Reglas obligatorias de vitalidad y overflow
+
+### 7a · Logos oficiales / Official logos
+- Los assets viven en `skills/elaniin-style/assets/`.
+- Superficie clara → `main-isologo-elaniin.svg` (símbolo azul + wordmark #141414).
+- Superficie oscura (excellence-blue / elaniin-black) → `white-isologo-elaniin.svg`.
+- Wordmark solo: `logotipo-elaniin.svg` (oscuro) / `white-logotipo-elaniin.svg` (blanco).
+- En HTML autocontenido: incrustar una vez como `<symbol id="elaniin-logo">` /
+  `<symbol id="elaniin-logo-white">` y usar `<svg><use href="#elaniin-logo"/></svg>`.
+- **Prohibido** escribir "elaniin" como texto en lugar del logo.
+
+### 7b · Texturas reactivas al mouse + microanimaciones (siempre)
+Toda propuesta (landing, dashboard, deck, reporte) DEBE incluir:
+1. **Spotlight / textura reactiva al mouse:** radial-gradient sutil que sigue al cursor
+   mediante CSS vars (`--mx`, `--my`) actualizadas en `mousemove`. Opacidad 4–8%,
+   tinte `blue-tint-50` o `dynamic-blue`. Estático bajo `prefers-reduced-motion`.
+2. **Microinteracciones como mínimo:**
+   - Botones: flecha que se desplaza al hover, `scale(0.98)` al press.
+   - Cards: glow/spotlight que sigue al mouse dentro de la card + lift sutil.
+   - Números/KPIs: count-up al entrar en viewport.
+   - Charts: trazo que se dibuja (`stroke-dashoffset`) al entrar en viewport.
+   - Links de nav: underline que entra desde la izquierda.
+   - Slides de deck: spotlight por slide + stagger de contenido.
+Referencia de implementación: `references/motion.md` §"Living surfaces".
+Esto no es decoración opcional: una pieza estática no es una propuesta Elaniin.
+
+### 7c · Anti-overflow (Tailwind + UX)
+- **Deck:** canvas fijo 1280×720 con `transform: scale()`; `.slide { overflow: hidden; }`;
+  **cero clases responsive dentro del deck** (el canvas siempre mide 1280);
+  grid explícito (`grid-cols-3`, nunca `md:grid-cols-3`);
+  presupuesto de contenido por slide: eyebrow + título + cuerpo deben caber en
+  720 − 2×padding. Si no cabe, reducir copy o dividir el slide.
+- **Grid/flex children:** `min-w-0` + `min-h-0` siempre que contengan texto o media.
+- **Texto largo:** `break-words` / `line-clamp-*` donde aplique.
+- **Cards:** `overflow-hidden` + altura controlada; el contenido interno no puede crecer
+  más que la card.
+- **Antes de entregar:** verificar visualmente cada slide/viewport; ningún elemento
+  cortado, ningún scroll interno no deseado.
+
+---
+
+---
+
 ## 6 · Output checklist / Checklist de salida
 
 Before delivering, verify:
 
+- [ ] **Official Elaniin logo used everywhere** (correct variant per surface); no text fallback.
+- [ ] **Zero overflow:** nothing clipped in viewport, slides, or cards; decks full-screen fixed canvas.
+- [ ] **Mouse-reactive texture/spotlight present** and disabled under reduced-motion.
+- [ ] **Microinteractions present** (button arrow/press, card glow, counters, chart draw).
 - [ ] Only Elaniin tokens used (no stray Tailwind default colors).
 - [ ] elevate-blue appears only in allowed detail roles, <5% area.
 - [ ] Alternating surfaces give the page rhythm.
