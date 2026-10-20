@@ -75,7 +75,8 @@ if [ -z "$SOURCE_DIR" ]; then
   fi
   unzip -q "$zip_path" -d "$tmpdir"
   # codeload has used both `repo-tag` and `repo_tag` folder names — locate by content
-  SOURCE_DIR="$(dirname "$(find "$tmpdir" -maxdepth 3 -type d -path "*/skills/${SKILL_NAME}" | head -n1)")"
+  skill_dir="$(find "$tmpdir" -maxdepth 3 -type d -path "*/skills/${SKILL_NAME}" | head -n1)"
+  SOURCE_DIR="$(dirname "$(dirname "$skill_dir")")"
   if [ -z "$SOURCE_DIR" ] || [ ! -f "${SOURCE_DIR}/skills/${SKILL_NAME}/SKILL.md" ]; then
     log "$MSG_NO_NET"
     rm -rf "$tmpdir"
