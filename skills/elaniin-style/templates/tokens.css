@@ -15,7 +15,7 @@
     - Tailwind v4 project: include tailwindcss first, then this file (or paste it).
        (Never spell out the import directive inside this comment: mentioning it
        anywhere in the block breaks @tailwindcss/browser.)
-    - Standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4 and paste
+    - Standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3 and paste
       this file inside a <style type="text/tailwindcss"> block (templates embed a copy —
       keep both in sync when editing).
   Defaults (palette/radii/shadows/breakpoints) are reset on purpose: only the tokens
@@ -32,7 +32,8 @@
   --text-*: initial;
   --ease-*: initial;
 
-  /* ---------- breakpoints: tablet 768 / desktop 1024 / wide 1280 ---------- */
+  /* ---------- breakpoints: mobile-lg 640 / tablet 768 / desktop 1024 / wide 1280 ---------- */
+  --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
@@ -502,7 +503,6 @@
   :focus-visible {
     outline: 2px solid transparent;
     box-shadow: var(--shadow-focus);
-    border-radius: var(--radius-button);
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }

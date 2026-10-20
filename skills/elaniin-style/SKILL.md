@@ -15,7 +15,7 @@ compatibility:
     - Codex / other coding agents (via install.sh --codex)
 metadata:
   author: Elaniin
-  version: "1.0.0"
+  version: "1.0.3"
   language: en,es
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 ---
@@ -95,9 +95,11 @@ dashboards, phone screens swiping on decks) — see `references/motion.md` §Liv
 See `references/motion.md`.
 
 ### Phase 4 — Delivery / Entrega
-- **Deck / dashboard / landing (standalone):** one self-contained HTML file, Tailwind CDN
-  v4 + `@theme` inline from `templates/tokens.css`. No external files except Google Fonts
-  and the Tailwind CDN.
+- **Deck / dashboard / landing (standalone):** one self-contained HTML file,
+  `@tailwindcss/browser@4.3.3` (pinned) + `@theme` inline from `templates/tokens.css`. No
+  external files except Google Fonts and that script. The browser CDN is a deliberate
+  exception for standalone artifacts; any real project (Next/Vite) uses the build plugin,
+  never the CDN.
 - **All CSS goes through the Tailwind-first API** of `templates/tokens.css`: values in
   `@theme`/`:root`, every named resource an `@utility`, animations as `--animate-*` +
   keyframes in `@theme`, durations via `duration-*` (never `duration-200`). Raw class
@@ -178,6 +180,31 @@ bilingüe de `references/search-keywords.md`.
 
 ---
 
+## 6 · Output checklist / Checklist de salida
+
+Before delivering, verify:
+
+- [ ] **Official Elaniin logo used everywhere** (correct variant per surface); no text fallback.
+- [ ] **Zero overflow:** nothing clipped in viewport, slides, or cards; decks full-screen fixed canvas.
+- [ ] **Mouse-reactive texture/spotlight present** and disabled under reduced-motion.
+- [ ] **Microinteractions present** (button arrow/press, card glow, counters, chart draw).
+- [ ] Only Elaniin tokens used (no stray Tailwind default colors).
+- [ ] elevate-blue appears only in allowed detail roles, <5% area.
+- [ ] Alternating surfaces give the page rhythm.
+- [ ] Type scale, measure, and families correct.
+- [ ] Hairline borders for structure; shadows only on cards/menus/product shots.
+- [ ] Motion: CSS ladder first; reduced-motion respected; content never blocked.
+- [ ] **≥1 living loop running** (pipeline / live KPI / phone swipe): pauses off-screen,
+      static end-state under reduced-motion. `motion.md` §Living mockups.
+- [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
+      `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
+- [ ] Focus rings, hover/active/disabled states present.
+- [ ] Mobile layout considered; targets ≥44px.
+- [ ] All copy in the user's language.
+- [ ] Standalone deliverables are one self-contained HTML file.
+
+---
+
 ## 7 · Mandatory liveliness & overflow rules / Reglas obligatorias de vitalidad y overflow
 
 ### 7a · Logos oficiales / Official logos
@@ -223,30 +250,3 @@ Esto no es decoración opcional: una pieza estática no es una propuesta Elaniin
   más que la card.
 - **Antes de entregar:** verificar visualmente cada slide/viewport; ningún elemento
   cortado, ningún scroll interno no deseado.
-
----
-
----
-
-## 6 · Output checklist / Checklist de salida
-
-Before delivering, verify:
-
-- [ ] **Official Elaniin logo used everywhere** (correct variant per surface); no text fallback.
-- [ ] **Zero overflow:** nothing clipped in viewport, slides, or cards; decks full-screen fixed canvas.
-- [ ] **Mouse-reactive texture/spotlight present** and disabled under reduced-motion.
-- [ ] **Microinteractions present** (button arrow/press, card glow, counters, chart draw).
-- [ ] Only Elaniin tokens used (no stray Tailwind default colors).
-- [ ] elevate-blue appears only in allowed detail roles, <5% area.
-- [ ] Alternating surfaces give the page rhythm.
-- [ ] Type scale, measure, and families correct.
-- [ ] Hairline borders for structure; shadows only on cards/menus/product shots.
-- [ ] Motion: CSS ladder first; reduced-motion respected; content never blocked.
-- [ ] **≥1 living loop running** (pipeline / live KPI / phone swipe): pauses off-screen,
-      static end-state under reduced-motion. `motion.md` §Living mockups.
-- [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
-      `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
-- [ ] Focus rings, hover/active/disabled states present.
-- [ ] Mobile layout considered; targets ≥44px.
-- [ ] All copy in the user's language.
-- [ ] Standalone deliverables are one self-contained HTML file.
