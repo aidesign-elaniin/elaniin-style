@@ -261,7 +261,7 @@ MOCK_2 = stage("95%,92%|85%,15%|85%,15%|72%,42%|72%,42%|72%,42%", """
     <div class="rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary">Upload plugin</div>
   </div>""")
 
-MOCK_3 = stage("95%,95%|50%,66%|50%,66%|50%,66%|50%,60%|50%,60%|86%,90%|86%,90%|86%,90%", """
+MOCK_3 = stage("95%,95%|50%,66%|50%,66%|50%,66%|50%,60%|50%,60%|86%,84%|86%,84%|86%,84%", """
   <div class="mock-hide absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
     <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
     <div class="mt-2 rounded-input border border-border-default px-2 py-2 text-[9px] leading-none text-text-secondary">Browse Anthropic sources</div>
@@ -269,9 +269,9 @@ MOCK_3 = stage("95%,95%|50%,66%|50%,66%|50%,66%|50%,60%|50%,60%|86%,90%|86%,90%|
   </div>
   <div class="mock-fade absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
     <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
-    <div class="mt-2 rounded-input bg-surface-subtle px-2 py-1.5 text-[8px] leading-snug text-text-muted">Standard notice for any marketplace</div>
-    <div class="mt-2 min-h-8 break-all rounded-input border border-border-input px-2 py-1.5 font-mono text-[8px] leading-snug text-text-primary mock-caret" data-on="5" data-type="https://github.com/aidesign-elaniin/elaniin-style"></div>
-    <div class="mock-press absolute bottom-3 right-3 rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
+    <div class="mt-1.5 rounded-input bg-surface-subtle px-2 py-1 text-[8px] leading-snug text-text-muted">Standard notice for any marketplace</div>
+    <div class="mt-1.5 break-all rounded-input border border-border-input px-2 py-1.5 font-mono text-[7px] leading-snug text-text-primary mock-caret" data-on="5" data-type="https://github.com/aidesign-elaniin/elaniin-style"></div>
+    <div class="mock-press ml-auto mt-1.5 w-fit rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
 MOCK_4 = stage("95%,95%|83%,66%|83%,66%|83%,66%|83%,66%", """
