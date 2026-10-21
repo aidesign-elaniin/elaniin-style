@@ -222,7 +222,7 @@ BARS = '<div class="space-y-2"><div class="h-2 w-3/4 rounded-full bg-border-defa
 def stage(path, inner):
     return '<div class="mock-stage mb-5" data-mock data-path="' + path + '" aria-hidden="true">' + inner + CURSOR + '</div>'
 
-MOCK_1 = stage("95%,92%|17%,84%|17%,84%|26%,50%|26%,50%|26%,50%|24%,80%|24%,80%|24%,80%", """
+MOCK_1 = stage("95%,92%|17%,84%|17%,84%|23%,33%|23%,33%|23%,33%|25%,85%|25%,85%|25%,85%", """
   <div class="mock-hide absolute inset-0" data-on="6">
     <div class="flex h-full">
       <div class="relative w-1/3 shrink-0 border-r border-border-default bg-white p-2">
@@ -250,7 +250,7 @@ MOCK_1 = stage("95%,92%|17%,84%|17%,84%|26%,50%|26%,50%|26%,50%|24%,80%|24%,80%|
     <div class="min-w-0 flex-1 p-3">""" + BARS + """</div>
   </div>""")
 
-MOCK_2 = stage("95%,92%|85%,15%|85%,15%|72%,42%|72%,42%|72%,42%", """
+MOCK_2 = stage("95%,92%|89%,13%|89%,13%|73%,45%|73%,45%|73%,45%", """
   <div class="flex items-center justify-between border-b border-border-default bg-white px-3 py-2">
     <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
     <div class="mock-press rounded-button border border-border-ink px-3 py-1 text-[10px] leading-none text-text-primary" data-on="2" data-off="3">Add</div>
@@ -261,7 +261,7 @@ MOCK_2 = stage("95%,92%|85%,15%|85%,15%|72%,42%|72%,42%|72%,42%", """
     <div class="rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary">Upload plugin</div>
   </div>""")
 
-MOCK_3 = stage("95%,95%|50%,66%|50%,66%|50%,66%|50%,60%|50%,60%|86%,84%|86%,84%|86%,84%", """
+MOCK_3 = stage("95%,95%|50%,73%|50%,73%|50%,73%|50%,64%|50%,64%|83%,80%|83%,80%|83%,80%", """
   <div class="mock-hide absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
     <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
     <div class="mt-2 rounded-input border border-border-default px-2 py-2 text-[9px] leading-none text-text-secondary">Browse Anthropic sources</div>
@@ -274,7 +274,7 @@ MOCK_3 = stage("95%,95%|50%,66%|50%,66%|50%,66%|50%,60%|50%,60%|86%,84%|86%,84%|
     <div class="mock-press ml-auto mt-1.5 w-fit rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
-MOCK_4 = stage("95%,95%|83%,66%|83%,66%|83%,66%|83%,66%", """
+MOCK_4 = stage("95%,95%|84%,56%|84%,56%|84%,56%|84%,56%", """
   <div class="space-y-2 p-3">
     <div class="flex items-center justify-between rounded-button border border-border-default bg-white p-2 opacity-60">
       <div class="space-y-1.5"><div class="h-2 w-16 rounded-full bg-border-strong"></div><div class="h-1.5 w-24 rounded-full bg-border-default"></div></div>
@@ -289,7 +289,7 @@ MOCK_4 = stage("95%,95%|83%,66%|83%,66%|83%,66%|83%,66%", """
     </div>
   </div>""")
 
-MOCK_5 = stage("95%,95%|86%,38%|86%,38%|86%,38%|86%,38%", """
+MOCK_5 = stage("95%,95%|88%,38%|88%,38%|88%,38%|88%,38%", """
   <div class="space-y-2 p-3">
     <div class="rounded-button border border-border-default bg-white p-2.5">
       <p class="truncate font-mono text-[10px] font-medium leading-none text-text-primary">elaniin-style-marketplace</p>
@@ -304,7 +304,7 @@ MOCK_5 = stage("95%,95%|86%,38%|86%,38%|86%,38%|86%,38%", """
     </div>
   </div>""")
 
-MOCK_6 = stage("95%,35%|46%,86%|46%,86%|26%,60%|26%,60%|90%,86%|90%,86%|90%,86%|90%,86%", """
+MOCK_6 = stage("95%,35%|45%,79%|45%,79%|27%,45%|45%,79%|45%,79%|90%,79%|90%,79%|90%,79%", """
   <div class="mock-fade absolute left-3 top-3 w-28 rounded-button border border-border-default bg-white p-1.5" data-on="8">
     <div class="aspect-video rounded-tag bg-excellence-blue p-2"><div class="h-1.5 w-3/4 rounded-full bg-white"></div><div class="mt-1.5 h-1 w-1/2 rounded-full bg-text-on-dark-secondary"></div></div>
     <div class="mt-1.5 h-1.5 w-2/3 rounded-full bg-border-default"></div>
