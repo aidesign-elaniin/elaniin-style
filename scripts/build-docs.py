@@ -222,19 +222,32 @@ BARS = '<div class="space-y-2"><div class="h-2 w-3/4 rounded-full bg-border-defa
 def stage(path, inner):
     return '<div class="mock-stage mb-5" data-mock data-path="' + path + '" aria-hidden="true">' + inner + CURSOR + '</div>'
 
-MOCK_1 = stage("95%,92%|15%,72%|15%,72%|80%,22%|80%,22%|80%,22%|80%,22%", """
-  <div class="flex h-full">
-    <div class="w-1/3 shrink-0 space-y-1 border-r border-border-default bg-white p-2">
-      <div class="h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary">Chats</div>
-      <div class="h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary">Projects</div>
-      <div class="mock-active h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary" data-on="2">Customize</div>
-    </div>
-    <div class="min-w-0 flex-1 p-3">
-      <div class="mock-fade flex gap-3 border-b border-border-default pb-2 text-[10px] leading-none text-text-muted" data-on="2">
-        <span>Connectors</span><span>Skills</span><span class="mock-tab" data-on="4">Plugins</span>
+MOCK_1 = stage("95%,92%|17%,84%|17%,84%|26%,50%|26%,50%|26%,50%|24%,80%|24%,80%|24%,80%", """
+  <div class="mock-hide absolute inset-0" data-on="6">
+    <div class="flex h-full">
+      <div class="relative w-1/3 shrink-0 border-r border-border-default bg-white p-2">
+        <div class="h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary">Chats</div>
+        <div class="h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary">Projects</div>
+        <div class="mock-active absolute inset-x-2 bottom-2 flex items-center gap-1.5 rounded-button px-1.5 py-1.5 text-[9px] leading-none text-text-secondary" data-on="2"><span class="h-4 w-4 shrink-0 rounded-full bg-blue-100"></span><span class="truncate">you@company.com</span></div>
       </div>
-      <div class="mock-fade mt-3" data-on="3">""" + BARS + """</div>
+      <div class="min-w-0 flex-1 p-3">""" + BARS + """</div>
     </div>
+    <div class="mock-fade absolute bottom-10 left-2 w-32 rounded-menu border border-border-default bg-white p-1 shadow-menu" data-on="2">
+      <div class="mock-active flex items-center justify-between rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary" data-on="4"><span>Settings</span><span class="text-text-muted">⌘ ,</span></div>
+      <div class="rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary">Usage</div>
+      <div class="rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary">Language</div>
+    </div>
+  </div>
+  <div class="mock-fade absolute inset-0 flex bg-white" data-on="6">
+    <div class="w-1/2 shrink-0 space-y-0.5 border-r border-border-default p-2">
+      <div class="px-2 py-1 text-[10px] leading-none text-text-secondary">General</div>
+      <div class="px-2 py-1 text-[10px] leading-none text-text-secondary">Account</div>
+      <p class="px-2 pb-0.5 pt-2 text-[8px] leading-none text-text-muted">Customize</p>
+      <div class="px-2 py-1 text-[10px] leading-none text-text-secondary">Skills</div>
+      <div class="px-2 py-1 text-[10px] leading-none text-text-secondary">Connectors</div>
+      <div class="mock-active rounded-button px-2 py-1 text-[10px] leading-none text-text-secondary" data-on="7">Plugins</div>
+    </div>
+    <div class="min-w-0 flex-1 p-3">""" + BARS + """</div>
   </div>""")
 
 MOCK_2 = stage("95%,92%|85%,15%|85%,15%|72%,42%|72%,42%|72%,42%", """
@@ -302,8 +315,8 @@ MOCK_6 = stage("95%,35%|46%,86%|46%,86%|26%,60%|26%,60%|90%,86%|90%,86%|90%,86%|
   </div>""")
 
 team_steps = "\n".join([
-    step("01", "Open Customize, then Plugins", "In the Claude desktop app (or at claude.ai) look at the left sidebar and click <strong>Customize</strong>. Then click <strong>Plugins</strong>. You must be signed in to your Claude account.",
-         '<p class="mt-3 text-body-sm text-text-secondary">Shortcut: <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener" class="font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring">claude.ai/customize/plugins</a></p>', mock=MOCK_1),
+    step("01", "Open Settings, then Plugins", "In the Claude desktop app click your name or email at the bottom of the left sidebar and choose <strong>Settings</strong> (on Mac you can press <kbd class=\"rounded-tag bg-surface-subtle px-1 font-mono text-code\">⌘ ,</kbd>). In the Settings list, under the <strong>Customize</strong> group, click <strong>Plugins</strong>. You must be signed in to your Claude account.",
+         '<p class="mt-3 text-body-sm text-text-secondary">On claude.ai you can also go straight to <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener" class="font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring">claude.ai/customize/plugins</a></p>', mock=MOCK_1),
     step("02", "Choose Add, then Add marketplace", "On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A box opens asking for the address of a repository.", mock=MOCK_2),
     step("03", "Paste the Elaniin address", "Copy the address below, paste it in the box and confirm. The repository is public, so you do not need your own GitHub account. Use <strong>this exact address</strong> every time.",
          f'<div class="mt-4">{code(SRC_URL, "address")}</div>', mock=MOCK_3),
@@ -314,13 +327,13 @@ team_steps = "\n".join([
 
 team_check = """<div class="mt-8 max-w-[68ch] rounded-card border border-border-default bg-surface-subtle p-6">
   <h3 class="font-display font-medium text-h4">How to know it worked</h3>
-  <p class="mt-2 text-body text-text-secondary">Open <strong>Customize → Plugins</strong>: <strong>elaniin-style</strong> is listed and its <strong>Disable plugin</strong> toggle is on. If you type <code class=\"break-words rounded-tag bg-white px-1 font-mono text-code text-text-primary\">/elaniin</code> in a chat, the skill shows up in the menu.</p>
+  <p class="mt-2 text-body text-text-secondary">Open <strong>Settings → Plugins</strong>: <strong>elaniin-style</strong> is listed and its <strong>Disable plugin</strong> toggle is on. If you type <code class=\"break-words rounded-tag bg-white px-1 font-mono text-code text-text-primary\">/elaniin</code> in a chat, the skill shows up in the menu.</p>
 </div>
 
 <details class="group mt-4 max-w-[68ch] rounded-card border border-border-default py-1">
   <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 px-6 font-display font-medium text-h4 focus-ring">Using the Code tab of the desktop app<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
   <div class="space-y-3 px-6 pb-5 text-body text-text-secondary">
-    <p>A plugin you add from <strong>Customize</strong> is downloaded to the Code tab the next time you start a session signed in to the same account.</p>
+    <p>A plugin you add from <strong>Settings → Plugins</strong> is downloaded to the Code tab the next time you start a session signed in to the same account.</p>
     <p>If it is not there yet, type <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/reload-plugins</code> in the session, or start a new one. You can also click <strong>+</strong> next to the prompt box and choose <strong>Add plugins</strong> or <strong>Manage plugins</strong>.</p>
     <p>In the Code tab invoke it by typing <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/elaniin-style:elaniin-style</code>. Plugins are available in local and SSH sessions, not in cloud sessions.</p>
   </div>
@@ -341,7 +354,7 @@ team_prompts = "\n".join(
 faq = [
     ("Do I have to install anything on my computer?", "No. It installs inside Claude, from the Plugins screen. No terminal needed."),
     ("I do not see “Add marketplace”", "On company Claude plans an administrator decides whether people can add their own marketplaces. Ask the person who manages your Claude workspace to allow it or to add Elaniin Style for you."),
-    ("It does not show up when I type /", "Open <strong>Customize → Plugins</strong> and check that <strong>elaniin-style</strong> is on. Then start a new conversation. In the Code tab type /reload-plugins or start a new session."),
+    ("It does not show up when I type /", "Open <strong>Settings → Plugins</strong> and check that <strong>elaniin-style</strong> is on. Then start a new conversation. In the Code tab type /reload-plugins or start a new session."),
     ("When do improvements arrive?", "On their own if you turned on <strong>Sync automatically</strong>. If not, open Plugins and click <strong>Check for updates</strong>."),
     ("I get an error saying “network source differs”", "You had already added Elaniin Style with a different form of address. In Plugins open the Elaniin marketplace, click <strong>Remove</strong>, and add it again pasting the full address from step 03."),
     ("Claude asks me to connect GitHub", "The Elaniin repository is public, so this is not normally needed. If it still asks, check that you pasted the full address starting with <strong>https://github.com/</strong>, and if it persists send the message to a developer."),

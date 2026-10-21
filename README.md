@@ -13,7 +13,7 @@ Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin
 
 ### Equipo (sin terminal, sin cuenta de GitHub) / Team
 
-1. En la app de Claude (o en claude.ai) abre **Customize → Plugins** (atajo: https://claude.ai/customize/plugins).
+1. En la app de Claude haz clic en tu nombre o correo (abajo a la izquierda) → **Settings** (o `⌘ ,`) y, en el grupo **Customize**, **Plugins**. En claude.ai también sirve https://claude.ai/customize/plugins.
 2. Pulsa **Add → Add marketplace**.
 3. Pega la dirección completa, siempre la misma: `https://github.com/aidesign-elaniin/elaniin-style` (repositorio público).
 4. En **Discover** busca **elaniin-style** y pulsa **Add**. Queda en tu cuenta (chat, Cowork y Claude Code).
