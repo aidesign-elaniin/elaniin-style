@@ -703,7 +703,7 @@ body = f'''
 <header class="sticky top-0 z-40 border-b border-border-default bg-white/90 backdrop-blur">
   <div class="container-site flex h-16 items-center justify-between">
     <a href="#" class="flex items-center focus-ring" aria-label="Elaniin Style, home">
-      <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo"/></svg>
+      <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo"/></svg>
     </a>
     <nav class="hidden items-center gap-8 text-body-sm text-text-secondary md:flex" aria-label="Primary">
       <a href="#install" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Install</a>
@@ -786,7 +786,7 @@ body = f'''
 <footer class="bg-elaniin-black text-white">
   <div class="container-site py-12">
     <div class="flex flex-wrap items-center justify-between gap-6 border-b border-border-on-dark pb-8">
-      <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo-white"/></svg>
+      <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo-white"/></svg>
       <a href="{REPO}" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-on-dark-secondary transition-colors duration-base hover:text-white focus-ring-on-dark">Repository on GitHub</a>
     </div>
     <p class="mono-label mt-8 text-caption text-text-on-dark-muted">© 2026 Elaniin · Elaniin Style</p>

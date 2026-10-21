@@ -1,6 +1,6 @@
 # Tokens / Tokens
 
-> Fuente única de verdad: `DESIGN.md` v1.45 del sitio Elaniin 2027.
+> Fuente única de verdad: `DESIGN.md` v1.51.2 del sitio Elaniin 2027.
 > Copia para proyectos: `templates/tokens.css`.
 
 ## Color

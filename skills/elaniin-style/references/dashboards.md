@@ -101,7 +101,7 @@ En reportes ejecutivos (no dashboards operativos) se permite una banda excellenc
 
 ## Reglas
 
-- **Logo oficial:** sidebar/topbar con `main-isologo-elaniin.svg` (superficie clara).
+- **Logotipo oficial:** sidebar con `logotipo-elaniin.svg` (superficie clara), solo el logotipo.
   Nunca el nombre escrito como texto.
 - **Vivo por defecto:** microinteracciones obligatorias — KPIs con count-up al entrar en
   viewport, charts cuyo trazo se dibuje una vez, card glow al hover, filas de tabla con

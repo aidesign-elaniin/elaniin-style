@@ -30,10 +30,11 @@ dominante por pieza.
 
 ## Reglas de composición
 
-- **Logo oficial siempre:** nav y footer con `main-isologo-elaniin.svg` en superficies
-  claras y `white-isologo-elaniin.svg` en oscuras. Nunca el wordmark escrito como texto.
-  El `<svg>` consumidor lleva `viewBox="0 0 364.43 81.38"` (si no, el logo aparenta
-  indentado; ver SKILL.md §7a). Favicon: `assets/favicon.svg` oficial.
+- **Logotipo oficial siempre, solo el logotipo:** nav y footer con `logotipo-elaniin.svg` en
+  superficies claras y `white-logotipo-elaniin.svg` en oscuras, a 28px de alto; sin símbolo ni
+  tagline. Nunca el wordmark escrito como texto. El `<svg>` consumidor lleva
+  `viewBox="0 0 281.45 75.91"` (si no, el logo aparenta indentado; ver SKILL.md §7a).
+  Favicon: `assets/favicon.svg` oficial (provisional, sin símbolo).
 - **Vivo por defecto:** spotlight reactivo al mouse en el hero (+ textura sutil),
   card glow que sigue al cursor, microinteracciones en botones y links.
   Ver `motion.md` §Living surfaces. Obligatorio en toda landing.

@@ -20,11 +20,11 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 
 # Elaniin Style
 
-> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.45).
+> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.51.2).
 > Use it to design and build decks, dashboards & reports, websites & landings, and to
 > develop the Elaniin 2027 site. Always work in the user's language (EN or ES).
 >
-> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.45).
+> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.51.2).
 > Úsala para diseñar y construir decks, dashboards & reports, websites & landings, y
 > para desarrollar el sitio Elaniin 2027. Trabaja siempre en el idioma del usuario (EN o ES).
 
@@ -112,11 +112,12 @@ See `references/motion.md`.
 
 Non-negotiables (full detail in `references/ux-a11y.md`):
 
-1. **Official logo always.** Never render the brand as plain text. Use the official SVG
-   assets in `assets/`: `main-isologo-elaniin.svg` (symbol + wordmark) on light surfaces,
-   `white-isologo-elaniin.svg` on dark surfaces; wordmarks (`logotipo-elaniin.svg` /
-   `white-logotipo-elaniin.svg`) when the symbol is not needed. Inline as `<symbol>` +
-   `<use>`, never a text fallback.
+1. **Official logotipo always, and only the logotipo.** Never render the brand as plain
+   text. Use the official wordmark SVGs in `assets/`: `logotipo-elaniin.svg` on light
+   surfaces and `white-logotipo-elaniin.svg` on dark ones, inlined as `<symbol>` + `<use>`,
+   never a text fallback. **No symbol (isotipo) and no tagline anywhere**: they are not
+   approved, so the isologo lockups no longer ship. Never recolor the name blue except the
+   one approved case (`logotipo-elaniin-blue.svg`, see §7a).
 2. **No overflow, ever.** Content must never spill the viewport, a slide, or a card.
    Enforce in Tailwind: `overflow-hidden` on fixed canvases, `min-w-0` on grid/flex
    children, `break-words` on long strings, explicit height budgets. See §7.
@@ -232,7 +233,7 @@ bilingüe de `references/search-keywords.md`.
 
 Before delivering, verify:
 
-- [ ] **Official Elaniin logo used everywhere** (correct variant per surface); no text fallback.
+- [ ] **Official logotipo only** (dark on light, white on dark), 28px tall in nav/footer; no symbol, no tagline, no isologo, no text fallback; favicon = `assets/favicon.svg`.
 - [ ] **Zero overflow:** nothing clipped in viewport, slides, or cards; decks full-screen fixed canvas.
 - [ ] **Mouse-reactive texture/spotlight present** and disabled under reduced-motion.
 - [ ] **Landings/websites: `module-field` in the hero background (and final CTA)** with its pointer-trail script.
@@ -264,21 +265,32 @@ Before delivering, verify:
 
 ## 7 · Mandatory liveliness & overflow rules / Reglas obligatorias de vitalidad y overflow
 
-### 7a · Logos oficiales / Official logos
-- Los assets viven en `skills/elaniin-style/assets/`.
-- Superficie clara → `main-isologo-elaniin.svg` (símbolo azul + wordmark #141414).
-- Superficie oscura (excellence-blue / elaniin-black) → `white-isologo-elaniin.svg`.
-- Wordmark solo: `logotipo-elaniin.svg` (oscuro) / `white-logotipo-elaniin.svg` (blanco).
+### 7a · Logotipo oficial / Official logotipo
+Regla del sitio (DESIGN.md §logo, v1.50.3): **solo el logotipo** (el lettering). Sin símbolo
+(isotipo) y sin tagline, en nav, footer, deck, dashboard o cualquier uso, hasta que el equipo
+los apruebe. Los lockups con símbolo (isologo) se quitaron: no se publican ni se usan.
+
+| Archivo en `assets/` | Estado | Uso |
+|---|---|---|
+| `logotipo-elaniin.svg` | En uso | Wordmark `#141414`. Superficies claras (blanco, Inspire Grey) |
+| `white-logotipo-elaniin.svg` | En uso | El mismo wordmark en blanco. Excellence Blue, Elaniin Black y footer |
+| `logotipo-elaniin-blue.svg` | **Solo un caso** | El mismo wordmark en Elevate Blue `#1054FF`, únicamente sobre la losa de software del recurso isométrico del hero (3.96:1). Prohibido en cualquier otro uso |
+| `favicon.svg` | **Provisional** | Cuadrado redondeado Elevate Blue con un círculo Inspire Grey: marca neutra **sin símbolo**. Se reemplaza cuando se apruebe el isotipo |
+
 - En HTML autocontenido: incrustar una vez como `<symbol id="elaniin-logo">` /
-  `<symbol id="elaniin-logo-white">` y usar `<svg><use href="#elaniin-logo"/></svg>`.
+  `<symbol id="elaniin-logo-white">` (viewBox `0 0 281.45 75.91`) y usar
+  `<svg><use href="#elaniin-logo"/></svg>`.
 - **Alineación (obligatorio):** el `<svg>` consumidor DEBE llevar el `viewBox` del asset
-  (`0 0 364.43 81.38` isologo · `0 0 281.45 75.91` wordmark). Sin `viewBox`, el browser
-  usa 300px de ancho por defecto y el logo queda **centrado** en esa caja (aparenta
-  indentado respecto al contenido de la izquierda). Correcto:
-  `<svg class="h-7 w-auto" viewBox="0 0 364.43 81.38" aria-label="Elaniin"><use href="#elaniin-logo"/></svg>`
-- **Favicon:** usar siempre `assets/favicon.svg` oficial (ícono blanco sobre cuadro azul
-  redondeado #1054FF). Nunca un cuadro azul genérico sin ícono, ni el ícono suelto.
-- **Prohibido** escribir "elaniin" como texto en lugar del logo.
+  (`0 0 281.45 75.91`). Sin `viewBox`, el browser usa 300px de ancho por defecto y el logo
+  queda **centrado** en esa caja (aparenta indentado respecto al contenido de la izquierda).
+  Correcto: `<svg class="h-7 w-auto" viewBox="0 0 281.45 75.91" aria-label="Elaniin"><use href="#elaniin-logo"/></svg>`
+- **Tamaño:** nav y footer a 28px de alto (`h-7`, ≈104px de ancho); mínimo 96px de ancho en
+  pantalla. Espacio libre: al menos la altura del punto de la "i" (≈16% del alto) por todos lados.
+- **Color:** negro Elaniin en superficies claras y blanco en oscuras. Nunca recolorear el nombre
+  de azul salvo el caso aprobado de la tabla.
+- **Favicon:** usar siempre `assets/favicon.svg` oficial. Nunca un cuadrado genérico distinto ni
+  un favicon con símbolo.
+- **Prohibido** escribir "elaniin" como texto en lugar del logotipo, y usar el isotipo/isologo.
 
 ### 7b · Texturas reactivas al mouse + microanimaciones (siempre)
 Toda propuesta (landing, dashboard, deck, reporte) DEBE incluir:

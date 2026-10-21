@@ -77,7 +77,7 @@ elemento cortado, ningún scroll interno no deseado.
   cierran devolviendo el foco, Tab atrapado, scroll bloqueado, cierra al pasar a desktop.
   Un botón de menú sin acción es un bug. Probar siempre a 375/768/1280.
 - **Topbar a 375px:** título legible (trunca último), máx. 3 acciones, secundarias solo-icono
-  con `aria-label` bajo `md`, logo en el drawer; targets `h-11`; padding `p-4` → `p-6`.
+  con `aria-label` bajo `md`, logotipo en el drawer; targets `h-11`; padding `p-4` → `p-6`.
 - Imágenes con `alt` descriptivo; SVG decorativo con `aria-hidden`.
 
 ## Datos y charts (dashboard / deck)

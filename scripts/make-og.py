@@ -1,7 +1,7 @@
 import math, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent  # repo root
-logo = (ROOT / "skills/elaniin-style/assets/main-isologo-elaniin.svg").as_uri()
+logo = (ROOT / "skills/elaniin-style/assets/logotipo-elaniin.svg").as_uri()
 import tempfile
 OUT = pathlib.Path(tempfile.mkdtemp())
 
@@ -50,7 +50,7 @@ body{{width:{W}px;height:{H}px;background:#fff;position:relative;overflow:hidden
   -webkit-mask-image:linear-gradient(to right,transparent 22%,#000 70%);mask-image:linear-gradient(to right,transparent 22%,#000 70%)}}
 .lit{{position:absolute;inset:0}}
 .lit i{{position:absolute;display:block}}
-.logo{{position:absolute;left:72px;top:64px;height:44px}}
+.logo{{position:absolute;left:72px;top:68px;height:40px}}
 .eyebrow{{position:absolute;left:72px;top:176px;font-family:"Geist Mono",monospace;font-size:20px;letter-spacing:.05em;text-transform:uppercase;color:#656873}}
 h1{{position:absolute;left:72px;top:196px;width:700px;font-family:"Instrument Sans",sans-serif;font-weight:500;font-size:84px;line-height:1;letter-spacing:-.035em}}
 p.lead{{position:absolute;left:72px;top:420px;width:640px;font-size:26px;line-height:1.4;color:#4a4d57}}
