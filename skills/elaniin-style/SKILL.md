@@ -166,7 +166,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 15. **Dashboards are functional, not mockups (non-negotiable).** Every nav item opens a real
    view (hash router), every control works (search, filters, sort, range, create/download,
    settings that persist), Export is real and disabled where there is no data, and there is
-   no SaaS user block: the sidebar footer is legal (Privacy · Terms · ©). A dashboard is not a
+   no SaaS user block: the sidebar is pinned to the viewport (`sticky`, `100dvh`) and only the content scrolls, with a thin one-line legal strip (Privacy · Terms · ©) in its bottom corner. A dashboard is not a
    SaaS. Details and minimum views: `references/dashboards.md`.
 16. **No decorative gradients or color bars (non-negotiable).** No stepped/segmented blue
    bars, ramp strips, gradient backgrounds, blobs or glass. Structure comes from hairlines,

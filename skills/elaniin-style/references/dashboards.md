@@ -7,7 +7,7 @@
 
 ```
 ┌─ Sidebar (240px, blanco, hairline right) ─┬─ Topbar (64px, hairline bottom) ────────┐
-│  Logo                                     │  Título página · Export · acción       │
+│  Logo (sidebar fija, 100dvh)              │  Título página · Export · acción       │
 │  Nav items (icono 16px + label body-sm)   ├────────────────────────────────────────┤
 │  · activo: marcador elevate-blue 2px o    │  KPI row (4 cards hairline)            │
 │    bg blue-tint-50 + texto ink            │  ┌────┐ ┌────┐ ┌────┐ ┌────┐           │
@@ -25,6 +25,12 @@ Topbar a 375px: hamburguesa + **título** (prioridad, trunca al final) + accione
 4 col ≥1280; charts full-width; tabla con scroll horizontal dentro de su card.
 
 ## Un dashboard es funcional, no una maqueta (obligatorio)
+La **sidebar está fija**: `position: sticky; top: 0; height: 100dvh` (la utility `drawer` a `lg+`),
+con el nav scrolleando por dentro si es largo; solo el contenido de la página hace scroll. El pie
+legal vive **pegado a la esquina inferior de la sidebar como una franja fina de una línea**
+(Privacy · Terms a la izquierda, © año a la derecha, 44px de alto): siempre visible, nunca al fondo
+de la página.
+
 Un dashboard **no es un SaaS**: no lleva bloque de usuario/cuenta (avatar, nombre, rol) ni
 planes, billing ni selector de workspace en la sidebar. El pie de la sidebar es **legal**
 (Privacy · Terms · © año), y esos enlaces abren vistas reales.

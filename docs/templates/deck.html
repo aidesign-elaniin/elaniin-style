@@ -547,7 +547,12 @@
     transition-delay: 0s;
   }
   @variant lg {
-    position: static;
+    /* persistent sidebar: pinned to the viewport; only the page content scrolls */
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    height: 100vh;
+    height: 100dvh;
     z-index: auto;
     width: var(--sidebar-width);
     transform: none;

@@ -518,7 +518,7 @@
 
 /* ---------- utilities: drawer (off-canvas mobile nav) ---------- */
 /* Mobile: panel that slides in from the left; closed = visibility hidden (out of tab order).
-   lg+: static sidebar. For a landing's mobile menu add `md:hidden` to drawer and scrim.
+   lg+: sticky full-height sidebar (pinned, only the content scrolls). For a landing's mobile menu add `md:hidden` to drawer and scrim.
    Behavior: templates/drawer.js (toggle data-open, focus, Esc, scroll lock). */
 @utility drawer {
   position: fixed;
@@ -535,7 +535,12 @@
     transition-delay: 0s;
   }
   @variant lg {
-    position: static;
+    /* persistent sidebar: pinned to the viewport; only the page content scrolls */
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    height: 100vh;
+    height: 100dvh;
     z-index: auto;
     width: var(--sidebar-width);
     transform: none;

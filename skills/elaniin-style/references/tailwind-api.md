@@ -167,7 +167,7 @@ Recetas y reglas: `references/grids.md`.
 ### Navegación móvil — drawer
 | Clase | Qué hace |
 |---|---|
-| `drawer` | Panel off-canvas `<lg` (ancho `--drawer-width`, 85vw máx.; cerrado = `visibility:hidden`); estático a `lg+` con `--sidebar-width`. Se abre con `data-open="true"` |
+| `drawer` | Panel off-canvas `<lg` (ancho `--drawer-width`, 85vw máx.; cerrado = `visibility:hidden`); a `lg+` queda **fijo** (`sticky`, `100dvh`) con `--sidebar-width`; solo el contenido scrollea. Se abre con `data-open="true"` |
 | `scrim` | Telón oscuro 48% bajo el drawer; oculto a `lg+`. `data-open="true"` lo muestra |
 
 Para un menú móvil de landing: `drawer md:hidden` + `scrim md:hidden` + `data-drawer-from="md"`.
