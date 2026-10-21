@@ -168,6 +168,10 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    settings that persist), Export is real and disabled where there is no data, and there is
    no SaaS user block: the sidebar footer is legal (Privacy · Terms · ©). A dashboard is not a
    SaaS. Details and minimum views: `references/dashboards.md`.
+16. **No decorative gradients or color bars (non-negotiable).** No stepped/segmented blue
+   bars, ramp strips, gradient backgrounds, blobs or glass. Structure comes from hairlines,
+   flat surfaces and the `module-field` texture. The only soft glows allowed are the pointer
+   `spotlight` and `card-glow`. The blue ramp tokens exist for states, never as a decorative strip.
 
 ---
 
@@ -240,6 +244,7 @@ Before delivering, verify:
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
+- [ ] **No gradients or color bars:** no stepped blue strip, gradient backgrounds, blobs or glass.
 - [ ] **Dashboards:** every nav item opens a real view; controls, Export and New report work; no user block, legal footer; no `href="#"`.
 - [ ] **No eyebrows:** no small mono/uppercase label above any heading.
 - [ ] **Anchors:** every `href="#id"` points at a `<section id>`; it lands with the section top under the sticky nav (`scroll-margin-top` via `[id]` base rule).

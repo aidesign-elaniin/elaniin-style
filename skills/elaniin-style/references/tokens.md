@@ -62,5 +62,5 @@ Measure: **body 68ch · lead 56ch · heading 20ch**.
 ## Motion
 `ease-standard cubic-bezier(0.4,0,0.2,1)` · `ease-emphasized cubic-bezier(0.25,1,0.5,1)` · durations `instant 100 · fast 150 · base 200 · slow 300 · reveal 500` ms · `reveal-distance 16px` · `reveal-stagger 60ms`.
 
-## Gradiente permitido
-El único gradiente del sistema es el **stepped blue ramp** (`--blue-steps`), una escalera de 8 tramos del blue-ramp. No hay degradados decorativos.
+## Sin gradientes
+**No hay gradientes decorativos.** Ni barras escalonadas de azul (el antiguo “stepped blue ramp” se eliminó), ni fondos degradados, ni blobs. Solo se permiten los resplandores radiales sutiles del puntero (`spotlight`, `card-glow`).

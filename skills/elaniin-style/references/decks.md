@@ -35,7 +35,7 @@ Un slide que recorta contenido es un slide roto. Reglas duras:
 
 | # | Slide | Layout |
 |---|---|---|
-| 1 | **Cover** | Blanco. Logo mono, display-xl (empresa + tagline), fecha caption. Opcional: stepped blue motif en esquina. |
+| 1 | **Cover** | Blanco. Logo mono, display-xl (empresa + tagline), fecha caption. Sin decoración de color: la textura `module-field` o nada. |
 | 2 | **Problem** | Grey. H2 + 2–3 bullets con iconos lineales. O full-bleed tipográfico. |
 | 3 | **Solution** | Blanco. H2 + product shot (`shadow-product`) + 3 value props en hairline grid. |
 | 4 | **How it works** | 3 pasos hairline con número en el título, conectores hairline. |
@@ -46,7 +46,7 @@ Un slide que recorta contenido es un slide roto. Reglas duras:
 | 9 | **Competition** | Matriz hairline (✓ / — / ✕ con iconos, no solo color). |
 | 10 | **Team** | Blanco. B/W portraits en grid hairline, nombre h4, rol caption. |
 | 11 | **The ask** | Navy. Número display blanco (monto / ronda), uso de fondos en 3 bullets, contacto. |
-| 12 | **Closing** | Blanco. Logo + tagline + contacto. stepped blue motif. |
+| 12 | **Closing** | Blanco. Logo + tagline + contacto. |
 
 Para **reportes internos**: cover → executive summary (navy) → secciones de datos →
 hallazgos → recomendaciones → next steps. Mismos tokens.

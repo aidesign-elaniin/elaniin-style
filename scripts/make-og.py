@@ -55,7 +55,6 @@ body{{width:{W}px;height:{H}px;background:#fff;position:relative;overflow:hidden
 h1{{position:absolute;left:72px;top:196px;width:700px;font-family:"Instrument Sans",sans-serif;font-weight:500;font-size:84px;line-height:1;letter-spacing:-.035em}}
 p.lead{{position:absolute;left:72px;top:420px;width:640px;font-size:26px;line-height:1.4;color:#4a4d57}}
 .band{{position:absolute;left:0;right:0;bottom:0;height:72px;background:#01172e;display:flex;align-items:center;justify-content:space-between;padding:0 72px}}
-.steps{{position:absolute;left:0;right:0;bottom:72px;height:8px;background:linear-gradient(90deg,#d7e2f8 0 12.5%,#b9cefb 12.5% 25%,#6a9aff 25% 37.5%,#1054ff 37.5% 50%,#0848cc 50% 62.5%,#023ca0 62.5% 75%,#022b63 75% 87.5%,#01172e 87.5% 100%)}}
 .band span{{white-space:nowrap;font-family:"Geist Mono",monospace;font-size:18px;letter-spacing:.05em;text-transform:uppercase;color:#a9b8cc}}
 .band b{{font-weight:500;color:#fff}}
 </style></head><body>
@@ -64,7 +63,6 @@ p.lead{{position:absolute;left:72px;top:420px;width:640px;font-size:26px;line-he
 <img class="logo" src="{logo}" alt="">
 <h1>The Elaniin style, inside Claude</h1>
 <p class="lead">Decks, dashboards and landings with the Elaniin 2027 design system.</p>
-<div class="steps"></div>
 <div class="band"><span><b>Elaniin Style</b> · Deck · Dashboard · Landing</span><span>aidesign-elaniin.github.io/elaniin-style</span></div>
 </body></html>'''
 (OUT / "og.html").write_text(html)

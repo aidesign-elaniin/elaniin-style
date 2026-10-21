@@ -57,7 +57,7 @@ dominante por pieza.
 - **Anti-overflow:** grid/flex children con `min-w-0`; `break-words` en títulos largos;
   `overflow-hidden` en cards con media; verificar mobile sin recortes.
 - **Imágenes:** product shots con `shadow-product`; iconos lineales 1.5px stroke, no emojis.
-- **Gradientes:** prohibidos salvo el stepped blue motif (`--blue-steps`) y el spotlight.
+- **Gradientes:** prohibidos. Sin barras escalonadas de azul ni degradados decorativos; solo el spotlight del puntero y el `card-glow`.
 - **Sombras:** solo `card-rest`, `menu`, `product`. Nunca sombras grandes difusas.
 - **Tipografía display:** Instrument Sans 500, tracking negativo en headings grandes.
 

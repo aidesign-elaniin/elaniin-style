@@ -80,7 +80,6 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 | `--section-y` / `-statement` / `-compact` | 96/128/64 · 72/96/48 · 56/72/40 | `section-y`, `section-y-statement`, `section-y-compact` |
 | `--card-padding` | 32 · — · 24 | `pad-card` |
 | `--nav-height` | 64 | — |
-| `--blue-steps` | gradiente escalonado azul | `var(--blue-steps)` |
 
 ### Radios · Sombras
 | Token | Valor | Utility |
@@ -225,4 +224,3 @@ anillo global · reduce → scroll auto. (Dashboard añade `body { background: s
 | `bg-[#f0f0f3] / #d7e2f8 / #e7eeff` | `bg-surface-subtle / bg-blue-100 / bg-blue-tint-50` |
 | status `text/bg/border-[#…]` | `text-success-text`, `bg-success-bg`, `border-success-border` (igual warning/error/info) |
 | `tabular` | `tabular-nums` (core) |
-| gradiente `blue-steps` inline | `background: var(--blue-steps)` |
