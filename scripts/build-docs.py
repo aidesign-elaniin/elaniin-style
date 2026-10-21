@@ -89,13 +89,29 @@ SRC_URL = "https://github.com/aidesign-elaniin/elaniin-style"
 SRC_GIT = SRC_URL + ".git"
 
 team_steps = "\n".join([
-    step("01", "Open Claude and go to Plugins", "In the Claude app (or on claude.ai) open the <strong>Customize</strong> menu, then <strong>Plugins</strong>."),
-    step("02", "Add the Elaniin marketplace", "Click <strong>Add → Add marketplace</strong> and paste this full address. The repository is public: you don't need your own GitHub account.",
+    step("01", "Open Customize, then Plugins", "In the Claude desktop app (or at claude.ai) look at the left sidebar and click <strong>Customize</strong>. Then click <strong>Plugins</strong>. You must be signed in to your Claude account.",
+         '<p class="mt-3 text-body-sm text-text-secondary">Shortcut: <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener" class="font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring">claude.ai/customize/plugins</a></p>'),
+    step("02", "Choose Add, then Add marketplace", "On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A box opens asking for the address of a repository."),
+    step("03", "Paste the Elaniin address", "Copy the address below, paste it in the box and confirm. The repository is public, so you do not need your own GitHub account. Use <strong>this exact address</strong> every time.",
          f'<div class="mt-4">{code(SRC_URL, "address")}</div>'),
-    step("03", "Install Elaniin Style", "Go to <strong>Discover</strong>, pick <strong>elaniin-style</strong> and click <strong>Add</strong>. It is saved to your account."),
-    step("04", "Activate it the first time", "Type <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/</code> in the chat and pick <strong>elaniin-style</strong>. After that Claude uses it on its own whenever you ask for something Elaniin."),
-    step("05", "Let it update itself", "On the marketplace entry turn on <strong>Sync automatically</strong>. You get improvements without doing anything else."),
+    step("04", "Install elaniin-style", "Go to <strong>Discover</strong>, find <strong>elaniin-style</strong> and click <strong>Add</strong>. It is saved to your account, so it is also available in chat, Cowork and Claude Code."),
+    step("05", "Turn on automatic updates", "Back in <strong>Plugins</strong>, find the Elaniin marketplace you added and turn on <strong>Sync automatically</strong>. To refresh by hand at any time click <strong>Check for updates</strong>."),
+    step("06", "Use it", "In any chat type " + ic("/") + " in the message box, type <strong>elaniin</strong> and pick <strong>elaniin-style</strong>, then write what you want, for example “Create a pitch deck in the Elaniin style”. You can also just describe the task: Claude loads the skill when it matches."),
 ])
+
+team_check = """<div class="mt-8 max-w-[68ch] rounded-card border border-border-default bg-surface-subtle p-6">
+  <h3 class="font-display font-medium text-h4">How to know it worked</h3>
+  <p class="mt-2 text-body text-text-secondary">Open <strong>Customize → Plugins</strong>: <strong>elaniin-style</strong> is listed and its <strong>Disable plugin</strong> toggle is on. If you type <code class=\"break-words rounded-tag bg-white px-1 font-mono text-code text-text-primary\">/elaniin</code> in a chat, the skill shows up in the menu.</p>
+</div>
+
+<details class="group mt-4 max-w-[68ch] rounded-card border border-border-default py-1">
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 px-6 font-display font-medium text-h4 focus-ring">Using the Code tab of the desktop app<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <div class="space-y-3 px-6 pb-5 text-body text-text-secondary">
+    <p>A plugin you add from <strong>Customize</strong> is downloaded to the Code tab the next time you start a session signed in to the same account.</p>
+    <p>If it is not there yet, type <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/reload-plugins</code> in the session, or start a new one. You can also click <strong>+</strong> next to the prompt box and choose <strong>Add plugins</strong> or <strong>Manage plugins</strong>.</p>
+    <p>In the Code tab invoke it by typing <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/elaniin-style:elaniin-style</code>. Plugins are available in local and SSH sessions, not in cloud sessions.</p>
+  </div>
+</details>"""
 
 team_prompts = "\n".join(
     f'''<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
@@ -111,10 +127,11 @@ team_prompts = "\n".join(
 
 faq = [
     ("Do I have to install anything on my computer?", "No. It installs inside Claude, from the Plugins screen. No terminal needed."),
-    ("How do I know it is active?", "Ask Claude for a deck or a page “in the Elaniin style”. It should use the official logo, white and grey with dark blue bands, and soft animations."),
+    ("I do not see “Add marketplace”", "On company Claude plans an administrator decides whether people can add their own marketplaces. Ask the person who manages your Claude workspace to allow it or to add Elaniin Style for you."),
+    ("It does not show up when I type /", "Open <strong>Customize → Plugins</strong> and check that <strong>elaniin-style</strong> is on. Then start a new conversation. In the Code tab type /reload-plugins or start a new session."),
     ("When do improvements arrive?", "On their own if you turned on <strong>Sync automatically</strong>. If not, open Plugins and click <strong>Check for updates</strong>."),
-    ("I get an error saying “network source differs”", "You had already added Elaniin Style with a different form of address. In Plugins remove the <strong>elaniin-style-marketplace</strong> marketplace (Remove) and add it again pasting the full address from step 02."),
-    ("I can't find the marketplace or it won't add", "Check that you pasted the full address, starting with <strong>https://github.com/</strong>. If it still fails, send the error message to a developer."),
+    ("I get an error saying “network source differs”", "You had already added Elaniin Style with a different form of address. In Plugins open the Elaniin marketplace, click <strong>Remove</strong>, and add it again pasting the full address from step 03."),
+    ("Claude asks me to connect GitHub", "The Elaniin repository is public, so this is not normally needed. If it still asks, check that you pasted the full address starting with <strong>https://github.com/</strong>, and if it persists send the message to a developer."),
     ("My deck or page needs a fine tweak", "Ask Claude in the same conversation. If you need manual editing, hand the HTML file to a developer: it is built with Tailwind for exactly that."),
 ]
 faq_html = "\n".join(
@@ -126,10 +143,11 @@ faq_html = "\n".join(
 
 panel_team = f'''<div data-panel="team" id="panel-team" role="tabpanel" aria-labelledby="tab-team" class="rise">
   <div class="container-site section-y-compact">
-    {eyebrow_h2("For the team", "Install it in 5 steps, no terminal", "Everything happens inside Claude. It takes under two minutes and you only do it once.")}
+    {eyebrow_h2("For the team", "Install it in 6 steps, no terminal", "Everything happens inside Claude, in the Plugins page. It takes a couple of minutes and you only do it once.")}
     <ol class="mt-10 grid-auto" style="--card-min:22rem">
       {team_steps}
     </ol>
+    {team_check}
   </div>
   <div class="container-site pb-16">
     <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Four requests to get started</h3>

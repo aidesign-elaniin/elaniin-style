@@ -11,12 +11,17 @@ Documentación completa (equipo y devs): https://aidesign-elaniin.github.io/elan
 
 Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin-style-marketplace`).
 
-### Equipo (sin terminal) / Team (no terminal)
+### Equipo (sin terminal, sin cuenta de GitHub) / Team
 
-1. Claude → **Customize → Plugins**.
-2. **Add → Add marketplace** → pega la dirección completa: `https://github.com/aidesign-elaniin/elaniin-style` (repositorio público, sin cuenta de GitHub).
-3. **Discover → elaniin-style → Add**.
-4. Activa **Sync automatically** para recibir actualizaciones solas.
+1. En la app de Claude (o en claude.ai) abre **Customize → Plugins** (atajo: https://claude.ai/customize/plugins).
+2. Pulsa **Add → Add marketplace**.
+3. Pega la dirección completa, siempre la misma: `https://github.com/aidesign-elaniin/elaniin-style` (repositorio público).
+4. En **Discover** busca **elaniin-style** y pulsa **Add**. Queda en tu cuenta (chat, Cowork y Claude Code).
+5. En **Plugins**, en el marketplace de Elaniin, activa **Sync automatically** (o **Check for updates** a mano).
+6. Úsalo: en un chat escribe `/`, luego `elaniin`, elige **elaniin-style** y pide lo que necesites.
+
+Si no ves **Add marketplace**, un administrador de tu plan de Claude controla si se permite: pídeselo.
+En la pestaña **Code** del escritorio llega en la siguiente sesión (o con `/reload-plugins`).
 
 ### Devs (Claude Code)
 
