@@ -7,7 +7,7 @@
 
 ```
 ┌─ Sidebar (240px, blanco, hairline right) ─┬─ Topbar (64px, hairline bottom) ────────┐
-│  Logo                                     │  Título página · búsqueda · avatar     │
+│  Logo                                     │  Título página · Export · acción       │
 │  Nav items (icono 16px + label body-sm)   ├────────────────────────────────────────┤
 │  · activo: marcador elevate-blue 2px o    │  KPI row (4 cards hairline)            │
 │    bg blue-tint-50 + texto ink            │  ┌────┐ ┌────┐ ┌────┐ ┌────┐           │
@@ -23,6 +23,30 @@ abierto con un botón hamburguesa de 44px (`aria-expanded`, Esc, scrim y foco de
 Topbar a 375px: hamburguesa + **título** (prioridad, trunca al final) + acciones solo-icono
 (`aria-label`) bajo `md`; el logo vive en la cabecera del drawer. KPIs 1 col <640, 2 col ≥640,
 4 col ≥1280; charts full-width; tabla con scroll horizontal dentro de su card.
+
+## Un dashboard es funcional, no una maqueta (obligatorio)
+Un dashboard **no es un SaaS**: no lleva bloque de usuario/cuenta (avatar, nombre, rol) ni
+planes, billing ni selector de workspace en la sidebar. El pie de la sidebar es **legal**
+(Privacy · Terms · © año), y esos enlaces abren vistas reales.
+
+1. **Cada ítem del nav abre una vista real.** Router por hash (`#/overview`, `#/revenue`…):
+   una `<div data-view>` por ruta, `aria-current="page"` en el enlace activo, `h1` y
+   `document.title` que cambian, foco movido a `<main tabindex="-1">`, scroll arriba, el
+   drawer se cierra al elegir. Ruta desconocida → Overview. El skip link `#main` no cambia de vista.
+   Prohibido `href="#"` en la navegación.
+2. **Cada vista tiene contenido y controles que funcionan**, con datos de muestra en un solo
+   objeto JS fácil de reemplazar. Vistas mínimas: Overview, una por cada ítem del nav
+   (p. ej. Revenue con rango 3M/6M/12M, Customers con búsqueda + filtros + orden por columna +
+   detalle en `<dialog>`, Products, Reports con crear/descargar/borrar, Settings con formulario
+   que guarda en `localStorage` y reinicia) y las páginas legales.
+3. **Botones de la topbar reales:** Export descarga la data de la vista actual (CSV o JSON
+   según Settings) y se **deshabilita** donde no hay datos; New report abre un diálogo.
+4. **Estados completos:** vacío (“No accounts match…”), cargando (`spinner`), éxito/error
+   (toast con `role="status"`, error de campo con `role="alert"`), `aria-sort` en columnas
+   ordenables, `<dialog>` nativo (Esc, foco de regreso) y `m-auto` (el preflight lo resetea).
+5. **Una vista oculta usa `hidden`** (fuera de árbol de accesibilidad y de tab order).
+6. Todo con los tokens y utilities del plugin: `side-link`, `field`, `switch` (ver
+   `tailwind-api.md`), `grid-page`/`grid-auto`, `pad-card`.
 
 ## Sin eyebrows
 Los headings de cards y secciones van solos. Los labels mono son solo de dato (caption de KPI,
@@ -94,6 +118,8 @@ En reportes ejecutivos (no dashboards operativos) se permite una banda excellenc
 - [ ] Todo dato tiene label, período y unidad.
 - [ ] Estados vacíos, loading, error diseñados.
 - [ ] Tabla usable con teclado; charts con aria-label descriptivo.
+- [ ] Cada ítem del nav abre una vista real (probado ruta por ruta); sin `href="#"`; sin bloque de usuario, pie legal.
+- [ ] Export, New report y los controles de cada vista funcionan; vacíos, toasts y diálogos probados.
 - [ ] Mobile sin pérdida crítica de datos.
 - [ ] La hamburguesa abre el drawer (probado); topbar legible a 375px; targets ≥44px; probado en 375/768/1280.
 - [ ] ≥1 dato vivo (deriva de KPI + redibujado del chart + `live-dot`): pausa fuera de

@@ -163,6 +163,11 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    Put the `id` on the `<section>` (never on an inner heading or a "#" marker) and keep the
    base rule `[id] { scroll-margin-top: var(--nav-height) }` from `tokens.css`. Test every
    nav link at 375 and 1280.
+15. **Dashboards are functional, not mockups (non-negotiable).** Every nav item opens a real
+   view (hash router), every control works (search, filters, sort, range, create/download,
+   settings that persist), Export is real and disabled where there is no data, and there is
+   no SaaS user block: the sidebar footer is legal (Privacy · Terms · ©). A dashboard is not a
+   SaaS. Details and minimum views: `references/dashboards.md`.
 
 ---
 
@@ -235,6 +240,7 @@ Before delivering, verify:
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
+- [ ] **Dashboards:** every nav item opens a real view; controls, Export and New report work; no user block, legal footer; no `href="#"`.
 - [ ] **No eyebrows:** no small mono/uppercase label above any heading.
 - [ ] **Anchors:** every `href="#id"` points at a `<section id>`; it lands with the section top under the sticky nav (`scroll-margin-top` via `[id]` base rule).
 - [ ] **Grids** use `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`; children `min-w-0`; no `-mx-*`, no arbitrary gaps (see `references/grids.md`).

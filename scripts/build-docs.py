@@ -373,7 +373,7 @@ example_cards = "\n".join(
 </a>'''
     for lab, title, desc, href in [
         ("Landing", "Product landing", "Hero with module field, features, looping pipeline, stats and mobile menu.", "templates/landing.html"),
-        ("Dashboard", "Metrics dashboard", "Sidebar that turns into a drawer, live KPIs, chart and table.", "templates/dashboard.html"),
+        ("Dashboard", "Metrics dashboard", "Six working views plus legal pages: revenue range, customers search and sort, products, reports you can create and download, persistent settings.", "templates/dashboard.html"),
         ("Deck", "16:9 presentation deck", "Fixed 1280×720 canvas with keyboard navigation and living slides.", "templates/deck.html"),
     ])
 
