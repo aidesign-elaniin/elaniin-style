@@ -14,22 +14,20 @@ Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin
 ### Equipo (sin terminal) / Team (no terminal)
 
 1. Claude → **Customize → Plugins**.
-2. **Add → Add marketplace** → `aidesign-elaniin/elaniin-style`.
+2. **Add → Add marketplace** → pega la dirección completa: `https://github.com/aidesign-elaniin/elaniin-style` (repositorio público, sin cuenta de GitHub).
 3. **Discover → elaniin-style → Add**.
 4. Activa **Sync automatically** para recibir actualizaciones solas.
 
 ### Devs (Claude Code)
 
 ```bash
-claude plugin marketplace add aidesign-elaniin/elaniin-style
+claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
 claude plugin install elaniin-style@elaniin-style-marketplace
 ```
 
-Un paso (Claude Code 2.1.292+):
-
-```bash
-claude plugin install elaniin-style --marketplace aidesign-elaniin/elaniin-style
-```
+> **Usa siempre la misma dirección (la URL completa)** en la app, la CLI y los settings. Mezclar
+> `owner/repo` con la URL da el error *“network source differs”*. Arreglo:
+> `claude plugin marketplace remove elaniin-style-marketplace` y vuelve a agregarlo con la URL.
 
 Repo compartido: commitea en `.claude/settings.json`
 
@@ -37,7 +35,7 @@ Repo compartido: commitea en `.claude/settings.json`
 {
   "extraKnownMarketplaces": {
     "elaniin-style-marketplace": {
-      "source": { "source": "github", "repo": "aidesign-elaniin/elaniin-style" },
+      "source": { "source": "git", "url": "https://github.com/aidesign-elaniin/elaniin-style.git" },
       "autoUpdate": true
     }
   },
