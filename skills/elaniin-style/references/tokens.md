@@ -44,7 +44,7 @@
 |---|---|---|
 | display | headings, display, buttons | Instrument Sans (500) |
 | text | párrafos, UI, forms | DM Sans (400) |
-| mono | tags, eyebrows, code | Geist Mono (400), feature `zero` 1 |
+| mono | tags, labels de dato, code | Geist Mono (400), feature `zero` 1 |
 
 Escala fluida (desktop → mobile): `display-xl 72→40` · `display-lg 56→36` · `h1 48→32` · `h2 36→28` · `h3 28→22` · `h4 22→20` · `lead 20→18` · `body-lg 18→17` · `body 16` · `body-sm 14` · `caption 13` · `label 13 mono uppercase +0.05em` · `code 13`.
 

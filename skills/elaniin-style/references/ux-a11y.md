@@ -68,6 +68,9 @@ elemento cortado, ningún scroll interno no deseado.
 - Targets táctiles ≥ 44×44px.
 - Inputs ≥ 16px de font-size en mobile (evita zoom automático iOS).
 - Nada depende solo de hover en mobile: estados activos/selected visibles.
+- **Sin eyebrows:** ningún texto mono/uppercase pequeño sobre un heading; el heading va solo.
+- **Anclas:** los enlaces `#id` apuntan a `<section id>` y aterrizan con el inicio de la sección
+  bajo el nav sticky (`scroll-margin-top: var(--nav-height)` en `[id]`). Probar a 375 y 1280.
 - **Navegación móvil:** toda nav oculta bajo su breakpoint tiene botón de menú (≥44px,
   `aria-label` + `aria-controls` + `aria-expanded`) que abre un drawer funcional:
   `drawer`/`scrim` + `templates/drawer.js` — foco al entrar, Esc/scrim/enlace/cerrar lo

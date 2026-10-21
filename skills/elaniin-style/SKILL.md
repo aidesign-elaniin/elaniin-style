@@ -152,6 +152,17 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    Mobile first (`col-span-12` then `md:` / `xl:`), `min-w-0` on every child, no negative
    margins, no `gap-[…]`, no `lift`/`card-glow` inside `grid-hairline`. Deck keeps explicit
    columns. Recipes: `references/grids.md`.
+13. **No eyebrows (non-negotiable).** Never put a small mono/uppercase label above a heading
+   ("Plugin para Claude", "01 — Discover", "The platform"): it is the tell-tale of generic
+   AI-made pages. A heading stands alone; context goes in the heading or the lead text.
+   `mono-label` is only for data labels (KPI captions, statuses, table headers, chart
+   legends, footer column titles), never as a pre-heading. Step numbers live inline in the
+   heading ("1. Abre Claude"), not above it.
+14. **Anchors land at the section start (non-negotiable).** In-page links (`#features`) must
+   put the top edge of the section right under the sticky nav, not its text or a heading.
+   Put the `id` on the `<section>` (never on an inner heading or a "#" marker) and keep the
+   base rule `[id] { scroll-margin-top: var(--nav-height) }` from `tokens.css`. Test every
+   nav link at 375 and 1280.
 
 ---
 
@@ -224,6 +235,8 @@ Before delivering, verify:
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
+- [ ] **No eyebrows:** no small mono/uppercase label above any heading.
+- [ ] **Anchors:** every `href="#id"` points at a `<section id>`; it lands with the section top under the sticky nav (`scroll-margin-top` via `[id]` base rule).
 - [ ] **Grids** use `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`; children `min-w-0`; no `-mx-*`, no arbitrary gaps (see `references/grids.md`).
 - [ ] **Mobile nav works:** hamburger opens a real drawer (aria-expanded, Esc, scrim, focus return); topbar fits at 375px with the title readable; tap targets ≥44px; checked at 375 / 768 / 1280.
 - [ ] Focus rings, hover/active/disabled states present.
@@ -278,7 +291,7 @@ Esto no es decoración opcional: una pieza estática no es una propuesta Elaniin
 - **Deck:** canvas fijo 1280×720 con `transform: scale()`; `.slide { overflow: hidden; }`;
   **cero clases responsive dentro del deck** (el canvas siempre mide 1280);
   grid explícito (`grid-cols-3`, nunca `md:grid-cols-3`);
-  presupuesto de contenido por slide: eyebrow + título + cuerpo deben caber en
+  presupuesto de contenido por slide: título + cuerpo deben caber en
   720 − 2×padding. Si no cabe, reducir copy o dividir el slide.
 - **Grid/flex children:** `min-w-0` + `min-h-0` siempre que contengan texto o media.
 - **Texto largo:** `break-words` / `line-clamp-*` donde aplique.

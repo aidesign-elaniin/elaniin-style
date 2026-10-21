@@ -23,7 +23,7 @@ Un slide que recorta contenido es un slide roto. Reglas duras:
    usar `grid-cols-3` (NO `md:grid-cols-3`), tamaños fijos, `w-[…]`. Los breakpoints de
    Tailwind miran el viewport, no el canvas, y rompen el layout al escalar.
 3. **Presupuesto de contenido por slide:** alto útil = `720 − 2×padding(80) = 560px`.
-   Eyebrow (~20) + título (hasta ~120) + cuerpo/grid (hasta ~360) deben caber.
+   Título (hasta ~120) + cuerpo/grid (hasta ~400) deben caber. Sin eyebrows.
    Si no cabe: reducir copy, bajar un step tipográfico, o partir en dos slides.
 4. **Grid/flex children:** `min-w-0` + `min-h-0`; cards con `overflow-hidden` y
    altura igualitaria (`items-stretch` / `h-full`).
@@ -38,7 +38,7 @@ Un slide que recorta contenido es un slide roto. Reglas duras:
 | 1 | **Cover** | Blanco. Logo mono, display-xl (empresa + tagline), fecha caption. Opcional: stepped blue motif en esquina. |
 | 2 | **Problem** | Grey. H2 + 2–3 bullets con iconos lineales. O full-bleed tipográfico. |
 | 3 | **Solution** | Blanco. H2 + product shot (`shadow-product`) + 3 value props en hairline grid. |
-| 4 | **How it works** | 3 pasos hairline, eyebrow mono-labels, conectores hairline. |
+| 4 | **How it works** | 3 pasos hairline con número en el título, conectores hairline. |
 | 5 | **Market** | Datos: 3 números display + fuentes caption. Chart simple (barras blue-ramp). |
 | 6 | **Product / demo** | Navy excellence-blue. Screenshot centrado, on-dark copy. Un solo gesto. |
 | 7 | **Traction** | Blanco. Chart de línea/área elevate-blue + KPIs. `tabular-nums`. |

@@ -29,6 +29,7 @@ META = """<meta name="viewport" content="width=device-width, initial-scale=1.0" 
 head = head.replace('<meta name="viewport" content="width=device-width, initial-scale=1.0" />', META)
 
 REPO = "https://github.com/aidesign-elaniin/elaniin-style"
+GITHUB = '<svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>'
 ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>'
 
 
@@ -45,8 +46,7 @@ def code(text, label="bash"):
 
 def step(n, title, body, extra=""):
     return f'''<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <p class="mono-label text-caption text-elevate-blue">{n}</p>
-  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">{title}</h3>
+  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">{n}</span>{title}</h3>
   <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">{body}</p>{extra}
 </li>'''
 
@@ -55,7 +55,7 @@ def eyebrow_h2(eyebrow, h2, lead=None, dark=False):
     c1 = "text-text-on-dark-accent" if dark else "text-text-muted"
     c2 = "text-white" if dark else "text-text-primary"
     c3 = "text-text-on-dark-secondary" if dark else "text-text-secondary"
-    out = f'<p class="mono-label text-caption {c1}">{eyebrow}</p>\n<h2 class="mt-3 max-w-[20ch] break-words font-display font-medium text-h2 {c2}">{h2}</h2>'
+    out = f'<h2 class="max-w-[20ch] break-words font-display font-medium text-h2 {c2}">{h2}</h2>'
     if lead:
         out += f'\n<p class="mt-4 max-w-[56ch] break-words text-lead {c3}">{lead}</p>'
     return out
@@ -71,8 +71,7 @@ def row(a, b, c):
 
 def block(i, title, body_html):
     return f'''<section id="dev-{i}" class="border-t border-border-default py-12">
-  <p class="mono-label text-caption text-elevate-blue">{i:02d}</p>
-  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">{title}</h3>
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">{i:02d}</span>{title}</h3>
   <div class="mt-6 min-w-0 space-y-5">{body_html}</div>
 </section>'''
 
@@ -100,8 +99,7 @@ team_steps = "\n".join([
 
 team_prompts = "\n".join(
     f'''<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
-  <p class="mono-label text-caption text-text-muted">{lab}</p>
-  <p class="mt-3 break-words font-display font-medium text-h4 text-text-primary">{txt}</p>
+  <p class="break-words font-display font-medium text-h4 text-text-primary">{txt}</p>
   <button type="button" data-copy-text="{html.escape(txt, quote=True)}" class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido {ARROW}</button>
 </div>'''
     for lab, txt in [
@@ -134,12 +132,10 @@ panel_team = f'''<div data-panel="team" id="panel-team" role="tabpanel" aria-lab
     </ol>
   </div>
   <div class="container-site pb-16">
-    <p class="mono-label text-caption text-text-muted">Pruébalo</p>
-    <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Cuatro pedidos para empezar</h3>
+    <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Cuatro pedidos para empezar</h3>
     <div class="mt-8 grid gap-6 md:grid-cols-2">{team_prompts}</div>
   </div>
   <div class="container-site pb-24">
-    <p class="mono-label text-caption text-text-muted">Preguntas frecuentes</p>
     <div class="mt-6 border-b border-border-default">{faq_html}</div>
   </div>
 </div>'''
@@ -370,15 +366,14 @@ skills/elaniin-style/
 
 example_cards = "\n".join(
     f'''<a href="{href}" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
-  <p class="mono-label text-caption text-elevate-blue">{lab}</p>
-  <h3 class="mt-3 font-display font-medium text-h3 text-text-primary">{title}</h3>
+  <h3 class="font-display font-medium text-h3 text-text-primary">{title}</h3>
   <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">{desc}</p>
   <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Abrir ejemplo {ARROW}</span>
 </a>'''
     for lab, title, desc, href in [
-        ("Landing", "Página de producto", "Hero con module field, features, pipeline en loop, stats y menú móvil.", "templates/landing.html"),
-        ("Dashboard", "Panel de métricas", "Sidebar que se vuelve drawer, KPIs en vivo, chart y tabla.", "templates/dashboard.html"),
-        ("Deck", "Presentación 16:9", "Canvas fijo de 1280×720 con navegación por teclado y slides vivos.", "templates/deck.html"),
+        ("Landing", "Landing de producto", "Hero con module field, features, pipeline en loop, stats y menú móvil.", "templates/landing.html"),
+        ("Dashboard", "Dashboard de métricas", "Sidebar que se vuelve drawer, KPIs en vivo, chart y tabla.", "templates/dashboard.html"),
+        ("Deck", "Deck de presentación 16:9", "Canvas fijo de 1280×720 con navegación por teclado y slides vivos.", "templates/deck.html"),
     ])
 
 dev_nav = "\n".join(
@@ -409,9 +404,12 @@ body = f'''
       <a href="#install" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Instalar</a>
       <a href="#how" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Cómo funciona</a>
       <a href="#examples" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Ejemplos</a>
-      <a href="{REPO}" class="btn-arrow ml-2 inline-flex h-10 items-center gap-2 rounded-button border border-border-ink px-4 font-display text-body-sm font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">GitHub {ARROW}</a>
+      <a href="{REPO}" class="ml-2 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 font-display text-body-sm font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">{GITHUB}GitHub</a>
     </nav>
-    <a href="#install" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 font-display text-body-sm font-medium text-white md:hidden focus-ring">Instalar</a>
+    <div class="flex items-center gap-2 md:hidden">
+      <a href="{REPO}" class="inline-flex h-11 w-11 items-center justify-center rounded-button border border-border-ink text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring" aria-label="GitHub">{GITHUB}</a>
+      <a href="#install" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 font-display text-body-sm font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Instalar</a>
+    </div>
   </div>
 </header>
 
@@ -419,8 +417,7 @@ body = f'''
   <section class="relative isolate overflow-hidden section-y" style="--section-y:104px">
     <div class="module-field" data-module-field aria-hidden="true"></div>
     <div class="container-site relative">
-      <p class="mono-label text-caption text-text-muted rise" style="--i:0">Plugin para Claude</p>
-      <h1 class="mt-4 max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">El estilo Elaniin, dentro de Claude</h1>
+      <h1 class="max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">El estilo Elaniin, dentro de Claude</h1>
       <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise" style="--i:2">Pide un deck, un dashboard o una landing y Claude los arma con el sistema de diseño Elaniin 2027. Se instala una vez y se actualiza solo.</p>
       <div class="mt-10 flex flex-wrap items-center gap-4 rise" style="--i:3">
         <a href="#install" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Instalar ahora {ARROW}</a>
@@ -433,8 +430,7 @@ body = f'''
     <div class="container-site">
       <div class="flex flex-wrap items-end justify-between gap-6">
         <div class="min-w-0">
-          <p class="mono-label text-caption text-text-muted">Cómo funciona</p>
-          <h2 class="mt-3 font-display font-medium text-h3 text-text-primary">Una instalación, siempre al día</h2>
+          <h2 class="font-display font-medium text-h3 text-text-primary">Una instalación, siempre al día</h2>
         </div>
         <p class="mono-label text-caption text-elevate-blue" data-pipeline-status aria-live="off">Listo ✓</p>
       </div>
@@ -449,13 +445,12 @@ body = f'''
 
   <section id="install" class="section-y-compact">
     <div class="container-site text-center">
-      <p class="mono-label text-caption text-text-muted">Elige tu camino</p>
-      <h2 class="mx-auto mt-3 max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">¿Quién va a instalarlo?</h2>
+      <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">¿Quién va a instalarlo?</h2>
       <div role="tablist" aria-label="Tipo de usuario" class="mt-8 inline-flex rounded-button border border-border-ink p-1">
-        <button type="button" role="tab" id="tab-team" data-tab="team" aria-controls="panel-team" aria-selected="true" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">Soy del equipo</button>
+        <button type="button" role="tab" id="tab-team" data-tab="team" aria-controls="panel-team" aria-selected="true" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">No soy dev</button>
         <button type="button" role="tab" id="tab-devs" data-tab="devs" aria-controls="panel-devs" aria-selected="false" tabindex="-1" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">Soy dev</button>
       </div>
-      <p class="mx-auto mt-4 max-w-[56ch] text-body-sm text-text-muted">Equipo: se instala desde la app de Claude, sin terminal. Dev: CLI, scopes, auto-update y edición de piezas.</p>
+      <p class="mx-auto mt-4 max-w-[56ch] text-body-sm text-text-muted">No soy dev: se instala desde la app de Claude, sin terminal. Soy dev: CLI, scopes, auto-update y edición de piezas.</p>
     </div>
   </section>
 

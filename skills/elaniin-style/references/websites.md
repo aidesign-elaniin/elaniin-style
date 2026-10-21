@@ -17,7 +17,7 @@ dominante por pieza.
                       Fondo: **module field** (`module-field`, textura firma, obligatoria).
                       Opcional: producto/UI shot con sombra `product`. Nada de fondo azul.
 3. Social proof     — grey o blanco, hairline top. Logos en mono/gris, no multicolor.
-4. Features / value — grid hairline 2–3 columnas. Cada celda: label mono (eyebrow), h3, body.
+4. Features / value — grid hairline 2–3 columnas. Cada celda: h3 + body (sin eyebrow).
                       O bento grid con 1 celda destacada en excellence-blue.
 5. Product / case   — banda oscura excellence-blue opcional con texto on-dark + screenshot.
 6. Data / stats     — 3–4 números grandes (display), captions mono-label.
@@ -40,6 +40,10 @@ dominante por pieza.
 - **Living loop:** ≥1 mockup en loop por landing (pipeline CI con la utility `pipeline`,
   reloj pausable por IntersectionObserver) — `motion.md` §Living mockups. Todo el CSS sale
   del API `@theme`/`@utility` (ver `references/tailwind-api.md`).
+- **Sin eyebrows.** Ningún label mono/uppercase encima de un heading (ni "01 — Discover" ni
+  "Plugin para Claude"): el heading va solo. `mono-label` es solo para labels de dato.
+- **Anclas:** el `id` va en la `<section>`; con `[id] { scroll-margin-top: var(--nav-height) }`
+  (base de `tokens.css`) el enlace `#sección` deja el inicio de la sección justo bajo el nav.
 - **Grids:** `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`, mobile first y `min-w-0`
   en hijos (recetas en `references/grids.md`). Nada de `-mx-*` ni gaps arbitrarios.
 - **Superficies con hover = cards con padding.** Toda celda que use `lift` o `card-glow`
@@ -60,7 +64,6 @@ dominante por pieza.
 ## Sección por defecto (copy bilingüe)
 
 Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
-- Eyebrow (mono-label uppercase): categoría.
 - H2: beneficio concreto, no "Our features".
 - Body: una idea, ≤2 líneas.
 - CTA: verbo + objeto ("Start free trial" / "Prueba gratis"), no "Submit".
@@ -68,6 +71,7 @@ Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
 ## Checklist específico de landing
 
 - [ ] Logo oficial en nav y footer (variante según superficie), nunca texto.
+- [ ] Sin eyebrows sobre headings; cada enlace `#id` cae al inicio de su `<section>` bajo el nav.
 - [ ] Hero legible en <3s: qué es, para quién, qué hacer.
 - [ ] **Module field** en el fondo del hero (y del CTA final) con su script de rastro.
 - [ ] Spotlight reactivo + card glow + microinteracciones activos (y off con reduced-motion).

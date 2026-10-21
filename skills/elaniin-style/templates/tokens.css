@@ -616,6 +616,9 @@
     line-height: var(--text-body--line-height);
     overflow-x: clip;
   }
+  [id] {
+    scroll-margin-top: calc(var(--nav-height) + 1px);
+  }
   ::selection {
     background: var(--color-blue-200);
     color: var(--color-excellence-blue);

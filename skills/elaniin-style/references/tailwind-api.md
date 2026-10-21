@@ -113,7 +113,7 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 ### Layout & tipo
 | Clase | Qué hace |
 |---|---|
-| `mono-label` | mono + uppercase + ls .05em (labels, statuses, eyebrows) |
+| `mono-label` | mono + uppercase + ls .05em (labels de dato, statuses; **nunca** sobre un heading) |
 | `container-site` | max 1280 + gutter + center |
 | `section-y` / `-statement` / `-compact` | padding-block de sección |
 | `pad-card` | padding de card (responsive) |

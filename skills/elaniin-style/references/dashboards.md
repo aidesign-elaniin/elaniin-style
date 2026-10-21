@@ -24,6 +24,10 @@ Topbar a 375px: hamburguesa + **título** (prioridad, trunca al final) + accione
 (`aria-label`) bajo `md`; el logo vive en la cabecera del drawer. KPIs 1 col <640, 2 col ≥640,
 4 col ≥1280; charts full-width; tabla con scroll horizontal dentro de su card.
 
+## Sin eyebrows
+Los headings de cards y secciones van solos. Los labels mono son solo de dato (caption de KPI,
+estado, encabezado de tabla, grupo de navegación), nunca encima de un título.
+
 ## Grids
 KPIs y charts se arman con `grid-page` + `col-span-12 sm:col-span-6 xl:col-span-3` /
 `xl:col-span-8|4`; listas de conteo desconocido con `grid-auto`. Detalle: `references/grids.md`.
