@@ -1,135 +1,101 @@
 # elaniin-style
 
-**Elaniin design system as an installable skill.** Bilingüe EN/ES.
-Skill de diseño Elaniin instalable. Bilingüe EN/ES.
+**Elaniin design system as a Claude plugin.** Bilingüe EN/ES.
+Decks, dashboards & reports, websites & landings en el estilo Elaniin 2027.
+
+Documentación completa (equipo y devs): [`docs/index.html`](docs/index.html).
 
 ---
 
-## What it does / Qué hace
+## Instalar / Install
 
-Turns Claude (Code, Artifacts, or other agents) into a designer that speaks the
-Elaniin 2027 language: decks, dashboards & reports, websites & landings — and
-develops the Elaniin 2027 site itself.
+Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin-style-marketplace`).
 
-Convierte a Claude (Code, Artifacts u otros agentes) en un diseñador que habla el
-lenguaje Elaniin 2027: decks, dashboards & reports, websites & landings — y
-desarrolla el sitio Elaniin 2027.
+### Equipo (sin terminal) / Team (no terminal)
 
-**Modes / Modos:** `deck` · `dashboard` · `website` · `site-dev`
+1. Claude → **Customize → Plugins**.
+2. **Add → Add marketplace** → `danielpineda-elaniin/elaniin-style`.
+3. **Discover → elaniin-style → Add**.
+4. Activa **Sync automatically** para recibir actualizaciones solas.
 
----
-
-## Install / Instalación
-
-### Option A — One command (recommended) / Opción A — Un comando (recomendada)
-
-Copy & paste into Claude. / Copia y pega en Claude:
-
-- **English:** see [`prompts/install-EN.md`](prompts/install-EN.md)
-- **Español:** ver [`prompts/install-ES.md`](prompts/install-ES.md)
-
-The prompt tells Claude to run: / El prompt le indica a Claude que ejecute:
+### Devs (Claude Code)
 
 ```bash
-curl -fsSL https://elaniin-style.netlify.app/install.sh | bash
+claude plugin marketplace add danielpineda-elaniin/elaniin-style
+claude plugin install elaniin-style@elaniin-style-marketplace
 ```
 
-### Option B — Manual / Opción B — Manual
+Un paso (Claude Code 2.1.292+):
 
 ```bash
-git clone https://github.com/danielpineda-elaniin/elaniin-style.git
-cd elaniin-style
-bash install.sh                # installs into ./.claude (current project)
-bash install.sh --all          # user-level Claude + Codex
-bash install.sh --codex        # Codex only
-bash install.sh --project ~/my-app   # into a specific project
+claude plugin install elaniin-style --marketplace danielpineda-elaniin/elaniin-style
 ```
 
-### Option C — Claude Code plugin marketplace / Opción C — Marketplace de plugin
+Repo compartido: commitea en `.claude/settings.json`
 
+```json
+{
+  "extraKnownMarketplaces": {
+    "elaniin-style-marketplace": {
+      "source": { "source": "github", "repo": "danielpineda-elaniin/elaniin-style" },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": { "elaniin-style@elaniin-style-marketplace": true }
+}
 ```
-/plugin marketplace add danielpineda-elaniin/elaniin-style
-/plugin install elaniin-style@elaniin-style-marketplace
-```
 
-No Anthropic approval needed — it is your own marketplace.
-No requiere aprobación de Anthropic — es tu propio marketplace.
+## Actualizar / Update
 
-### Uninstall / Desinstalar
+El plugin **no define `version`**: cada commit de este repo es una versión nueva.
+Con `autoUpdate` activo se descarga solo unos minutos después de abrir una sesión; la
+sesión en curso aplica el cambio con `/reload-plugins` o al reiniciar.
 
 ```bash
-bash uninstall.sh [--project <dir>] [--codex] [--all]
+claude plugin update elaniin-style@elaniin-style-marketplace
 ```
 
----
+Auto-update obligatorio para toda la organización: `autoUpdate: true` en *managed settings*
+(ver la sección 09 de la documentación).
 
-## Use it / Cómo usarla
+## Usar / Use
 
-After install + session restart, just ask in EN or ES:
-
-- "Create a Series A pitch deck in the Elaniin style"
-- "Design a dashboard with our Q4 metrics, Elaniin style"
-- "Build a landing page for our product in the Elaniin style"
-- "Change the hero section of the Elaniin site"
-
-Después de instalar + reiniciar la sesión, pide en EN o ES:
+Claude carga la skill cuando el pedido encaja, o invócala con
+`/elaniin-style:elaniin-style`:
 
 - "Crea un pitch deck de Serie A con el estilo Elaniin"
 - "Diseña un dashboard con nuestras métricas de Q4, estilo Elaniin"
-- "Construye una landing page para nuestro producto con el estilo Elaniin"
-- "Cambia el hero del sitio Elaniin"
+- "Construye una landing para nuestro producto con el estilo Elaniin"
 
----
+**Modos:** `deck` · `dashboard` · `website` · `site-dev`
 
-## What's inside / Qué contiene
+Los entregables son un HTML autocontenido con Tailwind v4 (`@tailwindcss/browser@4.3.3`) y
+tokens `@theme`/`@utility` embebidos: se editan a mano con clases de Tailwind. Inventario
+clase → token en `skills/elaniin-style/references/tailwind-api.md`.
+
+## Qué contiene / What's inside
 
 ```
+.claude-plugin/           marketplace.json + plugin.json
+docs/index.html           landing de instalación y documentación
 skills/elaniin-style/
-├── SKILL.md              # pipeline 5 fases, routing, UX core
-├── assets/               # logos oficiales Elaniin (isologo dark/white, wordmarks, favicon)
-├── references/           # tokens, methodology, motion, ux-a11y,
-│                         # websites, dashboards, decks, site-dev,
-│                         # visual-references, search-keywords
-└── templates/            # tokens.css, landing.html, dashboard.html,
-                          # deck.html, motion-presets.ts
-scripts/ensure-motion.sh  # instala motion en silencio si hay proyecto npm
-install.sh / uninstall.sh
-prompts/                  # prompts de instalación EN y ES
-.claude-plugin/           # marketplace.json + plugin.json
+├── SKILL.md              pipeline de 5 fases, routing, UX core
+├── assets/               logos oficiales y favicon
+├── references/           tokens, tailwind-api, motion, ux-a11y, websites, decks, dashboards, site-dev…
+├── scripts/              ensure-motion.sh (instala motion en silencio si hay package.json)
+└── templates/            tokens.css, landing.html, dashboard.html, deck.html, motion-presets.ts,
+                          module-field.js / module-field.tsx (textura interactiva del hero)
 ```
 
-## Non-negotiables / No negociables
+## No negociables / Non-negotiables
 
 - **Logo oficial siempre** (`assets/`), nunca el brand como texto.
-- **Cero overflow:** decks full-screen 16:9 con canvas fijo y `overflow:hidden`;
-  nada se corta en viewport, slides ni cards.
-- **Siempre vivo:** textura/spotlight reactivo al mouse + microinteracciones
-  (card glow, count-up, chart draw, botones con flecha) en cada propuesta;
-  todo se apaga con `prefers-reduced-motion`.
+- **Cero overflow:** decks 16:9 con canvas fijo; nada se corta.
+- **Siempre vivo:** spotlight reactivo + microinteracciones, todo apagable con `prefers-reduced-motion`.
+- **Textura firma:** `module-field` (cuadritos que se encienden con el mouse) en el hero y el CTA de toda landing. Pídela como "textura interactiva" o "module field".
+- **Solo tokens:** colores, tipos, radios, sombras y duraciones salen de `@theme`.
 
-
----
-
-## Design in one line / El diseño en una línea
-
-White and grey carry the page · Excellence Blue (`#01172E`) carries the weight ·
-Elevate Blue (`#1054FF`) appears only in fine details (<5% of the area) ·
-Hairline grids divide · Motion is restrained and always respects reduced-motion.
-
-Blanco y gris llevan la página · Excellence Blue (`#01172E`) lleva el peso ·
-Elevate Blue (`#1054FF`) aparece solo en detalles finos (<5% del área) ·
-Hairlines dividen · El movimiento es contenido y siempre respeta reduced-motion.
-
-Source of truth / Fuente de verdad: `DESIGN.md` v1.45 (Elaniin 2027 site).
-
----
-
-## Requirements / Requisitos
-
-- `bash`, `curl`, `unzip` (for the piped installer / para el installer por piped).
-- Claude Code, Claude Artifacts, or another agent that reads Agent Skills.
-- No runtime dependency on any host: everything is self-contained.
-- Sin dependencia de runtime con ningún host: todo es autocontenido.
+Fuente de verdad / Source of truth: `DESIGN.md` v1.45 (Elaniin 2027 site).
 
 ## License
 

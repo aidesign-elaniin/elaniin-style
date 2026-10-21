@@ -11,6 +11,7 @@ dominante por pieza.
 ```
 1. Nav              — 64px, hairline inferior, logo a la izq, links, CTA secundario.
 2. Hero             — blanco. Display-xl (max ~20ch), lead (56ch), 1 CTA primario + 1 secundario.
+                      Fondo: **module field** (`module-field`, textura firma, obligatoria).
                       Opcional: producto/UI shot con sombra `product`. Nada de fondo azul.
 3. Social proof     — grey o blanco, hairline top. Logos en mono/gris, no multicolor.
 4. Features / value — grid hairline 2–3 columnas. Cada celda: label mono (eyebrow), h3, body.
@@ -60,6 +61,7 @@ Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
 
 - [ ] Logo oficial en nav y footer (variante según superficie), nunca texto.
 - [ ] Hero legible en <3s: qué es, para quién, qué hacer.
+- [ ] **Module field** en el fondo del hero (y del CTA final) con su script de rastro.
 - [ ] Spotlight reactivo + card glow + microinteracciones activos (y off con reduced-motion).
 - [ ] ≥1 living loop activo (pipeline CI u otro mockup en loop): pausa fuera de pantalla,
       estado final estático con reduced-motion.

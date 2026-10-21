@@ -43,6 +43,29 @@ Duraciones: `instant 100 · fast 150 · base 200 · slow 300 · reveal 500` ms.
 **Toda propuesta Elaniin debe estar viva.** Una pieza estática no entrega. Mínimo
 obligatorio en cada landing, dashboard, deck y reporte:
 
+### 0 · Module field — la textura firma (hero y CTA)
+Cuadrícula de cuadritos (2px sobre 16px de pitch, `border-strong` al 45%) que se desvanece
+hacia abajo; cerca del puntero los cuadritos se encienden **celda por celda** subiendo la
+rampa `blue-300 (2px) → blue-400 (3px) → blue-500 (3px)` y se apagan en ~260ms. Portada de
+`elaniin-2027-website-main/src/components/sections/hero/module-field.tsx`.
+
+- **Reposo = CSS puro** (`@utility module-field`, conic-gradient; sin JS ni imagen).
+- **Rastro = canvas** (`templates/module-field.js` vanilla, o `templates/module-field.tsx`).
+  Apagado en táctil (`pointer: coarse`) y con `prefers-reduced-motion` (queda la cuadrícula).
+- **Dónde:** fondo del hero y del CTA final; una por sección; nunca tras texto largo ni
+  dentro de cards. Sin glows ni degradados encima (el hero es de cuadrados).
+
+```html
+<section class="relative isolate overflow-hidden section-y">
+  <div class="module-field" data-module-field aria-hidden="true"></div>
+  <div class="container-site relative">…</div>
+</section>
+<!-- banda oscura -->
+<div class="module-field module-field-dark module-field-mask-left" data-module-field aria-hidden="true"></div>
+```
+Variantes: `module-field-dark` (cuadritos blancos), `module-field-mask-left` (desvanece a la
+izquierda), `module-field-mask-none`. Tokens: `--module-size` 2px · `--module-pitch` 16px.
+
 ### 1 · Spotlight reactivo al mouse
 Radial-gradient sutil que sigue al cursor vía CSS vars.
 

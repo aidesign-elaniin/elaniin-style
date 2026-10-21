@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Instala Elaniin Style como plugin de Claude: guía para el equipo y documentación para desarrolladores." />
+<script>document.documentElement.classList.add('js')</script>
+<title>Elaniin Style — Instalación y documentación</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20id%3D%22uuid-39352c91-c51c-449d-89db-9394236a3bb7%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20viewBox%3D%220%200%20111.2%20111.2%22%3E%0A%20%20%3C%21--%20Generator%3A%20Adobe%20Illustrator%2030.7.0%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%202.1.4%20Build%20114%29%20%20--%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.st0%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%23f0f0f3%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.st1%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%231054ff%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cg%20id%3D%22uuid-cda3b57b-a952-4632-8231-855400abd96a%22%3E%0A%20%20%20%20%3Crect%20class%3D%22st1%22%20width%3D%22111.2%22%20height%3D%22111.2%22%20rx%3D%2220.6%22%20ry%3D%2220.6%22%2F%3E%0A%20%20%20%20%3Cg%3E%0A%20%20%20%20%20%20%3Cpath%20class%3D%22st0%22%20d%3D%22M75.8%2C23.3v4.9c0%2C.2-.2.4-.4.4h-39.6c-.2%2C0-.4-.2-.4-.4v-4.9c0-4.5%2C3.7-8.1%2C8.1-8.1h24.2c4.5%2C0%2C8.1%2C3.7%2C8.1%2C8.1h0Z%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20class%3D%22st0%22%20d%3D%22M29.4%2C28.7h5.6c.2%2C0%2C.5.2.5.5v30.3c0%2C.2-.2.5-.5.5h-12.6c-.2%2C0-.5-.2-.5-.5v-23.2c0-4.1%2C3.4-7.5%2C7.5-7.5Z%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20class%3D%22st0%22%20d%3D%22M81.8%2C28.7h-5.6c-.2%2C0-.4.2-.4.4v30.3c0%2C.2.2.4.4.4h12.6c.2%2C0%2C.4-.2.4-.4v-23.3c0-4.1-3.4-7.5-7.5-7.5Z%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2235.4%22%20y%3D%2259.8%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2262.3%22%20y%3D%2259.8%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2248.9%22%20y%3D%2273.3%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2235.4%22%20y%3D%2286.8%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style type="text/tailwindcss">
+/*
+  Elaniin tokens — single source of truth (DESIGN.md v1.45 · Tailwind v4).
+
+  CONTRACT — Tailwind-first API:
+    1. Every design value lives in @theme (or in :root when it is a layout/duration
+       var consumed by a utility — theme keys alone do NOT generate duration-* utilities).
+    2. Every named CSS resource is an @utility. Raw class selectors inside plain
+       <style> blocks are forbidden: they are invisible to the utility API.
+    3. Animations are tokens: --animate-* + @keyframes inside @theme, so `animate-*`
+       utilities exist — and every motion utility honors prefers-reduced-motion itself.
+    4. Durations are named: instant 100 · fast 150 · base 200 · slow 300 · reveal 500.
+       Use `duration-base`, never `duration-200`.
+
+  USAGE:
+    - Tailwind v4 project: include tailwindcss first, then this file (or paste it).
+       (Never spell out the import directive inside this comment: mentioning it
+       anywhere in the block breaks @tailwindcss/browser.)
+    - Standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3 and paste
+      this file inside a <style type="text/tailwindcss"> block (templates embed a copy —
+      keep both in sync when editing).
+  Defaults (palette/radii/shadows/breakpoints) are reset on purpose: only the tokens
+  below exist, so a stray `bg-blue-500` simply does not compile.
+*/
+
+@theme {
+  /* ---------- reset defaults ---------- */
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --ease-*: initial;
+
+  /* ---------- breakpoints: mobile-lg 640 / tablet 768 / desktop 1024 / wide 1280 ---------- */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* ---------- color: brand ---------- */
+  --color-elevate-blue: #1054ff;     /* DETAIL accent only (buttons, links, focus, active, symbol) */
+  --color-inspire-grey: #f0f0f3;
+  --color-excellence-blue: #01172e;  /* the strong color: dark bands, case stages, CTA, footer, code */
+  --color-elaniin-black: #141414;
+  --color-dynamic-blue: #4d75fd;     /* non-text accents only */
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* ---------- color: blue ramp ---------- */
+  --color-blue-100: #d7e2f8;
+  --color-blue-200: #b9cefb;
+  --color-blue-300: #6a9aff;
+  --color-blue-400: #4d75fd;
+  --color-blue-500: #1054ff;
+  --color-blue-600: #0848cc;
+  --color-blue-700: #023ca0;
+  --color-blue-800: #022b63;
+  --color-blue-900: #01172e;
+  --color-blue-tint-50: #e7eeff;
+  --color-blue-active-dark: #010f20;
+
+  /* ---------- color: text ---------- */
+  --color-text-primary: #141414;
+  --color-text-secondary: #4a4d57;
+  --color-text-muted: #656873;
+  --color-text-link: #1054ff;
+  --color-text-link-hover: #0848cc;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-secondary: #a9b8cc;
+  --color-text-on-dark-muted: #8ea0b8;
+  --color-text-on-dark-accent: #7b9bff;
+  --color-text-disabled: #8c8f9b;
+
+  /* ---------- color: surface ---------- */
+  --color-surface-page: #ffffff;
+  --color-surface-subtle: #f0f0f3;
+  --color-surface-card: #ffffff;
+  --color-surface-dark: #01172e;
+  --color-surface-dark-alt: #141414;
+  --color-surface-code: #01172e;
+
+  /* ---------- color: border ---------- */
+  --color-border-default: #e4e4ea;
+  --color-border-strong: #d3d4dc;
+  --color-border-input: #8c8f9b;
+  --color-border-ink: #141414;
+  --color-border-on-dark: rgba(255, 255, 255, 0.12);
+  --color-border-on-dark-strong: rgba(255, 255, 255, 0.24);
+  --color-surface-dark-card: rgba(255, 255, 255, 0.04);
+
+  /* ---------- color: status (state only, never decoration) ---------- */
+  --color-success-text: #136c42; --color-success-bg: #e3f4ea; --color-success-border: #b6e0c8; --color-success-dot: #1f9d61;
+  --color-warning-text: #8a5300; --color-warning-bg: #fff3d9; --color-warning-border: #f2d58f; --color-warning-dot: #b87700;
+  --color-error-text: #a3201f;   --color-error-bg: #fde7e7;   --color-error-border: #f1b5b5;   --color-error-dot: #d6322f;
+  --color-info-text: #0848cc;    --color-info-bg: #e7eeff;    --color-info-border: #b9cefb;    --color-info-dot: #1054ff;
+  --color-neutral-text: #4a4d57; --color-neutral-bg: #f0f0f3; --color-neutral-border: #e4e4ea; --color-neutral-dot: #8c8f9b;
+
+  /* ---------- typography: families ---------- */
+  --font-display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---------- typography: scale (fluid between mobile and desktop values) ---------- */
+  --text-display-xl: clamp(40px, 6.25vw - 8px, 72px);
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-h1: clamp(32px, 3.125vw + 8px, 48px);
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(28px, 1.562vw + 16px, 36px);
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(22px, 1.172vw + 13px, 28px);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h4: clamp(20px, 0.3906vw + 17px, 22px);
+  --text-h4--line-height: 1.25;
+  --text-h4--letter-spacing: -0.015em;
+  --text-lead: clamp(18px, 0.3906vw + 15px, 20px);
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.005em;
+  --text-body-lg: clamp(17px, 0.1953vw + 15.5px, 18px);
+  --text-body-lg--line-height: 1.55;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.5;
+  --text-caption: 13px;
+  --text-caption--line-height: 1.4;
+  --text-code: 13px;
+  --text-code--line-height: 1.63;
+  --text-button: 14px;
+  --text-button--line-height: 1;
+  --text-button-lg: 16px;
+  --text-button-lg--line-height: 1;
+
+  /* ---------- radius ---------- */
+  --radius-button: 6px;
+  --radius-input: 6px;
+  --radius-tag: 6px;
+  --radius-card: 12px;
+  --radius-media: 12px;
+  --radius-code: 12px;
+  --radius-menu: 8px;
+  --radius-modal: 16px;
+  --radius-tooltip: 6px;
+  --radius-device: 32px;
+  --radius-module: 2px;
+  --radius-full: 9999px;
+
+  /* ---------- shadow ---------- */
+  --shadow-none: none;
+  --shadow-card-rest: 0 0 1px rgba(1, 30, 61, 0.03), 0 1px 2px rgba(1, 30, 61, 0.06);
+  --shadow-menu: 0 8px 24px -8px rgba(1, 30, 61, 0.18), 0 0 0 1px rgba(1, 30, 61, 0.06);
+  --shadow-product: 0 30px 45px -30px rgba(1, 30, 61, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.1);
+  --shadow-focus: 0 0 0 2px #ffffff, 0 0 0 4px #1054ff;
+  --shadow-focus-on-dark: 0 0 0 2px #01172e, 0 0 0 4px #7b9bff;
+
+  /* ---------- motion: easings ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---------- motion: animation tokens (each generates an animate-* utility) ---------- */
+  --animate-rise: rise var(--dur-reveal) var(--ease-emphasized) both;
+  --animate-draw-line: draw-line 1.6s var(--ease-emphasized) 0.25s both;
+  --animate-float-chip: float-chip 4s ease-in-out infinite;
+  --animate-typing-dot: typing-dot 0.9s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 0.9s linear infinite;
+  --animate-ping-soft: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-sheen: sheen 5s linear infinite;
+
+  /* ---------- motion: keyframes (paired with the tokens above) ---------- */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(var(--reveal-distance)); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes draw-line {
+    from { stroke-dashoffset: var(--len, 1200); }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes float-chip {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes typing-dot {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50% { transform: translateY(-3px); opacity: 1; }
+  }
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes ping-soft {
+    0% { transform: scale(1); opacity: 0.8; }
+    75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes sheen {
+    from { transform: translate3d(-140%, 0, 0); }
+    to { transform: translate3d(420%, 0, 0); }
+  }
+}
+
+:root {
+  color-scheme: light;
+
+  /* layout */
+  --container-max: 1280px;
+  --gutter: 48px;
+  --grid-gap: 24px;
+  --nav-height: 64px;
+  --section-y: 96px;
+  --section-y-statement: 128px;
+  --section-y-compact: 64px;
+  --card-padding: 32px;
+  --module-size: 2px;
+  --module-pitch: 16px;
+
+  /* motion durations — consumed by the duration-* utilities (see contract §4) */
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --dur-reveal: 500ms;
+  --reveal-distance: 16px;
+  --reveal-stagger: 60ms;
+
+  /* the only gradient: stepped blue motif */
+  --blue-steps: linear-gradient(90deg, #d7e2f8 0 12.5%, #b9cefb 12.5% 25%, #6a9aff 25% 37.5%, #1054ff 37.5% 50%, #0848cc 50% 62.5%, #023ca0 62.5% 75%, #022b63 75% 87.5%, #01172e 87.5% 100%);
+}
+
+@media (max-width: 1023px) {
+  :root { --gutter: 32px; --section-y: 72px; --section-y-statement: 96px; --section-y-compact: 48px; }
+}
+@media (max-width: 767px) {
+  :root { --gutter: 20px; --grid-gap: 16px; --section-y: 56px; --section-y-statement: 72px; --section-y-compact: 40px; --card-padding: 24px; }
+}
+
+/* ---------- utilities: layout & type ---------- */
+@utility mono-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@utility section-y {
+  padding-block: var(--section-y);
+}
+@utility section-y-statement {
+  padding-block: var(--section-y-statement);
+}
+@utility section-y-compact {
+  padding-block: var(--section-y-compact);
+}
+@utility pad-card {
+  padding: var(--card-padding);
+}
+
+/* ---------- utilities: focus ---------- */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+  }
+}
+@utility focus-ring-on-dark {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus-on-dark);
+  }
+}
+
+/* ---------- utilities: named durations (contract §4) ---------- */
+@utility duration-instant { transition-duration: var(--dur-instant); }
+@utility duration-fast { transition-duration: var(--dur-fast); }
+@utility duration-base { transition-duration: var(--dur-base); }
+@utility duration-slow { transition-duration: var(--dur-slow); }
+@utility duration-reveal { transition-duration: var(--dur-reveal); }
+
+/* ---------- utilities: entrance ---------- */
+/* Time-based entrance: runs without waiting for hydration. Stagger with style="--i: n". */
+@utility rise {
+  animation: var(--animate-rise);
+  animation-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Scroll entrance (vanilla counterpart of the site's Reveal): hidden only when JS is
+   on (html.js), revealed by IntersectionObserver adding .is-visible. */
+@utility reveal {
+  transition: opacity var(--dur-reveal) var(--ease-emphasized), transform var(--dur-reveal) var(--ease-emphasized);
+  transition-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  html.js &:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js &:not(.is-visible),
+    & {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+/* SVG line draw: pair with style="--len: <path length>". */
+@utility draw-line {
+  stroke-dasharray: var(--len, 1200);
+  animation: var(--animate-draw-line);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- utilities: surfaces ---------- */
+@utility spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(600px circle at var(--mx, 70%) var(--my, 20%), rgba(77, 117, 253, 0.07), transparent 62%);
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+@utility card-glow {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 50%), rgba(16, 84, 255, 0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* ---------- utilities: interactions ---------- */
+@utility nav-link {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 100%;
+    background: var(--color-elevate-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
+  }
+}
+@utility btn-arrow {
+  &:active {
+    transform: scale(0.98);
+  }
+  & svg {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover svg,
+  &:focus-visible svg {
+    transform: translateX(4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & svg {
+      transition: none;
+    }
+  }
+}
+@utility lift {
+  transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-menu);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+@utility row-hover {
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+/* ---------- utilities: living mockups (loops) ---------- */
+/* 3-dot typing indicator. Markup: <span class="typing-dots"><i></i><i></i><i></i></span> */
+@utility typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  & > i {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: currentColor;
+    animation: var(--animate-typing-dot);
+  }
+  & > i:nth-child(2) { animation-delay: 0.12s; }
+  & > i:nth-child(3) { animation-delay: 0.24s; }
+  @media (prefers-reduced-motion: reduce) {
+    & > i {
+      animation: none;
+      opacity: 0.6;
+    }
+  }
+}
+/* Gentle vertical float for decorative chips. */
+@utility float-chip {
+  animation: var(--animate-float-chip);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Tiny spinner. Markup: <span class="spinner"></span> */
+@utility spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-default);
+  border-top-color: var(--color-elevate-blue);
+  animation: var(--animate-spin-slow);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Live-data dot with soft ping. Markup: <span class="live-dot"></span> */
+@utility live-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-success-dot);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    background: var(--color-success-dot);
+    animation: var(--animate-ping-soft);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}
+
+/* ---------- utilities: module field (signature texture of hero / CTA) ---------- */
+/* Resting grid = pure CSS: 2px squares on a 16px pitch, grey at 45%, masked toward the bottom.
+   Pointer trail = templates/module-field.js (canvas, off for touch + reduced-motion).
+   Markup: <div class="module-field" data-module-field aria-hidden="true"></div> as the first
+   child of a `relative isolate overflow-hidden` host. Variants: module-field-dark,
+   module-field-mask-left, module-field-mask-none. */
+@utility module-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --module-lit-1: var(--color-blue-500);
+  --module-lit-2: var(--color-blue-400);
+  --module-lit-3: var(--color-blue-300);
+  -webkit-mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.45;
+    background-image: conic-gradient(from 270deg at var(--module-size) var(--module-size), var(--module-color, var(--color-border-strong)) 0 90deg, transparent 0);
+    background-size: var(--module-pitch) var(--module-pitch);
+    background-position: calc((var(--module-pitch) - var(--module-size)) / 2) calc((var(--module-pitch) - var(--module-size)) / 2);
+  }
+  & > canvas {
+    position: absolute;
+    inset: 0;
+  }
+}
+@utility module-field-dark { --module-color: var(--color-border-on-dark-strong); }
+@utility module-field-mask-left { --module-mask: linear-gradient(to right, transparent 8%, #000 60%); }
+@utility module-field-mask-none { --module-mask: none; }
+
+/* ---------- base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+  body {
+    background: var(--color-surface-page);
+    color: var(--color-text-primary);
+    font-family: var(--font-text);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-blue-200);
+    color: var(--color-excellence-blue);
+  }
+  :focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}
+/* ---------- landing-only: living mockup (CI pipeline loop, driven by JS clock) ---------- */
+@utility pipeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  & > li {
+    position: relative;
+    padding-top: 34px;
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    line-height: var(--text-caption--line-height);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    transition: color var(--dur-base) var(--ease-standard);
+  }
+  & > li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    background: var(--color-border-strong);
+    transition: background-color var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
+  }
+  & > li::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    right: calc(-1 * var(--grid-gap));
+    height: 2px;
+    border-radius: var(--radius-full);
+    background: var(--color-border-default);
+    transition: background-color var(--dur-base) var(--ease-standard);
+  }
+  & > li:last-child::after {
+    display: none;
+  }
+  & > li[data-state="done"] {
+    color: var(--color-text-primary);
+  }
+  & > li[data-state="done"]::before,
+  & > li[data-state="done"]::after {
+    background: var(--color-elevate-blue);
+  }
+  & > li[data-state="active"] {
+    color: var(--color-elevate-blue);
+  }
+  & > li[data-state="active"]::before {
+    background: var(--color-elevate-blue);
+    box-shadow: 0 0 0 4px var(--color-blue-tint-50);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & > li,
+    & > li::before,
+    & > li::after {
+      transition: none;
+    }
+  }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="elaniin-logo" viewBox="0 0 364.43 81.38"><defs><style>.uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413{fill:#141414;}.uuid-0571ab0d-4279-482c-ba13-b56705a88b78{fill:#1054ff;}</style></defs><g id="uuid-6c66203c-0ba6-4869-9542-1fb1cd232807"><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0571ab0d-4279-482c-ba13-b56705a88b78" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-80aeb2ca-ac71-423b-a03f-370e7a42a413" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></symbol>
+<symbol id="elaniin-logo-white" viewBox="0 0 364.43 81.38"><defs><style>.uuid-0182cc41-29a0-4b21-9199-223efa245f4d{fill:#f0f0f3;}.uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd{fill:#141414;}.uuid-9e86be49-452b-4f62-b4fb-53b71208d740{fill:#1054ff;}</style></defs><g id="uuid-74b0c51a-cb41-4dbb-a49b-f5c490671e0d"><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-9e86be49-452b-4f62-b4fb-53b71208d740" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-b25288dd-5c20-496b-86dd-a4d6b4cf8afd" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M51.54,5.92v6.66c0,.17-.14.31-.31.31H13.19c-.17,0-.31-.14-.31-.31v-6.66C12.89,2.66,15.55,0,18.8,0h26.82c3.25,0,5.92,2.66,5.92,5.92Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M5.44,12.89h7.12c.18,0,.33.15.33.33v29.15c0,.18-.15.33-.33.33H.33c-.18,0-.33-.15-.33-.33v-24.04c0-2.99,2.45-5.44,5.44-5.44Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M58.99,12.89h-7.13c-.17,0-.32.14-.32.32v29.17c0,.17.14.32.32.32h12.25c.17,0,.32-.14.32-.32v-24.05c0-2.99-2.45-5.44-5.44-5.44Z"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="38.66" y="43.06" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="25.77" y="55.61" width="12.89" height="12.89" rx=".32" ry=".32"/><rect class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" x="12.89" y="68.49" width="12.89" height="12.89" rx=".32" ry=".32"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M124.4,60.22c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79h-42.39c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM118.92,32.89c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" points="142.6 75.06 142.59 .36 153.12 .3 153.14 75.07 142.6 75.06"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M212.16,75.08h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM198.46,61.61c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M243.35,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M289.04,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M337.12,29.89c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="283.69" cy="9.33" r="5.47"/><circle class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" cx="302.52" cy="9.33" r="5.47"/><path class="uuid-0182cc41-29a0-4b21-9199-223efa245f4d" d="M307.87,20.7h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></symbol>
+</svg>
+
+<div class="spotlight" aria-hidden="true"></div>
+<div class="relative z-10">
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-button focus:border focus:border-border-default focus:shadow-menu">Saltar al contenido</a>
+
+<header class="sticky top-0 z-40 border-b border-border-default bg-white/90 backdrop-blur">
+  <div class="container-site flex h-16 items-center justify-between">
+    <a href="#" class="flex items-center focus-ring" aria-label="Elaniin Style, inicio">
+      <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo"/></svg>
+    </a>
+    <nav class="hidden items-center gap-8 text-body-sm text-text-secondary md:flex" aria-label="Principal">
+      <a href="#install" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Instalar</a>
+      <a href="#how" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Cómo funciona</a>
+      <a href="https://github.com/danielpineda-elaniin/elaniin-style" class="btn-arrow ml-2 inline-flex h-10 items-center gap-2 rounded-button border border-border-ink px-4 font-display text-body-sm font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">GitHub <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+    </nav>
+    <a href="#install" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 font-display text-body-sm font-medium text-white md:hidden focus-ring">Instalar</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="relative isolate overflow-hidden section-y" style="--section-y:104px">
+    <div class="module-field" data-module-field aria-hidden="true"></div>
+    <div class="container-site relative">
+      <p class="mono-label text-caption text-text-muted rise" style="--i:0">Plugin para Claude</p>
+      <h1 class="mt-4 max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">El estilo Elaniin, dentro de Claude</h1>
+      <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise" style="--i:2">Pide un deck, un dashboard o una landing y Claude los arma con el sistema de diseño Elaniin 2027. Se instala una vez y se actualiza solo.</p>
+      <div class="mt-10 flex flex-wrap items-center gap-4 rise" style="--i:3">
+        <a href="#install" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Instalar ahora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+        <a href="#how" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button px-2 font-display text-body font-medium text-elevate-blue transition-colors duration-base hover:text-text-link-hover focus-ring">Cómo funciona <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="section-y-compact border-y border-border-default bg-surface-subtle">
+    <div class="container-site">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="min-w-0">
+          <p class="mono-label text-caption text-text-muted">Cómo funciona</p>
+          <h2 class="mt-3 font-display font-medium text-h3 text-text-primary">Una instalación, siempre al día</h2>
+        </div>
+        <p class="mono-label text-caption text-elevate-blue" data-pipeline-status aria-live="off">Listo ✓</p>
+      </div>
+      <ol class="pipeline mt-8" data-pipeline>
+        <li data-state="done">Instalar</li>
+        <li data-state="done">Activar</li>
+        <li data-state="done">Crear</li>
+        <li data-state="done">Actualizar</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="install" class="section-y-compact">
+    <div class="container-site text-center">
+      <p class="mono-label text-caption text-text-muted">Elige tu camino</p>
+      <h2 class="mx-auto mt-3 max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">¿Quién va a instalarlo?</h2>
+      <div role="tablist" aria-label="Tipo de usuario" class="mt-8 inline-flex rounded-button border border-border-ink p-1">
+        <button type="button" role="tab" id="tab-team" data-tab="team" aria-controls="panel-team" aria-selected="true" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">Soy del equipo</button>
+        <button type="button" role="tab" id="tab-devs" data-tab="devs" aria-controls="panel-devs" aria-selected="false" tabindex="-1" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">Soy dev</button>
+      </div>
+      <p class="mx-auto mt-4 max-w-[56ch] text-body-sm text-text-muted">Equipo: se instala desde la app de Claude, sin terminal. Dev: CLI, scopes, auto-update y edición de piezas.</p>
+    </div>
+  </section>
+
+  <section class="border-t border-border-default" aria-label="Guía de instalación">
+<div data-panel="team" id="panel-team" role="tabpanel" aria-labelledby="tab-team" class="rise">
+  <div class="container-site section-y-compact">
+    <p class="mono-label text-caption text-text-muted">Para el equipo</p>
+<h2 class="mt-3 max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Instálalo en 5 pasos, sin terminal</h2>
+<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Todo ocurre dentro de Claude. Toma menos de dos minutos y solo se hace una vez.</p>
+    <ol class="mt-10 grid gap-x-10 border-t border-border-default md:grid-cols-2">
+      <li class="card-glow lift min-w-0 border-b border-border-default pb-8 pt-6">
+  <p class="mono-label text-caption text-elevate-blue">01</p>
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Abre Claude y entra a Plugins</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">En la app de Claude (o en claude.ai) abre el menú <strong>Customize</strong> y luego <strong>Plugins</strong>.</p>
+</li>
+<li class="card-glow lift min-w-0 border-b border-border-default pb-8 pt-6">
+  <p class="mono-label text-caption text-elevate-blue">02</p>
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Agrega el marketplace de Elaniin</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Pulsa <strong>Add → Add marketplace</strong> y pega esta dirección. Si Claude pide conectar GitHub, acepta: es solo para leer el plugin.</p><div class="mt-4"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">dirección</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>danielpineda-elaniin/elaniin-style</code></pre>
+</div></div>
+</li>
+<li class="card-glow lift min-w-0 border-b border-border-default pb-8 pt-6">
+  <p class="mono-label text-caption text-elevate-blue">03</p>
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Instala Elaniin Style</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Entra a <strong>Discover</strong>, elige <strong>elaniin-style</strong> y pulsa <strong>Add</strong>. Queda guardado en tu cuenta.</p>
+</li>
+<li class="card-glow lift min-w-0 border-b border-border-default pb-8 pt-6">
+  <p class="mono-label text-caption text-elevate-blue">04</p>
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Actívalo la primera vez</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Escribe <code class="break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary">/</code> en el chat y elige <strong>elaniin-style</strong>. Después Claude lo usa solo cuando pides algo Elaniin.</p>
+</li>
+<li class="card-glow lift min-w-0 border-b border-border-default pb-8 pt-6">
+  <p class="mono-label text-caption text-elevate-blue">05</p>
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Deja que se actualice solo</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">En la entrada del marketplace activa <strong>Sync automatically</strong>. Así recibes las mejoras sin hacer nada más.</p>
+</li>
+    </ol>
+  </div>
+  <div class="container-site pb-16">
+    <p class="mono-label text-caption text-text-muted">Pruébalo</p>
+    <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Cuatro pedidos para empezar</h3>
+    <div class="mt-8 grid gap-6 md:grid-cols-2"><div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+  <p class="mono-label text-caption text-text-muted">Presentación</p>
+  <p class="mt-3 break-words font-display font-medium text-h4 text-text-primary">Crea un pitch deck de 8 slides con el estilo Elaniin para presentar nuestro servicio de producto digital.</p>
+  <button type="button" data-copy-text="Crea un pitch deck de 8 slides con el estilo Elaniin para presentar nuestro servicio de producto digital." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+</div>
+<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+  <p class="mono-label text-caption text-text-muted">Reporte</p>
+  <p class="mt-3 break-words font-display font-medium text-h4 text-text-primary">Diseña un dashboard con el estilo Elaniin con las métricas del último trimestre que te voy a pegar.</p>
+  <button type="button" data-copy-text="Diseña un dashboard con el estilo Elaniin con las métricas del último trimestre que te voy a pegar." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+</div>
+<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+  <p class="mono-label text-caption text-text-muted">Página</p>
+  <p class="mt-3 break-words font-display font-medium text-h4 text-text-primary">Construye una landing con el estilo Elaniin para presentar nuestro nuevo servicio.</p>
+  <button type="button" data-copy-text="Construye una landing con el estilo Elaniin para presentar nuestro nuevo servicio." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+</div>
+<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+  <p class="mono-label text-caption text-text-muted">Textura</p>
+  <p class="mt-3 break-words font-display font-medium text-h4 text-text-primary">Agrega la textura interactiva module field al hero de esta página, como en el sitio de Elaniin.</p>
+  <button type="button" data-copy-text="Agrega la textura interactiva module field al hero de esta página, como en el sitio de Elaniin." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+</div></div>
+  </div>
+  <div class="container-site pb-24">
+    <p class="mono-label text-caption text-text-muted">Preguntas frecuentes</p>
+    <div class="mt-6 border-b border-border-default"><details class="group border-t border-border-default py-4">
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Tengo que instalar algo en mi computadora?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">No. Se instala dentro de Claude, desde la pantalla de Plugins. No usas terminal.</p>
+</details>
+<details class="group border-t border-border-default py-4">
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Cómo sé que está activo?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Pídele a Claude un deck o una página “con el estilo Elaniin”. Debe usar el logo oficial, blanco y gris con bandas azul oscuro, y animaciones suaves.</p>
+</details>
+<details class="group border-t border-border-default py-4">
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Cuándo llegan las mejoras?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Si activaste <strong>Sync automatically</strong>, solas. Si no, abre Plugins y pulsa <strong>Check for updates</strong>.</p>
+</details>
+<details class="group border-t border-border-default py-4">
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">Mi deck o página necesita un cambio fino<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Pídeselo a Claude en la misma conversación. Si necesitas edición manual, pasa el archivo HTML a una persona de desarrollo: está hecho con Tailwind para eso.</p>
+</details>
+<details class="group border-t border-border-default py-4">
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">No encuentro el marketplace o me pide permisos<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Pide a tu líder de equipo que te dé acceso al repositorio de GitHub de Elaniin Style y vuelve a intentar el paso 02.</p>
+</details></div>
+  </div>
+</div>
+<div data-panel="devs" id="panel-devs" role="tabpanel" aria-labelledby="tab-devs" class="rise">
+  <div class="container-site section-y-compact">
+    <p class="mono-label text-caption text-text-muted">Para desarrollo</p>
+<h2 class="mt-3 max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Instalación, uso y edición de piezas</h2>
+<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Claude Code, scopes, repos compartidos, auto-update y cómo editar a mano un deck o una página con la API de Tailwind.</p>
+    <nav aria-label="Secciones para desarrollo" class="mt-8 flex flex-wrap gap-x-6"><a href="#dev-1" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">01 · Instalar</a>
+<a href="#dev-2" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">02 · Scopes</a>
+<a href="#dev-3" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">03 · Repo compartido</a>
+<a href="#dev-4" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">04 · Privado</a>
+<a href="#dev-5" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">05 · Actualizar</a>
+<a href="#dev-6" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">06 · Usar</a>
+<a href="#dev-7" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">07 · Editar piezas</a>
+<a href="#dev-8" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">08 · Textura</a>
+<a href="#dev-9" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">09 · Organización</a>
+<a href="#dev-10" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">10 · Problemas</a>
+<a href="#dev-11" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">11 · Repo</a></nav>
+  </div>
+  <div class="container-site pb-24"><section id="dev-1" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">01</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Instalar con la CLI</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Requiere Claude Code. El plugin vive en el marketplace <code class="font-mono text-code text-text-primary">elaniin-style-marketplace</code> de este repositorio.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># 1) agregar el marketplace
+claude plugin marketplace add danielpineda-elaniin/elaniin-style
+
+# 2) instalar (scope user por defecto)
+claude plugin install elaniin-style@elaniin-style-marketplace
+
+# 3) verificar
+claude plugin list</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Todo en un paso (Claude Code 2.1.292 o superior):</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>claude plugin install elaniin-style --marketplace danielpineda-elaniin/elaniin-style</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Dentro de una sesión de Claude Code, los mismos pasos son:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">claude code</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>/plugin marketplace add danielpineda-elaniin/elaniin-style
+/plugin install elaniin-style@elaniin-style-marketplace
+/reload-plugins</code></pre>
+</div></div>
+</section>
+<section id="dev-2" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">02</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Elegir el scope</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Agrega <code class="font-mono text-code text-text-primary">--scope</code> al comando <code class="font-mono text-code text-text-primary">install</code>. Local gana sobre proyecto, y proyecto sobre usuario.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">user</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">~/.claude/settings.json</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Predeterminado. Para todos tus proyectos.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">project</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">.claude/settings.json</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Se commitea. Cada colaborador corre una vez el install.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">local</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">.claude/settings.local.json</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Solo tú, solo este repo.</p>
+</div></div></div>
+</section>
+<section id="dev-3" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">03</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Habilitarlo en un repo compartido</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Commitea esto en <code class="font-mono text-code text-text-primary">.claude/settings.json</code> para que todo el equipo vea el marketplace. Se aplica después de aceptar la confianza del folder, y cada persona aún corre <code class="font-mono text-code text-text-primary">claude plugin install … --scope project</code> una vez.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">json</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>{
+  &quot;extraKnownMarketplaces&quot;: {
+    &quot;elaniin-style-marketplace&quot;: {
+      &quot;source&quot;: { &quot;source&quot;: &quot;github&quot;, &quot;repo&quot;: &quot;danielpineda-elaniin/elaniin-style&quot; },
+      &quot;autoUpdate&quot;: true
+    }
+  },
+  &quot;enabledPlugins&quot;: {
+    &quot;elaniin-style@elaniin-style-marketplace&quot;: true
+  }
+}</code></pre>
+</div></div>
+</section>
+<section id="dev-4" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">04</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Repositorio privado</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Claude Code corre git sin prompts, con tus credenciales existentes. No hay campo de token en el marketplace.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># HTTPS
+gh auth login
+gh auth setup-git
+
+# o SSH: llave en ssh-agent sin passphrase y github.com en known_hosts
+# fuerza HTTPS si no quieres que pruebe SSH primero:
+export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">La actualización en segundo plano solo usa credenciales guardadas: <code class="font-mono text-code text-text-primary">GITHUB_TOKEN</code> por sí solo no la autentica.</p></div>
+</section>
+<section id="dev-5" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">05</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Actualizar y desinstalar</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">El plugin no define <code class="font-mono text-code text-text-primary">version</code>: cada commit del repo cuenta como versión nueva. Con <code class="font-mono text-code text-text-primary">autoUpdate</code> activo se descarga solo unos minutos después de abrir una sesión; la sesión en curso conserva la versión cargada hasta <code class="font-mono text-code text-text-primary">/reload-plugins</code> o reiniciar.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># actualizar a mano
+claude plugin update elaniin-style@elaniin-style-marketplace
+# o desde una sesión
+/plugin marketplace update elaniin-style-marketplace
+/reload-plugins
+
+# desinstalar / quitar el marketplace
+claude plugin uninstall elaniin-style@elaniin-style-marketplace
+claude plugin marketplace remove elaniin-style-marketplace</code></pre>
+</div></div>
+</section>
+<section id="dev-6" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">06</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Usar el skill</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Claude lo carga solo cuando el pedido encaja. También puedes invocarlo con su nombre con namespace:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">claude code</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>/elaniin-style:elaniin-style</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Cuatro modos: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> y <strong>site-dev</strong> (el sitio Elaniin 2027 en Next.js). Pide en español o inglés; el skill responde en tu idioma. El script que instala <code class="font-mono text-code text-text-primary">motion</code> corre en silencio solo si el proyecto tiene <code class="font-mono text-code text-text-primary">package.json</code>.</p></div>
+</section>
+<section id="dev-7" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">07</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Editar un deck o una página generada</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Los entregables son <strong>un solo archivo HTML autocontenido</strong>: llevan Tailwind v4 (<code class="font-mono text-code text-text-primary">@tailwindcss/browser</code> fijado en 4.3.3) y el bloque de tokens embebido. No dependen de que el plugin siga instalado ni se actualizan solos: son del proyecto. Se editan con clases de Tailwind como cualquier HTML.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Color</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">bg-elevate-blue · bg-excellence-blue · bg-inspire-grey · text-text-primary · text-text-secondary · text-text-muted</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">elevate-blue solo como detalle (&lt;5% del área).</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Tipografía</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">font-display · font-text · font-mono · text-display-xl · text-h1…h4 · text-lead · text-body · text-caption</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Escala fluida; no uses tamaños sueltos.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Forma y sombra</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">rounded-button · rounded-card · rounded-input · shadow-card-rest · shadow-menu · shadow-product</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Radios y sombras vienen de @theme.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Layout</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">container-site · section-y · section-y-statement · section-y-compact · pad-card</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Gutter y ritmo vertical responsive.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Movimiento</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">duration-fast · duration-base · duration-slow · duration-reveal · rise · reveal · card-glow · lift · btn-arrow</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Duraciones con nombre: nunca duration-200.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Foco</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">focus-ring · focus-ring-on-dark</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Anillo doble visible en :focus-visible.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Breakpoints</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">sm 640 · md 768 · lg 1024 · xl 1280</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Los defaults de Tailwind se resetean a propósito.</p>
+</div></div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Reglas al editar</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Sin hex ni valores sueltos: usa el token (<code class="font-mono text-code text-text-primary">bg-elevate-blue</code>, no <code class="font-mono text-code text-text-primary">bg-[#1054ff]</code>).</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Colores y escalas por defecto de Tailwind no existen: <code class="font-mono text-code text-text-primary">bg-red-500</code> no compila.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Nada de selectores de clase sueltos en <code class="font-mono text-code text-text-primary">&lt;style&gt;</code>: cada recurso nuevo es un <code class="font-mono text-code text-text-primary">@utility</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">El deck no lleva clases responsive: su canvas siempre mide 1280×720. Usa <code class="font-mono text-code text-text-primary">grid-cols-3</code>, no <code class="font-mono text-code text-text-primary">md:grid-cols-3</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Mantén <code class="font-mono text-code text-text-primary">min-w-0</code> en hijos de grid/flex y <code class="font-mono text-code text-text-primary">overflow-hidden</code> en cards: cero overflow.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Respeta reduced-motion: toda animación nueva debe apagarse con <code class="font-mono text-code text-text-primary">prefers-reduced-motion</code>.</span></li></ul><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Ejemplo</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">html</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;a class=&quot;inline-flex h-12 items-center rounded-button bg-elevate-blue px-6
+          font-display font-medium text-white hover:bg-blue-600 active:bg-blue-700
+          transition-colors duration-base focus-ring&quot;&gt;
+  Empezar
+&lt;/a&gt;</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">El script de navegador necesita internet para compilar. Para llevar la pieza a un proyecto real, cambia al plugin de build y pega <code class="font-mono text-code text-text-primary">tokens.css</code> (está en <code class="font-mono text-code text-text-primary">skills/elaniin-style/templates/</code>) en tu CSS de entrada.</p><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Vite</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>npm install tailwindcss @tailwindcss/vite</code></pre>
+</div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">ts</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>// vite.config.ts
+import { defineConfig } from &#x27;vite&#x27;
+import tailwindcss from &#x27;@tailwindcss/vite&#x27;
+
+export default defineConfig({ plugins: [tailwindcss()] })</code></pre>
+</div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">css</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>/* src/index.css — @import va PRIMERO */
+@import &quot;tailwindcss&quot;;
+
+/* …y debajo pega el contenido completo de tokens.css
+   (@theme, :root, @utility, @layer base) */</code></pre>
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Next.js</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>npm install tailwindcss @tailwindcss/postcss postcss</code></pre>
+</div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">js</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>// postcss.config.mjs
+const config = { plugins: { &quot;@tailwindcss/postcss&quot;: {} } };
+export default config;</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Inventario completo clase → token → valor: <code class="font-mono text-code text-text-primary">references/tailwind-api.md</code> dentro del plugin.</p></div>
+</section>
+<section id="dev-8" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">08</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Textura interactiva: module field</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Es la textura firma del sitio Elaniin: una cuadrícula de cuadritos de 2 px cada 16 px (gris al 45%) que, al mover el mouse, se enciende celda por celda subiendo la rampa <strong>blue-300 → blue-400 → blue-500</strong> y se apaga en ~260 ms. Va en el fondo del hero y del CTA final. Es la misma del sitio <code class="font-mono text-code text-text-primary">elaniin-2027-website-main</code>, portada como recurso del skill.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">module-field</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">Cuadrícula en reposo, solo CSS. Primer hijo del host.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Base obligatoria.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">module-field-dark</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">Cuadritos blancos tenues para bandas oscuras.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Sobre excellence-blue.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">module-field-mask-left / -none</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">Desvanece hacia la izquierda, o sin desvanecer.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Por defecto se desvanece hacia abajo.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">--module-size · --module-pitch</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">2px · 16px en :root. El rastro lo lee del CSS.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Cámbialos solo en tokens.</p>
+</div></div><p class="max-w-[68ch] break-words text-body text-text-secondary">HTML (el host debe llevar <code class="font-mono text-code text-text-primary">relative isolate overflow-hidden</code> y el contenido <code class="font-mono text-code text-text-primary">relative</code>):</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">html</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;section class=&quot;relative isolate overflow-hidden section-y&quot;&gt;
+  &lt;div class=&quot;module-field&quot; data-module-field aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;container-site relative&quot;&gt;…contenido…&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- sobre fondo oscuro, desvanecida a la izquierda --&gt;
+&lt;section class=&quot;relative isolate overflow-hidden section-y bg-excellence-blue text-white&quot;&gt;
+  &lt;div class=&quot;module-field module-field-dark module-field-mask-left&quot;
+       data-module-field aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;container-site relative&quot;&gt;…contenido…&lt;/div&gt;
+&lt;/section&gt;</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">El rastro del mouse es un script de ~90 líneas sin dependencias. Los templates ya lo traen inline; en otros proyectos:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">html</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;script src=&quot;module-field.js&quot;&gt;&lt;/script&gt;
+&lt;!-- o pega el contenido de templates/module-field.js dentro de un &lt;script&gt; al final del body --&gt;</code></pre>
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">React / Next.js</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">tsx</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>// Next.js / React: copia templates/module-field.tsx a src/components/
+import { ModuleField } from &quot;@/components/module-field&quot;;
+
+&lt;section className=&quot;relative isolate overflow-hidden section-y&quot;&gt;
+  &lt;ModuleField /&gt;                       {/* fade=&quot;bottom&quot; tone=&quot;light&quot; */}
+  &lt;div className=&quot;container-site relative&quot;&gt;…&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;ModuleField fade=&quot;left&quot; tone=&quot;dark&quot; /&gt; {/* para bandas excellence-blue */}</code></pre>
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Reglas</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Solo en hero y CTA final, una por sección. Nunca como relleno de cards ni detrás de bloques de texto largo.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Es textura, no protagonista: opacidad en reposo 45% y sin glows ni degradados encima.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Los cuadritos son decorativos: <code class="font-mono text-code text-text-primary">aria-hidden="true"</code> y sin eventos de puntero propios.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">En pantallas táctiles y con <code class="font-mono text-code text-text-primary">prefers-reduced-motion</code> no hay rastro: queda solo la cuadrícula estática.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">El script también se necesita si agregas la textura a un HTML ya generado: sin él solo verás la cuadrícula en reposo.</span></li></ul></div>
+</section>
+<section id="dev-9" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">09</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Despliegue para toda la organización</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Para que el auto-update sea obligatorio y nadie pueda apagarlo, ponlo en <em>managed settings</em> (Organization settings → Claude Code → Managed settings, MDM o <code class="font-mono text-code text-text-primary">managed-settings.json</code>). Con <code class="font-mono text-code text-text-primary">autoUpdate</code> definido ahí, el toggle de <code class="font-mono text-code text-text-primary">/plugin</code> queda bloqueado.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">json</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>{
+  &quot;extraKnownMarketplaces&quot;: {
+    &quot;elaniin-style-marketplace&quot;: {
+      &quot;source&quot;: { &quot;source&quot;: &quot;github&quot;, &quot;repo&quot;: &quot;danielpineda-elaniin/elaniin-style&quot; },
+      &quot;autoUpdate&quot;: true
+    }
+  },
+  &quot;enabledPlugins&quot;: {
+    &quot;elaniin-style@elaniin-style-marketplace&quot;: true
+  }
+}</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Si usan <code class="font-mono text-code text-text-primary">DISABLE_AUTOUPDATER=1</code>, agreguen <code class="font-mono text-code text-text-primary">FORCE_AUTOUPDATE_PLUGINS=1</code> para mantener las actualizaciones del plugin.</p></div>
+</section>
+<section id="dev-10" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">10</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Solución de problemas</h3>
+  <div class="mt-6 min-w-0 space-y-5"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>claude plugin list              # ¿está instalado y habilitado?
+claude plugin details elaniin-style
+/status                         # ¿qué settings se aplican?</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">¿Falla el clone? Revisa las credenciales de git (bloque 04). ¿No aparece el comando? Corre <code class="font-mono text-code text-text-primary">/reload-plugins</code> o abre una sesión nueva. ¿Sigue la versión vieja? <code class="font-mono text-code text-text-primary">claude plugin update</code> y recarga.</p></div>
+</section>
+<section id="dev-11" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">11</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Qué trae el repositorio</h3>
+  <div class="mt-6 min-w-0 space-y-5"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">árbol</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>.claude-plugin/        marketplace.json + plugin.json
+skills/elaniin-style/
+├── SKILL.md           pipeline de 5 fases y reglas
+├── assets/            logos oficiales y favicon
+├── references/        tokens, tailwind-api, motion, ux-a11y, websites, decks, dashboards
+├── scripts/           ensure-motion.sh
+└── templates/         tokens.css, landing.html, dashboard.html, deck.html</code></pre>
+</div></div>
+</section></div>
+</div>
+  </section>
+
+  <section class="relative isolate overflow-hidden section-y bg-excellence-blue text-white">
+    <div class="module-field module-field-dark module-field-mask-left" data-module-field aria-hidden="true"></div>
+    <div class="container-site relative text-center">
+      <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-white">¿Algo no funciona?</h2>
+      <p class="mx-auto mt-5 max-w-[56ch] text-lead text-text-on-dark-secondary">Abre un issue en el repositorio con el paso donde te quedaste y el mensaje que viste.</p>
+      <a href="https://github.com/danielpineda-elaniin/elaniin-style/issues" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring-on-dark">Abrir un issue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-elaniin-black text-white">
+  <div class="container-site py-12">
+    <div class="flex flex-wrap items-center justify-between gap-6 border-b border-border-on-dark pb-8">
+      <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo-white"/></svg>
+      <a href="https://github.com/danielpineda-elaniin/elaniin-style" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-on-dark-secondary transition-colors duration-base hover:text-white focus-ring-on-dark">Repositorio en GitHub</a>
+    </div>
+    <p class="mono-label mt-8 text-caption text-text-on-dark-muted">© 2026 Elaniin · Elaniin Style</p>
+  </div>
+</footer>
+</div>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* switch: Equipo / Dev (hash-synced, arrow keys) */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-tab]'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+  function select(name, focus, push) {
+    tabs.forEach(function (t) {
+      var on = t.dataset.tab === name;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      if (on && focus) t.focus();
+    });
+    panels.forEach(function (p) { p.hidden = p.dataset.panel !== name; });
+    if (push) { try { history.replaceState(null, '', '#' + name); } catch (e) {} }
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t.dataset.tab, false, true); });
+    t.addEventListener('keydown', function (e) {
+      var k = e.key, n = null;
+      if (k === 'ArrowRight' || k === 'ArrowDown') n = tabs[(i + 1) % tabs.length];
+      else if (k === 'ArrowLeft' || k === 'ArrowUp') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (k === 'Home') n = tabs[0];
+      else if (k === 'End') n = tabs[tabs.length - 1];
+      if (n) { e.preventDefault(); select(n.dataset.tab, true, true); }
+    });
+  });
+  var h = (location.hash || '').replace('#', '');
+  select(h === 'devs' ? 'devs' : 'team', false, false);
+  addEventListener('hashchange', function () {
+    var x = location.hash.replace('#', '');
+    if (x === 'devs' || x === 'team') select(x, false, false);
+  });
+
+  /* copy buttons */
+  function copy(text, ok, fail) {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fail);
+    else fail();
+  }
+  function flashText(node, label) {
+    var old = node.nodeValue;
+    node.nodeValue = label;
+    setTimeout(function () { node.nodeValue = old; }, 1600);
+  }
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var pre = b.closest('.rounded-code').querySelector('pre');
+      copy(pre.innerText, function () { flashText(b.firstChild, 'Copiado'); }, function () { flashText(b.firstChild, 'Selecciona y copia'); });
+    });
+  });
+  document.querySelectorAll('[data-copy-text]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      copy(b.dataset.copyText, function () { flashText(b.firstChild, 'Copiado '); }, function () { flashText(b.firstChild, 'Selecciona y copia '); });
+    });
+  });
+
+  /* living loop: install pipeline, paused off-screen */
+  var pipeline = document.querySelector('[data-pipeline]');
+  var statusEl = document.querySelector('[data-pipeline-status]');
+  if (pipeline) {
+    var steps = Array.prototype.slice.call(pipeline.children);
+    var names = ['Instalando…', 'Activando…', 'Creando…', 'Actualizando…', 'Listo ✓'];
+    if (reduce) {
+      steps.forEach(function (li) { li.setAttribute('data-state', 'done'); });
+      if (statusEl) statusEl.textContent = names[4];
+    } else {
+      var PERIOD = 7000, STEP = 1400, last = -1, raf = null, t0 = 0;
+      var setPhase = function (ph) {
+        if (ph === last) return;
+        last = ph;
+        for (var i = 0; i < steps.length; i++) steps[i].setAttribute('data-state', i < ph ? 'done' : i === ph ? 'active' : 'idle');
+        if (statusEl) statusEl.textContent = names[Math.min(ph, 4)];
+      };
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) {
+          if (en.isIntersecting && raf === null) {
+            t0 = performance.now(); last = -1;
+            raf = requestAnimationFrame(function loop(now) {
+              setPhase(Math.min(Math.floor(((now - t0) % PERIOD) / STEP), 4));
+              raf = requestAnimationFrame(loop);
+            });
+          } else if (!en.isIntersecting && raf !== null) { cancelAnimationFrame(raf); raf = null; }
+        });
+      }, { threshold: 0.3 }).observe(pipeline);
+    }
+  }
+
+  /* mouse-reactive spotlight + card glow */
+  if (!reduce) {
+    addEventListener('mousemove', function (e) {
+      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+      document.documentElement.style.setProperty('--my', e.clientY + 'px');
+    }, { passive: true });
+    document.addEventListener('pointermove', function (e) {
+      var c = e.target.closest && e.target.closest('.card-glow');
+      if (!c) return;
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--cx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--cy', (e.clientY - r.top) + 'px');
+    });
+  }
+})();
+</script>
+<script>
+/*
+  Elaniin module field — pointer trail (vanilla, no dependencies).
+  Ported from elaniin-2027-website-main: src/components/sections/hero/module-field.tsx
+
+  The resting grid is pure CSS (the `module-field` utility in tokens.css). This script only
+  adds the lit layer: a canvas where squares within 6 cells of the pointer light up cell by
+  cell, stepping up the blue ramp (blue-300 -> blue-400 -> blue-500) and fading out in ~260ms.
+  Off for touch screens and prefers-reduced-motion (the resting grid stays as texture).
+
+  Markup (host must be position:relative + overflow-hidden; the field listens on its parent):
+    <section class="relative isolate overflow-hidden section-y">
+      <div class="module-field" data-module-field aria-hidden="true"></div>
+      <div class="container-site relative">…content…</div>
+    </section>
+
+  Paste inside a <script> at the end of <body>, or load it as a file. Safe to run twice.
+*/
+(function () {
+  var fields = document.querySelectorAll('[data-module-field]');
+  if (!fields.length) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(pointer: coarse)').matches) return;
+
+  var RADIUS = 6;     // cells of influence around the pointer
+  var DECAY_MS = 260; // time constant of the fade-out
+  var SIZES = [3, 3, 2];                  // px, brightest step first
+  var MIN = [0.66, 0.33, 0.04];           // intensity thresholds per step
+  var FALLBACK = ['#1054ff', '#4d75fd', '#6a9aff'];
+
+  Array.prototype.forEach.call(fields, function (field) {
+    if (field.dataset.moduleReady) return;
+    field.dataset.moduleReady = '1';
+
+    var host = field.parentElement;
+    var cs = getComputedStyle(field);
+    var pitch = parseFloat(cs.getPropertyValue('--module-pitch')) || 16;
+    var colors = [1, 2, 3].map(function (n, i) {
+      return cs.getPropertyValue('--module-lit-' + n).trim() || FALLBACK[i];
+    });
+
+    var canvas = document.createElement('canvas');
+    field.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    if (!host || !ctx) return;
+
+    var cols = 0, dpr = 1;
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = host.getBoundingClientRect();
+      canvas.width = Math.round(r.width * dpr);
+      canvas.height = Math.round(r.height * dpr);
+      canvas.style.width = r.width + 'px';
+      canvas.style.height = r.height + 'px';
+      cols = Math.ceil(r.width / pitch);
+    }
+    resize();
+    new ResizeObserver(resize).observe(host);
+
+    var lit = new Map(); // cell index -> intensity 0..1
+    var raf = 0, last = 0;
+
+    function draw(now) {
+      var dt = last ? now - last : 16;
+      last = now;
+      var k = Math.exp(-dt / DECAY_MS);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+      lit.forEach(function (v, key) {
+        var next = v * k;
+        if (next < 0.04) { lit.delete(key); return; }
+        lit.set(key, next);
+        var step = next >= MIN[0] ? 0 : next >= MIN[1] ? 1 : 2;
+        var size = SIZES[step];
+        ctx.fillStyle = colors[step];
+        ctx.fillRect((key % cols) * pitch + pitch / 2 - size / 2,
+                     Math.floor(key / cols) * pitch + pitch / 2 - size / 2, size, size);
+      });
+      if (lit.size > 0) raf = requestAnimationFrame(draw);
+      else { raf = 0; last = 0; }
+    }
+
+    host.addEventListener('pointermove', function (e) {
+      var rect = host.getBoundingClientRect();
+      var cx = (e.clientX - rect.left) / pitch, cy = (e.clientY - rect.top) / pitch;
+      var c0 = Math.floor(cx), r0 = Math.floor(cy);
+      for (var dy = -RADIUS; dy <= RADIUS; dy++) {
+        for (var dx = -RADIUS; dx <= RADIUS; dx++) {
+          var col = c0 + dx, row = r0 + dy;
+          if (col < 0 || col >= cols || row < 0) continue;
+          var d = Math.hypot(col + 0.5 - cx, row + 0.5 - cy);
+          if (d > RADIUS) continue;
+          var v = Math.pow(1 - d / RADIUS, 1.4), key = row * cols + col;
+          if (v > (lit.get(key) || 0)) lit.set(key, v);
+        }
+      }
+      if (!raf) raf = requestAnimationFrame(draw);
+    });
+  });
+})();
+</script>
+</body>
+</html>

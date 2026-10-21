@@ -140,6 +140,16 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 | `spotlight` | radial 600px / 7% siguiendo `--mx,--my` (fixed, detrás del contenido) |
 | `card-glow` | glow radial 260px en `::after` siguiendo `--cx,--cy` al hover |
 
+### Textura firma — module field (hero / CTA)
+| Clase | Qué hace |
+|---|---|
+| `module-field` | cuadrícula 2px/16px (`--module-size`, `--module-pitch`), gris 45%, máscara hacia abajo; el rastro (canvas) lo pinta `templates/module-field.js` |
+| `module-field-dark` | cuadritos `border-on-dark-strong` para bandas oscuras |
+| `module-field-mask-left` / `-mask-none` | desvanece a la izquierda / sin máscara |
+
+Host: `relative isolate overflow-hidden`; contenido `relative`. Marcar con `data-module-field`
+y `aria-hidden="true"`. Rastro apagado en táctil y con reduced-motion.
+
 ### Interacciones
 | Clase | Qué hace |
 |---|---|

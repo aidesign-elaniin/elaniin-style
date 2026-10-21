@@ -229,6 +229,8 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --module-size: 2px;
+  --module-pitch: 16px;
 
   /* motion durations — consumed by the duration-* utilities (see contract §4) */
   --dur-instant: 100ms;
@@ -494,6 +496,39 @@
   }
 }
 
+/* ---------- utilities: module field (signature texture of hero / CTA) ---------- */
+/* Resting grid = pure CSS: 2px squares on a 16px pitch, grey at 45%, masked toward the bottom.
+   Pointer trail = templates/module-field.js (canvas, off for touch + reduced-motion).
+   Markup: <div class="module-field" data-module-field aria-hidden="true"></div> as the first
+   child of a `relative isolate overflow-hidden` host. Variants: module-field-dark,
+   module-field-mask-left, module-field-mask-none. */
+@utility module-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --module-lit-1: var(--color-blue-500);
+  --module-lit-2: var(--color-blue-400);
+  --module-lit-3: var(--color-blue-300);
+  -webkit-mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.45;
+    background-image: conic-gradient(from 270deg at var(--module-size) var(--module-size), var(--module-color, var(--color-border-strong)) 0 90deg, transparent 0);
+    background-size: var(--module-pitch) var(--module-pitch);
+    background-position: calc((var(--module-pitch) - var(--module-size)) / 2) calc((var(--module-pitch) - var(--module-size)) / 2);
+  }
+  & > canvas {
+    position: absolute;
+    inset: 0;
+  }
+}
+@utility module-field-dark { --module-color: var(--color-border-on-dark-strong); }
+@utility module-field-mask-left { --module-mask: linear-gradient(to right, transparent 8%, #000 60%); }
+@utility module-field-mask-none { --module-mask: none; }
+
 /* ---------- base ---------- */
 @layer base {
   html {
@@ -614,8 +649,9 @@
 
 <main id="main">
   <!-- HERO -->
-  <section class="section-y" style="--section-y:112px">
-    <div class="container-site">
+  <section class="relative isolate overflow-hidden section-y" style="--section-y:112px">
+    <div class="module-field" data-module-field aria-hidden="true"></div>
+    <div class="container-site relative">
       <p class="mono-label text-caption text-text-muted rise" style="--i:0">Digital product studio</p>
       <h1 class="mt-4 max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">We design products people actually use</h1>
       <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise" style="--i:2">Strategy, design and engineering for teams that ship. From zero-to-one products to full platform redesigns — in weeks, not quarters.</p>
@@ -747,8 +783,9 @@
   </section>
 
   <!-- CTA -->
-  <section class="section-y bg-excellence-blue text-white">
-    <div class="container-site text-center">
+  <section class="relative isolate overflow-hidden section-y bg-excellence-blue text-white">
+    <div class="module-field module-field-dark module-field-mask-left" data-module-field aria-hidden="true"></div>
+    <div class="container-site relative text-center">
       <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-white reveal">Ready to build something people love?</h2>
       <p class="mx-auto mt-5 max-w-[56ch] text-lead text-text-on-dark-secondary reveal" style="--i:1">Tell us about your product. We’ll come back within two business days with a plan.</p>
       <a href="#" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 text-body font-display font-medium text-white hover:bg-blue-600 transition-colors duration-base reveal" style="--i:2">Start a project
@@ -863,6 +900,106 @@
     });
   }, { threshold: 0.4 });
   document.querySelectorAll('[data-count]').forEach(function (el) { io.observe(el); });
+})();
+</script>
+<script>
+/*
+  Elaniin module field — pointer trail (vanilla, no dependencies).
+  Ported from elaniin-2027-website-main: src/components/sections/hero/module-field.tsx
+
+  The resting grid is pure CSS (the `module-field` utility in tokens.css). This script only
+  adds the lit layer: a canvas where squares within 6 cells of the pointer light up cell by
+  cell, stepping up the blue ramp (blue-300 -> blue-400 -> blue-500) and fading out in ~260ms.
+  Off for touch screens and prefers-reduced-motion (the resting grid stays as texture).
+
+  Markup (host must be position:relative + overflow-hidden; the field listens on its parent):
+    <section class="relative isolate overflow-hidden section-y">
+      <div class="module-field" data-module-field aria-hidden="true"></div>
+      <div class="container-site relative">…content…</div>
+    </section>
+
+  Paste inside a <script> at the end of <body>, or load it as a file. Safe to run twice.
+*/
+(function () {
+  var fields = document.querySelectorAll('[data-module-field]');
+  if (!fields.length) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(pointer: coarse)').matches) return;
+
+  var RADIUS = 6;     // cells of influence around the pointer
+  var DECAY_MS = 260; // time constant of the fade-out
+  var SIZES = [3, 3, 2];                  // px, brightest step first
+  var MIN = [0.66, 0.33, 0.04];           // intensity thresholds per step
+  var FALLBACK = ['#1054ff', '#4d75fd', '#6a9aff'];
+
+  Array.prototype.forEach.call(fields, function (field) {
+    if (field.dataset.moduleReady) return;
+    field.dataset.moduleReady = '1';
+
+    var host = field.parentElement;
+    var cs = getComputedStyle(field);
+    var pitch = parseFloat(cs.getPropertyValue('--module-pitch')) || 16;
+    var colors = [1, 2, 3].map(function (n, i) {
+      return cs.getPropertyValue('--module-lit-' + n).trim() || FALLBACK[i];
+    });
+
+    var canvas = document.createElement('canvas');
+    field.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    if (!host || !ctx) return;
+
+    var cols = 0, dpr = 1;
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = host.getBoundingClientRect();
+      canvas.width = Math.round(r.width * dpr);
+      canvas.height = Math.round(r.height * dpr);
+      canvas.style.width = r.width + 'px';
+      canvas.style.height = r.height + 'px';
+      cols = Math.ceil(r.width / pitch);
+    }
+    resize();
+    new ResizeObserver(resize).observe(host);
+
+    var lit = new Map(); // cell index -> intensity 0..1
+    var raf = 0, last = 0;
+
+    function draw(now) {
+      var dt = last ? now - last : 16;
+      last = now;
+      var k = Math.exp(-dt / DECAY_MS);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+      lit.forEach(function (v, key) {
+        var next = v * k;
+        if (next < 0.04) { lit.delete(key); return; }
+        lit.set(key, next);
+        var step = next >= MIN[0] ? 0 : next >= MIN[1] ? 1 : 2;
+        var size = SIZES[step];
+        ctx.fillStyle = colors[step];
+        ctx.fillRect((key % cols) * pitch + pitch / 2 - size / 2,
+                     Math.floor(key / cols) * pitch + pitch / 2 - size / 2, size, size);
+      });
+      if (lit.size > 0) raf = requestAnimationFrame(draw);
+      else { raf = 0; last = 0; }
+    }
+
+    host.addEventListener('pointermove', function (e) {
+      var rect = host.getBoundingClientRect();
+      var cx = (e.clientX - rect.left) / pitch, cy = (e.clientY - rect.top) / pitch;
+      var c0 = Math.floor(cx), r0 = Math.floor(cy);
+      for (var dy = -RADIUS; dy <= RADIUS; dy++) {
+        for (var dx = -RADIUS; dx <= RADIUS; dx++) {
+          var col = c0 + dx, row = r0 + dy;
+          if (col < 0 || col >= cols || row < 0) continue;
+          var d = Math.hypot(col + 0.5 - cx, row + 0.5 - cy);
+          if (d > RADIUS) continue;
+          var v = Math.pow(1 - d / RADIUS, 1.4), key = row * cols + col;
+          if (v > (lit.get(key) || 0)) lit.set(key, v);
+        }
+      }
+      if (!raf) raf = requestAnimationFrame(draw);
+    });
+  });
 })();
 </script>
 </body>

@@ -1,5 +1,6 @@
 {
   "name": "elaniin-style-marketplace",
+  "description": "Elaniin design system for Claude: decks, dashboards & reports, websites & landings.",
   "owner": {
     "name": "Elaniin",
     "url": "https://github.com/danielpineda-elaniin"

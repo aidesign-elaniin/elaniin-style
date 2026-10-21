@@ -229,6 +229,8 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --module-size: 2px;
+  --module-pitch: 16px;
 
   /* motion durations — consumed by the duration-* utilities (see contract §4) */
   --dur-instant: 100ms;
@@ -493,6 +495,39 @@
     }
   }
 }
+
+/* ---------- utilities: module field (signature texture of hero / CTA) ---------- */
+/* Resting grid = pure CSS: 2px squares on a 16px pitch, grey at 45%, masked toward the bottom.
+   Pointer trail = templates/module-field.js (canvas, off for touch + reduced-motion).
+   Markup: <div class="module-field" data-module-field aria-hidden="true"></div> as the first
+   child of a `relative isolate overflow-hidden` host. Variants: module-field-dark,
+   module-field-mask-left, module-field-mask-none. */
+@utility module-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --module-lit-1: var(--color-blue-500);
+  --module-lit-2: var(--color-blue-400);
+  --module-lit-3: var(--color-blue-300);
+  -webkit-mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.45;
+    background-image: conic-gradient(from 270deg at var(--module-size) var(--module-size), var(--module-color, var(--color-border-strong)) 0 90deg, transparent 0);
+    background-size: var(--module-pitch) var(--module-pitch);
+    background-position: calc((var(--module-pitch) - var(--module-size)) / 2) calc((var(--module-pitch) - var(--module-size)) / 2);
+  }
+  & > canvas {
+    position: absolute;
+    inset: 0;
+  }
+}
+@utility module-field-dark { --module-color: var(--color-border-on-dark-strong); }
+@utility module-field-mask-left { --module-mask: linear-gradient(to right, transparent 8%, #000 60%); }
+@utility module-field-mask-none { --module-mask: none; }
 
 /* ---------- base ---------- */
 @layer base {

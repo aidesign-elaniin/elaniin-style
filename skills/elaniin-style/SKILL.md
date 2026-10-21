@@ -6,16 +6,14 @@ description: >
   Elevate Blue detail-only accent, hairline grids, restrained motion). Also develops
   the Elaniin 2027 Next.js site. Bilingüe: sigue instrucciones en EN o ES.
   Use when the user asks for an "Elaniin" deck, dashboard, report, landing, website,
-  or to build/change the Elaniin site — or invokes /elaniin-style.
+  or to build/change the Elaniin site — or invokes /elaniin-style:elaniin-style.
 license: MIT
 compatibility:
   requires_any_of:
     - Claude Code
     - Claude Artifacts (via HTML templates)
-    - Codex / other coding agents (via install.sh --codex)
 metadata:
   author: Elaniin
-  version: "1.0.3"
   language: en,es
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 ---
@@ -145,6 +143,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 | elaniin-black | `#141414` | Wordmark, primary text |
 | dynamic-blue | `#4D75FD` | Non-text accents, chart series |
 | border-default | `#E4E4EA` | Hairlines on white/grey |
+| module-field | 2px squares / 16px pitch, grey 45% | Hero + CTA texture (utility `module-field`) |
 | ease-standard | `cubic-bezier(0.4,0,0.2,1)` | UI micro-interactions |
 | ease-emphasized | `cubic-bezier(0.25,1,0.5,1)` | Entrances, reveals |
 | reveal | 500ms / 16px up | Standard entrance |
@@ -156,12 +155,14 @@ Full map in `references/tokens.md`; copy-paste source in `templates/tokens.css`;
 
 ## 4 · Auto-install motion (silent) / Instalación automática de motion (silenciosa)
 
-**EN** — Never ask the user to install `motion`. Run `scripts/ensure-motion.sh` from the
-project root. It detects the lockfile and installs silently; if there is no `package.json`
+**EN** — Never ask the user to install `motion`. Run the skill's own `scripts/ensure-motion.sh`
+(`${CLAUDE_SKILL_DIR}` = this skill folder) passing the project root as argument:
+`bash "${CLAUDE_SKILL_DIR}/scripts/ensure-motion.sh" "$PWD"`. It detects the lockfile and installs silently; if there is no `package.json`
 it leaves the CSS-only ladder in place.
 
-**ES** — Nunca pidas al usuario instalar `motion`. Ejecuta `scripts/ensure-motion.sh` desde
-la raíz del proyecto. Detecta el lockfile e instala en silencio; si no hay `package.json`,
+**ES** — Nunca pidas al usuario instalar `motion`. Ejecuta el `scripts/ensure-motion.sh` de esta skill
+(`${CLAUDE_SKILL_DIR}` = carpeta de la skill) pasando la raíz del proyecto como argumento:
+`bash "${CLAUDE_SKILL_DIR}/scripts/ensure-motion.sh" "$PWD"`. Detecta el lockfile e instala en silencio; si no hay `package.json`,
 deja la escalera CSS-only.
 
 In Claude Artifacts (no npm): use the CSS ladder (`rise` + keyframes from `tokens.css`);
@@ -187,6 +188,7 @@ Before delivering, verify:
 - [ ] **Official Elaniin logo used everywhere** (correct variant per surface); no text fallback.
 - [ ] **Zero overflow:** nothing clipped in viewport, slides, or cards; decks full-screen fixed canvas.
 - [ ] **Mouse-reactive texture/spotlight present** and disabled under reduced-motion.
+- [ ] **Landings/websites: `module-field` in the hero background (and final CTA)** with its pointer-trail script.
 - [ ] **Microinteractions present** (button arrow/press, card glow, counters, chart draw).
 - [ ] Only Elaniin tokens used (no stray Tailwind default colors).
 - [ ] elevate-blue appears only in allowed detail roles, <5% area.
@@ -225,6 +227,14 @@ Before delivering, verify:
 
 ### 7b · Texturas reactivas al mouse + microanimaciones (siempre)
 Toda propuesta (landing, dashboard, deck, reporte) DEBE incluir:
+0. **Module field (textura firma de Elaniin) — landings y websites, siempre:** cuadrícula
+   de cuadritos 2px/16px al fondo del **hero** y del **CTA final** que se enciende celda por
+   celda siguiendo el mouse (rampa blue-300→400→500, ~260ms). Es la misma textura del sitio
+   Elaniin 2027 (`elaniin-2027-website-main`). Recurso listo: utilities `module-field`,
+   `module-field-dark`, `module-field-mask-left|none` en `templates/tokens.css` + rastro en
+   `templates/module-field.js` (vanilla) o `templates/module-field.tsx` (React/Next). Si el
+   usuario dice "textura", "textura interactiva", "module field" o "como el sitio", es esto.
+   Detalle: `references/motion.md` §Module field.
 1. **Spotlight / textura reactiva al mouse:** radial-gradient sutil que sigue al cursor
    mediante CSS vars (`--mx`, `--my`) actualizadas en `mousemove`. Opacidad 4–8%,
    tinte `blue-tint-50` o `dynamic-blue`. Estático bajo `prefers-reduced-motion`.
