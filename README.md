@@ -11,12 +11,30 @@ Documentación completa (equipo y devs): https://aidesign-elaniin.github.io/elan
 
 Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin-style-marketplace`).
 
-### Equipo (sin terminal) / Team (no terminal)
+### Equipo (sin terminal, sin cuenta de GitHub) / Team
 
-1. Claude → **Customize → Plugins**.
-2. **Add → Add marketplace** → `aidesign-elaniin/elaniin-style`.
-3. **Discover → elaniin-style → Add**.
-4. Activa **Sync automatically** para recibir actualizaciones solas.
+1. Abre la app de Claude → pestaña **Code** → abre cualquier carpeta.
+2. Pega este mensaje y envíalo; Claude instala, activa el auto-update y verifica:
+
+```
+Instala el plugin Elaniin Style en mi Claude y confirma que funciona.
+
+1. Ejecuta estos dos comandos, uno por uno, y muéstrame el resultado:
+   claude plugin marketplace add aidesign-elaniin/elaniin-style
+   claude plugin install elaniin-style@elaniin-style-marketplace
+
+2. Activa las actualizaciones automáticas: abre ~/.claude/settings.json y agrega esto SIN borrar nada de lo que ya exista (si el archivo no existe, créalo):
+   { "extraKnownMarketplaces": { "elaniin-style-marketplace": { "source": { "source": "github", "repo": "aidesign-elaniin/elaniin-style" }, "autoUpdate": true } } }
+
+3. Verifica con: claude plugin list
+   Debe aparecer elaniin-style como habilitado.
+
+4. Si el comando claude no existe o algo falla, dime en palabras simples qué pasó y NO intentes otra forma de instalación.
+
+5. Al terminar, dime que cierre y vuelva a abrir la sesión, y que para probarlo escriba: "Crea un deck con el estilo Elaniin".
+```
+
+3. Cierra y vuelve a abrir la sesión. El repositorio es público: no se necesita GitHub.
 
 ### Devs (Claude Code)
 

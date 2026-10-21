@@ -702,7 +702,7 @@
         <button type="button" role="tab" id="tab-team" data-tab="team" aria-controls="panel-team" aria-selected="true" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">Soy del equipo</button>
         <button type="button" role="tab" id="tab-devs" data-tab="devs" aria-controls="panel-devs" aria-selected="false" tabindex="-1" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">Soy dev</button>
       </div>
-      <p class="mx-auto mt-4 max-w-[56ch] text-body-sm text-text-muted">Equipo: se instala desde la app de Claude, sin terminal. Dev: CLI, scopes, auto-update y edición de piezas.</p>
+      <p class="mx-auto mt-4 max-w-[56ch] text-body-sm text-text-muted">Equipo: pegas un mensaje en Claude y él lo instala, sin terminal ni cuenta de GitHub. Dev: CLI, scopes, auto-update y edición de piezas.</p>
     </div>
   </section>
 
@@ -710,39 +710,43 @@
 <div data-panel="team" id="panel-team" role="tabpanel" aria-labelledby="tab-team" class="rise">
   <div class="container-site section-y-compact">
     <p class="mono-label text-caption text-text-muted">Para el equipo</p>
-<h2 class="mt-3 max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Instálalo en 5 pasos, sin terminal</h2>
-<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Todo ocurre dentro de Claude. Toma menos de dos minutos y solo se hace una vez.</p>
-    <ol class="mt-10 grid gap-6 md:grid-cols-2">
+<h2 class="mt-3 max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Instálalo en 3 pasos, pegando un mensaje</h2>
+<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Claude hace la instalación por ti. Toma un par de minutos y solo se hace una vez.</p>
+    <ol class="mt-10 grid max-w-[960px] gap-6">
       <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <p class="mono-label text-caption text-elevate-blue">01</p>
-  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Abre Claude y entra a Plugins</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">En la app de Claude (o en claude.ai) abre el menú <strong>Customize</strong> y luego <strong>Plugins</strong>.</p>
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Abre Claude en la pestaña Code</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">En la app de Claude entra a la pestaña <strong>Code</strong> y abre cualquier carpeta (puede ser una vacía). Ahí Claude puede ejecutar la instalación por ti.</p>
 </li>
 <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <p class="mono-label text-caption text-elevate-blue">02</p>
-  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Agrega el marketplace de Elaniin</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Pulsa <strong>Add → Add marketplace</strong> y pega esta dirección. Si Claude pide conectar GitHub, acepta: es solo para leer el plugin.</p><div class="mt-4"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Pega este mensaje y envíalo</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Copia el mensaje completo, pégalo en el chat y deja que Claude haga todo. Si te pide permiso para ejecutar un comando, acéptalo. No necesitas cuenta de GitHub.</p><div class="mt-4"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
-    <span class="mono-label text-caption text-text-on-dark-muted">dirección</span>
+    <span class="mono-label text-caption text-text-on-dark-muted">mensaje para Claude</span>
     <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
   </div>
-  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>aidesign-elaniin/elaniin-style</code></pre>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>Instala el plugin Elaniin Style en mi Claude y confirma que funciona.
+
+1. Ejecuta estos dos comandos, uno por uno, y muéstrame el resultado:
+   claude plugin marketplace add aidesign-elaniin/elaniin-style
+   claude plugin install elaniin-style@elaniin-style-marketplace
+
+2. Activa las actualizaciones automáticas: abre ~/.claude/settings.json y agrega esto SIN borrar nada de lo que ya exista (si el archivo no existe, créalo):
+   { &quot;extraKnownMarketplaces&quot;: { &quot;elaniin-style-marketplace&quot;: { &quot;source&quot;: { &quot;source&quot;: &quot;github&quot;, &quot;repo&quot;: &quot;aidesign-elaniin/elaniin-style&quot; }, &quot;autoUpdate&quot;: true } } }
+
+3. Verifica con: claude plugin list
+   Debe aparecer elaniin-style como habilitado.
+
+4. Si el comando claude no existe o algo falla, dime en palabras simples qué pasó y NO intentes otra forma de instalación.
+
+5. Al terminar, dime que cierre y vuelva a abrir la sesión, y que para probarlo escriba: &quot;Crea un deck con el estilo Elaniin&quot;.</code></pre>
 </div></div>
 </li>
 <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <p class="mono-label text-caption text-elevate-blue">03</p>
-  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Instala Elaniin Style</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Entra a <strong>Discover</strong>, elige <strong>elaniin-style</strong> y pulsa <strong>Add</strong>. Queda guardado en tu cuenta.</p>
-</li>
-<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <p class="mono-label text-caption text-elevate-blue">04</p>
-  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Actívalo la primera vez</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Escribe <code class="break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary">/</code> en el chat y elige <strong>elaniin-style</strong>. Después Claude lo usa solo cuando pides algo Elaniin.</p>
-</li>
-<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <p class="mono-label text-caption text-elevate-blue">05</p>
-  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Deja que se actualice solo</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">En la entrada del marketplace activa <strong>Sync automatically</strong>. Así recibes las mejoras sin hacer nada más.</p>
+  <h3 class="mt-3 font-display font-medium text-h4 text-text-primary">Reinicia y pruébalo</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Cierra y vuelve a abrir la sesión. Escribe <em>“Crea un deck con el estilo Elaniin”</em> o invoca <code class="break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary">/elaniin-style:elaniin-style</code>. Se actualiza solo, no tienes que hacer nada más.</p>
 </li>
     </ol>
   </div>
@@ -773,8 +777,12 @@
   <div class="container-site pb-24">
     <p class="mono-label text-caption text-text-muted">Preguntas frecuentes</p>
     <div class="mt-6 border-b border-border-default"><details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Tengo que instalar algo en mi computadora?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">No. Se instala dentro de Claude, desde la pantalla de Plugins. No usas terminal.</p>
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Necesito una cuenta de GitHub o terminal?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">No. El repositorio es público y Claude ejecuta los comandos por ti desde la pestaña Code.</p>
+</details>
+<details class="group border-t border-border-default py-4">
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">Claude dice que no puede ejecutar comandos o que no encuentra “claude”<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Revisa que estés en la pestaña <strong>Code</strong>, no en el chat normal. Si sigue igual, pasa el mensaje de error a una persona de desarrollo.</p>
 </details>
 <details class="group border-t border-border-default py-4">
   <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Cómo sé que está activo?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
@@ -782,15 +790,11 @@
 </details>
 <details class="group border-t border-border-default py-4">
   <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Cuándo llegan las mejoras?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Si activaste <strong>Sync automatically</strong>, solas. Si no, abre Plugins y pulsa <strong>Check for updates</strong>.</p>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Solas: el mensaje de instalación activa la actualización automática. Si algo no llega, escribe a Claude: “actualiza el plugin elaniin-style”.</p>
 </details>
 <details class="group border-t border-border-default py-4">
   <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">Mi deck o página necesita un cambio fino<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
   <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Pídeselo a Claude en la misma conversación. Si necesitas edición manual, pasa el archivo HTML a una persona de desarrollo: está hecho con Tailwind para eso.</p>
-</details>
-<details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">No encuentro el marketplace o me pide permisos<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Pide a tu líder de equipo que te dé acceso al repositorio de GitHub de Elaniin Style y vuelve a intentar el paso 02.</p>
 </details></div>
   </div>
 </div>
@@ -883,20 +887,8 @@ claude plugin list</code></pre>
 </section>
 <section id="dev-4" class="border-t border-border-default py-12">
   <p class="mono-label text-caption text-elevate-blue">04</p>
-  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Repositorio privado</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Claude Code corre git sin prompts, con tus credenciales existentes. No hay campo de token en el marketplace.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
-  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
-    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
-  </div>
-  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># HTTPS
-gh auth login
-gh auth setup-git
-
-# o SSH: llave en ssh-agent sin passphrase y github.com en known_hosts
-# fuerza HTTPS si no quieres que pruebe SSH primero:
-export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">La actualización en segundo plano solo usa credenciales guardadas: <code class="font-mono text-code text-text-primary">GITHUB_TOKEN</code> por sí solo no la autentica.</p></div>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Acceso al repositorio</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">El repositorio es <strong>público</strong>: no hace falta cuenta de GitHub, token ni permisos para instalar o actualizar. Si algún día pasa a privado, Claude Code usará las credenciales de git del usuario (<code class="font-mono text-code text-text-primary">gh auth login</code> y <code class="font-mono text-code text-text-primary">gh auth setup-git</code> por HTTPS, o una llave SSH en ssh-agent).</p></div>
 </section>
 <section id="dev-5" class="border-t border-border-default py-12">
   <p class="mono-label text-caption text-elevate-blue">05</p>
