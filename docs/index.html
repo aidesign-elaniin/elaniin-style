@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Instala Elaniin Style como plugin de Claude: guía para el equipo y documentación para desarrolladores." />
+<meta name="description" content="Install Elaniin Style as a Claude plugin: a guide for the team and documentation for developers." />
 <link rel="canonical" href="https://aidesign-elaniin.github.io/elaniin-style/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Elaniin Style" />
-<meta property="og:locale" content="es_ES" />
-<meta property="og:title" content="Elaniin Style — el estilo Elaniin, dentro de Claude" />
-<meta property="og:description" content="Plugin de Claude para crear decks, dashboards y landings con el sistema de diseño Elaniin 2027. Guía para el equipo y documentación para devs." />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Elaniin Style — the Elaniin style, inside Claude" />
+<meta property="og:description" content="A Claude plugin to create decks, dashboards and landings with the Elaniin 2027 design system. A guide for the team and docs for devs." />
 <meta property="og:url" content="https://aidesign-elaniin.github.io/elaniin-style/" />
 <meta property="og:image" content="https://aidesign-elaniin.github.io/elaniin-style/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Elaniin Style: el estilo Elaniin, dentro de Claude, con la textura de cuadritos azules de la marca." />
+<meta property="og:image:alt" content="Elaniin Style: the Elaniin style, inside Claude, with the brand blue square texture." />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Elaniin Style — el estilo Elaniin, dentro de Claude" />
-<meta name="twitter:description" content="Plugin de Claude para decks, dashboards y landings con el sistema de diseño Elaniin 2027." />
+<meta name="twitter:title" content="Elaniin Style — the Elaniin style, inside Claude" />
+<meta name="twitter:description" content="A Claude plugin for decks, dashboards and landings with the Elaniin 2027 design system." />
 <meta name="twitter:image" content="https://aidesign-elaniin.github.io/elaniin-style/og.png" />
 <script>document.documentElement.classList.add('js')</script>
-<title>Elaniin Style — Instalación y documentación</title>
+<title>Elaniin Style — Install and docs</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20id%3D%22uuid-39352c91-c51c-449d-89db-9394236a3bb7%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20viewBox%3D%220%200%20111.2%20111.2%22%3E%0A%20%20%3C%21--%20Generator%3A%20Adobe%20Illustrator%2030.7.0%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%202.1.4%20Build%20114%29%20%20--%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.st0%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%23f0f0f3%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.st1%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%231054ff%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cg%20id%3D%22uuid-cda3b57b-a952-4632-8231-855400abd96a%22%3E%0A%20%20%20%20%3Crect%20class%3D%22st1%22%20width%3D%22111.2%22%20height%3D%22111.2%22%20rx%3D%2220.6%22%20ry%3D%2220.6%22%2F%3E%0A%20%20%20%20%3Cg%3E%0A%20%20%20%20%20%20%3Cpath%20class%3D%22st0%22%20d%3D%22M75.8%2C23.3v4.9c0%2C.2-.2.4-.4.4h-39.6c-.2%2C0-.4-.2-.4-.4v-4.9c0-4.5%2C3.7-8.1%2C8.1-8.1h24.2c4.5%2C0%2C8.1%2C3.7%2C8.1%2C8.1h0Z%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20class%3D%22st0%22%20d%3D%22M29.4%2C28.7h5.6c.2%2C0%2C.5.2.5.5v30.3c0%2C.2-.2.5-.5.5h-12.6c-.2%2C0-.5-.2-.5-.5v-23.2c0-4.1%2C3.4-7.5%2C7.5-7.5Z%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20class%3D%22st0%22%20d%3D%22M81.8%2C28.7h-5.6c-.2%2C0-.4.2-.4.4v30.3c0%2C.2.2.4.4.4h12.6c.2%2C0%2C.4-.2.4-.4v-23.3c0-4.1-3.4-7.5-7.5-7.5Z%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2235.4%22%20y%3D%2259.8%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2262.3%22%20y%3D%2259.8%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2248.9%22%20y%3D%2273.3%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20class%3D%22st0%22%20x%3D%2235.4%22%20y%3D%2286.8%22%20width%3D%2213.5%22%20height%3D%2213.5%22%20rx%3D%22.3%22%20ry%3D%22.3%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E" />
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -734,22 +734,22 @@
 
 <div class="spotlight" aria-hidden="true"></div>
 <div class="relative z-10">
-<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-button focus:border focus:border-border-default focus:shadow-menu">Saltar al contenido</a>
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-button focus:border focus:border-border-default focus:shadow-menu">Skip to content</a>
 
 <header class="sticky top-0 z-40 border-b border-border-default bg-white/90 backdrop-blur">
   <div class="container-site flex h-16 items-center justify-between">
-    <a href="#" class="flex items-center focus-ring" aria-label="Elaniin Style, inicio">
+    <a href="#" class="flex items-center focus-ring" aria-label="Elaniin Style, home">
       <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo"/></svg>
     </a>
-    <nav class="hidden items-center gap-8 text-body-sm text-text-secondary md:flex" aria-label="Principal">
-      <a href="#install" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Instalar</a>
-      <a href="#how" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Cómo funciona</a>
-      <a href="#examples" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Ejemplos</a>
+    <nav class="hidden items-center gap-8 text-body-sm text-text-secondary md:flex" aria-label="Primary">
+      <a href="#install" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Install</a>
+      <a href="#how" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">How it works</a>
+      <a href="#examples" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Examples</a>
       <a href="https://github.com/aidesign-elaniin/elaniin-style" class="ml-2 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 font-display text-body-sm font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
     </nav>
     <div class="flex items-center gap-2 md:hidden">
       <a href="https://github.com/aidesign-elaniin/elaniin-style" class="inline-flex h-11 w-11 items-center justify-center rounded-button border border-border-ink text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
-      <a href="#install" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 font-display text-body-sm font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Instalar</a>
+      <a href="#install" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 font-display text-body-sm font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Install</a>
     </div>
   </div>
 </header>
@@ -758,11 +758,11 @@
   <section class="relative isolate overflow-hidden section-y" style="--section-y:104px">
     <div class="module-field" data-module-field aria-hidden="true"></div>
     <div class="container-site relative">
-      <h1 class="max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">El estilo Elaniin, dentro de Claude</h1>
-      <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise" style="--i:2">Pide un deck, un dashboard o una landing y Claude los arma con el sistema de diseño Elaniin 2027. Se instala una vez y se actualiza solo.</p>
+      <h1 class="max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">The Elaniin style, inside Claude</h1>
+      <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise" style="--i:2">Ask for a deck, a dashboard or a landing and Claude builds it with the Elaniin 2027 design system. Install it once and it updates itself.</p>
       <div class="mt-10 flex flex-wrap items-center gap-4 rise" style="--i:3">
-        <a href="#install" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Instalar ahora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
-        <a href="#how" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button px-2 font-display text-body font-medium text-elevate-blue transition-colors duration-base hover:text-text-link-hover focus-ring">Cómo funciona <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+        <a href="#install" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Install now <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+        <a href="#how" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button px-2 font-display text-body font-medium text-elevate-blue transition-colors duration-base hover:text-text-link-hover focus-ring">How it works <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
       </div>
     </div>
   </section>
@@ -771,146 +771,146 @@
     <div class="container-site">
       <div class="flex flex-wrap items-end justify-between gap-6">
         <div class="min-w-0">
-          <h2 class="font-display font-medium text-h3 text-text-primary">Una instalación, siempre al día</h2>
+          <h2 class="font-display font-medium text-h3 text-text-primary">One install, always up to date</h2>
         </div>
-        <p class="mono-label text-caption text-elevate-blue" data-pipeline-status aria-live="off">Listo ✓</p>
+        <p class="mono-label text-caption text-elevate-blue" data-pipeline-status aria-live="off">Done ✓</p>
       </div>
       <ol class="pipeline mt-8" data-pipeline>
-        <li data-state="done">Instalar</li>
-        <li data-state="done">Activar</li>
-        <li data-state="done">Crear</li>
-        <li data-state="done">Actualizar</li>
+        <li data-state="done">Install</li>
+        <li data-state="done">Activate</li>
+        <li data-state="done">Create</li>
+        <li data-state="done">Update</li>
       </ol>
     </div>
   </section>
 
   <section id="install" class="section-y-compact">
     <div class="container-site text-center">
-      <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">¿Quién va a instalarlo?</h2>
-      <div role="tablist" aria-label="Tipo de usuario" class="mt-8 inline-flex rounded-button border border-border-ink p-1">
-        <button type="button" role="tab" id="tab-team" data-tab="team" aria-controls="panel-team" aria-selected="true" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">No soy dev</button>
-        <button type="button" role="tab" id="tab-devs" data-tab="devs" aria-controls="panel-devs" aria-selected="false" tabindex="-1" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">Soy dev</button>
+      <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Who is installing it?</h2>
+      <div role="tablist" aria-label="User type" class="mt-8 inline-flex rounded-button border border-border-ink p-1">
+        <button type="button" role="tab" id="tab-team" data-tab="team" aria-controls="panel-team" aria-selected="true" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">I'm not a dev</button>
+        <button type="button" role="tab" id="tab-devs" data-tab="devs" aria-controls="panel-devs" aria-selected="false" tabindex="-1" class="inline-flex h-11 min-w-36 items-center justify-center rounded-button px-5 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle aria-selected:bg-excellence-blue aria-selected:text-white aria-selected:hover:bg-excellence-blue focus-ring">I'm a dev</button>
       </div>
-      <p class="mx-auto mt-4 max-w-[56ch] text-body-sm text-text-muted">No soy dev: se instala desde la app de Claude, sin terminal. Soy dev: CLI, scopes, auto-update y edición de piezas.</p>
+      <p class="mx-auto mt-4 max-w-[56ch] text-body-sm text-text-muted">Not a dev: install from the Claude app, no terminal. Dev: CLI, scopes, auto-update and editing pieces.</p>
     </div>
   </section>
 
-  <section class="border-t border-border-default" aria-label="Guía de instalación">
+  <section class="border-t border-border-default" aria-label="Installation guide">
 <div data-panel="team" id="panel-team" role="tabpanel" aria-labelledby="tab-team" class="rise">
   <div class="container-site section-y-compact">
-    <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Instálalo en 5 pasos, sin terminal</h2>
-<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Todo ocurre dentro de Claude. Toma menos de dos minutos y solo se hace una vez.</p>
+    <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Install it in 5 steps, no terminal</h2>
+<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Everything happens inside Claude. It takes under two minutes and you only do it once.</p>
     <ol class="mt-10 grid-auto" style="--card-min:22rem">
       <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">01</span>Abre Claude y entra a Plugins</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">En la app de Claude (o en claude.ai) abre el menú <strong>Customize</strong> y luego <strong>Plugins</strong>.</p>
+  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">01</span>Open Claude and go to Plugins</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">In the Claude app (or on claude.ai) open the <strong>Customize</strong> menu, then <strong>Plugins</strong>.</p>
 </li>
 <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">02</span>Agrega el marketplace de Elaniin</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Pulsa <strong>Add → Add marketplace</strong> y pega esta dirección completa. El repositorio es público: no necesitas tu propia cuenta de GitHub.</p><div class="mt-4"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">02</span>Add the Elaniin marketplace</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Click <strong>Add → Add marketplace</strong> and paste this full address. The repository is public: you don't need your own GitHub account.</p><div class="mt-4"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
-    <span class="mono-label text-caption text-text-on-dark-muted">dirección</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <span class="mono-label text-caption text-text-on-dark-muted">address</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>https://github.com/aidesign-elaniin/elaniin-style</code></pre>
 </div></div>
 </li>
 <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">03</span>Instala Elaniin Style</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Entra a <strong>Discover</strong>, elige <strong>elaniin-style</strong> y pulsa <strong>Add</strong>. Queda guardado en tu cuenta.</p>
+  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">03</span>Install Elaniin Style</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Go to <strong>Discover</strong>, pick <strong>elaniin-style</strong> and click <strong>Add</strong>. It is saved to your account.</p>
 </li>
 <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">04</span>Actívalo la primera vez</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Escribe <code class="break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary">/</code> en el chat y elige <strong>elaniin-style</strong>. Después Claude lo usa solo cuando pides algo Elaniin.</p>
+  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">04</span>Activate it the first time</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Type <code class="break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary">/</code> in the chat and pick <strong>elaniin-style</strong>. After that Claude uses it on its own whenever you ask for something Elaniin.</p>
 </li>
 <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">05</span>Deja que se actualice solo</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">En la entrada del marketplace activa <strong>Sync automatically</strong>. Así recibes las mejoras sin hacer nada más.</p>
+  <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">05</span>Let it update itself</h3>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">On the marketplace entry turn on <strong>Sync automatically</strong>. You get improvements without doing anything else.</p>
 </li>
     </ol>
   </div>
   <div class="container-site pb-16">
-    <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Cuatro pedidos para empezar</h3>
+    <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Four requests to get started</h3>
     <div class="mt-8 grid gap-6 md:grid-cols-2"><div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
-  <p class="break-words font-display font-medium text-h4 text-text-primary">Crea un pitch deck de 8 slides con el estilo Elaniin para presentar nuestro servicio de producto digital.</p>
-  <button type="button" data-copy-text="Crea un pitch deck de 8 slides con el estilo Elaniin para presentar nuestro servicio de producto digital." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+  <p class="break-words font-display font-medium text-h4 text-text-primary">Create an 8-slide pitch deck in the Elaniin style to present our digital product service.</p>
+  <button type="button" data-copy-text="Create an 8-slide pitch deck in the Elaniin style to present our digital product service." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div>
 <div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
-  <p class="break-words font-display font-medium text-h4 text-text-primary">Diseña un dashboard con el estilo Elaniin con las métricas del último trimestre que te voy a pegar.</p>
-  <button type="button" data-copy-text="Diseña un dashboard con el estilo Elaniin con las métricas del último trimestre que te voy a pegar." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+  <p class="break-words font-display font-medium text-h4 text-text-primary">Design a dashboard in the Elaniin style with last quarter's metrics that I'm about to paste.</p>
+  <button type="button" data-copy-text="Design a dashboard in the Elaniin style with last quarter&#x27;s metrics that I&#x27;m about to paste." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div>
 <div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
-  <p class="break-words font-display font-medium text-h4 text-text-primary">Construye una landing con el estilo Elaniin para presentar nuestro nuevo servicio.</p>
-  <button type="button" data-copy-text="Construye una landing con el estilo Elaniin para presentar nuestro nuevo servicio." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+  <p class="break-words font-display font-medium text-h4 text-text-primary">Build a landing page in the Elaniin style to present our new service.</p>
+  <button type="button" data-copy-text="Build a landing page in the Elaniin style to present our new service." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div>
 <div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
-  <p class="break-words font-display font-medium text-h4 text-text-primary">Agrega la textura interactiva module field al hero de esta página, como en el sitio de Elaniin.</p>
-  <button type="button" data-copy-text="Agrega la textura interactiva module field al hero de esta página, como en el sitio de Elaniin." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copiar pedido <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+  <p class="break-words font-display font-medium text-h4 text-text-primary">Add the interactive module field texture to this page's hero, like on the Elaniin site.</p>
+  <button type="button" data-copy-text="Add the interactive module field texture to this page&#x27;s hero, like on the Elaniin site." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div></div>
   </div>
   <div class="container-site pb-24">
     <div class="mt-6 border-b border-border-default"><details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Tengo que instalar algo en mi computadora?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">No. Se instala dentro de Claude, desde la pantalla de Plugins. No usas terminal.</p>
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">Do I have to install anything on my computer?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">No. It installs inside Claude, from the Plugins screen. No terminal needed.</p>
 </details>
 <details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Cómo sé que está activo?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Pídele a Claude un deck o una página “con el estilo Elaniin”. Debe usar el logo oficial, blanco y gris con bandas azul oscuro, y animaciones suaves.</p>
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">How do I know it is active?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Ask Claude for a deck or a page “in the Elaniin style”. It should use the official logo, white and grey with dark blue bands, and soft animations.</p>
 </details>
 <details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">¿Cuándo llegan las mejoras?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Si activaste <strong>Sync automatically</strong>, solas. Si no, abre Plugins y pulsa <strong>Check for updates</strong>.</p>
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">When do improvements arrive?<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">On their own if you turned on <strong>Sync automatically</strong>. If not, open Plugins and click <strong>Check for updates</strong>.</p>
 </details>
 <details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">Me sale un error que dice “network source differs”<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Ya habías agregado Elaniin Style con otra forma de dirección. En Plugins quita el marketplace <strong>elaniin-style-marketplace</strong> (Remove) y vuelve a agregarlo pegando la dirección completa del paso 02.</p>
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">I get an error saying “network source differs”<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">You had already added Elaniin Style with a different form of address. In Plugins remove the <strong>elaniin-style-marketplace</strong> marketplace (Remove) and add it again pasting the full address from step 02.</p>
 </details>
 <details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">No encuentro el marketplace o no se agrega<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Revisa que pegaste la dirección completa, empezando por <strong>https://github.com/</strong>. Si sigue igual, pasa el mensaje de error a una persona de desarrollo.</p>
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">I can't find the marketplace or it won't add<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Check that you pasted the full address, starting with <strong>https://github.com/</strong>. If it still fails, send the error message to a developer.</p>
 </details>
 <details class="group border-t border-border-default py-4">
-  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">Mi deck o página necesita un cambio fino<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
-  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Pídeselo a Claude en la misma conversación. Si necesitas edición manual, pasa el archivo HTML a una persona de desarrollo: está hecho con Tailwind para eso.</p>
+  <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-display font-medium text-h4 text-text-primary focus-ring">My deck or page needs a fine tweak<span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span></summary>
+  <p class="mt-3 max-w-[68ch] break-words text-body text-text-secondary">Ask Claude in the same conversation. If you need manual editing, hand the HTML file to a developer: it is built with Tailwind for exactly that.</p>
 </details></div>
   </div>
 </div>
 <div data-panel="devs" id="panel-devs" role="tabpanel" aria-labelledby="tab-devs" class="rise">
   <div class="container-site section-y-compact">
-    <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Instalación, uso y edición de piezas</h2>
-<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Claude Code, scopes, repos compartidos, auto-update y cómo editar a mano un deck o una página con la API de Tailwind.</p>
-    <nav aria-label="Secciones para desarrollo" class="mt-8 flex flex-wrap gap-x-6"><a href="#dev-1" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">01 · Instalar</a>
+    <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Install, use and edit pieces</h2>
+<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Claude Code, scopes, shared repos, auto-update and how to hand-edit a deck or a page with the Tailwind API.</p>
+    <nav aria-label="Developer sections" class="mt-8 flex flex-wrap gap-x-6"><a href="#dev-1" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">01 · Install</a>
 <a href="#dev-2" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">02 · Scopes</a>
-<a href="#dev-3" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">03 · Repo compartido</a>
-<a href="#dev-4" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">04 · Acceso</a>
-<a href="#dev-5" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">05 · Actualizar</a>
-<a href="#dev-6" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">06 · Usar</a>
-<a href="#dev-7" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">07 · Editar piezas</a>
-<a href="#dev-8" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">08 · Textura</a>
-<a href="#dev-9" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">09 · Organización</a>
-<a href="#dev-10" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">10 · Problemas</a>
+<a href="#dev-3" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">03 · Shared repo</a>
+<a href="#dev-4" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">04 · Access</a>
+<a href="#dev-5" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">05 · Update</a>
+<a href="#dev-6" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">06 · Use</a>
+<a href="#dev-7" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">07 · Edit pieces</a>
+<a href="#dev-8" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">08 · Texture</a>
+<a href="#dev-9" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">09 · Organization</a>
+<a href="#dev-10" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">10 · Issues</a>
 <a href="#dev-11" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">11 · Grids</a>
 <a href="#dev-12" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">12 · Repo</a></nav>
   </div>
   <div class="container-site pb-24"><section id="dev-1" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">01</span>Instalar con la CLI</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Requiere Claude Code. El plugin vive en el marketplace <code class="font-mono text-code text-text-primary">elaniin-style-marketplace</code> de este repositorio.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">01</span>Install with the CLI</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Requires Claude Code. The plugin lives in the <code class="font-mono text-code text-text-primary">elaniin-style-marketplace</code> marketplace of this repository.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
-  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># 1) agregar el marketplace
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># 1) add the marketplace
 claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
 
-# 2) instalar (scope user por defecto)
+# 2) install (user scope by default)
 claude plugin install elaniin-style@elaniin-style-marketplace
 
-# 3) verificar
+# 3) verify
 claude plugin list</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary"><strong>Usa siempre la misma dirección</strong> (la URL completa) en la app, la CLI y los settings. Si mezclas <code class="font-mono text-code text-text-primary">owner/repo</code> con la URL, Claude Code rechaza el marketplace con “network source differs”.</p><p class="max-w-[68ch] break-words text-body text-text-secondary">Dentro de una sesión de Claude Code, los mismos pasos son:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary"><strong>Always use the same address</strong> (the full URL) in the app, the CLI and the settings. If you mix <code class="font-mono text-code text-text-primary">owner/repo</code> with the URL, Claude Code rejects the marketplace with “network source differs”.</p><p class="max-w-[68ch] break-words text-body text-text-secondary">Inside a Claude Code session the same steps are:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">claude code</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>/plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
 /plugin install elaniin-style@elaniin-style-marketplace
@@ -918,27 +918,27 @@ claude plugin list</code></pre>
 </div></div>
 </section>
 <section id="dev-2" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">02</span>Elegir el scope</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Agrega <code class="font-mono text-code text-text-primary">--scope</code> al comando <code class="font-mono text-code text-text-primary">install</code>. Local gana sobre proyecto, y proyecto sobre usuario.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">02</span>Choose the scope</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Add <code class="font-mono text-code text-text-primary">--scope</code> to the <code class="font-mono text-code text-text-primary">install</code> command. Local wins over project, and project wins over user.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">user</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">~/.claude/settings.json</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Predeterminado. Para todos tus proyectos.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Default. For all your projects.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">project</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">.claude/settings.json</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Se commitea. Cada colaborador corre una vez el install.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Committed. Each collaborator runs install once.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">local</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">.claude/settings.local.json</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Solo tú, solo este repo.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Only you, only this repo.</p>
 </div></div></div>
 </section>
 <section id="dev-3" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">03</span>Habilitarlo en un repo compartido</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Commitea esto en <code class="font-mono text-code text-text-primary">.claude/settings.json</code> para que todo el equipo vea el marketplace. Se aplica después de aceptar la confianza del folder, y cada persona aún corre <code class="font-mono text-code text-text-primary">claude plugin install … --scope project</code> una vez.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">03</span>Enable it in a shared repo</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Commit this in <code class="font-mono text-code text-text-primary">.claude/settings.json</code> so the whole team sees the marketplace. It applies after accepting the folder trust prompt, and each person still runs <code class="font-mono text-code text-text-primary">claude plugin install … --scope project</code> once.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">json</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>{
   &quot;extraKnownMarketplaces&quot;: {
@@ -954,120 +954,120 @@ claude plugin list</code></pre>
 </div></div>
 </section>
 <section id="dev-4" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">04</span>Acceso al repositorio</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">El repositorio es <strong>público</strong>: no hace falta cuenta de GitHub, token ni permisos para instalar o actualizar. Si algún día pasa a privado, Claude Code usará las credenciales de git del usuario (<code class="font-mono text-code text-text-primary">gh auth login</code> y <code class="font-mono text-code text-text-primary">gh auth setup-git</code> por HTTPS, o una llave SSH en ssh-agent).</p></div>
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">04</span>Repository access</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">The repository is <strong>public</strong>: no GitHub account, token or permissions are needed to install or update. If it ever becomes private, Claude Code will use the user's git credentials (<code class="font-mono text-code text-text-primary">gh auth login</code> and <code class="font-mono text-code text-text-primary">gh auth setup-git</code> over HTTPS, or an SSH key in ssh-agent).</p></div>
 </section>
 <section id="dev-5" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">05</span>Actualizar y desinstalar</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">El plugin no define <code class="font-mono text-code text-text-primary">version</code>: cada commit del repo cuenta como versión nueva. Con <code class="font-mono text-code text-text-primary">autoUpdate</code> activo se descarga solo unos minutos después de abrir una sesión; la sesión en curso conserva la versión cargada hasta <code class="font-mono text-code text-text-primary">/reload-plugins</code> o reiniciar.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">05</span>Update and uninstall</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">The plugin does not define <code class="font-mono text-code text-text-primary">version</code>: every commit in the repo counts as a new version. With <code class="font-mono text-code text-text-primary">autoUpdate</code> on it downloads by itself a few minutes after opening a session; the running session keeps the loaded version until <code class="font-mono text-code text-text-primary">/reload-plugins</code> or a restart.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
-  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># actualizar a mano
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># update manually
 claude plugin update elaniin-style@elaniin-style-marketplace
-# o desde una sesión
+# or from a session
 /plugin marketplace update elaniin-style-marketplace
 /reload-plugins
 
-# desinstalar / quitar el marketplace
+# uninstall / remove the marketplace
 claude plugin uninstall elaniin-style@elaniin-style-marketplace
 claude plugin marketplace remove elaniin-style-marketplace</code></pre>
 </div></div>
 </section>
 <section id="dev-6" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">06</span>Usar el skill</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Claude lo carga solo cuando el pedido encaja. También puedes invocarlo con su nombre con namespace:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">06</span>Use the skill</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Claude loads it on its own when the request fits. You can also invoke it by its namespaced name:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">claude code</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>/elaniin-style:elaniin-style</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Cuatro modos: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> y <strong>site-dev</strong> (el sitio Elaniin 2027 en Next.js). Pide en español o inglés; el skill responde en tu idioma. El script que instala <code class="font-mono text-code text-text-primary">motion</code> corre en silencio solo si el proyecto tiene <code class="font-mono text-code text-text-primary">package.json</code>.</p></div>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Four modes: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> and <strong>site-dev</strong> (the Elaniin 2027 site in Next.js). Ask in Spanish or English; the skill answers in your language. The script that installs <code class="font-mono text-code text-text-primary">motion</code> runs silently only if the project has a <code class="font-mono text-code text-text-primary">package.json</code>.</p></div>
 </section>
 <section id="dev-7" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">07</span>Editar un deck o una página generada</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Los entregables son <strong>un solo archivo HTML autocontenido</strong>: llevan Tailwind v4 (<code class="font-mono text-code text-text-primary">@tailwindcss/browser</code> fijado en 4.3.3) y el bloque de tokens embebido. No dependen de que el plugin siga instalado ni se actualizan solos: son del proyecto. Se editan con clases de Tailwind como cualquier HTML.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">07</span>Edit a generated deck or page</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Deliverables are <strong>a single self-contained HTML file</strong>: they carry Tailwind v4 (<code class="font-mono text-code text-text-primary">@tailwindcss/browser</code> pinned to 4.3.3) and the token block embedded. They do not depend on the plugin staying installed and do not update on their own: they belong to the project. Edit them with Tailwind classes like any HTML.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Color</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">bg-elevate-blue · bg-excellence-blue · bg-inspire-grey · text-text-primary · text-text-secondary · text-text-muted</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">elevate-blue solo como detalle (&lt;5% del área).</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">elevate-blue only as a detail (&lt;5% of the area).</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
-  <p class="min-w-0 break-words font-mono text-code text-text-primary">Tipografía</p>
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Typography</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">font-display · font-text · font-mono · text-display-xl · text-h1…h4 · text-lead · text-body · text-caption</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Escala fluida; no uses tamaños sueltos.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Fluid scale; do not use loose sizes.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
-  <p class="min-w-0 break-words font-mono text-code text-text-primary">Forma y sombra</p>
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Shape and shadow</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">rounded-button · rounded-card · rounded-input · shadow-card-rest · shadow-menu · shadow-product</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Radios y sombras vienen de @theme.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Radii and shadows come from @theme.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Layout</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">container-site · section-y · section-y-statement · section-y-compact · pad-card</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Gutter y ritmo vertical responsive.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Responsive gutter and vertical rhythm.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
-  <p class="min-w-0 break-words font-mono text-code text-text-primary">Movimiento</p>
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Motion</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">duration-fast · duration-base · duration-slow · duration-reveal · rise · reveal · card-glow · lift · btn-arrow</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Duraciones con nombre: nunca duration-200.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Named durations: never duration-200.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
-  <p class="min-w-0 break-words font-mono text-code text-text-primary">Foco</p>
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Focus</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">focus-ring · focus-ring-on-dark</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Anillo doble visible en :focus-visible.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Visible double ring on :focus-visible.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
-  <p class="min-w-0 break-words font-mono text-code text-text-primary">Cards con hover</p>
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Hover cards</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">lift · card-glow + rounded-card border bg-surface-card pad-card</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Siempre con padding: nunca texto pegado al borde.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Always padded: never text touching the edge.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Grids</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">gap-grid · grid-page · grid-auto · grid-hairline</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Sección 11. Sin márgenes negativos.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Section 11. No negative margins.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
-  <p class="min-w-0 break-words font-mono text-code text-text-primary">Navegación móvil</p>
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Mobile navigation</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">drawer · scrim + drawer.js</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Botón de menú de 44px que abre un drawer real.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">A 44px menu button that opens a real drawer.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
-  <p class="min-w-0 break-words font-mono text-code text-text-primary">Textura firma</p>
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Signature texture</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">module-field · module-field-dark · module-field-mask-left</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Sección 08. Hero y CTA final.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Section 08. Hero and final CTA.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Breakpoints</p>
   <p class="min-w-0 break-words text-body-sm text-text-secondary">sm 640 · md 768 · lg 1024 · xl 1280</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Los defaults de Tailwind se resetean a propósito.</p>
-</div></div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Reglas al editar</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Sin hex ni valores sueltos: usa el token (<code class="font-mono text-code text-text-primary">bg-elevate-blue</code>, no <code class="font-mono text-code text-text-primary">bg-[#1054ff]</code>).</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Colores y escalas por defecto de Tailwind no existen: <code class="font-mono text-code text-text-primary">bg-red-500</code> no compila.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Nada de selectores de clase sueltos en <code class="font-mono text-code text-text-primary">&lt;style&gt;</code>: cada recurso nuevo es un <code class="font-mono text-code text-text-primary">@utility</code>.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">El deck no lleva clases responsive: su canvas siempre mide 1280×720. Usa <code class="font-mono text-code text-text-primary">grid-cols-3</code>, no <code class="font-mono text-code text-text-primary">md:grid-cols-3</code>.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Mantén <code class="font-mono text-code text-text-primary">min-w-0</code> en hijos de grid/flex y <code class="font-mono text-code text-text-primary">overflow-hidden</code> en cards: cero overflow.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Todo elemento con <code class="font-mono text-code text-text-primary">lift</code> o <code class="font-mono text-code text-text-primary">card-glow</code> es una card: lleva <code class="font-mono text-code text-text-primary">rounded-card border bg-surface-card pad-card</code>. Nunca texto pegado al borde del hover ni márgenes negativos.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Navegación móvil: si una nav se oculta bajo su breakpoint, necesita un botón de menú de 44px que abra un drawer real (<code class="font-mono text-code text-text-primary">drawer</code> + <code class="font-mono text-code text-text-primary">scrim</code> + <code class="font-mono text-code text-text-primary">drawer.js</code>). Un hamburguesa sin acción es un bug; prueba a 375, 768 y 1280 px.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Respeta reduced-motion: toda animación nueva debe apagarse con <code class="font-mono text-code text-text-primary">prefers-reduced-motion</code>.</span></li></ul><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Ejemplo</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Tailwind defaults are reset on purpose.</p>
+</div></div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules when editing</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">No hex or loose values: use the token (<code class="font-mono text-code text-text-primary">bg-elevate-blue</code>, not <code class="font-mono text-code text-text-primary">bg-[#1054ff]</code>).</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Tailwind's default colors and scales do not exist: <code class="font-mono text-code text-text-primary">bg-red-500</code> does not compile.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">No loose class selectors in <code class="font-mono text-code text-text-primary">&lt;style&gt;</code>: every new resource is a <code class="font-mono text-code text-text-primary">@utility</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">The deck has no responsive classes: its canvas is always 1280×720. Use <code class="font-mono text-code text-text-primary">grid-cols-3</code>, not <code class="font-mono text-code text-text-primary">md:grid-cols-3</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Keep <code class="font-mono text-code text-text-primary">min-w-0</code> on grid/flex children and <code class="font-mono text-code text-text-primary">overflow-hidden</code> on cards: zero overflow.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Any element with <code class="font-mono text-code text-text-primary">lift</code> or <code class="font-mono text-code text-text-primary">card-glow</code> is a card: it gets <code class="font-mono text-code text-text-primary">rounded-card border bg-surface-card pad-card</code>. Never text touching the hover edge, never negative margins.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Mobile navigation: if a nav is hidden below its breakpoint it needs a 44px menu button that opens a real drawer (<code class="font-mono text-code text-text-primary">drawer</code> + <code class="font-mono text-code text-text-primary">scrim</code> + <code class="font-mono text-code text-text-primary">drawer.js</code>). A hamburger with no action is a bug; test at 375, 768 and 1280 px.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Respect reduced motion: every new animation must switch off with <code class="font-mono text-code text-text-primary">prefers-reduced-motion</code>.</span></li></ul><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Example</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">html</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;a class=&quot;inline-flex h-12 items-center rounded-button bg-elevate-blue px-6
           font-display font-medium text-white hover:bg-blue-600 active:bg-blue-700
           transition-colors duration-base focus-ring&quot;&gt;
-  Empezar
+  Get started
 &lt;/a&gt;</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">El script de navegador necesita internet para compilar. Para llevar la pieza a un proyecto real, cambia al plugin de build y pega <code class="font-mono text-code text-text-primary">tokens.css</code> (está en <code class="font-mono text-code text-text-primary">skills/elaniin-style/templates/</code>) en tu CSS de entrada.</p><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Vite</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">The browser script needs internet to compile. To move the piece into a real project, switch to the build plugin and paste <code class="font-mono text-code text-text-primary">tokens.css</code> (it lives in <code class="font-mono text-code text-text-primary">skills/elaniin-style/templates/</code>) into your entry CSS.</p><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Vite</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>npm install tailwindcss @tailwindcss/vite</code></pre>
 </div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">ts</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>// vite.config.ts
 import { defineConfig } from &#x27;vite&#x27;
@@ -1077,76 +1077,76 @@ export default defineConfig({ plugins: [tailwindcss()] })</code></pre>
 </div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">css</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
-  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>/* src/index.css — @import va PRIMERO */
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>/* src/index.css — @import goes FIRST */
 @import &quot;tailwindcss&quot;;
 
-/* …y debajo pega el contenido completo de tokens.css
+/* …and below paste the full contents of tokens.css
    (@theme, :root, @utility, @layer base) */</code></pre>
 </div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Next.js</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>npm install tailwindcss @tailwindcss/postcss postcss</code></pre>
 </div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">js</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>// postcss.config.mjs
 const config = { plugins: { &quot;@tailwindcss/postcss&quot;: {} } };
 export default config;</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Inventario completo clase → token → valor: <code class="font-mono text-code text-text-primary">references/tailwind-api.md</code> dentro del plugin.</p></div>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Full class → token → value inventory: <code class="font-mono text-code text-text-primary">references/tailwind-api.md</code> inside the plugin.</p></div>
 </section>
 <section id="dev-8" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">08</span>Textura interactiva: module field</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Es la textura firma del sitio Elaniin: una cuadrícula de cuadritos de 2 px cada 16 px (gris al 45%) que, al mover el mouse, se enciende celda por celda subiendo la rampa <strong>blue-300 → blue-400 → blue-500</strong> y se apaga en ~260 ms. Va en el fondo del hero y del CTA final. Es la misma del sitio <code class="font-mono text-code text-text-primary">elaniin-2027-website-main</code>, portada como recurso del skill.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">08</span>Interactive texture: module field</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">It is the signature texture of the Elaniin site: a grid of 2 px squares every 16 px (grey at 45%) that, as the mouse moves, lights up cell by cell climbing the <strong>blue-300 → blue-400 → blue-500</strong> ramp and fades out in ~260 ms. It goes in the background of the hero and the final CTA. It is the same one as on the <code class="font-mono text-code text-text-primary">elaniin-2027-website-main</code> site, ported as a skill resource.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">module-field</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">Cuadrícula en reposo, solo CSS. Primer hijo del host.</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Base obligatoria.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">Resting grid, CSS only. First child of the host.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Required base.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">module-field-dark</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">Cuadritos blancos tenues para bandas oscuras.</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Sobre excellence-blue.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">Faint white squares for dark bands.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">On excellence-blue.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">module-field-mask-left / -none</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">Desvanece hacia la izquierda, o sin desvanecer.</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Por defecto se desvanece hacia abajo.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">Fades to the left, or no fade.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">By default it fades downward.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">--module-size · --module-pitch</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">2px · 16px en :root. El rastro lo lee del CSS.</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Cámbialos solo en tokens.</p>
-</div></div><p class="max-w-[68ch] break-words text-body text-text-secondary">HTML (el host debe llevar <code class="font-mono text-code text-text-primary">relative isolate overflow-hidden</code> y el contenido <code class="font-mono text-code text-text-primary">relative</code>):</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">2px · 16px on :root. The trail reads them from CSS.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Change them only in tokens.</p>
+</div></div><p class="max-w-[68ch] break-words text-body text-text-secondary">HTML (the host must have <code class="font-mono text-code text-text-primary">relative isolate overflow-hidden</code> and the content <code class="font-mono text-code text-text-primary">relative</code>):</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">html</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;section class=&quot;relative isolate overflow-hidden section-y&quot;&gt;
   &lt;div class=&quot;module-field&quot; data-module-field aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;container-site relative&quot;&gt;…contenido…&lt;/div&gt;
+  &lt;div class=&quot;container-site relative&quot;&gt;…content…&lt;/div&gt;
 &lt;/section&gt;
 
-&lt;!-- sobre fondo oscuro, desvanecida a la izquierda --&gt;
+&lt;!-- on a dark background, fading out to the left --&gt;
 &lt;section class=&quot;relative isolate overflow-hidden section-y bg-excellence-blue text-white&quot;&gt;
   &lt;div class=&quot;module-field module-field-dark module-field-mask-left&quot;
        data-module-field aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;container-site relative&quot;&gt;…contenido…&lt;/div&gt;
+  &lt;div class=&quot;container-site relative&quot;&gt;…content…&lt;/div&gt;
 &lt;/section&gt;</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">El rastro del mouse es un script de ~90 líneas sin dependencias. Los templates ya lo traen inline; en otros proyectos:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">The mouse trail is a ~90-line script with no dependencies. The templates already include it inline; in other projects:</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">html</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;script src=&quot;module-field.js&quot;&gt;&lt;/script&gt;
-&lt;!-- o pega el contenido de templates/module-field.js dentro de un &lt;script&gt; al final del body --&gt;</code></pre>
+&lt;!-- or paste the contents of templates/module-field.js inside a &lt;script&gt; at the end of body --&gt;</code></pre>
 </div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">React / Next.js</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">tsx</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
-  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>// Next.js / React: copia templates/module-field.tsx a src/components/
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>// Next.js / React: copy templates/module-field.tsx to src/components/
 import { ModuleField } from &quot;@/components/module-field&quot;;
 
 &lt;section className=&quot;relative isolate overflow-hidden section-y&quot;&gt;
@@ -1154,19 +1154,19 @@ import { ModuleField } from &quot;@/components/module-field&quot;;
   &lt;div className=&quot;container-site relative&quot;&gt;…&lt;/div&gt;
 &lt;/section&gt;
 
-&lt;ModuleField fade=&quot;left&quot; tone=&quot;dark&quot; /&gt; {/* para bandas excellence-blue */}</code></pre>
-</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Reglas</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Solo en hero y CTA final, una por sección. Nunca como relleno de cards ni detrás de bloques de texto largo.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Es textura, no protagonista: opacidad en reposo 45% y sin glows ni degradados encima.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Los cuadritos son decorativos: <code class="font-mono text-code text-text-primary">aria-hidden="true"</code> y sin eventos de puntero propios.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">En pantallas táctiles y con <code class="font-mono text-code text-text-primary">prefers-reduced-motion</code> no hay rastro: queda solo la cuadrícula estática.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">El script también se necesita si agregas la textura a un HTML ya generado: sin él solo verás la cuadrícula en reposo.</span></li></ul></div>
+&lt;ModuleField fade=&quot;left&quot; tone=&quot;dark&quot; /&gt; {/* for excellence-blue bands */}</code></pre>
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Only in the hero and the final CTA, one per section. Never as card filler or behind long blocks of text.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">It is texture, not the star: 45% resting opacity and no glows or gradients on top.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">The squares are decorative: <code class="font-mono text-code text-text-primary">aria-hidden="true"</code> and no pointer events of their own.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">On touch screens and with <code class="font-mono text-code text-text-primary">prefers-reduced-motion</code> there is no trail: only the static grid remains.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">You also need the script if you add the texture to an already generated HTML: without it you only see the resting grid.</span></li></ul></div>
 </section>
 <section id="dev-9" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">09</span>Despliegue para toda la organización</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Para que el auto-update sea obligatorio y nadie pueda apagarlo, ponlo en <em>managed settings</em> (Organization settings → Claude Code → Managed settings, MDM o <code class="font-mono text-code text-text-primary">managed-settings.json</code>). Con <code class="font-mono text-code text-text-primary">autoUpdate</code> definido ahí, el toggle de <code class="font-mono text-code text-text-primary">/plugin</code> queda bloqueado.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">09</span>Organization-wide rollout</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">To make auto-update mandatory so nobody can switch it off, put it in <em>managed settings</em> (Organization settings → Claude Code → Managed settings, MDM or <code class="font-mono text-code text-text-primary">managed-settings.json</code>). With <code class="font-mono text-code text-text-primary">autoUpdate</code> defined there, the <code class="font-mono text-code text-text-primary">/plugin</code> toggle is locked.</p><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">json</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>{
   &quot;extraKnownMarketplaces&quot;: {
@@ -1179,47 +1179,47 @@ import { ModuleField } from &quot;@/components/module-field&quot;;
     &quot;elaniin-style@elaniin-style-marketplace&quot;: true
   }
 }</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Si usan <code class="font-mono text-code text-text-primary">DISABLE_AUTOUPDATER=1</code>, agreguen <code class="font-mono text-code text-text-primary">FORCE_AUTOUPDATE_PLUGINS=1</code> para mantener las actualizaciones del plugin.</p></div>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">If you use <code class="font-mono text-code text-text-primary">DISABLE_AUTOUPDATER=1</code>, add <code class="font-mono text-code text-text-primary">FORCE_AUTOUPDATE_PLUGINS=1</code> to keep plugin updates running.</p></div>
 </section>
 <section id="dev-10" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">10</span>Solución de problemas</h3>
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">10</span>Troubleshooting</h3>
   <div class="mt-6 min-w-0 space-y-5"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code># Error &quot;network source differs from the one declared in settings&quot;:
-# el marketplace ya existía con otra forma de dirección. Quítalo y agrégalo otra vez:
+# the marketplace already existed with a different form of address. Remove it and add it again:
 claude plugin marketplace remove elaniin-style-marketplace
 claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
 
-claude plugin list              # ¿está instalado y habilitado?
+claude plugin list              # is it installed and enabled?
 claude plugin details elaniin-style
-/status                         # ¿qué settings se aplican?</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">¿Falla el clone? Revisa las credenciales de git (bloque 04). ¿No aparece el comando? Corre <code class="font-mono text-code text-text-primary">/reload-plugins</code> o abre una sesión nueva. ¿Sigue la versión vieja? <code class="font-mono text-code text-text-primary">claude plugin update</code> y recarga.</p></div>
+/status                         # which settings apply?</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Clone fails? Check your git credentials (block 04). Command missing? Run <code class="font-mono text-code text-text-primary">/reload-plugins</code> or open a new session. Still on the old version? <code class="font-mono text-code text-text-primary">claude plugin update</code> and reload.</p></div>
 </section>
 <section id="dev-11" class="border-t border-border-default py-12">
   <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">11</span>Grids</h3>
-  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Tailwind ya trae <code class="font-mono text-code text-text-primary">grid-cols-*</code> y <code class="font-mono text-code text-text-primary">col-span-*</code>. El plugin añade cuatro utilities que los conectan con los tokens de Elaniin: úsalas siempre en vez de armar grids con valores sueltos.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Tailwind already ships <code class="font-mono text-code text-text-primary">grid-cols-*</code> and <code class="font-mono text-code text-text-primary">col-span-*</code>. The plugin adds four utilities that connect them to the Elaniin tokens: always use them instead of building grids with loose values.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">gap-grid</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">gap del token: 24px, 16px en móvil.</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Para cualquier grid o flex.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">Token gap: 24px, 16px on mobile.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">For any grid or flex.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">grid-page</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">12 columnas. Hijos con col-span-12 md:col-span-N.</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Conteo fijo: KPIs, features, aside.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">12 columns. Children with col-span-12 md:col-span-N.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Fixed count: KPIs, features, aside.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">grid-auto</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">auto-fit con --card-min (16rem).</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Conteo desconocido: cards, logos.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">auto-fit with --card-min (16rem).</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Unknown count: cards, logos.</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">grid-hairline</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">celdas con líneas de 1px, sin márgenes negativos.</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Stats y comparativas. Con grid-cols-N y pad-card.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">cells with 1px lines, no negative margins.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Stats and comparisons. With grid-cols-N and pad-card.</p>
 </div></div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">grid-page</h4><div class="grid-page"><div class="min-w-0 rounded-tag bg-surface-subtle p-4 col-span-12 md:col-span-4"><p class="mono-label break-words text-caption text-text-muted">col-span-4</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 col-span-12 md:col-span-4"><p class="mono-label break-words text-caption text-text-muted">col-span-4</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 col-span-12 md:col-span-4"><p class="mono-label break-words text-caption text-text-muted">col-span-4</p></div></div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">html</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;section class=&quot;grid-page&quot;&gt;
   &lt;article class=&quot;col-span-12 min-w-0 xl:col-span-8&quot;&gt;…&lt;/article&gt;
@@ -1228,44 +1228,45 @@ claude plugin details elaniin-style
 </div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">grid-auto</h4><div class="grid-auto" style="--card-min:10rem"><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 1</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 2</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 3</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 4</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 5</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 6</p></div></div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">html</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;ul class=&quot;grid-auto&quot; style=&quot;--card-min: 14rem&quot;&gt;
   &lt;li class=&quot;min-w-0 rounded-card border border-border-default bg-surface-card pad-card&quot;&gt;…&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
-</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">grid-hairline</h4><div class="grid-hairline grid-cols-2 md:grid-cols-4"><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">120+</p><p class="mono-label text-caption text-text-muted">Proyectos</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">4.9</p><p class="mono-label text-caption text-text-muted">Rating</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">38%</p><p class="mono-label text-caption text-text-muted">Mejora</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">6 sem</p><p class="mono-label text-caption text-text-muted">Lanzamiento</p></div></div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">grid-hairline</h4><div class="grid-hairline grid-cols-2 md:grid-cols-4"><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">120+</p><p class="mono-label text-caption text-text-muted">Projects</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">4.9</p><p class="mono-label text-caption text-text-muted">Rating</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">38%</p><p class="mono-label text-caption text-text-muted">Lift</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">6 wks</p><p class="mono-label text-caption text-text-muted">Launch</p></div></div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">html</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;div class=&quot;grid-hairline grid-cols-2 md:grid-cols-4&quot;&gt;
   &lt;div class=&quot;pad-card&quot;&gt;…&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Reglas</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Móvil primero: cada hijo de <code class="font-mono text-code text-text-primary">grid-page</code> lleva <code class="font-mono text-code text-text-primary">col-span-12</code> y luego sube con <code class="font-mono text-code text-text-primary">md:</code> o <code class="font-mono text-code text-text-primary">xl:</code>.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary"><code class="font-mono text-code text-text-primary">min-w-0</code> en todo hijo de grid o flex con texto, media o tablas.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Nada de márgenes negativos (<code class="font-mono text-code text-text-primary">-mx-*</code>) ni gaps arbitrarios (<code class="font-mono text-code text-text-primary">gap-[18px]</code>).</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">No uses <code class="font-mono text-code text-text-primary">lift</code> ni <code class="font-mono text-code text-text-primary">card-glow</code> dentro de <code class="font-mono text-code text-text-primary">grid-hairline</code>: el recorte oculta la sombra. Para cards con hover usa <code class="font-mono text-code text-text-primary">grid-page</code> o <code class="font-mono text-code text-text-primary">grid-auto</code>.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">El deck mantiene columnas explícitas (<code class="font-mono text-code text-text-primary">grid-cols-3</code>): su canvas siempre mide 1280 px.</span></li></ul><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Mobile first: every child of <code class="font-mono text-code text-text-primary">grid-page</code> gets <code class="font-mono text-code text-text-primary">col-span-12</code> and then scales up with <code class="font-mono text-code text-text-primary">md:</code> or <code class="font-mono text-code text-text-primary">xl:</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary"><code class="font-mono text-code text-text-primary">min-w-0</code> on every grid or flex child with text, media or tables.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">No negative margins (<code class="font-mono text-code text-text-primary">-mx-*</code>) and no arbitrary gaps (<code class="font-mono text-code text-text-primary">gap-[18px]</code>).</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Do not use <code class="font-mono text-code text-text-primary">lift</code> or <code class="font-mono text-code text-text-primary">card-glow</code> inside <code class="font-mono text-code text-text-primary">grid-hairline</code>: the clipping hides the shadow. For hover cards use <code class="font-mono text-code text-text-primary">grid-page</code> or <code class="font-mono text-code text-text-primary">grid-auto</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">The deck keeps explicit columns (<code class="font-mono text-code text-text-primary">grid-cols-3</code>): its canvas is always 1280 px.</span></li></ul><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
-  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>grep -n -E &#x27;\-mx-|gap-\[|grid-cols-\[&#x27; archivo.html            # debe salir vacío</code></pre>
-</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Recetas completas (bento, aside, container queries) en <code class="font-mono text-code text-text-primary">references/grids.md</code> dentro del plugin.</p></div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>grep -n -E &#x27;\-mx-|gap-\[|grid-cols-\[&#x27; file.html            # must print nothing</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Full recipes (bento, aside, container queries) in <code class="font-mono text-code text-text-primary">references/grids.md</code> inside the plugin.</p></div>
 </section>
 <section id="dev-12" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">12</span>Qué trae el repositorio</h3>
+  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">12</span>What the repository ships</h3>
   <div class="mt-6 min-w-0 space-y-5"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
-    <span class="mono-label text-caption text-text-on-dark-muted">árbol</span>
-    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+    <span class="mono-label text-caption text-text-on-dark-muted">tree</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
   </div>
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>.claude-plugin/        marketplace.json + plugin.json
-docs/                  este landing y los templates de muestra
-scripts/build-docs.py  regenera docs/ (landing + copia de templates)
+docs/                  this landing and the sample templates
+scripts/build-docs.py  regenerates docs/ (landing + template copies)
+scripts/make-og.py     regenerates docs/og.png (share image)
 skills/elaniin-style/
-├── SKILL.md           pipeline de 5 fases y reglas
-├── assets/            logos oficiales y favicon
+├── SKILL.md           5-phase pipeline and rules
+├── assets/            official logos and favicon
 ├── references/        tokens, tailwind-api, grids, motion, ux-a11y, websites, decks, dashboards
 ├── scripts/           ensure-motion.sh
 └── templates/         tokens.css, landing.html, dashboard.html, deck.html,
@@ -1277,23 +1278,23 @@ skills/elaniin-style/
 
   <section id="examples" class="section-y-compact border-t border-border-default">
     <div class="container-site">
-      <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Míralo funcionando</h2>
-<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Tres piezas de muestra hechas con el skill. Ábrelas, redimensiona la ventana y mueve el mouse.</p>
+      <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">See it working</h2>
+<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Three sample pieces made with the skill. Open them, resize the window and move the mouse.</p>
       <div class="grid-auto mt-10" style="--card-min:18rem">
         <a href="templates/landing.html" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
-  <h3 class="font-display font-medium text-h3 text-text-primary">Landing de producto</h3>
-  <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Hero con module field, features, pipeline en loop, stats y menú móvil.</p>
-  <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Abrir ejemplo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+  <h3 class="font-display font-medium text-h3 text-text-primary">Product landing</h3>
+  <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Hero with module field, features, looping pipeline, stats and mobile menu.</p>
+  <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Open example <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
 <a href="templates/dashboard.html" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
-  <h3 class="font-display font-medium text-h3 text-text-primary">Dashboard de métricas</h3>
-  <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Sidebar que se vuelve drawer, KPIs en vivo, chart y tabla.</p>
-  <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Abrir ejemplo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+  <h3 class="font-display font-medium text-h3 text-text-primary">Metrics dashboard</h3>
+  <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Sidebar that turns into a drawer, live KPIs, chart and table.</p>
+  <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Open example <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
 <a href="templates/deck.html" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
-  <h3 class="font-display font-medium text-h3 text-text-primary">Deck de presentación 16:9</h3>
-  <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Canvas fijo de 1280×720 con navegación por teclado y slides vivos.</p>
-  <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Abrir ejemplo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+  <h3 class="font-display font-medium text-h3 text-text-primary">16:9 presentation deck</h3>
+  <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Fixed 1280×720 canvas with keyboard navigation and living slides.</p>
+  <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Open example <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
       </div>
     </div>
@@ -1302,9 +1303,9 @@ skills/elaniin-style/
   <section class="relative isolate overflow-hidden section-y bg-excellence-blue text-white">
     <div class="module-field module-field-dark module-field-mask-left" data-module-field aria-hidden="true"></div>
     <div class="container-site relative text-center">
-      <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-white">¿Algo no funciona?</h2>
-      <p class="mx-auto mt-5 max-w-[56ch] text-lead text-text-on-dark-secondary">Abre un issue en el repositorio con el paso donde te quedaste y el mensaje que viste.</p>
-      <a href="https://github.com/aidesign-elaniin/elaniin-style/issues" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring-on-dark">Abrir un issue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+      <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-white">Something not working?</h2>
+      <p class="mx-auto mt-5 max-w-[56ch] text-lead text-text-on-dark-secondary">Open an issue on the repository with the step where you got stuck and the message you saw.</p>
+      <a href="https://github.com/aidesign-elaniin/elaniin-style/issues" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring-on-dark">Open an issue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
     </div>
   </section>
 </main>
@@ -1313,7 +1314,7 @@ skills/elaniin-style/
   <div class="container-site py-12">
     <div class="flex flex-wrap items-center justify-between gap-6 border-b border-border-on-dark pb-8">
       <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo-white"/></svg>
-      <a href="https://github.com/aidesign-elaniin/elaniin-style" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-on-dark-secondary transition-colors duration-base hover:text-white focus-ring-on-dark">Repositorio en GitHub</a>
+      <a href="https://github.com/aidesign-elaniin/elaniin-style" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-on-dark-secondary transition-colors duration-base hover:text-white focus-ring-on-dark">Repository on GitHub</a>
     </div>
     <p class="mono-label mt-8 text-caption text-text-on-dark-muted">© 2026 Elaniin · Elaniin Style</p>
   </div>
@@ -1324,7 +1325,7 @@ skills/elaniin-style/
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* switch: Equipo / Dev (hash-synced, arrow keys) */
+  /* switch: Not a dev / Dev (hash-synced, arrow keys) */
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-tab]'));
   var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
   function select(name, focus, push) {
@@ -1368,12 +1369,12 @@ skills/elaniin-style/
   document.querySelectorAll('[data-copy]').forEach(function (b) {
     b.addEventListener('click', function () {
       var pre = b.closest('.rounded-code').querySelector('pre');
-      copy(pre.innerText, function () { flashText(b.firstChild, 'Copiado'); }, function () { flashText(b.firstChild, 'Selecciona y copia'); });
+      copy(pre.innerText, function () { flashText(b.firstChild, 'Copied'); }, function () { flashText(b.firstChild, 'Select and copy'); });
     });
   });
   document.querySelectorAll('[data-copy-text]').forEach(function (b) {
     b.addEventListener('click', function () {
-      copy(b.dataset.copyText, function () { flashText(b.firstChild, 'Copiado '); }, function () { flashText(b.firstChild, 'Selecciona y copia '); });
+      copy(b.dataset.copyText, function () { flashText(b.firstChild, 'Copied '); }, function () { flashText(b.firstChild, 'Select and copy '); });
     });
   });
 
@@ -1382,7 +1383,7 @@ skills/elaniin-style/
   var statusEl = document.querySelector('[data-pipeline-status]');
   if (pipeline) {
     var steps = Array.prototype.slice.call(pipeline.children);
-    var names = ['Instalando…', 'Activando…', 'Creando…', 'Actualizando…', 'Listo ✓'];
+    var names = ['Installing…', 'Activating…', 'Creating…', 'Updating…', 'Done ✓'];
     if (reduce) {
       steps.forEach(function (li) { li.setAttribute('data-state', 'done'); });
       if (statusEl) statusEl.textContent = names[4];

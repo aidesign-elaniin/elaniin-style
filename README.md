@@ -77,6 +77,7 @@ clase → token en `skills/elaniin-style/references/tailwind-api.md`.
 .claude-plugin/           marketplace.json + plugin.json
 docs/index.html           landing de instalación y documentación (+ templates de muestra)
 scripts/build-docs.py     regenera docs/ desde los templates: `python3 scripts/build-docs.py`
+scripts/make-og.py        regenera la imagen para compartir `docs/og.png`
 skills/elaniin-style/
 ├── SKILL.md              pipeline de 5 fases, routing, UX core
 ├── assets/               logos oficiales y favicon
