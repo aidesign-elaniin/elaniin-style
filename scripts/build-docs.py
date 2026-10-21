@@ -26,6 +26,103 @@ META = """<meta name="viewport" content="width=device-width, initial-scale=1.0" 
 <meta name="twitter:title" content="Elaniin Style — the Elaniin style, inside Claude" />
 <meta name="twitter:description" content="A Claude plugin for decks, dashboards and landings with the Elaniin 2027 design system." />
 <meta name="twitter:image" content="%(u)sog.png" />""" % {"u": URL}
+EXTRA_CSS = r'''
+/* ---------- docs-only: step mockups (driven by the state machine in the page script) ---------- */
+@theme {
+  --animate-caret: caret 1s steps(1) infinite;
+  @keyframes caret {
+    50% { opacity: 0; }
+  }
+}
+@utility mock-stage {
+  position: relative;
+  height: 9rem;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-menu);
+  background: var(--color-surface-subtle);
+}
+@utility mock-fade {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard);
+  &.is-on { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+@utility mock-hide {
+  transition: opacity var(--dur-base) var(--ease-standard);
+  &.is-on { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+@utility mock-active {
+  transition: background-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  &.is-on { background: var(--color-blue-tint-50); color: var(--color-text-primary); }
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+@utility mock-tab {
+  transition: color var(--dur-base) var(--ease-standard);
+  &.is-on {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-decoration-color: var(--color-elevate-blue);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+@utility mock-press {
+  transition: transform var(--dur-fast) var(--ease-standard), background-color var(--dur-fast) var(--ease-standard);
+  &.is-on { transform: scale(0.92); }
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+@utility mock-switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-border-input);
+  transition: background-color var(--dur-base) var(--ease-standard);
+  & > i {
+    position: absolute;
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &.is-on { background: var(--color-excellence-blue); }
+  &.is-on > i { transform: translateX(0.75rem); }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    & > i { transition: none; }
+  }
+}
+@utility mock-cursor {
+  position: absolute;
+  z-index: 5;
+  left: 95%;
+  top: 92%;
+  pointer-events: none;
+  transition: left var(--dur-reveal) var(--ease-emphasized), top var(--dur-reveal) var(--ease-emphasized);
+  @media (prefers-reduced-motion: reduce) { display: none; }
+}
+@utility mock-caret {
+  &.is-typing::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 0.9em;
+    margin-left: 1px;
+    vertical-align: -0.1em;
+    background: currentColor;
+    animation: var(--animate-caret);
+  }
+}
+'''
+head = head.replace('</style>\n</head>', EXTRA_CSS + '</style>\n</head>', 1)
 head = head.replace('<meta name="viewport" content="width=device-width, initial-scale=1.0" />', META)
 
 REPO = "https://github.com/aidesign-elaniin/elaniin-style"
@@ -44,8 +141,9 @@ def code(text, label="bash"):
 </div>'''
 
 
-def step(n, title, body, extra=""):
+def step(n, title, body, extra="", mock=""):
     return f'''<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+  {mock}
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">{n}</span>{title}</h3>
   <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">{body}</p>{extra}
 </li>'''
@@ -88,15 +186,101 @@ def ic(t):
 SRC_URL = "https://github.com/aidesign-elaniin/elaniin-style"
 SRC_GIT = SRC_URL + ".git"
 
+
+CURSOR = '<svg class="mock-cursor" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1l11 5-4.5 1.5L7 12z" class="fill-elaniin-black stroke-white" stroke-width="1.2" stroke-linejoin="round"/></svg>'
+BARS = '<div class="space-y-2"><div class="h-2 w-3/4 rounded-full bg-border-default"></div><div class="h-2 w-1/2 rounded-full bg-border-default"></div></div>'
+
+def stage(path, inner):
+    return '<div class="mock-stage mb-5" data-mock data-path="' + path + '" aria-hidden="true">' + inner + CURSOR + '</div>'
+
+MOCK_1 = stage("95%,92%|15%,72%|15%,72%|80%,22%|80%,22%|80%,22%|80%,22%", """
+  <div class="flex h-full">
+    <div class="w-1/3 shrink-0 space-y-1 border-r border-border-default bg-white p-2">
+      <div class="h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary">Chats</div>
+      <div class="h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary">Projects</div>
+      <div class="mock-active h-6 rounded-button px-2 text-[10px] leading-6 text-text-secondary" data-on="2">Customize</div>
+    </div>
+    <div class="min-w-0 flex-1 p-3">
+      <div class="mock-fade flex gap-3 border-b border-border-default pb-2 text-[10px] leading-none text-text-muted" data-on="2">
+        <span>Connectors</span><span>Skills</span><span class="mock-tab" data-on="4">Plugins</span>
+      </div>
+      <div class="mock-fade mt-3" data-on="3">""" + BARS + """</div>
+    </div>
+  </div>""")
+
+MOCK_2 = stage("95%,92%|85%,15%|85%,15%|72%,42%|72%,42%|72%,42%", """
+  <div class="flex items-center justify-between border-b border-border-default bg-white px-3 py-2">
+    <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
+    <div class="mock-press rounded-button border border-border-ink px-3 py-1 text-[10px] leading-none text-text-primary" data-on="2" data-off="3">Add</div>
+  </div>
+  <div class="p-3">""" + BARS + """</div>
+  <div class="mock-fade absolute right-3 top-11 w-36 rounded-menu border border-border-default bg-white p-1 shadow-menu" data-on="2">
+    <div class="mock-active rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary" data-on="4">Add marketplace</div>
+    <div class="rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary">Upload plugin</div>
+  </div>""")
+
+MOCK_3 = stage("95%,95%|52%,50%|52%,50%|52%,50%|82%,80%|82%,80%|82%,80%", """
+  <div class="absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu">
+    <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
+    <div class="mt-2 min-h-10 break-all rounded-input border border-border-input px-2 py-1.5 font-mono text-[9px] leading-snug text-text-primary mock-caret" data-on="2" data-type="https://github.com/aidesign-elaniin/elaniin-style"></div>
+    <div class="mock-press absolute bottom-3 right-3 rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="5" data-off="6">Add</div>
+  </div>""")
+
+MOCK_4 = stage("95%,95%|83%,66%|83%,66%|83%,66%|83%,66%", """
+  <div class="space-y-2 p-3">
+    <div class="flex items-center justify-between rounded-button border border-border-default bg-white p-2 opacity-60">
+      <div class="space-y-1.5"><div class="h-2 w-16 rounded-full bg-border-strong"></div><div class="h-1.5 w-24 rounded-full bg-border-default"></div></div>
+      <div class="rounded-button border border-border-default px-3 py-1 text-[10px] leading-none text-text-muted">Add</div>
+    </div>
+    <div class="relative flex items-center justify-between rounded-button border border-border-ink bg-white p-2">
+      <div class="min-w-0"><p class="font-mono text-[10px] font-medium leading-none text-text-primary">elaniin-style</p><div class="mt-1.5 h-1.5 w-24 rounded-full bg-border-default"></div></div>
+      <div class="relative h-6 w-14 shrink-0">
+        <div class="mock-hide mock-press absolute inset-0 flex items-center justify-center rounded-button bg-elevate-blue text-[10px] leading-none text-white" data-on="3">Add</div>
+        <div class="mock-fade absolute inset-0 flex items-center justify-center gap-1 rounded-button border border-success-border bg-success-bg text-[10px] leading-none text-success-text" data-on="3"><span class="h-1.5 w-1.5 rounded-full bg-success-dot"></span>Added</div>
+      </div>
+    </div>
+  </div>""")
+
+MOCK_5 = stage("95%,95%|86%,38%|86%,38%|86%,38%|86%,38%", """
+  <div class="space-y-2 p-3">
+    <div class="rounded-button border border-border-default bg-white p-2.5">
+      <p class="truncate font-mono text-[10px] font-medium leading-none text-text-primary">elaniin-style-marketplace</p>
+      <div class="mt-3 flex items-center justify-between gap-3">
+        <span class="text-[10px] leading-none text-text-secondary">Sync automatically</span>
+        <div class="mock-switch" data-on="2"><i></i></div>
+      </div>
+    </div>
+    <div class="flex items-center justify-between px-1">
+      <span class="text-[10px] leading-none text-text-muted">Check for updates</span>
+      <div class="mock-fade flex items-center gap-1.5 rounded-button border border-success-border bg-success-bg px-2 py-1 text-[10px] leading-none text-success-text" data-on="3"><span class="h-1.5 w-1.5 rounded-full bg-success-dot"></span>Up to date</div>
+    </div>
+  </div>""")
+
+MOCK_6 = stage("95%,35%|46%,86%|46%,86%|26%,60%|26%,60%|90%,86%|90%,86%|90%,86%|90%,86%", """
+  <div class="mock-fade absolute left-3 top-3 w-28 rounded-button border border-border-default bg-white p-1.5" data-on="8">
+    <div class="aspect-video rounded-tag bg-excellence-blue p-2"><div class="h-1.5 w-3/4 rounded-full bg-white"></div><div class="mt-1.5 h-1 w-1/2 rounded-full bg-text-on-dark-secondary"></div></div>
+    <div class="mt-1.5 h-1.5 w-2/3 rounded-full bg-border-default"></div>
+  </div>
+  <div class="mock-fade absolute inset-x-3 bottom-11 w-36 rounded-menu border border-border-default bg-white p-1 shadow-menu" data-on="2" data-off="4">
+    <div class="mock-active rounded-button px-2 py-1.5 font-mono text-[10px] leading-none text-text-secondary" data-on="3">elaniin-style</div>
+    <div class="rounded-button px-2 py-1.5 font-mono text-[10px] leading-none text-text-muted">other-skill</div>
+  </div>
+  <div class="absolute inset-x-3 bottom-3 flex items-center gap-1.5 rounded-menu border border-border-input bg-white px-2 py-1.5">
+    <span class="mock-fade text-[10px] leading-none text-text-muted" data-on="2" data-off="4">/</span>
+    <span class="mock-fade rounded-tag bg-blue-tint-50 px-1.5 py-1 font-mono text-[9px] leading-none text-text-primary" data-on="4">elaniin-style</span>
+    <span class="mock-caret min-w-0 flex-1 truncate text-[9px] leading-none text-text-primary" data-on="5" data-type="Create a pitch deck in the Elaniin style"></span>
+    <span class="mock-press flex h-5 w-5 shrink-0 items-center justify-center rounded-button bg-excellence-blue" data-on="7" data-off="8"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+  </div>""")
+
 team_steps = "\n".join([
     step("01", "Open Customize, then Plugins", "In the Claude desktop app (or at claude.ai) look at the left sidebar and click <strong>Customize</strong>. Then click <strong>Plugins</strong>. You must be signed in to your Claude account.",
-         '<p class="mt-3 text-body-sm text-text-secondary">Shortcut: <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener" class="font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring">claude.ai/customize/plugins</a></p>'),
-    step("02", "Choose Add, then Add marketplace", "On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A box opens asking for the address of a repository."),
+         '<p class="mt-3 text-body-sm text-text-secondary">Shortcut: <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener" class="font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring">claude.ai/customize/plugins</a></p>', mock=MOCK_1),
+    step("02", "Choose Add, then Add marketplace", "On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A box opens asking for the address of a repository.", mock=MOCK_2),
     step("03", "Paste the Elaniin address", "Copy the address below, paste it in the box and confirm. The repository is public, so you do not need your own GitHub account. Use <strong>this exact address</strong> every time.",
-         f'<div class="mt-4">{code(SRC_URL, "address")}</div>'),
-    step("04", "Install elaniin-style", "Go to <strong>Discover</strong>, find <strong>elaniin-style</strong> and click <strong>Add</strong>. It is saved to your account, so it is also available in chat, Cowork and Claude Code."),
-    step("05", "Turn on automatic updates", "Back in <strong>Plugins</strong>, find the Elaniin marketplace you added and turn on <strong>Sync automatically</strong>. To refresh by hand at any time click <strong>Check for updates</strong>."),
-    step("06", "Use it", "In any chat type " + ic("/") + " in the message box, type <strong>elaniin</strong> and pick <strong>elaniin-style</strong>, then write what you want, for example “Create a pitch deck in the Elaniin style”. You can also just describe the task: Claude loads the skill when it matches."),
+         f'<div class="mt-4">{code(SRC_URL, "address")}</div>', mock=MOCK_3),
+    step("04", "Install elaniin-style", "Go to <strong>Discover</strong>, find <strong>elaniin-style</strong> and click <strong>Add</strong>. It is saved to your account, so it is also available in chat, Cowork and Claude Code.", mock=MOCK_4),
+    step("05", "Turn on automatic updates", "Back in <strong>Plugins</strong>, find the Elaniin marketplace you added and turn on <strong>Sync automatically</strong>. To refresh by hand at any time click <strong>Check for updates</strong>.", mock=MOCK_5),
+    step("06", "Use it", "In any chat type " + ic("/") + " in the message box, type <strong>elaniin</strong> and pick <strong>elaniin-style</strong>, then write what you want, for example “Create a pitch deck in the Elaniin style”. You can also just describe the task: Claude loads the skill when it matches.", mock=MOCK_6),
 ])
 
 team_check = """<div class="mt-8 max-w-[68ch] rounded-card border border-border-default bg-surface-subtle p-6">
@@ -597,6 +781,47 @@ script = r'''
       }, { threshold: 0.3 }).observe(pipeline);
     }
   }
+
+  /* step mockups: a tiny state machine (1 step per second). It runs only while the card is on
+     screen and, with reduced motion, renders the final state once and never starts. */
+  var MOCK_STEP_MS = 1000;
+  document.querySelectorAll('[data-mock]').forEach(function (stage) {
+    var path = (stage.dataset.path || '').split('|').map(function (p) { return p.split(','); });
+    var last = path.length - 1, step = 0, timer = null;
+    var cursor = stage.querySelector('.mock-cursor');
+    var els = Array.prototype.slice.call(stage.querySelectorAll('[data-on]'));
+
+    function typeInto(el, on) {
+      var full = el.dataset.type;
+      if (!full) return;
+      if (reduce) { el.textContent = full; return; }
+      if (on && !el._typing) {
+        el._typing = true; el.classList.add('is-typing'); var i = 0;
+        el._t = setInterval(function () {
+          i++; el.textContent = full.slice(0, i);
+          if (i >= full.length) { clearInterval(el._t); }
+        }, 32);
+      } else if (!on) {
+        clearInterval(el._t); el._typing = false; el.classList.remove('is-typing'); el.textContent = '';
+      }
+    }
+    function render() {
+      els.forEach(function (el) {
+        var on = step >= +el.dataset.on && (el.dataset.off === undefined || step < +el.dataset.off);
+        el.classList.toggle('is-on', on);
+        typeInto(el, on);
+      });
+      if (cursor) { var p = path[Math.min(step, last)]; cursor.style.left = p[0]; cursor.style.top = p[1]; }
+    }
+    function start() { if (timer === null) timer = setInterval(function () { step = (step + 1) % (last + 3); render(); }, MOCK_STEP_MS); }
+    function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
+
+    if (reduce) { step = last; render(); return; }
+    render();
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) start(); else stop(); });
+    }, { threshold: 0.3 }).observe(stage);
+  });
 
   /* mouse-reactive spotlight + card glow */
   if (!reduce) {

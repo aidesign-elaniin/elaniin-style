@@ -152,6 +152,17 @@ solo, da la impresión de producto vivo y se detiene cuando nadie lo mira.
   `PERIOD 7000ms / STEP 1400ms`, rAF, pausable); **dashboard** → KPI vivo
   (drift `+0.1…0.7k` cada 7s con tween + re-trigger de `draw-line` en el chart).
 
+### Técnica C · Mockup de pasos (tutoriales de instalación o de uso)
+Cuando una card explica una acción de interfaz, lleva arriba un **mockup ilustrado en loop**
+de esa acción (cursor que se mueve, clic, resultado). Se hace con una pequeña máquina de estados:
+cada elemento declara `data-on="N"` (y opcional `data-off="M"`) y el escenario `data-mock` avanza
+1 paso por segundo; el cursor sigue `data-path="x%,y%|x%,y%|…"` y el texto que se “escribe” usa
+`data-type`. Utilities: `mock-stage`, `mock-fade`, `mock-active`, `mock-press`, `mock-switch`,
+`mock-cursor`, `mock-caret`. Reglas: `aria-hidden="true"`; solo corre mientras está en pantalla
+(IntersectionObserver); con `prefers-reduced-motion` se pinta el **estado final** una vez, sin cursor;
+UI genérica en tokens Elaniin, nunca una copia de la marca ajena. Ejemplo vivo: los 6 pasos del
+landing de instalación (`scripts/build-docs.py`).
+
 ### Reduce → estado final
 | Técnica | Bajo `prefers-reduced-motion: reduce` |
 |---|---|
