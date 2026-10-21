@@ -261,11 +261,17 @@ MOCK_2 = stage("95%,92%|85%,15%|85%,15%|72%,42%|72%,42%|72%,42%", """
     <div class="rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary">Upload plugin</div>
   </div>""")
 
-MOCK_3 = stage("95%,95%|52%,50%|52%,50%|52%,50%|82%,80%|82%,80%|82%,80%", """
-  <div class="absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu">
+MOCK_3 = stage("95%,95%|50%,66%|50%,66%|50%,66%|50%,60%|50%,60%|86%,90%|86%,90%|86%,90%", """
+  <div class="mock-hide absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
     <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
-    <div class="mt-2 min-h-10 break-all rounded-input border border-border-input px-2 py-1.5 font-mono text-[9px] leading-snug text-text-primary mock-caret" data-on="2" data-type="https://github.com/aidesign-elaniin/elaniin-style"></div>
-    <div class="mock-press absolute bottom-3 right-3 rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="5" data-off="6">Add</div>
+    <div class="mt-2 rounded-input border border-border-default px-2 py-2 text-[9px] leading-none text-text-secondary">Browse Anthropic sources</div>
+    <div class="mock-active mt-1.5 rounded-input border border-border-default px-2 py-2 text-[9px] leading-none text-text-secondary" data-on="3">Add from a repository</div>
+  </div>
+  <div class="mock-fade absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
+    <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
+    <div class="mt-2 rounded-input bg-surface-subtle px-2 py-1.5 text-[8px] leading-snug text-text-muted">Standard notice for any marketplace</div>
+    <div class="mt-2 min-h-8 break-all rounded-input border border-border-input px-2 py-1.5 font-mono text-[8px] leading-snug text-text-primary mock-caret" data-on="5" data-type="https://github.com/aidesign-elaniin/elaniin-style"></div>
+    <div class="mock-press absolute bottom-3 right-3 rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
 MOCK_4 = stage("95%,95%|83%,66%|83%,66%|83%,66%|83%,66%", """
@@ -317,8 +323,10 @@ MOCK_6 = stage("95%,35%|46%,86%|46%,86%|26%,60%|26%,60%|90%,86%|90%,86%|90%,86%|
 team_steps = "\n".join([
     step("01", "Open Settings, then Plugins", "In the Claude desktop app click your name or email at the bottom of the left sidebar and choose <strong>Settings</strong> (on Mac you can press <kbd class=\"rounded-tag bg-surface-subtle px-1 font-mono text-code\">⌘ ,</kbd>). In the Settings list, under the <strong>Customize</strong> group, click <strong>Plugins</strong>. You must be signed in to your Claude account.",
          '<p class="mt-3 text-body-sm text-text-secondary">On claude.ai you can also go straight to <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener" class="font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring">claude.ai/customize/plugins</a></p>', mock=MOCK_1),
-    step("02", "Choose Add, then Add marketplace", "On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A box opens asking for the address of a repository.", mock=MOCK_2),
-    step("03", "Paste the Elaniin address", "Copy the address below, paste it in the box and confirm. The repository is public, so you do not need your own GitHub account. Use <strong>this exact address</strong> every time.",
+    step("02", "Choose Add, then Add marketplace", "On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A small window opens with two options.", mock=MOCK_2),
+    step("03", "Paste the Elaniin address", "A window with a few small moves. Use <strong>this exact address</strong> every time.",
+         '<ol class="mt-3 list-decimal space-y-1 pl-5 text-body-sm text-text-secondary"><li>Choose <strong>Add from a repository</strong>.</li><li>Paste the address in the <strong>URL</strong> box.</li><li>Click <strong>Sync</strong>.</li></ol>'
+         '<p class="mt-3 rounded-card bg-surface-subtle p-4 text-body-sm text-text-secondary"><strong>A red notice will appear. Relax, it is normal.</strong> Claude shows it for every marketplace that is not from Anthropic. This repository is Elaniin\'s and public, so you can go ahead.</p>'
          f'<div class="mt-4">{code(SRC_URL, "address")}</div>', mock=MOCK_3),
     step("04", "Install elaniin-style", "Go to <strong>Discover</strong>, find <strong>elaniin-style</strong> and click <strong>Add</strong>. It is saved to your account, so it is also available in chat, Cowork and Claude Code.", mock=MOCK_4),
     step("05", "Turn on automatic updates", "Back in <strong>Plugins</strong>, find the Elaniin marketplace you added and turn on <strong>Sync automatically</strong>. To refresh by hand at any time click <strong>Check for updates</strong>.", mock=MOCK_5),

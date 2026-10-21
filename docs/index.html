@@ -1007,17 +1007,23 @@
     <div class="rounded-button px-2 py-1.5 text-[10px] leading-none text-text-secondary">Upload plugin</div>
   </div><svg class="mock-cursor" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1l11 5-4.5 1.5L7 12z" class="fill-elaniin-black stroke-white" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">02</span>Choose Add, then Add marketplace</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A box opens asking for the address of a repository.</p>
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A small window opens with two options.</p>
 </li>
 <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
-  <div class="mock-stage mb-5" data-mock data-path="95%,95%|52%,50%|52%,50%|52%,50%|82%,80%|82%,80%|82%,80%" aria-hidden="true">
-  <div class="absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu">
+  <div class="mock-stage mb-5" data-mock data-path="95%,95%|50%,66%|50%,66%|50%,66%|50%,60%|50%,60%|86%,90%|86%,90%|86%,90%" aria-hidden="true">
+  <div class="mock-hide absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
     <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
-    <div class="mt-2 min-h-10 break-all rounded-input border border-border-input px-2 py-1.5 font-mono text-[9px] leading-snug text-text-primary mock-caret" data-on="2" data-type="https://github.com/aidesign-elaniin/elaniin-style"></div>
-    <div class="mock-press absolute bottom-3 right-3 rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="5" data-off="6">Add</div>
+    <div class="mt-2 rounded-input border border-border-default px-2 py-2 text-[9px] leading-none text-text-secondary">Browse Anthropic sources</div>
+    <div class="mock-active mt-1.5 rounded-input border border-border-default px-2 py-2 text-[9px] leading-none text-text-secondary" data-on="3">Add from a repository</div>
+  </div>
+  <div class="mock-fade absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
+    <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
+    <div class="mt-2 rounded-input bg-surface-subtle px-2 py-1.5 text-[8px] leading-snug text-text-muted">Standard notice for any marketplace</div>
+    <div class="mt-2 min-h-8 break-all rounded-input border border-border-input px-2 py-1.5 font-mono text-[8px] leading-snug text-text-primary mock-caret" data-on="5" data-type="https://github.com/aidesign-elaniin/elaniin-style"></div>
+    <div class="mock-press absolute bottom-3 right-3 rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div><svg class="mock-cursor" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1l11 5-4.5 1.5L7 12z" class="fill-elaniin-black stroke-white" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">03</span>Paste the Elaniin address</h3>
-  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">Copy the address below, paste it in the box and confirm. The repository is public, so you do not need your own GitHub account. Use <strong>this exact address</strong> every time.</p><div class="mt-4"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">A window with a few small moves. Use <strong>this exact address</strong> every time.</p><ol class="mt-3 list-decimal space-y-1 pl-5 text-body-sm text-text-secondary"><li>Choose <strong>Add from a repository</strong>.</li><li>Paste the address in the <strong>URL</strong> box.</li><li>Click <strong>Sync</strong>.</li></ol><p class="mt-3 rounded-card bg-surface-subtle p-4 text-body-sm text-text-secondary"><strong>A red notice will appear. Relax, it is normal.</strong> Claude shows it for every marketplace that is not from Anthropic. This repository is Elaniin's and public, so you can go ahead.</p><div class="mt-4"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">address</span>
     <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copy</button>
