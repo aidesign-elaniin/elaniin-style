@@ -89,7 +89,8 @@ skills/elaniin-style/
 ├── references/           tokens, tailwind-api, motion, ux-a11y, websites, decks, dashboards, site-dev…
 ├── scripts/              ensure-motion.sh (instala motion en silencio si hay package.json)
 └── templates/            tokens.css, landing.html, dashboard.html, deck.html, motion-presets.ts,
-                          module-field.js / module-field.tsx (textura interactiva del hero)
+                          module-field.js / module-field.tsx (textura interactiva del hero),
+                          iso-stack.js + iso/ (recurso isométrico del hero: HTML y React)
 ```
 
 ## No negociables / Non-negotiables

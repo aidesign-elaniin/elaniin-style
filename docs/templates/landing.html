@@ -24,6 +24,10 @@
     4. Durations are named: instant 100 · fast 150 · base 200 · slow 300 · reveal 500.
        Use `duration-base`, never `duration-200`.
 
+    5. @theme is STATIC: every token is emitted as a CSS variable even when no utility uses it, so inline
+       styles and JS can reference var(--color-*) (the isometric resource does). Without `static`,
+       Tailwind v4 prunes unused variables and a missing var() silently renders black.
+
   USAGE:
     - Tailwind v4 project: include tailwindcss first, then this file (or paste it).
        (Never spell out the import directive inside this comment: mentioning it
@@ -35,7 +39,7 @@
   below exist, so a stray `bg-blue-500` simply does not compile.
 */
 
-@theme {
+@theme static {
   /* ---------- reset defaults ---------- */
   --color-*: initial;
   --radius-*: initial;
@@ -497,6 +501,34 @@
   }
 }
 
+/* ---------- isometric resources: levitation and floating (DESIGN.md motifs.isometric) ---------- */
+/* iso-levitate: the whole piece floats 6px, 3s. iso-float: a label floats 4px, 2s, staggered with --d. */
+@theme {
+  --animate-iso-levitate: iso-levitate 3s var(--ease-standard) infinite alternate;
+  --animate-iso-float: iso-float 2s var(--ease-standard) infinite alternate;
+  @keyframes iso-levitate {
+    from { transform: translateY(0); }
+    to { transform: translateY(-6px); }
+  }
+  @keyframes iso-float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+  }
+}
+@utility iso-levitate {
+  animation: var(--animate-iso-levitate);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@utility iso-float {
+  animation: var(--animate-iso-float);
+  animation-delay: calc(var(--d, 0) * 400ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
 /* ---------- utilities: grids (on top of Tailwind's native grid-cols / col-span) ---------- */
 /* gap-grid: the responsive gap token (24px, 16px on mobile). grid-page: 12-col page grid —
    children carry col-span-12 md:col-span-N. grid-auto: auto-fit cards of unknown count
@@ -717,6 +749,7 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
 <symbol id="elaniin-logo" viewBox="0 0 281.45 75.91"><g fill="#141414"><g id="uuid-5492e3b7-2299-49d7-a0db-08f3ca1d8490"><path d="M41.42,59.92c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79H10.41c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM35.95,32.59c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon points="59.63 74.76 59.61 .06 70.15 0 70.16 74.77 59.63 74.76"/><path d="M129.19,74.78h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM115.49,61.31c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path d="M160.38,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path d="M206.07,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path d="M254.15,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle cx="200.72" cy="9.03" r="5.47"/><circle cx="219.55" cy="9.03" r="5.47"/><path d="M224.9,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></g></symbol>
 <symbol id="elaniin-logo-white" viewBox="0 0 281.45 75.91"><g fill="#ffffff"><g id="uuid-5492e3b7-2299-49d7-a0db-08f3ca1d8490"><path d="M41.42,59.92c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79H10.41c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM35.95,32.59c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon points="59.63 74.76 59.61 .06 70.15 0 70.16 74.77 59.63 74.76"/><path d="M129.19,74.78h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM115.49,61.31c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path d="M160.38,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path d="M206.07,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path d="M254.15,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle cx="200.72" cy="9.03" r="5.47"/><circle cx="219.55" cy="9.03" r="5.47"/><path d="M224.9,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></g></symbol>
+<symbol id="elaniin-logo-blue" viewBox="0 0 281.45 75.91"><g fill="#1054ff"><g id="uuid-5492e3b7-2299-49d7-a0db-08f3ca1d8490"><path d="M41.42,59.92c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79H10.41c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM35.95,32.59c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon points="59.63 74.76 59.61 .06 70.15 0 70.16 74.77 59.63 74.76"/><path d="M129.19,74.78h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM115.49,61.31c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path d="M160.38,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path d="M206.07,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path d="M254.15,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle cx="200.72" cy="9.03" r="5.47"/><circle cx="219.55" cy="9.03" r="5.47"/><path d="M224.9,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></g></symbol>
 </svg>
 <div class="spotlight" aria-hidden="true"></div>
 <div class="relative z-10">
@@ -766,16 +799,21 @@
   <!-- HERO -->
   <section class="relative isolate overflow-hidden section-y" style="--section-y:112px">
     <div class="module-field" data-module-field aria-hidden="true"></div>
-    <div class="container-site relative">
-<h1 class="max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">We design products people actually use</h1>
-      <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise" style="--i:2">Strategy, design and engineering for teams that ship. From zero-to-one products to full platform redesigns — in weeks, not quarters.</p>
-      <div class="mt-10 flex flex-wrap items-center gap-4 rise" style="--i:3">
-        <a href="#" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 text-body font-display font-medium text-white hover:bg-blue-600 active:bg-blue-700 transition-colors duration-base">Start a project
+    <div class="container-site relative grid-page items-center">
+      <div class="col-span-12 flex min-w-0 flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
+        <h1 class="max-w-[12ch] break-words font-display font-medium text-display-xl text-balance text-text-primary rise" style="--i:1">We design products people actually use</h1>
+        <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise max-lg:max-w-[40ch] max-lg:text-balance" style="--i:2">Strategy, design and engineering for teams that ship. From zero-to-one products to full platform redesigns — in weeks, not quarters.</p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4 rise max-md:w-full max-md:flex-col lg:justify-start" style="--i:3">
+          <a href="#" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 text-body font-display font-medium text-white hover:bg-blue-600 active:bg-blue-700 transition-colors duration-base">Start a project
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
         </a>
-        <a href="#product" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button px-2 text-body font-display font-medium text-elevate-blue hover:text-text-link-hover transition-colors duration-base">See the work
+          <a href="#product" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button px-2 text-body font-display font-medium text-elevate-blue hover:text-text-link-hover transition-colors duration-base">See the work
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
         </a>
+        </div>
+      </div>
+      <div class="col-span-12 mx-auto w-full min-w-0 max-w-[560px] lg:col-span-6 lg:mx-0 lg:max-w-none">
+        <div data-iso-stack data-software="Software" data-ai="AI" data-cloud="Cloud"></div>
       </div>
     </div>
   </section>
@@ -1176,6 +1214,310 @@
   var onResize = function () { if (desktop.matches) setOpen(false, false); };
   if (desktop.addEventListener) desktop.addEventListener('change', onResize);
   else desktop.addListener(onResize);
+})();
+</script>
+<script>
+/*
+  Elaniin isometric resource — vanilla build (no dependencies). Ported from the Elaniin 2027 site:
+  src/components/ui/iso/* and src/components/sections/hero/hero-stack.tsx (DESIGN.md motifs.isometric).
+  React/Next build of the same scene: templates/iso/.  Rules and recipe: references/isometric.md.
+
+  WHAT IS CSS AND WHAT IS NOT
+  - CSS (tokens.css): colors via var(--color-*) written inline on SVG shapes, the `rise` entrance, the
+    `iso-levitate` / `iso-float` loops, the frost (backdrop-filter + clip-path) and reduced motion.
+  - NOT CSS (this file): the isometric projection and every SVG matrix / polygon, and the 12s clock that
+    derives pulse position, arm length, slab slide and opacity. JS writes those as SVG attributes and inline
+    transform / opacity on every tick: there are no CSS transitions in the main motion.
+
+  Markup (needs the `<symbol id="elaniin-logo-blue">` of the page sprite, tokens.css, and this script):
+    <div data-iso-stack data-software="Software" data-ai="AI" data-cloud="Cloud"></div>
+  Decorative: it sets aria-hidden. Under prefers-reduced-motion it renders the assembled state once.
+*/
+(function () {
+  var COS30 = Math.cos(Math.PI / 6);
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* ---------------------------------------------------------------- kit (iso.ts) */
+  function project(p, o) { return { x: o.x + (p.x - p.y) * COS30, y: o.y + (p.x + p.y) / 2 - p.z }; }
+  function pointsAttr(list, o) {
+    return list.map(function (p) { var q = project(p, o); return q.x.toFixed(1) + ',' + q.y.toFixed(1); }).join(' ');
+  }
+  function planeTransform(o, z) { return 'translate(0 ' + (-z) + ') matrix(' + COS30 + ' 0.5 ' + (-COS30) + ' 0.5 ' + o.x + ' ' + o.y + ')'; }
+  function pointAt(line, progress) {
+    var lengths = [], total = 0, i;
+    for (i = 1; i < line.length; i++) { var l = Math.hypot(line[i].x - line[i - 1].x, line[i].y - line[i - 1].y); lengths.push(l); total += l; }
+    var left = Math.min(1, Math.max(0, progress)) * total;
+    for (i = 0; i < lengths.length; i++) {
+      if (left <= lengths[i] || i === lengths.length - 1) {
+        var k = lengths[i] === 0 ? 0 : left / lengths[i];
+        return { x: line[i].x + (line[i + 1].x - line[i].x) * k, y: line[i].y + (line[i + 1].y - line[i].y) * k };
+      }
+      left -= lengths[i];
+    }
+    return line[0];
+  }
+  var clamp01 = function (v) { return Math.min(1, Math.max(0, v)); };
+  var easeInOut = function (v) { return v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2; };
+
+  /* ---------------------------------------------------------------- glass slab (slab.tsx) */
+  var FACES = {
+    software: { top: 'var(--color-blue-tint-50)', left: 'var(--color-blue-100)', right: 'var(--color-blue-200)' },
+    ai: { top: 'var(--color-blue-800)', left: 'var(--color-excellence-blue)', right: 'var(--color-blue-active-dark)' },
+    cloud: { top: 'var(--color-surface-subtle)', left: 'var(--color-border-default)', right: 'var(--color-border-strong)' },
+    plate: { top: 'var(--color-white)', left: 'var(--color-blue-tint-50)', right: 'var(--color-blue-100)' }
+  };
+  var GLASS = { opacity: 0.78, aiOpacity: 0.82, edge: 'var(--color-excellence-blue)' };
+
+  function topFace(b) {
+    return [
+      { x: b.x, y: b.y, z: b.z + b.h }, { x: b.x + b.w, y: b.y, z: b.z + b.h },
+      { x: b.x + b.w, y: b.y + b.d, z: b.z + b.h }, { x: b.x, y: b.y + b.d, z: b.z + b.h }
+    ];
+  }
+  function topTexture(look, b, o) {
+    var plane = planeTransform(o, b.z + b.h), items = '', i, j;
+    if (look === 'software') {
+      for (i = 12; i <= b.w - 12; i += 12) for (j = 12; j <= b.d - 12; j += 12)
+        items += '<rect x="' + (b.x + i - 1.5) + '" y="' + (b.y + j - 1.5) + '" width="3" height="3" rx="0.5"/>';
+      return '<g transform="' + plane + '" style="fill:var(--color-blue-400);opacity:.6">' + items + '</g>';
+    }
+    if (look === 'ai') {
+      for (i = 12; i < b.w; i += 12) items += '<line x1="' + (b.x + i) + '" y1="' + b.y + '" x2="' + (b.x + i) + '" y2="' + (b.y + b.d) + '"/>';
+      for (j = 12; j < b.d; j += 12) items += '<line x1="' + b.x + '" y1="' + (b.y + j) + '" x2="' + (b.x + b.w) + '" y2="' + (b.y + j) + '"/>';
+      return '<g transform="' + plane + '" style="stroke:var(--color-white);stroke-width:1;opacity:.14">' + items + '</g>';
+    }
+    for (j = 10; j < b.d; j += 10) items += '<line x1="' + b.x + '" y1="' + (b.y + j) + '" x2="' + (b.x + b.w) + '" y2="' + (b.y + j) + '"/>';
+    return '<g transform="' + plane + '" style="stroke:var(--color-border-input);stroke-width:1;opacity:.5">' + items + '</g>';
+  }
+  /** SVG markup of a glass slab: left, right and top faces + the fine texture of its look. */
+  function slabSvg(look, b, o) {
+    var dark = look === 'ai', faces = FACES[look];
+    var edge = 'stroke:' + (dark ? 'var(--color-border-on-dark-strong)' : GLASS.edge) + ';stroke-width:1;stroke-linejoin:round;stroke-opacity:' + (dark ? 1 : 0.9);
+    var fo = dark ? GLASS.aiOpacity : GLASS.opacity;
+    var face = function (fill) { return 'style="fill:' + fill + ';fill-opacity:' + fo + ';' + edge + '"'; };
+    var left = [{ x: b.x, y: b.y + b.d, z: b.z }, { x: b.x + b.w, y: b.y + b.d, z: b.z }, { x: b.x + b.w, y: b.y + b.d, z: b.z + b.h }, { x: b.x, y: b.y + b.d, z: b.z + b.h }];
+    var right = [{ x: b.x + b.w, y: b.y, z: b.z }, { x: b.x + b.w, y: b.y + b.d, z: b.z }, { x: b.x + b.w, y: b.y + b.d, z: b.z + b.h }, { x: b.x + b.w, y: b.y, z: b.z + b.h }];
+    return '<g><polygon points="' + pointsAttr(left, o) + '" ' + face(faces.left) + '/>' +
+      '<polygon points="' + pointsAttr(right, o) + '" ' + face(faces.right) + '/>' +
+      '<polygon points="' + pointsAttr(topFace(b), o) + '" ' + face(faces.top) + '/>' +
+      (look !== 'plate' ? topTexture(look, b, o) : '') + '</g>';
+  }
+  /** Flat grey diamond with the footprint of a piece, drawn at depth z (shadow). */
+  function floorSvg(o, x, y, w, d, z) {
+    var pts = pointsAttr([{ x: x, y: y, z: z }, { x: x + w, y: y, z: z }, { x: x + w, y: y + d, z: z }, { x: x, y: y + d, z: z }], o);
+    return '<polygon points="' + pts + '" style="fill:var(--color-surface-subtle)"/>';
+  }
+
+  /* ---------------------------------------------------------------- the hero scene (hero-stack.tsx) */
+  var VB = { x: 67, y: 30, w: 640, h: 500 };
+  var VIEWBOX = VB.x + ' ' + VB.y + ' ' + VB.w + ' ' + VB.h;
+  var O = { x: 400, y: 246 };
+  var LIFT = 36, D = 200, PERIOD = 12000, TICK = 50;
+  var PLATE = { x: -90, y: -30, z: 0, w: 350, d: 260, h: 12 };
+  var RISER = { x: -68, y: 192, z: 12, w: 16, d: 16, h: 200 };
+  var RISER_X = RISER.x + RISER.w, RISER_Y = RISER.y + RISER.d / 2;
+  var SLIDE = 28, DIM = 0.4;
+  var T = { trace: 1000, traceDur: 1000, rise: 900, branch: 1000, up: 700, hold: 900, down: 700 };
+  var PILL_H = 38;
+
+  /* lucide icons (ISC): generic, never a third-party brand logo */
+  var ICONS = {
+    cloud: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
+    software: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+    ai: '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>'
+  };
+  /* bottom to top, each slab narrower than the one below so a strip of its top face stays visible */
+  var STATIONS = [
+    { look: 'cloud', box: { x: 0, y: 0, z: 12, w: 230, d: D, h: 40 }, tile: { x: 195, y: 100 } },
+    { look: 'software', box: { x: 0, y: 0, z: 72, w: 160, d: D, h: 80 }, tile: { x: 125, y: 100 } },
+    { look: 'ai', box: { x: 0, y: 0, z: 172, w: 90, d: D, h: 40 }, tile: { x: 45, y: 100 } }
+  ];
+  var levelOf = function (s) { return s.box.z + s.box.h / 2; };
+  var TIMES = (function () {
+    var r = T.trace + T.traceDur;
+    return STATIONS.map(function () { var row = { R: r, B: r + T.rise, A: r + T.rise + T.branch }; r = row.B; return row; });
+  })();
+  var TRACE_SCREEN = [
+    { x: PLATE.x + PLATE.w, y: PLATE.y + PLATE.d - 12, z: PLATE.h },
+    { x: RISER_X, y: PLATE.y + PLATE.d - 12, z: PLATE.h },
+    { x: RISER_X, y: RISER_Y, z: PLATE.h }
+  ].map(function (p) { return project(p, O); });
+
+  function envelope(t, a) {
+    var s = t - a;
+    if (s <= 0) return 0;
+    if (s < T.up) return easeInOut(s / T.up);
+    if (s < T.up + T.hold) return 1;
+    if (s < T.up + T.hold + T.down) return 1 - easeInOut((s - T.up - T.hold) / T.down);
+    return 0;
+  }
+  var pct = function (p) { return (((p.x - VB.x) / VB.w) * 100).toFixed(2) + '% ' + (((p.y - VB.y) / VB.h) * 100).toFixed(2) + '%'; };
+
+  function el(tag, attrs, html) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (html) n.innerHTML = html;
+    return n;
+  }
+  function div(cls, style) { var d = document.createElement('div'); d.className = cls; if (style) d.style.cssText = style; return d; }
+  function svgLayer(cls) {
+    var s = el('svg', { viewBox: VIEWBOX, focusable: 'false' });
+    s.setAttribute('class', cls);
+    return s;
+  }
+  function rise(i) { return 'rise" style="--i:' + i; }
+
+  var uid = 0;
+  function mountStack(host, labels) {
+    var id = 'iso-halo-' + (++uid);
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    host.setAttribute('aria-hidden', 'true');
+    host.classList.add('relative', 'w-full');
+    host.innerHTML = '';
+
+    /* ground: the shadow stays on the ground while the piece above it levitates */
+    var ground = svgLayer('block h-auto w-full');
+    ground.innerHTML = '<g class="' + rise(0) + '">' + floorSvg(O, PLATE.x + 10, PLATE.y + 10, PLATE.w - 20, PLATE.d - 20, -LIFT) + '</g>';
+    host.appendChild(ground);
+
+    var lev = div('iso-levitate absolute inset-0');
+    host.appendChild(lev);
+
+    /* base svg: plate, riser, trace, arms, pulses */
+    var layer = 'absolute inset-0 block h-full w-full';
+    var base = svgLayer(layer);
+    var trace = TRACE_SCREEN.map(function (p) { return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+    base.innerHTML =
+      '<defs><filter id="' + id + '" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter></defs>' +
+      '<g class="' + rise(0) + '">' + slabSvg('plate', PLATE, O) + slabSvg('plate', RISER, O) + '</g>' +
+      '<g class="' + rise(2) + '"><polyline points="' + trace + '" style="fill:none;stroke:var(--color-excellence-blue);stroke-opacity:.4;stroke-width:1;stroke-linejoin:round"/>' +
+      '<g data-arms></g><g data-pulses></g></g>';
+    lev.appendChild(base);
+    var armsG = base.querySelector('[data-arms]'), pulsesG = base.querySelector('[data-pulses]');
+
+    /* per slab: a frost (backdrop blur clipped to its silhouette) and the slab svg */
+    var parts = STATIONS.map(function (st, i) {
+      var b = st.box;
+      var sil = [
+        { x: b.x, y: b.y, z: b.z + b.h }, { x: b.x + b.w, y: b.y, z: b.z + b.h }, { x: b.x + b.w, y: b.y, z: b.z },
+        { x: b.x + b.w, y: b.y + b.d, z: b.z }, { x: b.x, y: b.y + b.d, z: b.z }, { x: b.x, y: b.y + b.d, z: b.z + b.h }
+      ].map(function (p) { return pct(project(p, O)); });
+      var frostWrap = div('rise pointer-events-none absolute inset-0', '--i:' + (2 + i * 2));
+      var frost = div('absolute inset-0', 'clip-path:polygon(' + sil.join(', ') + ');backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)');
+      frostWrap.appendChild(frost);
+      lev.appendChild(frostWrap);
+
+      var name = labels[st.look];
+      var length = 56 + name.length * 9;
+      var plane = planeTransform(O, b.z + b.h) + ' matrix(0 -1 1 0 ' + (st.tile.x - PILL_H / 2) + ' ' + (st.tile.y + length / 2) + ')';
+      var tile =
+        '<g><g transform="' + plane + '" style="fill:var(--color-blue-300);opacity:.35"><rect x="0" y="0" width="' + length + '" height="' + PILL_H + '" rx="8"/></g>' +
+        '<g class="iso-float" style="--d:' + i + '"><g transform="' + plane + '">' +
+        '<rect x="0" y="0" width="' + length + '" height="' + PILL_H + '" rx="8" style="fill:var(--color-white);stroke:var(--color-excellence-blue);stroke-width:1;stroke-opacity:.9"/>' +
+        '<svg x="12" y="' + (PILL_H - 20) / 2 + '" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-elevate-blue)">' + ICONS[st.look] + '</svg>' +
+        '<text x="42" y="' + (PILL_H / 2 + 5) + '" style="fill:var(--color-text-primary);font-family:var(--font-display);font-size:15px;font-weight:500">' + name + '</text>' +
+        '</g></g></g>';
+      var logo = '';
+      if (st.look === 'software') {
+        var width = 88, height = width * (75.91 / 281.45), u = (b.d - width) / 2;
+        var zTop = b.z + b.h - (b.h - height) / 2;
+        var e = O.x + (b.w - b.d) * COS30, f = O.y + (b.w + b.d) / 2 - zTop;
+        logo = '<g transform="matrix(' + COS30 + ' -0.5 0 1 ' + e + ' ' + f + ')"><use href="#elaniin-logo-blue" x="' + u + '" y="0" width="' + width + '" height="' + height + '"/></g>';
+      }
+      var lit = st.look === 'ai' ? 'var(--color-text-on-dark-accent)' : 'var(--color-elevate-blue)';
+      var svg = svgLayer(layer);
+      svg.innerHTML = '<g class="' + rise(2 + i * 2) + '"><g data-move>' + slabSvg(st.look, b, O) + logo + tile +
+        '<polygon data-lit points="' + pointsAttr(topFace(b), O) + '" style="fill:none;stroke:' + lit + ';stroke-width:2;stroke-linejoin:round;opacity:0"/></g></g>';
+      lev.appendChild(svg);
+      return { frost: frost, move: svg.querySelector('[data-move]'), lit: svg.querySelector('[data-lit]') };
+    });
+
+    function render(t) {
+      var envs = TIMES.map(function (row) { return envelope(t, row.A); });
+      var emphasis = Math.max.apply(null, envs);
+
+      parts.forEach(function (p, i) {
+        var off = SLIDE * envs[i], opacity = 1 - DIM * emphasis * (1 - envs[i]);
+        p.move.setAttribute('transform', 'translate(' + (off * COS30).toFixed(2) + ' ' + (off * 0.5).toFixed(2) + ')');
+        p.move.style.opacity = opacity;
+        p.frost.style.transform = 'translate(' + (((off * COS30) / VB.w) * 100).toFixed(3) + '%, ' + (((off * 0.5) / VB.h) * 100).toFixed(3) + '%)';
+        p.frost.style.opacity = opacity;
+        p.lit.style.opacity = envs[i];
+      });
+
+      /* arms: one per slab, from the riser to the slab's left corner; it telescopes with the slab as it slides */
+      var arms = '';
+      STATIONS.forEach(function (st, i) {
+        var level = levelOf(st), row = TIMES[i];
+        var from = project({ x: RISER_X, y: RISER_Y, z: level }, O);
+        var to = project({ x: SLIDE * envs[i], y: RISER_Y, z: level }, O);
+        var travelling = t >= row.B && t < row.A;
+        var progress = easeInOut(clamp01((t - row.B) / T.branch));
+        var head = project({ x: RISER_X + (SLIDE * envs[i] - RISER_X) * progress, y: RISER_Y, z: level }, O);
+        var trail = travelling ? 1 : t >= row.A ? clamp01(1 - (t - row.A) / 700) : 0;
+        arms += '<line x1="' + from.x + '" y1="' + from.y + '" x2="' + to.x + '" y2="' + to.y + '" style="stroke:var(--color-excellence-blue);stroke-opacity:.5;stroke-width:1"/>';
+        if (trail > 0) arms += '<line x1="' + from.x + '" y1="' + from.y + '" x2="' + (travelling ? head.x : to.x) + '" y2="' + (travelling ? head.y : to.y) + '" style="stroke:var(--color-elevate-blue);stroke-width:2;stroke-linecap:round;opacity:' + trail + '"/>';
+        arms += '<circle cx="' + to.x + '" cy="' + to.y + '" r="3" style="fill:var(--color-white);stroke:var(--color-elevate-blue);stroke-width:1.5"/>';
+      });
+      armsG.innerHTML = arms;
+
+      /* the light: along the trace, up the riser, and along each arm */
+      var pulses = [];
+      var traceEnd = T.trace + T.traceDur;
+      if (t >= T.trace && t < traceEnd) {
+        var p0 = pointAt(TRACE_SCREEN, easeInOut((t - T.trace) / T.traceDur));
+        pulses.push({ x: p0.x, y: p0.y, opacity: clamp01((t - T.trace) / 150) });
+      }
+      var last = TIMES[TIMES.length - 1];
+      if (t >= traceEnd && t < last.B + 200) {
+        var z = PLATE.h, from0 = z;
+        TIMES.forEach(function (row, i) {
+          var level = levelOf(STATIONS[i]);
+          if (t >= row.R && t < row.B) z = from0 + (level - from0) * easeInOut((t - row.R) / T.rise);
+          else if (t >= row.B) z = level;
+          from0 = level;
+        });
+        var pr = project({ x: RISER_X, y: RISER_Y, z: z }, O);
+        pulses.push({ x: pr.x, y: pr.y, opacity: t < last.B ? 1 : clamp01(1 - (t - last.B) / 200) });
+      }
+      TIMES.forEach(function (row, i) {
+        if (t >= row.B && t < row.A) {
+          var level = levelOf(STATIONS[i]), k = easeInOut((t - row.B) / T.branch);
+          var pa = project({ x: RISER_X + (0 - RISER_X) * k, y: RISER_Y, z: level }, O);
+          pulses.push({ x: pa.x, y: pa.y, opacity: 1 });
+        }
+      });
+      pulsesG.innerHTML = pulses.map(function (p) {
+        return '<g style="opacity:' + p.opacity + '"><circle cx="' + p.x + '" cy="' + p.y + '" r="11" filter="url(#' + id + ')" style="fill:var(--color-blue-400);opacity:.5"/>' +
+          '<circle cx="' + p.x + '" cy="' + p.y + '" r="4" style="fill:var(--color-elevate-blue)"/><circle cx="' + p.x + '" cy="' + p.y + '" r="1.5" style="fill:var(--color-white)"/></g>';
+      }).join('');
+    }
+
+    /* one clock per scene: runs only while on screen; reduced motion rests on the assembled state */
+    var t = 0, timer = null;
+    if (reduce) { render(PERIOD - 1); return; }
+    render(0);
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (en.isIntersecting && timer === null) timer = setInterval(function () { t = (t + TICK) % PERIOD; render(t); }, TICK);
+        else if (!en.isIntersecting && timer !== null) { clearInterval(timer); timer = null; }
+      });
+    }, { threshold: 0.3 }).observe(host);
+  }
+
+  /* kit exposed so a new resource can be built from the same projection, glass and shadow */
+  window.ElaniinIso = {
+    COS30: COS30, project: project, pointsAttr: pointsAttr, planeTransform: planeTransform, pointAt: pointAt,
+    clamp01: clamp01, easeInOut: easeInOut, slabSvg: slabSvg, floorSvg: floorSvg, topFace: topFace, mountStack: mountStack
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-iso-stack]'), function (host) {
+    mountStack(host, {
+      software: host.dataset.software || 'Software',
+      ai: host.dataset.ai || 'AI',
+      cloud: host.dataset.cloud || 'Cloud'
+    });
+  });
 })();
 </script>
 </body>

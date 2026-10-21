@@ -13,7 +13,10 @@ dominante por pieza.
                       En móvil (<md) los links van en un **drawer** (`drawer md:hidden` +
                       `scrim` + `templates/drawer.js`, `data-drawer-from="md"`) abierto por una
                       hamburguesa de 44px junto al CTA; nunca dejar links inaccesibles.
-2. Hero             — blanco. Display-xl (max ~20ch), lead (56ch), 1 CTA primario + 1 secundario.
+2. Hero             — dos variantes oficiales. SPLIT: texto a la izquierda y recurso isométrico a la
+                      derecha desde 1024 px; por debajo todo centrado (lead máx. 40ch, h1 máx. 12ch);
+                      ver `references/isometric.md`. CENTRADO: todo centrado, sin recurso visual.
+                      Blanco. Display-xl (max ~20ch), lead (56ch), 1 CTA primario + 1 secundario.
                       Fondo: **module field** (`module-field`, textura firma, obligatoria).
                       Opcional: producto/UI shot con sombra `product`. Nada de fondo azul.
 3. Social proof     — grey o blanco, hairline top. Logos en mono/gris, no multicolor.

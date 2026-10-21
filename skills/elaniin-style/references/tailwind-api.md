@@ -139,6 +139,18 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 | `spotlight` | radial 600px / 7% siguiendo `--mx,--my` (fixed, detrás del contenido) |
 | `card-glow` | glow radial 260px en `::after` siguiendo `--cx,--cy` al hover |
 
+> **`@theme static`:** el bloque principal de tokens es *static*: todas las variables se emiten aunque
+> ninguna utilidad las use, para que estilos en línea y JS puedan usar `var(--color-*)`. Sin `static`,
+> Tailwind v4 las poda y un `var()` ausente se renderiza negro (pasó con el isométrico).
+
+### Recursos isométricos
+| Clase | Qué hace |
+|---|---|
+| `iso-levitate` | toda la pieza flota 6px, 3s (alternate); la sombra se queda en el suelo |
+| `iso-float` | una etiqueta flota 4px, 2s, desfasada con `style="--d: n"` (delay = `--d × 400ms`) |
+
+Ambas con `animation: none` bajo reduced-motion. Reglas, geometría y receta: `references/isometric.md`.
+
 ### Textura firma — module field (hero / CTA)
 | Clase | Qué hace |
 |---|---|

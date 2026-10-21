@@ -38,7 +38,7 @@ Detect the deliverable from the request and load only what you need:
 |---|---|---|
 | **deck** | pitch deck, presentation, slides, informe presentado | `references/decks.md` + `templates/deck.html` |
 | **dashboard** | dashboard, admin, analytics, report, panel | `references/dashboards.md` + `templates/dashboard.html` |
-| **website** | landing, website, homepage, web page, sitio web | `references/websites.md` + `templates/landing.html` |
+| **website** | landing, website, homepage, web page, sitio web | `references/websites.md` + `templates/landing.html` (+ `references/isometric.md` when a hero or section must explain how pieces fit) |
 | **site-dev** | build/change the Elaniin 2027 site (Next.js) | `references/site-dev.md` |
 
 For every mode you also need:
@@ -117,7 +117,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    surfaces and `white-logotipo-elaniin.svg` on dark ones, inlined as `<symbol>` + `<use>`,
    never a text fallback. **No symbol (isotipo) and no tagline anywhere**: they are not
    approved, so the isologo lockups no longer ship. Never recolor the name blue except the
-   one approved case (`logotipo-elaniin-blue.svg`, see §7a).
+   one approved case (`logotipo-elaniin-blue.svg`, only on the software slab of an isometric resource, see §7a and `references/isometric.md`).
 2. **No overflow, ever.** Content must never spill the viewport, a slide, or a card.
    Enforce in Tailwind: `overflow-hidden` on fixed canvases, `min-w-0` on grid/flex
    children, `break-words` on long strings, explicit height budgets. See §7.
@@ -173,10 +173,22 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    bars, ramp strips, gradient backgrounds, blobs or glass. Structure comes from hairlines,
    flat surfaces and the `module-field` texture. The only soft glows allowed are the pointer
    `spotlight` and `card-glow`. The blue ramp tokens exist for states, never as a decorative strip.
+   **One exception:** inside an isometric resource (rule 18) blur is allowed in exactly two places: the
+   14px frost of its glass slabs and the halo of its travelling pulse. It never reaches the page
+   background, the text or any other component, and there are still no gradients.
 17. **Decks end with a closing slide and device frames hide their seams (non-negotiable).**
    Every deck finishes with a closing slide: official logo, one closing line, contact. Device
    mockups (`phone-frame`) draw the bezel ABOVE the screens (overlay `::after`, higher z-index);
    screens run edge to edge underneath, so the joins of swiping screens are never visible.
+18. **Isometric resources follow the approved bar (non-negotiable).** A hero or section whose content
+   is a structure (a stack, a flow, an architecture) may use an animated isometric resource, never as
+   decoration and never inside cards or lists. Use the kit (`templates/iso-stack.js` for HTML,
+   `templates/iso/` for React/Next): true isometric at 30°, inline SVG, frosted-glass slabs (14px frost),
+   the defined color of each entity, fine textures, labels with generic lucide icons (never third-party
+   brand logos), one 12s clock that runs only on screen, `iso-levitate` over a small shadow, reduced
+   motion = assembled state. The blue logotipo appears only on the software slab. Full rules, exact
+   geometry and the recipe for a new resource: `references/isometric.md`. Wait for approval before
+   reusing a new resource elsewhere.
 
 ---
 
@@ -250,6 +262,7 @@ Before delivering, verify:
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
 - [ ] **Decks:** last slide is a closing slide (logo + line + contact); device bezels sit above the screens, no visible seams; counter and dots match the slide count.
+- [ ] **Isometric resource (if used):** built with the kit and the 15 rules of `references/isometric.md`; frost only inside it; blue logotipo only on the software slab; checked on a phone and at 375/768/1024/1280.
 - [ ] **No gradients or color bars:** no stepped blue strip, gradient backgrounds, blobs or glass.
 - [ ] **Dashboards:** every nav item opens a real view; controls, Export and New report work; no user block, legal footer; no `href="#"`.
 - [ ] **No eyebrows:** no small mono/uppercase label above any heading.

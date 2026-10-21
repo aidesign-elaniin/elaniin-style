@@ -6,6 +6,7 @@ b_i = src.index("<body>")
 e_i = next(i for i in range(b_i, len(src)) if src[i].strip() == "</svg>")
 head = "\n".join(src[: e_i + 1])  # through the logo <symbol> sprite
 MF_JS = (ROOT / "skills/elaniin-style/templates/module-field.js").read_text()
+ISO_JS = (ROOT / "skills/elaniin-style/templates/iso-stack.js").read_text()
 head = head.replace('<html lang="en">', '<html lang="en">')
 head = head.replace("<title>Elaniin — Landing template</title>", "<title>Elaniin Style — Install and docs</title>")
 URL = "https://aidesign-elaniin.github.io/elaniin-style/"
@@ -531,6 +532,25 @@ g_rules = "\n".join(
         "The deck keeps explicit columns (<code class=\"font-mono text-code text-text-primary\">grid-cols-3</code>): its canvas is always 1280 px.",
     ])
 
+
+ISO_HTML = """<div data-iso-stack data-software="Software" data-ai="AI" data-cloud="Cloud"></div>
+
+<!-- the page needs <symbol id="elaniin-logo-blue"> (landing.html has it), tokens.css and: -->
+<script src="iso-stack.js"></script>"""
+ISO_REACT = """// copy templates/iso/ to src/components/iso/ (needs lucide-react and logotipo-elaniin-blue.svg in public/assets)
+import { HeroStack } from "@/components/iso/hero-stack";
+
+<HeroStack labels={{ software: "Software", ai: "AI", cloud: "Cloud" }} />"""
+iso_rules = "\n".join(
+    f'<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">{x}</span></li>'
+    for x in [
+        "Only for structures (a stack, a flow, an architecture): in a hero or a section whose content is complex. Never decoration, never inside cards or lists.",
+        "Colors only from tokens, written inline on the SVG with <code class=\"font-mono text-code text-text-primary\">var(--color-*)</code>. Strokes are 1px, glass faces are 78% opaque, no gradients and no box-shadow.",
+        "Frosted glass is a <code class=\"font-mono text-code text-text-primary\">backdrop-filter: blur(14px)</code> clipped to each slab&rsquo;s silhouette. Blur exists only inside the resource.",
+        "Each entity keeps its defined color. The blue logotipo appears only on the software slab. Labels use generic lucide icons, never third-party brand logos.",
+        "Projection, matrices and the 12s clock are JavaScript (not CSS). Only <code class=\"font-mono text-code text-text-primary\">rise</code>, <code class=\"font-mono text-code text-text-primary\">iso-levitate</code> and <code class=\"font-mono text-code text-text-primary\">iso-float</code> are CSS. With reduced motion the scene rests assembled.",
+    ])
+
 dev_blocks = "\n".join([
     block(1, "Install with the CLI", p("Requires Claude Code. The plugin lives in the <code class=\"font-mono text-code text-text-primary\">elaniin-style-marketplace</code> marketplace of this repository.") + code(INSTALL) +
           p("<strong>Always use the same address</strong> (the full URL) in the app, the CLI and the settings. If you mix <code class=\"font-mono text-code text-text-primary\">owner/repo</code> with the URL, Claude Code rejects the marketplace with “network source differs”.") +
@@ -581,6 +601,17 @@ dev_blocks = "\n".join([
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3">' + g_rules + "</ul>" +
           code(G_AUDIT) +
           p("Full recipes (bento, aside, container queries) in <code class=\"font-mono text-code text-text-primary\">references/grids.md</code> inside the plugin.")),
+    block(13, "Isometric resource", p("The approved way to explain how pieces fit: three frosted-glass slabs on a base plate, a riser that feeds each slab through its own arm, a pulse of light that travels the structure, and the slab that receives it sliding forward. It is the hero of this very page: <strong>Marketplace → Plugin → Claude</strong>.") +
+          '<div class="border-b border-border-default">' +
+          row("iso-levitate", "The whole piece floats 6px, 3s.", "Utility in tokens.css.") +
+          row("iso-float", "A label floats 4px, 2s, staggered with --d.", "Utility in tokens.css.") +
+          row("iso-stack.js", "Vanilla build for self-contained HTML. Exposes window.ElaniinIso (project, slabSvg, floorSvg, mountStack…).", "templates/iso-stack.js") +
+          row("iso/", "React / Next build: HeroStack, Slab, Floor, iso.ts, use-clock.ts.", "templates/iso/") +
+          "</div>" +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">HTML</h4>' + code(ISO_HTML, "html") +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">React / Next.js</h4>' + code(ISO_REACT, "tsx") +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3">' + iso_rules + "</ul>" +
+          p("Exact geometry, the 15 rules, the timeline and the recipe for a new resource are in <code class=\"font-mono text-code text-text-primary\">references/isometric.md</code> inside the plugin.")),
     block(12, "What the repository ships", code('''.claude-plugin/        marketplace.json + plugin.json
 docs/                  this landing and the sample templates
 scripts/build-docs.py  regenerates docs/ (landing + template copies)
@@ -591,7 +622,8 @@ skills/elaniin-style/
 ├── references/        tokens, tailwind-api, grids, motion, ux-a11y, websites, decks, dashboards
 ├── scripts/           ensure-motion.sh
 └── templates/         tokens.css, landing.html, dashboard.html, deck.html,
-                       module-field.js / .tsx, drawer.js''', "tree")),
+                       module-field.js / .tsx, drawer.js,
+                       iso-stack.js + iso/ (isometric resource)''', "tree")),
 ])
 
 
@@ -610,12 +642,12 @@ example_cards = "\n".join(
 GROUPS = [
     ("Install", [1, 2, 3, 4, 5, 9, 10]),
     ("Use & edit", [6, 7]),
-    ("Resources", [8, 11, 12]),
+    ("Resources", [8, 11, 13, 12]),
 ]
 ORDER = [k for _, ks in GROUPS for k in ks]
 NUM = {k: n for n, k in enumerate(ORDER, 1)}
 SHORT = {1: "Install with the CLI", 2: "Scopes", 3: "Shared repo", 4: "Access", 5: "Update", 9: "Organization", 10: "Troubleshooting",
-         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository"}
+         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource"}
 
 
 def accordion(k):
@@ -721,12 +753,17 @@ body = f'''
 <main id="main">
   <section class="relative isolate overflow-hidden section-y" style="--section-y:104px">
     <div class="module-field" data-module-field aria-hidden="true"></div>
-    <div class="container-site relative">
-      <h1 class="max-w-[16ch] break-words font-display font-medium text-display-xl text-text-primary rise" style="--i:1">The Elaniin style, inside Claude</h1>
-      <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise" style="--i:2">Ask for a deck, a dashboard or a landing and Claude builds it with the Elaniin 2027 design system. Install it once and it updates itself.</p>
-      <div class="mt-10 flex flex-wrap items-center gap-4 rise" style="--i:3">
-        <a href="#install" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Install now {ARROW}</a>
+    <div class="container-site relative grid-page items-center">
+      <div class="col-span-12 flex min-w-0 flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
+        <h1 class="max-w-[12ch] break-words text-balance font-display font-medium text-display-xl text-text-primary rise" style="--i:1">The Elaniin style, inside Claude</h1>
+        <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise max-lg:max-w-[40ch] max-lg:text-balance" style="--i:2">Ask for a deck, a dashboard or a landing and Claude builds it with the Elaniin 2027 design system. Install it once and it updates itself.</p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4 rise max-md:w-full max-md:flex-col lg:justify-start" style="--i:3">
+          <a href="#install" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Install now {ARROW}</a>
         <a href="#how" class="btn-arrow inline-flex h-12 items-center gap-2 rounded-button px-2 font-display text-body font-medium text-elevate-blue transition-colors duration-base hover:text-text-link-hover focus-ring">How it works {ARROW}</a>
+        </div>
+      </div>
+      <div class="col-span-12 mx-auto w-full min-w-0 max-w-[560px] lg:col-span-6 lg:mx-0 lg:max-w-none">
+        <div data-iso-stack data-software="Plugin" data-ai="Claude" data-cloud="Marketplace"></div>
       </div>
     </div>
   </section>
@@ -842,7 +879,7 @@ script = r'''
     if (!el) return;
     var d = el.closest('details');
     if (d) d.open = true;
-    el.scrollIntoView();
+    el.scrollIntoView({ behavior: 'auto' });
   }
   function goTo(id) {
     select('devs', false, false);
@@ -861,6 +898,7 @@ script = r'''
     var x = location.hash.replace('#', '');
     if (DEV_ID.test(x)) goTo(x);
   });
+  addEventListener('load', function () { var x = location.hash.replace('#', ''); if (DEV_ID.test(x)) openTarget(x); });
   if (devSections.length) {
     var spy = new IntersectionObserver(function (es) {
       es.forEach(function (en) {
@@ -996,6 +1034,8 @@ script = r'''
 </script>
 <script>
 ''' + MF_JS + '''</script>
+<script>
+''' + ISO_JS + '''</script>
 </body>
 </html>
 '''

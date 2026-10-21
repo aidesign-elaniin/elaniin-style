@@ -152,6 +152,11 @@ solo, da la impresión de producto vivo y se detiene cuando nadie lo mira.
   `PERIOD 7000ms / STEP 1400ms`, rAF, pausable); **dashboard** → KPI vivo
   (drift `+0.1…0.7k` cada 7s con tween + re-trigger de `draw-line` en el chart).
 
+### Técnica D · Escena isométrica con reloj
+Un reloj de 12 s (JS, cada 50 ms, solo en pantalla) deriva todo el movimiento de una escena isométrica
+(pulsos, brazos, deslizamientos, opacidades) y lo escribe en atributos SVG; solo `rise`, `iso-levitate` e
+`iso-float` son CSS. Bajo reduced-motion el reloj queda en el estado ensamblado. Ver `references/isometric.md`.
+
 ### Técnica C · Mockup de pasos (tutoriales de instalación o de uso)
 Cuando una card explica una acción de interfaz, lleva arriba un **mockup ilustrado en loop**
 de esa acción (cursor que se mueve, clic, resultado). Se hace con una pequeña máquina de estados:

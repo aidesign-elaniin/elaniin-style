@@ -11,6 +11,10 @@
     4. Durations are named: instant 100 · fast 150 · base 200 · slow 300 · reveal 500.
        Use `duration-base`, never `duration-200`.
 
+    5. @theme is STATIC: every token is emitted as a CSS variable even when no utility uses it, so inline
+       styles and JS can reference var(--color-*) (the isometric resource does). Without `static`,
+       Tailwind v4 prunes unused variables and a missing var() silently renders black.
+
   USAGE:
     - Tailwind v4 project: include tailwindcss first, then this file (or paste it).
        (Never spell out the import directive inside this comment: mentioning it
@@ -22,7 +26,7 @@
   below exist, so a stray `bg-blue-500` simply does not compile.
 */
 
-@theme {
+@theme static {
   /* ---------- reset defaults ---------- */
   --color-*: initial;
   --radius-*: initial;
@@ -481,6 +485,34 @@
       animation: none;
       opacity: 0;
     }
+  }
+}
+
+/* ---------- isometric resources: levitation and floating (DESIGN.md motifs.isometric) ---------- */
+/* iso-levitate: the whole piece floats 6px, 3s. iso-float: a label floats 4px, 2s, staggered with --d. */
+@theme {
+  --animate-iso-levitate: iso-levitate 3s var(--ease-standard) infinite alternate;
+  --animate-iso-float: iso-float 2s var(--ease-standard) infinite alternate;
+  @keyframes iso-levitate {
+    from { transform: translateY(0); }
+    to { transform: translateY(-6px); }
+  }
+  @keyframes iso-float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+  }
+}
+@utility iso-levitate {
+  animation: var(--animate-iso-levitate);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@utility iso-float {
+  animation: var(--animate-iso-float);
+  animation-delay: calc(var(--d, 0) * 400ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
