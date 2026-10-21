@@ -228,6 +228,7 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --card-min: 16rem;
   --drawer-width: 18rem;
   --sidebar-width: 15rem;
   --module-size: 2px;
@@ -494,6 +495,38 @@
       animation: none;
       opacity: 0;
     }
+  }
+}
+
+/* ---------- utilities: grids (on top of Tailwind's native grid-cols / col-span) ---------- */
+/* gap-grid: the responsive gap token (24px, 16px on mobile). grid-page: 12-col page grid —
+   children carry col-span-12 md:col-span-N. grid-auto: auto-fit cards of unknown count
+   (override --card-min per grid via style). grid-hairline: cells separated by 1px lines,
+   no negative margins; add grid-cols-N / md:grid-cols-N and give children pad-card. */
+@utility gap-grid {
+  gap: var(--grid-gap);
+}
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-hairline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card);
+  background: var(--color-border-default);
+  & > * {
+    min-width: 0;
+    background: var(--color-surface-card);
   }
 }
 

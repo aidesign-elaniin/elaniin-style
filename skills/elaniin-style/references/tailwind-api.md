@@ -155,6 +155,16 @@ y `aria-hidden="true"`. Rastro apagado en táctil y con reduced-motion.
 > (mínimo `p-6`). Nunca texto pegado al borde ni márgenes negativos para compensar.
 > Auditoría rápida: `grep -n -E 'class="[^"]*(card-glow|lift)' archivo.html | grep -v -E 'pad-card|p-[68]'` debe salir vacío.
 
+### Grids
+| Clase | Qué hace |
+|---|---|
+| `gap-grid` | `gap: var(--grid-gap)` (24px; 16px en móvil) |
+| `grid-page` | 12 columnas + gap; hijos `col-span-12 md:col-span-N` |
+| `grid-auto` | `auto-fit` con `--card-min` (16rem, override con `style="--card-min:14rem"`) |
+| `grid-hairline` | celdas con líneas de 1px compartidas + borde/radio; usar con `grid-cols-N` y `pad-card` |
+
+Recetas y reglas: `references/grids.md`.
+
 ### Navegación móvil — drawer
 | Clase | Qué hace |
 |---|---|

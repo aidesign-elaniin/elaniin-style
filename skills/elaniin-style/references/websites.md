@@ -40,6 +40,8 @@ dominante por pieza.
 - **Living loop:** ≥1 mockup en loop por landing (pipeline CI con la utility `pipeline`,
   reloj pausable por IntersectionObserver) — `motion.md` §Living mockups. Todo el CSS sale
   del API `@theme`/`@utility` (ver `references/tailwind-api.md`).
+- **Grids:** `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`, mobile first y `min-w-0`
+  en hijos (recetas en `references/grids.md`). Nada de `-mx-*` ni gaps arbitrarios.
 - **Superficies con hover = cards con padding.** Toda celda que use `lift` o `card-glow`
   lleva `rounded-card border bg-surface-card pad-card`. Sin padding el hover se ve como una
   caja con el texto pegado al borde: prohibido. Nada de `-mx-*` para disimularlo.

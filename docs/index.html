@@ -245,6 +245,7 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --card-min: 16rem;
   --drawer-width: 18rem;
   --sidebar-width: 15rem;
   --module-size: 2px;
@@ -511,6 +512,38 @@
       animation: none;
       opacity: 0;
     }
+  }
+}
+
+/* ---------- utilities: grids (on top of Tailwind's native grid-cols / col-span) ---------- */
+/* gap-grid: the responsive gap token (24px, 16px on mobile). grid-page: 12-col page grid —
+   children carry col-span-12 md:col-span-N. grid-auto: auto-fit cards of unknown count
+   (override --card-min per grid via style). grid-hairline: cells separated by 1px lines,
+   no negative margins; add grid-cols-N / md:grid-cols-N and give children pad-card. */
+@utility gap-grid {
+  gap: var(--grid-gap);
+}
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-hairline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card);
+  background: var(--color-border-default);
+  & > * {
+    min-width: 0;
+    background: var(--color-surface-card);
   }
 }
 
@@ -865,7 +898,8 @@
 <a href="#dev-8" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">08 · Textura</a>
 <a href="#dev-9" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">09 · Organización</a>
 <a href="#dev-10" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">10 · Problemas</a>
-<a href="#dev-11" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">11 · Repo</a></nav>
+<a href="#dev-11" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">11 · Grids</a>
+<a href="#dev-12" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">12 · Repo</a></nav>
   </div>
   <div class="container-site pb-24"><section id="dev-1" class="border-t border-border-default py-12">
   <p class="mono-label text-caption text-elevate-blue">01</p>
@@ -1166,6 +1200,62 @@ claude plugin details elaniin-style
 </section>
 <section id="dev-11" class="border-t border-border-default py-12">
   <p class="mono-label text-caption text-elevate-blue">11</p>
+  <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Grids</h3>
+  <div class="mt-6 min-w-0 space-y-5"><p class="max-w-[68ch] break-words text-body text-text-secondary">Tailwind ya trae <code class="font-mono text-code text-text-primary">grid-cols-*</code> y <code class="font-mono text-code text-text-primary">col-span-*</code>. El plugin añade cuatro utilities que los conectan con los tokens de Elaniin: úsalas siempre en vez de armar grids con valores sueltos.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">gap-grid</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">gap del token: 24px, 16px en móvil.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Para cualquier grid o flex.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">grid-page</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">12 columnas. Hijos con col-span-12 md:col-span-N.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Conteo fijo: KPIs, features, aside.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">grid-auto</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">auto-fit con --card-min (16rem).</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Conteo desconocido: cards, logos.</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">grid-hairline</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">celdas con líneas de 1px, sin márgenes negativos.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Stats y comparativas. Con grid-cols-N y pad-card.</p>
+</div></div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">grid-page</h4><div class="grid-page"><div class="min-w-0 rounded-tag bg-surface-subtle p-4 col-span-12 md:col-span-4"><p class="mono-label break-words text-caption text-text-muted">col-span-4</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 col-span-12 md:col-span-4"><p class="mono-label break-words text-caption text-text-muted">col-span-4</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 col-span-12 md:col-span-4"><p class="mono-label break-words text-caption text-text-muted">col-span-4</p></div></div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">html</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;section class=&quot;grid-page&quot;&gt;
+  &lt;article class=&quot;col-span-12 min-w-0 xl:col-span-8&quot;&gt;…&lt;/article&gt;
+  &lt;aside class=&quot;col-span-12 min-w-0 xl:col-span-4&quot;&gt;…&lt;/aside&gt;
+&lt;/section&gt;</code></pre>
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">grid-auto</h4><div class="grid-auto" style="--card-min:10rem"><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 1</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 2</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 3</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 4</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 5</p></div><div class="min-w-0 rounded-tag bg-surface-subtle p-4 "><p class="mono-label break-words text-caption text-text-muted">card 6</p></div></div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">html</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;ul class=&quot;grid-auto&quot; style=&quot;--card-min: 14rem&quot;&gt;
+  &lt;li class=&quot;min-w-0 rounded-card border border-border-default bg-surface-card pad-card&quot;&gt;…&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">grid-hairline</h4><div class="grid-hairline grid-cols-2 md:grid-cols-4"><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">120+</p><p class="mono-label text-caption text-text-muted">Proyectos</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">4.9</p><p class="mono-label text-caption text-text-muted">Rating</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">38%</p><p class="mono-label text-caption text-text-muted">Mejora</p></div><div class="pad-card"><p class="font-display text-h3 font-medium text-text-primary">6 sem</p><p class="mono-label text-caption text-text-muted">Lanzamiento</p></div></div><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">html</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>&lt;div class=&quot;grid-hairline grid-cols-2 md:grid-cols-4&quot;&gt;
+  &lt;div class=&quot;pad-card&quot;&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Reglas</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Móvil primero: cada hijo de <code class="font-mono text-code text-text-primary">grid-page</code> lleva <code class="font-mono text-code text-text-primary">col-span-12</code> y luego sube con <code class="font-mono text-code text-text-primary">md:</code> o <code class="font-mono text-code text-text-primary">xl:</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary"><code class="font-mono text-code text-text-primary">min-w-0</code> en todo hijo de grid o flex con texto, media o tablas.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Nada de márgenes negativos (<code class="font-mono text-code text-text-primary">-mx-*</code>) ni gaps arbitrarios (<code class="font-mono text-code text-text-primary">gap-[18px]</code>).</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">No uses <code class="font-mono text-code text-text-primary">lift</code> ni <code class="font-mono text-code text-text-primary">card-glow</code> dentro de <code class="font-mono text-code text-text-primary">grid-hairline</code>: el recorte oculta la sombra. Para cards con hover usa <code class="font-mono text-code text-text-primary">grid-page</code> o <code class="font-mono text-code text-text-primary">grid-auto</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">El deck mantiene columnas explícitas (<code class="font-mono text-code text-text-primary">grid-cols-3</code>): su canvas siempre mide 1280 px.</span></li></ul><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
+  <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
+    <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
+    <button type="button" data-copy class="mono-label inline-flex h-11 min-w-11 items-center justify-center rounded-button px-3 text-caption text-text-on-dark-secondary transition-colors duration-fast hover:bg-surface-dark-card hover:text-white active:scale-95 focus-ring-on-dark">Copiar</button>
+  </div>
+  <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>grep -n -E &#x27;\-mx-|gap-\[|grid-cols-\[&#x27; archivo.html            # debe salir vacío</code></pre>
+</div><p class="max-w-[68ch] break-words text-body text-text-secondary">Recetas completas (bento, aside, container queries) en <code class="font-mono text-code text-text-primary">references/grids.md</code> dentro del plugin.</p></div>
+</section>
+<section id="dev-12" class="border-t border-border-default py-12">
+  <p class="mono-label text-caption text-elevate-blue">12</p>
   <h3 class="mt-3 max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Qué trae el repositorio</h3>
   <div class="mt-6 min-w-0 space-y-5"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">

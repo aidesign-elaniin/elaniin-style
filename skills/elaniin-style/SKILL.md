@@ -45,6 +45,7 @@ For every mode you also need:
 - `references/tokens.md` (or `templates/tokens.css`) — the color/type/motion vocabulary.
 - `references/motion.md` — the animation language.
 - `references/ux-a11y.md` — states, focus, contrast, reduced-motion.
+- `references/grids.md` — `grid-page` / `grid-auto` / `grid-hairline` (website & dashboard layouts).
 
 If ambiguous, ask one short clarifying question, then proceed.
 
@@ -145,6 +146,12 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    max 3 actions, secondary actions are icon-only below `md` with `aria-label`, the brand
    logo lives in the drawer header. Every tap target ≥44px (`h-11`), page padding `p-4`
    mobile → `p-6` md. Test 375 / 768 / 1280 before delivering.
+12. **Grids come from the Elaniin utilities (non-negotiable).** Layouts use `grid-page`
+   (12 cols, fixed counts), `grid-auto` (unknown counts) or `grid-hairline` (shared 1px lines),
+   plus Tailwind's native `col-span-*` / `grid-cols-*`, and `gap-grid` for any other gap.
+   Mobile first (`col-span-12` then `md:` / `xl:`), `min-w-0` on every child, no negative
+   margins, no `gap-[…]`, no `lift`/`card-glow` inside `grid-hairline`. Deck keeps explicit
+   columns. Recipes: `references/grids.md`.
 
 ---
 
@@ -159,6 +166,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 | dynamic-blue | `#4D75FD` | Non-text accents, chart series |
 | border-default | `#E4E4EA` | Hairlines on white/grey |
 | module-field | 2px squares / 16px pitch, grey 45% | Hero + CTA texture (utility `module-field`) |
+| grid-gap · card-min | 24px (16 mobile) · 16rem | `gap-grid`, `grid-page`, `grid-auto`, `grid-hairline` — see `references/grids.md` |
 | ease-standard | `cubic-bezier(0.4,0,0.2,1)` | UI micro-interactions |
 | ease-emphasized | `cubic-bezier(0.25,1,0.5,1)` | Entrances, reveals |
 | reveal | 500ms / 16px up | Standard entrance |
@@ -216,6 +224,7 @@ Before delivering, verify:
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
+- [ ] **Grids** use `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`; children `min-w-0`; no `-mx-*`, no arbitrary gaps (see `references/grids.md`).
 - [ ] **Mobile nav works:** hamburger opens a real drawer (aria-expanded, Esc, scrim, focus return); topbar fits at 375px with the title readable; tap targets ≥44px; checked at 375 / 768 / 1280.
 - [ ] Focus rings, hover/active/disabled states present.
 - [ ] Mobile layout considered; targets ≥44px.

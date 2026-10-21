@@ -229,6 +229,7 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --card-min: 16rem;
   --drawer-width: 18rem;
   --sidebar-width: 15rem;
   --module-size: 2px;
@@ -498,6 +499,38 @@
   }
 }
 
+/* ---------- utilities: grids (on top of Tailwind's native grid-cols / col-span) ---------- */
+/* gap-grid: the responsive gap token (24px, 16px on mobile). grid-page: 12-col page grid —
+   children carry col-span-12 md:col-span-N. grid-auto: auto-fit cards of unknown count
+   (override --card-min per grid via style). grid-hairline: cells separated by 1px lines,
+   no negative margins; add grid-cols-N / md:grid-cols-N and give children pad-card. */
+@utility gap-grid {
+  gap: var(--grid-gap);
+}
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-hairline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card);
+  background: var(--color-border-default);
+  & > * {
+    min-width: 0;
+    background: var(--color-surface-card);
+  }
+}
+
 /* ---------- utilities: drawer (off-canvas mobile nav) ---------- */
 /* Mobile: panel that slides in from the left; closed = visibility hidden (out of tab order).
    lg+: static sidebar. For a landing's mobile menu add `md:hidden` to drawer and scrim.
@@ -679,23 +712,23 @@
 
     <main id="main" class="flex-1 p-4 md:p-6">
       <!-- KPI ROW -->
-      <section aria-label="Key metrics" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <article class="card-glow rounded-card border border-border-default bg-white p-6 rise" style="--i:0">
+      <section aria-label="Key metrics" class="grid-page">
+        <article class="card-glow col-span-12 min-w-0 rounded-card border border-border-default bg-white p-6 rise sm:col-span-6 xl:col-span-3" style="--i:0">
           <p class="mono-label text-caption text-text-muted">Revenue</p>
           <p class="mt-2 font-display font-medium text-[32px] leading-none tabular-nums" data-count="128.4" data-live data-prefix="$" data-suffix="k" data-decimals="1">$128.4k</p>
           <p class="mt-3 flex items-center gap-2 text-caption text-success-text"><span class="h-2 w-2 shrink-0 rounded-full bg-success-dot"></span>+12.4% vs. prev. period</p>
         </article>
-        <article class="card-glow rounded-card border border-border-default bg-white p-6 rise" style="--i:1">
+        <article class="card-glow col-span-12 min-w-0 rounded-card border border-border-default bg-white p-6 rise sm:col-span-6 xl:col-span-3" style="--i:1">
           <p class="mono-label text-caption text-text-muted">Active users</p>
           <p class="mt-2 font-display font-medium text-[32px] leading-none tabular-nums" data-count="24108" data-decimals="0">24,108</p>
           <p class="mt-3 flex items-center gap-2 text-caption text-success-text"><span class="h-2 w-2 shrink-0 rounded-full bg-success-dot"></span>+8.1% vs. prev. period</p>
         </article>
-        <article class="card-glow rounded-card border border-border-default bg-white p-6 rise" style="--i:2">
+        <article class="card-glow col-span-12 min-w-0 rounded-card border border-border-default bg-white p-6 rise sm:col-span-6 xl:col-span-3" style="--i:2">
           <p class="mono-label text-caption text-text-muted">Conversion</p>
           <p class="mt-2 font-display font-medium text-[32px] leading-none tabular-nums" data-count="3.42" data-suffix="%" data-decimals="2">3.42%</p>
           <p class="mt-3 flex items-center gap-2 text-caption text-error-text"><span class="h-2 w-2 shrink-0 rounded-full bg-error-dot"></span>−0.3pp vs. prev. period</p>
         </article>
-        <article class="card-glow rounded-card border border-border-default bg-white p-6 rise" style="--i:3">
+        <article class="card-glow col-span-12 min-w-0 rounded-card border border-border-default bg-white p-6 rise sm:col-span-6 xl:col-span-3" style="--i:3">
           <p class="mono-label text-caption text-text-muted">Churn</p>
           <p class="mt-2 font-display font-medium text-[32px] leading-none tabular-nums" data-count="1.8" data-suffix="%" data-decimals="1">1.8%</p>
           <p class="mt-3 flex items-center gap-2 text-caption text-success-text"><span class="h-2 w-2 shrink-0 rounded-full bg-success-dot"></span>−0.4pp vs. prev. period</p>
@@ -703,8 +736,8 @@
       </section>
 
       <!-- CHART + SIDE -->
-      <section class="mt-6 grid gap-4 xl:grid-cols-3" aria-label="Trends">
-        <article class="min-w-0 rounded-card border border-border-default bg-white p-6 xl:col-span-2 reveal" style="--i:4" data-live-chart>
+      <section class="grid-page mt-6" aria-label="Trends">
+        <article class="col-span-12 min-w-0 rounded-card border border-border-default bg-white p-6 reveal xl:col-span-8" style="--i:4" data-live-chart>
           <div class="flex flex-wrap items-center justify-between gap-4 border-b border-border-default pb-4">
             <div class="min-w-0">
               <h2 class="font-display font-medium text-h4">Revenue over time</h2>
@@ -733,7 +766,7 @@
           </svg>
         </article>
 
-        <article class="card-glow min-w-0 rounded-card border border-border-default bg-surface-dark p-6 text-white reveal" style="--i:5">
+        <article class="card-glow col-span-12 min-w-0 rounded-card border border-border-default bg-surface-dark p-6 text-white reveal xl:col-span-4" style="--i:5">
           <p class="mono-label text-caption text-text-on-dark-accent">Insight</p>
           <h2 class="mt-3 break-words font-display font-medium text-h3 text-white">Expansion revenue is now 31% of new MRR</h2>
           <p class="mt-4 text-body-sm text-text-on-dark-secondary">Upgrades from existing accounts outpaced new logos for the third consecutive month. Seat expansion in the Growth tier drove most of the lift.</p>
