@@ -59,7 +59,7 @@ claude plugin update elaniin-style@elaniin-style-marketplace
 ```
 
 Auto-update obligatorio para toda la organización: `autoUpdate: true` en *managed settings*
-(ver la sección 09 de la documentación).
+(ver la sección 06 de la documentación).
 
 ## Usar / Use
 

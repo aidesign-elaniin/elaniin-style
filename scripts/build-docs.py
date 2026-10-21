@@ -27,6 +27,33 @@ META = """<meta name="viewport" content="width=device-width, initial-scale=1.0" 
 <meta name="twitter:description" content="A Claude plugin for decks, dashboards and landings with the Elaniin 2027 design system." />
 <meta name="twitter:image" content="%(u)sog.png" />""" % {"u": URL}
 EXTRA_CSS = r'''
+/* ---------- docs-only: developer table of contents ---------- */
+@utility toc-link {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-button);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  transition: background-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  @variant lg {
+    min-height: 2.25rem;
+  }
+  &:hover {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-primary);
+  }
+  &[aria-current="true"] {
+    background: var(--color-blue-tint-50);
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
 /* ---------- docs-only: step mockups (driven by the state machine in the page script) ---------- */
 @theme {
   --animate-caret: caret 1s steps(1) infinite;
@@ -167,11 +194,12 @@ def row(a, b, c):
 </div>'''
 
 
+BLOCKS = {}
+
+
 def block(i, title, body_html):
-    return f'''<section id="dev-{i}" class="border-t border-border-default py-12">
-  <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">{i:02d}</span>{title}</h3>
-  <div class="mt-6 min-w-0 space-y-5">{body_html}</div>
-</section>'''
+    BLOCKS[i] = (title, body_html)
+    return ""
 
 
 def p(t):
@@ -464,7 +492,7 @@ tokens_rows = "\n".join([
     row("Hover cards", "lift · card-glow + rounded-card border bg-surface-card pad-card", "Always padded: never text touching the edge."),
     row("Grids", "gap-grid · grid-page · grid-auto · grid-hairline", "Section 11. No negative margins."),
     row("Mobile navigation", "drawer · scrim + drawer.js", "A 44px menu button that opens a real drawer."),
-    row("Signature texture", "module-field · module-field-dark · module-field-mask-left", "Section 08. Hero and final CTA."),
+    row("Signature texture", "module-field · module-field-dark · module-field-mask-left", "Section 10. Hero and final CTA."),
     row("Breakpoints", "sm 640 · md 768 · lg 1024 · xl 1280", "Tailwind defaults are reset on purpose."),
 ])
 
@@ -522,7 +550,7 @@ dev_blocks = "\n".join([
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules when editing</h4><ul class="space-y-3">' + rules + "</ul>" +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Example</h4>' + code(HTML_USE, "html") +
           p("The browser script needs internet to compile. To move the piece into a real project, switch to the build plugin and paste <code class=\"font-mono text-code text-text-primary\">tokens.css</code> (it lives in <code class=\"font-mono text-code text-text-primary\">skills/elaniin-style/templates/</code>) into your entry CSS.") +
-          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Vite</h4>' + code(VITE) + code(VITE_CFG, "ts") + code(CSS_ENTRY, "css") +
+          '<h4 id="dev-9-build" class="pt-4 font-display font-medium text-h4 text-text-primary">Vite</h4>' + code(VITE) + code(VITE_CFG, "ts") + code(CSS_ENTRY, "css") +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Next.js</h4>' + code(NEXT) + code(NEXT_CFG, "js") +
           p("Full class → token → value inventory: <code class=\"font-mono text-code text-text-primary\">references/tailwind-api.md</code> inside the plugin.")),
     block(8, "Interactive texture: module field", p("It is the signature texture of the Elaniin site: a grid of 2 px squares every 16 px (grey at 45%) that, as the mouse moves, lights up cell by cell climbing the <strong>blue-300 → blue-400 → blue-500</strong> ramp and fades out in ~260 ms. It goes in the background of the hero and the final CTA. It is the same one as on the <code class=\"font-mono text-code text-text-primary\">elaniin-2027-website-main</code> site, ported as a skill resource.") +
@@ -579,17 +607,91 @@ example_cards = "\n".join(
         ("Deck", "16:9 presentation deck", "Fixed 1280×720 canvas with keyboard navigation and living slides.", "templates/deck.html"),
     ])
 
-dev_nav = "\n".join(
-    f'<a href="#dev-{i}" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-secondary transition-colors duration-base hover:text-text-primary focus-ring">{i:02d} · {t}</a>'
-    for i, t in [(1, "Install"), (2, "Scopes"), (3, "Shared repo"), (4, "Access"), (5, "Update"), (6, "Use"), (7, "Edit pieces"), (8, "Texture"), (9, "Organization"), (10, "Issues"), (11, "Grids"), (12, "Repo")]
-)
+GROUPS = [
+    ("Install", [1, 2, 3, 4, 5, 9, 10]),
+    ("Use & edit", [6, 7]),
+    ("Resources", [8, 11, 12]),
+]
+ORDER = [k for _, ks in GROUPS for k in ks]
+NUM = {k: n for n, k in enumerate(ORDER, 1)}
+SHORT = {1: "Install with the CLI", 2: "Scopes", 3: "Shared repo", 4: "Access", 5: "Update", 9: "Organization", 10: "Troubleshooting",
+         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository"}
+
+
+def accordion(k):
+    title, body = BLOCKS[k]
+    n = NUM[k]
+    opened = " open" if k == 1 else ""
+    return f'''<details id="dev-{n}" data-dev-section class="group scroll-mt-28 border-t border-border-default lg:scroll-mt-17"{opened}>
+  <summary class="flex min-h-14 cursor-pointer items-center justify-between gap-4 py-4 focus-ring">
+    <h3 class="min-w-0 break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">{n:02d}</span>{title}</h3>
+    <span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span>
+  </summary>
+  <div class="min-w-0 space-y-5 pb-10 pt-2">{body}</div>
+</details>'''
+
+
+def toc_list(extra=""):
+    out = ""
+    for gname, ks in GROUPS:
+        out += f'<p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">{gname}</p>'
+        for k in ks:
+            out += f'<a href="#dev-{NUM[k]}" data-toc-link="dev-{NUM[k]}" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">{NUM[k]:02d}</span>{SHORT[k]}</a>'
+    return out
+
+
+accordions = "\n".join(accordion(k) for k in ORDER)
+
+QUICK = """claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
+claude plugin install elaniin-style@elaniin-style-marketplace"""
+
+TASKS = [
+    ("Install", "Two commands and you are done.", "dev-1"),
+    ("Share with my team", "Commit it in settings.json.", "dev-3"),
+    ("Edit a piece", "Change a deck or page with the tokens.", "dev-9"),
+    ("Move it to Next", "Vite or PostCSS in a real project.", "dev-9-build"),
+    ("Fix an error", "Find the fix by symptom.", "dev-7"),
+    ("Org rollout", "Managed settings and auto-update.", "dev-6"),
+]
+task_cards = "\n".join(
+    f'''<a href="#{target}" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+  <h3 class="font-display font-medium text-h4 text-text-primary">{name}</h3>
+  <p class="mt-1 text-body-sm text-text-secondary">{desc}</p>
+  <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section {ARROW}</span>
+</a>'''
+    for name, desc, target in TASKS)
 
 panel_devs = f'''<div data-panel="devs" id="panel-devs" role="tabpanel" aria-labelledby="tab-devs" class="rise">
   <div class="container-site section-y-compact">
     {eyebrow_h2("For developers", "Install, use and edit pieces", "Claude Code, scopes, shared repos, auto-update and how to hand-edit a deck or a page with the Tailwind API.")}
-    <nav aria-label="Developer sections" class="mt-8 flex flex-wrap gap-x-6">{dev_nav}</nav>
+    <div class="mt-10 max-w-[860px]">
+      <h3 class="font-display font-medium text-h4 text-text-primary">Install in 30 seconds</h3>
+      <div class="mt-3">{code(QUICK)}</div>
+    </div>
+    <h3 class="mt-12 font-display font-medium text-h3 text-text-primary">What do you want to do?</h3>
+    <div class="grid-auto mt-6" style="--card-min:15rem">{task_cards}</div>
   </div>
-  <div class="container-site pb-24">{dev_blocks}</div>
+
+  <div class="container-site pb-24">
+    <details data-toc-mobile class="sticky top-16 z-20 border-y border-border-default bg-white/95 backdrop-blur lg:hidden">
+      <summary class="flex min-h-12 cursor-pointer items-center justify-between gap-3 text-body-sm font-medium text-text-primary focus-ring">
+        <span class="min-w-0 truncate">On this page <span class="text-text-muted" data-toc-now></span></span>
+        <span class="mono-label shrink-0 text-caption text-elevate-blue" aria-hidden="true">+</span>
+      </summary>
+      <nav aria-label="On this page" class="max-h-[60dvh] overflow-y-auto pb-3">{toc_list()}</nav>
+    </details>
+    <div class="grid-page mt-6 lg:mt-10">
+      <aside class="col-span-3 hidden min-w-0 lg:block">
+        <nav aria-label="On this page" class="sticky top-20 max-h-[calc(100dvh-6rem)] overflow-y-auto">{toc_list()}</nav>
+      </aside>
+      <div class="col-span-12 min-w-0 lg:col-span-9">
+        <div class="flex justify-end pb-2">
+          <button type="button" data-expand-all data-state="closed" class="inline-flex min-h-11 items-center rounded-button px-3 text-body-sm font-medium text-elevate-blue transition-colors duration-base hover:bg-surface-subtle focus-ring">Expand all</button>
+        </div>
+        {accordions}
+      </div>
+    </div>
+  </div>
 </div>'''
 
 # ------------------------------------------------------------------ page
@@ -722,11 +824,64 @@ script = r'''
       if (n) { e.preventDefault(); select(n.dataset.tab, true, true); }
     });
   });
+  var DEV_HASH = /^dev-\d+(-build)?$/;
   var h = (location.hash || '').replace('#', '');
-  select(h === 'devs' ? 'devs' : 'team', false, false);
+  select(h === 'devs' || DEV_HASH.test(h) ? 'devs' : 'team', false, false);
   addEventListener('hashchange', function () {
     var x = location.hash.replace('#', '');
     if (x === 'devs' || x === 'team') select(x, false, false);
+  });
+
+  /* developer panel: deep links open their accordion, scroll-spy table of contents, expand all */
+  var DEV_ID = /^dev-\d+(-build)?$/;
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('[data-toc-link]'));
+  var devSections = Array.prototype.slice.call(document.querySelectorAll('[data-dev-section]'));
+  var mobileToc = document.querySelector('[data-toc-mobile]');
+  function openTarget(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var d = el.closest('details');
+    if (d) d.open = true;
+    el.scrollIntoView();
+  }
+  function goTo(id) {
+    select('devs', false, false);
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+    openTarget(id);
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#dev-"]');
+    if (!a) return;
+    e.preventDefault();
+    if (mobileToc) mobileToc.open = false;
+    goTo(a.getAttribute('href').slice(1));
+  });
+  if (DEV_ID.test(h)) goTo(h);
+  addEventListener('hashchange', function () {
+    var x = location.hash.replace('#', '');
+    if (DEV_ID.test(x)) goTo(x);
+  });
+  if (devSections.length) {
+    var spy = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        tocLinks.forEach(function (a) {
+          if (a.dataset.tocLink === en.target.id) {
+            a.setAttribute('aria-current', 'true');
+            var now = document.querySelector('[data-toc-now]');
+            if (now) now.textContent = '· ' + a.lastChild.textContent.trim();
+          } else { a.removeAttribute('aria-current'); }
+        });
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    devSections.forEach(function (s) { spy.observe(s); });
+  }
+  var expandBtn = document.querySelector('[data-expand-all]');
+  if (expandBtn) expandBtn.addEventListener('click', function () {
+    var openAll = expandBtn.dataset.state !== 'open';
+    devSections.forEach(function (s) { s.open = openAll; });
+    expandBtn.dataset.state = openAll ? 'open' : 'closed';
+    expandBtn.textContent = openAll ? 'Collapse all' : 'Expand all';
   });
 
   /* copy buttons */
