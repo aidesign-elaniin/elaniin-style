@@ -136,6 +136,15 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    at least). Never leave text flush against the edge of a box that appears on hover, and
    never fake the padding with negative margins (`-mx-*`). Hairline cells without a hover
    surface may stay padding-free; the moment they lift or glow they become cards.
+11. **Mobile navigation is never lost, and it works (non-negotiable).** Any nav that
+   disappears below its breakpoint (sidebar, links) MUST have a menu button — ≥44×44px,
+   `aria-label`, `aria-controls`, `aria-expanded` — that opens a drawer: `drawer` + `scrim`
+   utilities and `templates/drawer.js` (focus moves in, Esc / scrim / link / close button
+   dismiss and return focus, Tab trapped, scroll locked, closes on resize). A dead
+   hamburger button is a bug. Topbar at 375px: page title keeps priority (truncates last),
+   max 3 actions, secondary actions are icon-only below `md` with `aria-label`, the brand
+   logo lives in the drawer header. Every tap target ≥44px (`h-11`), page padding `p-4`
+   mobile → `p-6` md. Test 375 / 768 / 1280 before delivering.
 
 ---
 
@@ -207,6 +216,7 @@ Before delivering, verify:
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
+- [ ] **Mobile nav works:** hamburger opens a real drawer (aria-expanded, Esc, scrim, focus return); topbar fits at 375px with the title readable; tap targets ≥44px; checked at 375 / 768 / 1280.
 - [ ] Focus rings, hover/active/disabled states present.
 - [ ] Mobile layout considered; targets ≥44px.
 - [ ] All copy in the user's language.

@@ -10,6 +10,9 @@ dominante por pieza.
 
 ```
 1. Nav              — 64px, hairline inferior, logo a la izq, links, CTA secundario.
+                      En móvil (<md) los links van en un **drawer** (`drawer md:hidden` +
+                      `scrim` + `templates/drawer.js`, `data-drawer-from="md"`) abierto por una
+                      hamburguesa de 44px junto al CTA; nunca dejar links inaccesibles.
 2. Hero             — blanco. Display-xl (max ~20ch), lead (56ch), 1 CTA primario + 1 secundario.
                       Fondo: **module field** (`module-field`, textura firma, obligatoria).
                       Opcional: producto/UI shot con sombra `product`. Nada de fondo azul.
@@ -68,6 +71,7 @@ Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
 - [ ] Spotlight reactivo + card glow + microinteracciones activos (y off con reduced-motion).
 - [ ] ≥1 living loop activo (pipeline CI u otro mockup en loop): pausa fuera de pantalla,
       estado final estático con reduced-motion.
+- [ ] Nav móvil: los links hidden <md están en un drawer que abre (hamburguesa 44px, Esc, scrim).
 - [ ] Un solo CTA primario visible por viewport.
 - [ ] Ritmo de fondos alternado, no 10 secciones blancas seguidas.
 - [ ] Cero overflow: mobile sin recortes, CTAs full-width, grid colapsa a 1 col.

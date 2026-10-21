@@ -229,6 +229,8 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --drawer-width: 18rem;
+  --sidebar-width: 15rem;
   --module-size: 2px;
   --module-pitch: 16px;
 
@@ -496,6 +498,56 @@
   }
 }
 
+/* ---------- utilities: drawer (off-canvas mobile nav) ---------- */
+/* Mobile: panel that slides in from the left; closed = visibility hidden (out of tab order).
+   lg+: static sidebar. For a landing's mobile menu add `md:hidden` to drawer and scrim.
+   Behavior: templates/drawer.js (toggle data-open, focus, Esc, scroll lock). */
+@utility drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 50;
+  width: min(var(--drawer-width), 85vw);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform var(--dur-slow) var(--ease-emphasized), visibility 0s linear var(--dur-slow);
+  &[data-open="true"] {
+    transform: none;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  @variant lg {
+    position: static;
+    z-index: auto;
+    width: var(--sidebar-width);
+    transform: none;
+    visibility: visible;
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+@utility scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(1, 23, 46, 0.48);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  &[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @variant lg {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
 /* ---------- utilities: module field (signature texture of hero / CTA) ---------- */
 /* Resting grid = pure CSS: 2px squares on a 16px pitch, grey at 45%, masked toward the bottom.
    Pointer trail = templates/module-field.js (canvas, off for touch + reduced-motion).
@@ -574,19 +626,23 @@
 
 <div class="relative z-10 flex min-h-screen">
   <!-- SIDEBAR -->
-  <aside class="hidden w-60 shrink-0 flex-col border-r border-border-default bg-white lg:flex">
-    <div class="flex h-16 items-center border-b border-border-default px-6">
+  <div class="scrim" data-scrim aria-hidden="true"></div>
+  <aside id="app-drawer" data-drawer class="drawer flex shrink-0 flex-col border-r border-border-default bg-white" aria-label="Sidebar">
+    <div class="flex h-16 items-center justify-between border-b border-border-default pl-6 pr-3">
       <svg class="h-6 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo"/></svg>
+      <button type="button" data-menu-close class="inline-flex h-11 w-11 items-center justify-center rounded-button text-text-secondary transition-colors duration-base hover:bg-surface-subtle lg:hidden focus-ring" aria-label="Close menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </div>
     <nav class="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Main">
       <p class="mono-label px-3 pb-2 pt-3 text-caption text-text-disabled">Analytics</p>
-      <a href="#main" aria-current="page" class="flex h-10 items-center gap-3 rounded-button bg-blue-tint-50 px-3 text-body-sm font-medium text-text-primary"><span class="h-2 w-2 shrink-0 rounded-full bg-elevate-blue"></span>Overview</a>
-      <a href="#" class="flex h-10 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Revenue</a>
-      <a href="#" class="flex h-10 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Customers</a>
-      <a href="#" class="flex h-10 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Products</a>
+      <a href="#main" aria-current="page" class="flex h-11 items-center gap-3 rounded-button bg-blue-tint-50 px-3 text-body-sm font-medium text-text-primary"><span class="h-2 w-2 shrink-0 rounded-full bg-elevate-blue"></span>Overview</a>
+      <a href="#" class="flex h-11 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Revenue</a>
+      <a href="#" class="flex h-11 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Customers</a>
+      <a href="#" class="flex h-11 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Products</a>
       <p class="mono-label px-3 pb-2 pt-6 text-caption text-text-disabled">Operations</p>
-      <a href="#" class="flex h-10 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Reports</a>
-      <a href="#" class="flex h-10 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Settings</a>
+      <a href="#" class="flex h-11 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Reports</a>
+      <a href="#" class="flex h-11 items-center gap-3 rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle transition-colors duration-base">Settings</a>
     </nav>
     <div class="border-t border-border-default p-4">
       <div class="flex items-center gap-3">
@@ -601,25 +657,27 @@
 
   <div class="flex min-w-0 flex-1 flex-col">
     <!-- TOPBAR -->
-    <header class="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-border-default bg-white/90 px-6 backdrop-blur">
-      <div class="flex min-w-0 items-center gap-4">
-        <button class="lg:hidden inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-button border border-border-default" aria-label="Open menu">
+    <header class="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border-default bg-white/90 px-4 backdrop-blur md:px-6">
+      <div class="flex min-w-0 flex-1 items-center gap-3">
+        <button type="button" data-menu-button aria-controls="app-drawer" aria-expanded="false" class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default transition-colors duration-base hover:bg-surface-subtle lg:hidden focus-ring" aria-label="Open menu">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
-        <svg class="h-5 w-auto lg:hidden" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo"/></svg>
-        <h1 class="truncate font-display font-medium text-h4">Overview</h1>
-        <span class="mono-label hidden rounded-button border border-border-default px-2 py-1 text-caption text-text-muted sm:inline">Last 30 days</span>
+        <h1 class="min-w-0 truncate font-display font-medium text-h4">Overview</h1>
+        <span class="mono-label hidden shrink-0 rounded-button border border-border-default px-2 py-1 text-caption text-text-muted md:inline">Last 30 days</span>
       </div>
-      <div class="flex shrink-0 items-center gap-3">
-        <button class="btn-arrow inline-flex h-10 items-center gap-2 rounded-button border border-border-input bg-white px-4 text-body-sm font-display font-medium hover:bg-surface-subtle transition-colors duration-base">
+      <div class="flex shrink-0 items-center gap-2 md:gap-3">
+        <button type="button" class="btn-arrow inline-flex h-11 w-11 items-center justify-center gap-2 rounded-button border border-border-input bg-white font-display text-body-sm font-medium transition-colors duration-base hover:bg-surface-subtle md:w-auto md:px-4 focus-ring" aria-label="Export">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
-          <span class="hidden sm:inline">Export</span>
+          <span class="hidden md:inline">Export</span>
         </button>
-        <button class="inline-flex h-10 items-center rounded-button bg-elevate-blue px-4 text-body-sm font-display font-medium text-white hover:bg-blue-600 active:bg-blue-700 transition-colors duration-base">New report</button>
+        <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-button bg-elevate-blue font-display text-body-sm font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 md:w-auto md:px-4 focus-ring" aria-label="New report">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true" class="md:hidden"><path d="M12 5v14M5 12h14"/></svg>
+          <span class="hidden md:inline">New report</span>
+        </button>
       </div>
     </header>
 
-    <main id="main" class="flex-1 p-6">
+    <main id="main" class="flex-1 p-4 md:p-6">
       <!-- KPI ROW -->
       <section aria-label="Key metrics" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <article class="card-glow rounded-card border border-border-default bg-white p-6 rise" style="--i:0">
@@ -813,6 +871,73 @@
     entries.forEach(function (en) { if (en.isIntersecting) { countUp(en.target); io.unobserve(en.target); } });
   }, { threshold: 0.4 });
   document.querySelectorAll('[data-count]').forEach(function (el) { io.observe(el); });
+})();
+</script>
+<script>
+/*
+  Elaniin drawer — off-canvas mobile navigation (vanilla, no dependencies).
+
+  Pairs with the `drawer` + `scrim` utilities in tokens.css. Works for a dashboard sidebar
+  (persistent from lg) and for a landing's mobile menu (add `md:hidden` to drawer + scrim and
+  data-drawer-from="md").
+
+  Markup:
+    <button data-menu-button aria-controls="app-drawer" aria-expanded="false" aria-label="Open menu" class="lg:hidden">…</button>
+    <div class="scrim" data-scrim aria-hidden="true"></div>
+    <aside id="app-drawer" data-drawer class="drawer" aria-label="Main">
+      <button data-menu-close aria-label="Close menu">…</button>
+      <nav>…links…</nav>
+    </aside>
+
+  Behavior: focus moves into the drawer; Esc, scrim, close button or any link closes it and
+  returns focus to the menu button; Tab is trapped inside while open; page scroll is locked;
+  it closes by itself when the viewport grows to the persistent layout.
+*/
+(function () {
+  var drawer = document.querySelector('[data-drawer]');
+  var btn = document.querySelector('[data-menu-button]');
+  var scrim = document.querySelector('[data-scrim]');
+  if (!drawer || !btn || !scrim) return;
+
+  var desktop = matchMedia('(min-width: ' + (drawer.dataset.drawerFrom === 'md' ? '48rem' : '64rem') + ')');
+  var FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var isOpen = false;
+
+  function setOpen(open, restoreFocus) {
+    if (open === isOpen) return;
+    isOpen = open;
+    drawer.dataset.open = String(open);
+    scrim.dataset.open = String(open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.documentElement.classList.toggle('overflow-hidden', open);
+    if (open) {
+      var first = drawer.querySelector(FOCUSABLE);
+      if (first) first.focus();
+    } else if (restoreFocus) {
+      btn.focus();
+    }
+  }
+
+  btn.addEventListener('click', function () { setOpen(!isOpen, true); });
+  scrim.addEventListener('click', function () { setOpen(false, true); });
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('[data-menu-close], a[href]')) setOpen(false, true);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen) return;
+    if (e.key === 'Escape') { setOpen(false, true); return; }
+    if (e.key !== 'Tab') return;
+    var items = drawer.querySelectorAll(FOCUSABLE);
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  var onResize = function () { if (desktop.matches) setOpen(false, false); };
+  if (desktop.addEventListener) desktop.addEventListener('change', onResize);
+  else desktop.addListener(onResize);
 })();
 </script>
 </body>

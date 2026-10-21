@@ -155,6 +155,16 @@ y `aria-hidden="true"`. Rastro apagado en táctil y con reduced-motion.
 > (mínimo `p-6`). Nunca texto pegado al borde ni márgenes negativos para compensar.
 > Auditoría rápida: `grep -n -E 'class="[^"]*(card-glow|lift)' archivo.html | grep -v -E 'pad-card|p-[68]'` debe salir vacío.
 
+### Navegación móvil — drawer
+| Clase | Qué hace |
+|---|---|
+| `drawer` | Panel off-canvas `<lg` (ancho `--drawer-width`, 85vw máx.; cerrado = `visibility:hidden`); estático a `lg+` con `--sidebar-width`. Se abre con `data-open="true"` |
+| `scrim` | Telón oscuro 48% bajo el drawer; oculto a `lg+`. `data-open="true"` lo muestra |
+
+Para un menú móvil de landing: `drawer md:hidden` + `scrim md:hidden` + `data-drawer-from="md"`.
+Comportamiento en `templates/drawer.js` (marcadores `data-menu-button`, `data-drawer`,
+`data-scrim`, `data-menu-close`).
+
 ### Interacciones
 | Clase | Qué hace |
 |---|---|

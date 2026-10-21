@@ -68,6 +68,13 @@ elemento cortado, ningún scroll interno no deseado.
 - Targets táctiles ≥ 44×44px.
 - Inputs ≥ 16px de font-size en mobile (evita zoom automático iOS).
 - Nada depende solo de hover en mobile: estados activos/selected visibles.
+- **Navegación móvil:** toda nav oculta bajo su breakpoint tiene botón de menú (≥44px,
+  `aria-label` + `aria-controls` + `aria-expanded`) que abre un drawer funcional:
+  `drawer`/`scrim` + `templates/drawer.js` — foco al entrar, Esc/scrim/enlace/cerrar lo
+  cierran devolviendo el foco, Tab atrapado, scroll bloqueado, cierra al pasar a desktop.
+  Un botón de menú sin acción es un bug. Probar siempre a 375/768/1280.
+- **Topbar a 375px:** título legible (trunca último), máx. 3 acciones, secundarias solo-icono
+  con `aria-label` bajo `md`, logo en el drawer; targets `h-11`; padding `p-4` → `p-6`.
 - Imágenes con `alt` descriptivo; SVG decorativo con `aria-hidden`.
 
 ## Datos y charts (dashboard / deck)

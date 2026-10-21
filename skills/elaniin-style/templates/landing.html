@@ -229,6 +229,8 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --drawer-width: 18rem;
+  --sidebar-width: 15rem;
   --module-size: 2px;
   --module-pitch: 16px;
 
@@ -496,6 +498,56 @@
   }
 }
 
+/* ---------- utilities: drawer (off-canvas mobile nav) ---------- */
+/* Mobile: panel that slides in from the left; closed = visibility hidden (out of tab order).
+   lg+: static sidebar. For a landing's mobile menu add `md:hidden` to drawer and scrim.
+   Behavior: templates/drawer.js (toggle data-open, focus, Esc, scroll lock). */
+@utility drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 50;
+  width: min(var(--drawer-width), 85vw);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform var(--dur-slow) var(--ease-emphasized), visibility 0s linear var(--dur-slow);
+  &[data-open="true"] {
+    transform: none;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  @variant lg {
+    position: static;
+    z-index: auto;
+    width: var(--sidebar-width);
+    transform: none;
+    visibility: visible;
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+@utility scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(1, 23, 46, 0.48);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  &[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @variant lg {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
 /* ---------- utilities: module field (signature texture of hero / CTA) ---------- */
 /* Resting grid = pure CSS: 2px squares on a 16px pitch, grey at 45%, masked toward the bottom.
    Pointer trail = templates/module-field.js (canvas, off for touch + reduced-motion).
@@ -643,9 +695,33 @@
       <a href="#stats" class="nav-link hover:text-text-primary transition-colors duration-base">Results</a>
       <a href="#" class="ml-2 inline-flex h-10 items-center gap-2 rounded-button border border-border-ink px-4 text-body-sm font-display font-medium text-text-primary hover:bg-surface-subtle transition-colors duration-base btn-arrow">Contact sales</a>
     </nav>
-    <a href="#" class="md:hidden inline-flex h-10 items-center rounded-button bg-elevate-blue px-4 text-body-sm font-display font-medium text-white">Start</a>
+    <div class="flex items-center gap-2 md:hidden">
+      <a href="#" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 text-body-sm font-display font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Start</a>
+      <button type="button" data-menu-button aria-controls="app-drawer" aria-expanded="false" class="inline-flex h-11 w-11 items-center justify-center rounded-button border border-border-default transition-colors duration-base hover:bg-surface-subtle focus-ring" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
   </div>
 </header>
+
+<!-- MOBILE MENU (drawer, < md) -->
+<div class="scrim md:hidden" data-scrim aria-hidden="true"></div>
+<aside id="app-drawer" data-drawer data-drawer-from="md" class="drawer flex flex-col border-r border-border-default bg-white md:hidden" aria-label="Primary">
+  <div class="flex h-16 items-center justify-between border-b border-border-default pl-6 pr-3">
+    <svg class="h-6 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 364.43 81.38"><use href="#elaniin-logo"/></svg>
+    <button type="button" data-menu-close class="inline-flex h-11 w-11 items-center justify-center rounded-button text-text-secondary transition-colors duration-base hover:bg-surface-subtle focus-ring" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Primary mobile">
+    <a href="#features" class="flex h-11 items-center rounded-button px-3 text-body font-display font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Features</a>
+    <a href="#product" class="flex h-11 items-center rounded-button px-3 text-body font-display font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Product</a>
+    <a href="#stats" class="flex h-11 items-center rounded-button px-3 text-body font-display font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Results</a>
+  </nav>
+  <div class="border-t border-border-default p-4">
+    <a href="#" class="inline-flex h-12 w-full items-center justify-center rounded-button border border-border-ink font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Contact sales</a>
+  </div>
+</aside>
 
 <main id="main">
   <!-- HERO -->
@@ -1000,6 +1076,73 @@
       if (!raf) raf = requestAnimationFrame(draw);
     });
   });
+})();
+</script>
+<script>
+/*
+  Elaniin drawer — off-canvas mobile navigation (vanilla, no dependencies).
+
+  Pairs with the `drawer` + `scrim` utilities in tokens.css. Works for a dashboard sidebar
+  (persistent from lg) and for a landing's mobile menu (add `md:hidden` to drawer + scrim and
+  data-drawer-from="md").
+
+  Markup:
+    <button data-menu-button aria-controls="app-drawer" aria-expanded="false" aria-label="Open menu" class="lg:hidden">…</button>
+    <div class="scrim" data-scrim aria-hidden="true"></div>
+    <aside id="app-drawer" data-drawer class="drawer" aria-label="Main">
+      <button data-menu-close aria-label="Close menu">…</button>
+      <nav>…links…</nav>
+    </aside>
+
+  Behavior: focus moves into the drawer; Esc, scrim, close button or any link closes it and
+  returns focus to the menu button; Tab is trapped inside while open; page scroll is locked;
+  it closes by itself when the viewport grows to the persistent layout.
+*/
+(function () {
+  var drawer = document.querySelector('[data-drawer]');
+  var btn = document.querySelector('[data-menu-button]');
+  var scrim = document.querySelector('[data-scrim]');
+  if (!drawer || !btn || !scrim) return;
+
+  var desktop = matchMedia('(min-width: ' + (drawer.dataset.drawerFrom === 'md' ? '48rem' : '64rem') + ')');
+  var FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var isOpen = false;
+
+  function setOpen(open, restoreFocus) {
+    if (open === isOpen) return;
+    isOpen = open;
+    drawer.dataset.open = String(open);
+    scrim.dataset.open = String(open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.documentElement.classList.toggle('overflow-hidden', open);
+    if (open) {
+      var first = drawer.querySelector(FOCUSABLE);
+      if (first) first.focus();
+    } else if (restoreFocus) {
+      btn.focus();
+    }
+  }
+
+  btn.addEventListener('click', function () { setOpen(!isOpen, true); });
+  scrim.addEventListener('click', function () { setOpen(false, true); });
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('[data-menu-close], a[href]')) setOpen(false, true);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen) return;
+    if (e.key === 'Escape') { setOpen(false, true); return; }
+    if (e.key !== 'Tab') return;
+    var items = drawer.querySelectorAll(FOCUSABLE);
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  var onResize = function () { if (desktop.matches) setOpen(false, false); };
+  if (desktop.addEventListener) desktop.addEventListener('change', onResize);
+  else desktop.addListener(onResize);
 })();
 </script>
 </body>

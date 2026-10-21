@@ -228,6 +228,8 @@
   --section-y-statement: 128px;
   --section-y-compact: 64px;
   --card-padding: 32px;
+  --drawer-width: 18rem;
+  --sidebar-width: 15rem;
   --module-size: 2px;
   --module-pitch: 16px;
 
@@ -492,6 +494,56 @@
       animation: none;
       opacity: 0;
     }
+  }
+}
+
+/* ---------- utilities: drawer (off-canvas mobile nav) ---------- */
+/* Mobile: panel that slides in from the left; closed = visibility hidden (out of tab order).
+   lg+: static sidebar. For a landing's mobile menu add `md:hidden` to drawer and scrim.
+   Behavior: templates/drawer.js (toggle data-open, focus, Esc, scroll lock). */
+@utility drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 50;
+  width: min(var(--drawer-width), 85vw);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform var(--dur-slow) var(--ease-emphasized), visibility 0s linear var(--dur-slow);
+  &[data-open="true"] {
+    transform: none;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  @variant lg {
+    position: static;
+    z-index: auto;
+    width: var(--sidebar-width);
+    transform: none;
+    visibility: visible;
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+@utility scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(1, 23, 46, 0.48);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  &[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @variant lg {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
