@@ -1004,6 +1004,8 @@ out = ROOT / "docs"
 out.mkdir(exist_ok=True)
 (out / "index.html").write_text(head + "\n" + body + script)
 import shutil
+# guard: the logotipo variants share one class name, so a <style> inside a <symbol> turns a logo blank
+assert not re.search(r"<symbol[^>]*>(?:(?!</symbol>).)*<style", head, re.S), "logo <symbol> must not carry <style>"
 (out / "templates").mkdir(exist_ok=True)
 for name in ("deck", "landing", "dashboard"):
     shutil.copy(ROOT / f"skills/elaniin-style/templates/{name}.html", out / "templates" / f"{name}.html")

@@ -286,6 +286,12 @@ los apruebe. Los lockups con símbolo (isologo) se quitaron: no se publican ni s
   Correcto: `<svg class="h-7 w-auto" viewBox="0 0 281.45 75.91" aria-label="Elaniin"><use href="#elaniin-logo"/></svg>`
 - **Tamaño:** nav y footer a 28px de alto (`h-7`, ≈104px de ancho); mínimo 96px de ancho en
   pantalla. Espacio libre: al menos la altura del punto de la "i" (≈16% del alto) por todos lados.
+- **Trampa al incrustar (causa de logos en blanco):** los tres SVG (`logotipo`, `white-` y
+  `-blue`) usan **el mismo nombre de clase** con distinto `fill`. Si pegas sus `<style>` en la
+  misma página, gana la última regla y el logo oscuro sale blanco sobre blanco. Al hacer el
+  `<symbol>` **quita el `<defs><style>` y las `class`** y pon el color como `fill` en un `<g>`:
+  `<symbol id="elaniin-logo" viewBox="0 0 281.45 75.91"><g fill="#141414">…paths…</g></symbol>`.
+  Verifica siempre en pantalla que el logo se ve (claro y oscuro).
 - **Color:** negro Elaniin en superficies claras y blanco en oscuras. Nunca recolorear el nombre
   de azul salvo el caso aprobado de la tabla.
 - **Favicon:** usar siempre `assets/favicon.svg` oficial. Nunca un cuadrado genérico distinto ni
