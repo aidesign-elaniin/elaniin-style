@@ -3,7 +3,7 @@
 **Elaniin design system as a Claude plugin.** Bilingüe EN/ES.
 Decks, dashboards & reports, websites & landings en el estilo Elaniin 2027.
 
-Documentación completa (equipo y devs): [`docs/index.html`](docs/index.html).
+Documentación completa (equipo y devs): https://aidesign-elaniin.github.io/elaniin-style/ ([`docs/index.html`](docs/index.html)).
 
 ---
 
@@ -14,21 +14,21 @@ Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin
 ### Equipo (sin terminal) / Team (no terminal)
 
 1. Claude → **Customize → Plugins**.
-2. **Add → Add marketplace** → `danielpineda-elaniin/elaniin-style`.
+2. **Add → Add marketplace** → `aidesign-elaniin/elaniin-style`.
 3. **Discover → elaniin-style → Add**.
 4. Activa **Sync automatically** para recibir actualizaciones solas.
 
 ### Devs (Claude Code)
 
 ```bash
-claude plugin marketplace add danielpineda-elaniin/elaniin-style
+claude plugin marketplace add aidesign-elaniin/elaniin-style
 claude plugin install elaniin-style@elaniin-style-marketplace
 ```
 
 Un paso (Claude Code 2.1.292+):
 
 ```bash
-claude plugin install elaniin-style --marketplace danielpineda-elaniin/elaniin-style
+claude plugin install elaniin-style --marketplace aidesign-elaniin/elaniin-style
 ```
 
 Repo compartido: commitea en `.claude/settings.json`
@@ -37,7 +37,7 @@ Repo compartido: commitea en `.claude/settings.json`
 {
   "extraKnownMarketplaces": {
     "elaniin-style-marketplace": {
-      "source": { "source": "github", "repo": "danielpineda-elaniin/elaniin-style" },
+      "source": { "source": "github", "repo": "aidesign-elaniin/elaniin-style" },
       "autoUpdate": true
     }
   },
