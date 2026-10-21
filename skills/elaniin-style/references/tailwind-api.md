@@ -150,6 +150,11 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 Host: `relative isolate overflow-hidden`; contenido `relative`. Marcar con `data-module-field`
 y `aria-hidden="true"`. Rastro apagado en táctil y con reduced-motion.
 
+> **Regla de padding:** `lift` y `card-glow` crean una superficie al hacer hover. El elemento
+> **siempre** lleva `rounded-card border border-border-default bg-surface-card pad-card`
+> (mínimo `p-6`). Nunca texto pegado al borde ni márgenes negativos para compensar.
+> Auditoría rápida: `grep -n -E 'class="[^"]*(card-glow|lift)' archivo.html | grep -v -E 'pad-card|p-[68]'` debe salir vacío.
+
 ### Interacciones
 | Clase | Qué hace |
 |---|---|

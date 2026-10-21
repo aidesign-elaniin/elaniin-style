@@ -130,6 +130,12 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 8. **Language:** produce all UI copy in the user's language (EN or ES). Never mix.
 9. **Alive by default.** Every deliverable includes (a) a mouse-reactive texture/spotlight
    and (b) microinteractions — see §7. Static, lifeless compositions are not Elaniin.
+10. **Hover surfaces always have padding (non-negotiable).** Any element that shows a
+   surface on hover — `lift`, `card-glow`, hover borders/shadows — is a real card: it MUST
+   carry `rounded-card border border-border-default bg-surface-card pad-card` (or `p-6`/`p-8`
+   at least). Never leave text flush against the edge of a box that appears on hover, and
+   never fake the padding with negative margins (`-mx-*`). Hairline cells without a hover
+   surface may stay padding-free; the moment they lift or glow they become cards.
 
 ---
 
@@ -200,6 +206,7 @@ Before delivering, verify:
       static end-state under reduced-motion. `motion.md` §Living mockups.
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
+- [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
 - [ ] Focus rings, hover/active/disabled states present.
 - [ ] Mobile layout considered; targets ≥44px.
 - [ ] All copy in the user's language.

@@ -117,6 +117,8 @@ card.addEventListener('pointermove', (e) => {
 | Input | Border elevate-blue + focus-ring al focus |
 
 ### 4 · Reglas
+- **Card glow y lift = card con padding.** La superficie que aparece al hover necesita
+  `pad-card` + `rounded-card` + borde; sin padding el texto queda pegado al borde.
 - Todo lo anterior se desactiva con `prefers-reduced-motion: reduce`.
 - Performance: solo `transform`, `opacity`, `background-position` (compositor);
   nunca animar `top/left/width/height`.
