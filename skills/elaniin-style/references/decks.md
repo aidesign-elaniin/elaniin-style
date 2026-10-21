@@ -46,7 +46,7 @@ Un slide que recorta contenido es un slide roto. Reglas duras:
 | 9 | **Competition** | Matriz hairline (✓ / — / ✕ con iconos, no solo color). |
 | 10 | **Team** | Blanco. B/W portraits en grid hairline, nombre h4, rol caption. |
 | 11 | **The ask** | Navy. Número display blanco (monto / ronda), uso de fondos en 3 bullets, contacto. |
-| 12 | **Closing** | Blanco. Logo + tagline + contacto. |
+| 12 | **Closing (obligatorio)** | Blanco. Logo oficial + una frase de cierre + contacto en 3 columnas hairline (email, web, oficinas). **Todo deck termina con un slide de cierre**; el contacto vive aquí, no en el slide Ask. |
 
 Para **reportes internos**: cover → executive summary (navy) → secciones de datos →
 hallazgos → recomendaciones → next steps. Mismos tokens.
@@ -68,6 +68,12 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 - **Living loop:** ≥1 mockup en loop por deck (phone de pantallas swiping con la utility
   `phone-track`, chip ETA flotante, spinner/typing — CSS puro, estático bajo
   reduced-motion) — `motion.md` §Living mockups. CSS: `references/tailwind-api.md`.
+- **Marco de dispositivo (phone-frame):** el bisel negro se pinta **por encima** de las pantallas
+  (`::after` con `inset box-shadow` y `z-index` mayor); las pantallas llenan el marco de borde a
+  borde por debajo y `phone-track` les da el padding. Así las uniones entre pantallas que se
+  deslizan nunca se ven. Nunca uses `padding` + fondo negro del marco como bisel.
+- **Cierre:** el deck termina con un slide de cierre (logo + frase + contacto). El contador
+  `Slide 1 / N` y los dots se ajustan al total real.
 - **Imágenes:** producto real o abstracto neutro; nunca stock sonriente.
 - **Sin:** clip-art, emojis como iconos, word-art, transiciones con zoom/rotación.
 

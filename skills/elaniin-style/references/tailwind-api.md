@@ -203,7 +203,7 @@ anillo global · reduce → scroll auto. (Dashboard añade `body { background: s
 |---|---|---|
 | `landing.html` | `pipeline` | grid 4 col; `li::before` nodo, `li::after` conector; estados `data-state="idle|active|done"` (idle = base, sin regla) |
 | `dashboard.html` | `side-link`, `field`, `switch` | `side-link` (nav con `aria-current="page"`), `field` (input/select 44px), `switch` (checkbox `role="switch"`); router por hash + vistas, ver `dashboards.md` |
-| `deck.html` | `stage`, `deck`, `slide` (+`.active/.dark/.grey`), `slide-spot`, `nav-dots`, `hud`, `phone-frame`, `phone-track` | + `@theme` extra: `--animate-phone-swipe` (9s infinite); overrides base: `html,body height:100%`, `body` navy + `overflow:hidden` |
+| `deck.html` | `stage`, `deck`, `slide` (+`.active/.dark/.grey`), `slide-spot`, `nav-dots`, `hud`, `phone-frame` (bisel como overlay `::after`), `phone-sheen`, `phone-track` (padding de pantallas) | + `@theme` extra: `--animate-phone-swipe` (9s infinite); overrides base: `html,body height:100%`, `body` navy + `overflow:hidden` |
 
 ---
 

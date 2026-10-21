@@ -172,6 +172,10 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    bars, ramp strips, gradient backgrounds, blobs or glass. Structure comes from hairlines,
    flat surfaces and the `module-field` texture. The only soft glows allowed are the pointer
    `spotlight` and `card-glow`. The blue ramp tokens exist for states, never as a decorative strip.
+17. **Decks end with a closing slide and device frames hide their seams (non-negotiable).**
+   Every deck finishes with a closing slide: official logo, one closing line, contact. Device
+   mockups (`phone-frame`) draw the bezel ABOVE the screens (overlay `::after`, higher z-index);
+   screens run edge to edge underneath, so the joins of swiping screens are never visible.
 
 ---
 
@@ -244,6 +248,7 @@ Before delivering, verify:
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
+- [ ] **Decks:** last slide is a closing slide (logo + line + contact); device bezels sit above the screens, no visible seams; counter and dots match the slide count.
 - [ ] **No gradients or color bars:** no stepped blue strip, gradient backgrounds, blobs or glass.
 - [ ] **Dashboards:** every nav item opens a real view; controls, Export and New report work; no user block, legal footer; no `href="#"`.
 - [ ] **No eyebrows:** no small mono/uppercase label above any heading.

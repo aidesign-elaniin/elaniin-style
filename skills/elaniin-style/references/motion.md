@@ -137,7 +137,7 @@ solo, da la impresión de producto vivo y se detiene cuando nadie lo mira.
 - Solo `transform`/`opacity`; el loop nunca compite con el texto (esquina, fondo,
   `aria-hidden="true"`).
 - Inventario: `typing-dots` (burbujas de chat), `float-chip` (badge ETA flotante),
-  `spinner`, `live-dot` (ping de dato en vivo), `sheen` (brillo del phone-frame),
+  `spinner`, `live-dot` (ping de dato en vivo), `sheen` (brillo sobre el bisel del phone-frame, utility `phone-sheen`),
   `phone-track` (swipe de pantallas en el deck).
 
 ### Técnica B · JS clock gated por IntersectionObserver
