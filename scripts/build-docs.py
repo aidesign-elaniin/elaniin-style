@@ -274,13 +274,14 @@ MOCK_3 = stage("95%,95%|50%,73%|50%,73%|50%,73%|50%,64%|50%,64%|83%,80%|83%,80%|
     <div class="mock-press ml-auto mt-1.5 w-fit rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
-MOCK_4 = stage("95%,95%|50%,52%|50%,52%|50%,52%", """
+MOCK_4 = stage("95%,95%|50%,55%|50%,55%|50%,55%", """
   <div class="flex h-full flex-col bg-white">
     <div class="flex items-center gap-3 border-b border-border-default px-3 py-2">
       <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
-      <div class="ml-auto flex items-center gap-3">
+      <div class="ml-auto flex items-center gap-2">
         <span class="mock-tab text-[10px] leading-none text-text-secondary" data-on="0">Yours</span>
         <span class="text-[10px] leading-none text-text-muted">Discover</span>
+        <span class="flex items-center gap-0.5 rounded-button bg-elaniin-black px-1.5 py-1 text-[8px] font-medium leading-none text-white"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add</span>
       </div>
     </div>
     <div class="p-3">
