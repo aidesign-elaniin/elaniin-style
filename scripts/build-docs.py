@@ -274,7 +274,7 @@ MOCK_3 = stage("95%,95%|50%,73%|50%,73%|50%,73%|50%,64%|50%,64%|83%,80%|83%,80%|
     <div class="mock-press ml-auto mt-1.5 w-fit rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
-MOCK_4 = stage("95%,95%|50%,40%|50%,40%|50%,40%", """
+MOCK_4 = stage("95%,95%|50%,52%|50%,52%|50%,52%", """
   <div class="flex h-full flex-col bg-white">
     <div class="flex items-center gap-3 border-b border-border-default px-3 py-2">
       <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
@@ -284,7 +284,8 @@ MOCK_4 = stage("95%,95%|50%,40%|50%,40%|50%,40%", """
       </div>
     </div>
     <div class="p-3">
-      <div class="mock-press" data-on="1" data-off="2">
+      <p class="flex items-center gap-1.5 text-[9px] font-medium leading-none text-text-primary">From marketplaces you added <span class="rounded-full bg-surface-subtle px-1.5 py-0.5 text-[7px] font-normal leading-none text-text-muted">6</span></p>
+      <div class="mock-press mt-2" data-on="1" data-off="2">
         <div class="mock-active flex items-center justify-between rounded-button border border-border-default bg-white p-2" data-on="1">
           <div class="min-w-0">
             <p class="font-mono text-[10px] font-medium leading-none text-text-primary">Elaniin Style</p>
