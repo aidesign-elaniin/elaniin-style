@@ -80,7 +80,7 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 ## Navegación & entrega
 
 - Teclado: ←/→/space, Home/End. `aria-live` para "Slide 3 de 12".
-- Dots o contador inferior discreto (mono-label).
+- Dots, contador y botón "Full" van en la **barra de control** inferior (`hud`, `--hud-height` 56px, fondo elaniin-black): franja propia debajo del canvas, con su padding. Nunca flotan sobre una slide: en fondos blancos el hint se cortaba y no se leía. El canvas se escala con `innerHeight - 56`.
 - Exportar PDF: `@media print` una slide por página, fondos impresos
   (`-webkit-print-color-adjust: exact`).
 - Presentar en browser a pantalla completa; funciona sin servidor.
@@ -88,6 +88,7 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 ## Checklist de deck
 
 - [ ] Full-screen 16:9; revisado slide por slide sin ningún elemento cortado.
+- [ ] Contador, dots y "Full" en la barra inferior propia, legibles sobre cualquier slide.
 - [ ] Cero clases responsive dentro del deck; `.slide { overflow: hidden }`.
 - [ ] Logo oficial en cover y closing (variante según superficie).
 - [ ] Spotlight reactivo + microinteracciones (chart draw, count-up, stagger).

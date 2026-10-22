@@ -189,7 +189,8 @@ Comportamiento en `templates/drawer.js` (marcadores `data-menu-button`, `data-dr
 ### Interacciones
 | Clase | Qué hace |
 |---|---|
-| `nav-link` | underline 2px `scaleX` desde la izquierda al hover/focus |
+| `nav-link` | opción A: underline 2px `scaleX` desde la izquierda al hover/focus (por defecto en landing y footer) |
+| `nav-link-pill` | opción B, la de la referencia principal (DESIGN.md `components.nav.link`): pill 40px, fondo `surface-subtle` y color `text-link` al hover. Elegir UNA opción por sitio |
 | `btn-arrow` | `svg` `translateX(4px)` al hover + `scale(.98)` al active |
 | `lift` | `translateY(-4px)` + `shadow-menu` al hover |
 | `row-hover` | respuesta de fila en tablas |

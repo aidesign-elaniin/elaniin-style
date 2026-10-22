@@ -394,6 +394,24 @@
 }
 
 /* ---------- utilities: interactions ---------- */
+@utility nav-link-pill {
+  /* reference-site nav link (DESIGN.md components.nav.link): 40px pill, subtle surface on hover */
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-button);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: background-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  &:hover {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-link);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
 @utility nav-link {
   position: relative;
   &::after {
@@ -1713,7 +1731,7 @@ skills/elaniin-style/
     <div class="container-site relative text-center">
       <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-white">Something not working?</h2>
       <p class="mx-auto mt-5 max-w-[56ch] text-lead text-text-on-dark-secondary">Open an issue on the repository with the step where you got stuck and the message you saw.</p>
-      <a href="https://github.com/aidesign-elaniin/elaniin-style/issues" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring-on-dark">Open an issue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+      <a href="https://github.com/aidesign-elaniin/elaniin-style/issues" target="_blank" rel="noopener" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring-on-dark">Open an issue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
     </div>
   </section>
 </main>

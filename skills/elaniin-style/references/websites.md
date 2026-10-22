@@ -50,6 +50,7 @@ dominante por pieza.
   (base de `tokens.css`) el enlace `#sección` deja el inicio de la sección justo bajo el nav.
 - **Grids:** `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`, mobile first y `min-w-0`
   en hijos (recetas en `references/grids.md`). Nada de `-mx-*` ni gaps arbitrarios.
+- **CTA del nav = `button.primary md`** (fondo elevate-blue, texto blanco, hover `blue-600`, active `blue-700`); el outline gris no es el CTA del nav. Los links del nav usan `nav-link` (underline) o `nav-link-pill` (referencia principal); una sola opción por sitio.
 - **Superficies con hover = cards con padding.** Toda celda que use `lift` o `card-glow`
   lleva `rounded-card border bg-surface-card pad-card`. Sin padding el hover se ve como una
   caja con el texto pegado al borde: prohibido. Nada de `-mx-*` para disimularlo.

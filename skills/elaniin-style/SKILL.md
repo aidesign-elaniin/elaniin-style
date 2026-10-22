@@ -180,6 +180,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    Every deck finishes with a closing slide: official logo, one closing line, contact. Device
    mockups (`phone-frame`) draw the bezel ABOVE the screens (overlay `::after`, higher z-index);
    screens run edge to edge underneath, so the joins of swiping screens are never visible.
+   The deck controls (counter, dots, "Full") sit in a bottom bar of their own, outside the canvas, so they stay readable on white slides.
 18. **Isometric resources follow the approved bar (non-negotiable).** A hero or section whose content
    is a structure (a stack, a flow, an architecture) may use an animated isometric resource, never as
    decoration and never inside cards or lists. Use the kit (`templates/iso-stack.js` for HTML,
@@ -261,7 +262,7 @@ Before delivering, verify:
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
 - [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
-- [ ] **Decks:** last slide is a closing slide (logo + line + contact); device bezels sit above the screens, no visible seams; counter and dots match the slide count.
+- [ ] **Decks:** last slide is a closing slide (logo + line + contact); device bezels sit above the screens, no visible seams; counter and dots match the slide count; counter, dots and the "Full" hint live in their own bottom bar (`hud`), never on top of a slide.
 - [ ] **Isometric resource (if used):** built with the kit and the 15 rules of `references/isometric.md`; frost only inside it; blue logotipo only on the software slab; checked on a phone and at 375/768/1024/1280.
 - [ ] **No gradients or color bars:** no stepped blue strip, gradient backgrounds, blobs or glass.
 - [ ] **Dashboards:** every nav item opens a real view; controls, Export and New report work; no user block, legal footer; no `href="#"`.

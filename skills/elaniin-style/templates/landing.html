@@ -378,6 +378,24 @@
 }
 
 /* ---------- utilities: interactions ---------- */
+@utility nav-link-pill {
+  /* reference-site nav link (DESIGN.md components.nav.link): 40px pill, subtle surface on hover */
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-button);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: background-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  &:hover {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-link);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
 @utility nav-link {
   position: relative;
   &::after {
@@ -765,7 +783,7 @@
       <a href="#features" class="nav-link hover:text-text-primary transition-colors duration-base">Features</a>
       <a href="#product" class="nav-link hover:text-text-primary transition-colors duration-base">Product</a>
       <a href="#stats" class="nav-link hover:text-text-primary transition-colors duration-base">Results</a>
-      <a href="#" class="ml-2 inline-flex h-10 items-center gap-2 rounded-button border border-border-ink px-4 text-body-sm font-display font-medium text-text-primary hover:bg-surface-subtle transition-colors duration-base btn-arrow">Contact sales</a>
+      <a href="#" class="ml-2 inline-flex h-10 items-center gap-2 rounded-button bg-elevate-blue px-4 text-body-sm font-display font-medium text-white hover:bg-blue-600 active:bg-blue-700 transition-colors duration-base btn-arrow focus-ring">Contact sales</a>
     </nav>
     <div class="flex items-center gap-2 md:hidden">
       <a href="#" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 text-body-sm font-display font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Start</a>
@@ -791,7 +809,7 @@
     <a href="#stats" class="flex h-11 items-center rounded-button px-3 text-body font-display font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Results</a>
   </nav>
   <div class="border-t border-border-default p-4">
-    <a href="#" class="inline-flex h-12 w-full items-center justify-center rounded-button border border-border-ink font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Contact sales</a>
+    <a href="#" class="inline-flex h-12 w-full items-center justify-center rounded-button bg-elevate-blue font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Contact sales</a>
   </div>
 </aside>
 

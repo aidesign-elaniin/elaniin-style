@@ -228,6 +228,7 @@
   --gutter: 48px;
   --grid-gap: 24px;
   --nav-height: 64px;
+  --hud-height: 56px;  /* deck control bar (counter, dots, Full), below the canvas */
   --section-y: 96px;
   --section-y-statement: 128px;
   --section-y-compact: 64px;
@@ -692,8 +693,9 @@
 /* ---------- deck-only: presentation chrome ---------- */
 @utility stage {
   position: fixed;
-  inset: 0;
+  inset: 0 0 var(--hud-height) 0;
   display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   place-items: center;
 }
 @utility deck {
@@ -744,12 +746,12 @@
 }
 @utility nav-dots {
   position: fixed;
-  bottom: 18px;
+  bottom: calc(var(--hud-height) / 2 - 4px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  z-index: 10;
+  z-index: 11;
   & button {
     width: 8px;
     height: 8px;
@@ -773,14 +775,19 @@
   }
 }
 @utility hud {
+  /* control bar: its own strip below the canvas, so the hint never sits on a slide */
   position: fixed;
-  top: 16px;
-  right: 20px;
+  inset: auto 0 0 0;
+  height: var(--hud-height);
+  padding-inline: 24px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   z-index: 10;
-  color: rgba(255, 255, 255, 0.55);
+  background: var(--color-elaniin-black);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
   font-family: var(--font-mono);
   font-size: var(--text-caption);
   letter-spacing: 0.05em;
@@ -1147,7 +1154,7 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function scaleDeck() {
-    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.96;
+    var s = Math.min(window.innerWidth / 1280, (window.innerHeight - 56) / 720) * 0.96;
     deck.style.transform = 'scale(' + s + ')';
   }
   window.addEventListener('resize', scaleDeck);

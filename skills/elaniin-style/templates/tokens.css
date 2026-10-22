@@ -365,6 +365,24 @@
 }
 
 /* ---------- utilities: interactions ---------- */
+@utility nav-link-pill {
+  /* reference-site nav link (DESIGN.md components.nav.link): 40px pill, subtle surface on hover */
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-button);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: background-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  &:hover {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-link);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
 @utility nav-link {
   position: relative;
   &::after {

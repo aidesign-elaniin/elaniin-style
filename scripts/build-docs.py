@@ -836,7 +836,7 @@ body = f'''
     <div class="container-site relative text-center">
       <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-white">Something not working?</h2>
       <p class="mx-auto mt-5 max-w-[56ch] text-lead text-text-on-dark-secondary">Open an issue on the repository with the step where you got stuck and the message you saw.</p>
-      <a href="{REPO}/issues" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring-on-dark">Open an issue {ARROW}</a>
+      <a href="{REPO}/issues" target="_blank" rel="noopener" class="btn-arrow mt-10 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-8 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring-on-dark">Open an issue {ARROW}</a>
     </div>
   </section>
 </main>
