@@ -16,7 +16,7 @@ Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin
 1. En la app de Claude haz clic en tu nombre o correo (abajo a la izquierda) → **Settings** (o `⌘ ,`) y, en el grupo **Customize**, **Plugins**. En claude.ai también sirve https://claude.ai/customize/plugins.
 2. Pulsa **Add → Add marketplace**.
 3. Elige **Add from a repository**, pega en **URL** la dirección completa, siempre la misma, `https://github.com/aidesign-elaniin/elaniin-style` (repositorio público), y pulsa **Sync**. El aviso rojo es normal: Claude lo muestra con cualquier marketplace que no sea de Anthropic.
-4. Ve a la pestaña **Yours**, busca **Elaniin Style** y haz clic sobre el plugin, no en **Add**. Queda en tu cuenta (chat, Cowork y Claude Code).
+4. En **Discover** aparece la tarjeta **Elaniin style**: pulsa **Add** (cambia a **Added**). Luego ve a la pestaña **Yours** y haz clic en la tarjeta **Elaniin Style**. Queda en tu cuenta (chat, Cowork y Claude Code).
 5. En la misma pestaña **Yours**, abre el marketplace de Elaniin y verifica que el switch **Update** esté activado. Si no lo está, actívalo para que el plugin siempre esté actualizado.
 6. Úsalo: en un chat escribe `/`, luego `elaniin`, elige **Elaniin Style** y pide lo que necesites.
 

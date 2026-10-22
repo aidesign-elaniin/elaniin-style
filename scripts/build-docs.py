@@ -274,25 +274,40 @@ MOCK_3 = stage("95%,95%|50%,73%|50%,73%|50%,73%|50%,64%|50%,64%|83%,80%|83%,80%|
     <div class="mock-press ml-auto mt-1.5 w-fit rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
-MOCK_4 = stage("95%,95%|50%,55%|50%,55%|50%,55%", """
+MOCK_4 = stage("95%,95%|85%,47%|85%,47%|85%,47%|60%,12%|60%,12%|50%,59%|50%,59%|50%,59%", """
   <div class="flex h-full flex-col bg-white">
     <div class="flex items-center gap-3 border-b border-border-default px-3 py-2">
       <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
-      <div class="ml-auto flex items-center gap-2">
-        <span class="mock-tab text-[10px] leading-none text-text-secondary" data-on="0">Yours</span>
-        <span class="text-[10px] leading-none text-text-muted">Discover</span>
+      <div class="ml-auto flex items-center gap-3">
+        <span class="mock-tab text-[10px] leading-none text-text-secondary" data-on="5">Yours</span>
+        <span class="mock-tab text-[10px] leading-none text-text-secondary" data-on="0" data-off="5">Discover</span>
         <span class="flex items-center gap-0.5 rounded-button bg-elaniin-black px-1.5 py-1 text-[8px] font-medium leading-none text-white"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add</span>
       </div>
     </div>
-    <div class="p-3">
-      <p class="flex items-center gap-1.5 text-[9px] font-medium leading-none text-text-primary">From marketplaces you added <span class="rounded-full bg-surface-subtle px-1.5 py-0.5 text-[7px] font-normal leading-none text-text-muted">6</span></p>
-      <div class="mock-press mt-2" data-on="1" data-off="2">
-        <div class="mock-active flex items-center justify-between rounded-button border border-border-default bg-white p-2" data-on="1">
-          <div class="min-w-0">
-            <p class="font-mono text-[10px] font-medium leading-none text-text-primary">Elaniin Style</p>
-            <div class="mt-1.5 h-1.5 w-24 rounded-full bg-border-default"></div>
+    <div class="relative min-h-0 flex-1">
+      <div class="mock-hide absolute inset-0 p-3" data-on="5">
+        <div class="flex items-center gap-2 rounded-button border border-border-default bg-white p-2">
+          <span class="h-6 w-6 shrink-0 rounded-button border border-border-default bg-surface-subtle"></span>
+          <div class="min-w-0 flex-1">
+            <p class="text-[10px] font-medium leading-none text-text-primary">Elaniin style</p>
+            <div class="mt-1.5 h-1.5 w-20 rounded-full bg-border-default"></div>
           </div>
-          <span class="text-[12px] leading-none text-text-muted" aria-hidden="true">›</span>
+          <div class="relative h-5 w-12 shrink-0">
+            <span class="mock-hide mock-press absolute inset-0 flex items-center justify-center rounded-button bg-elevate-blue text-[8px] font-medium leading-none text-white" data-on="2" data-off="3">Add</span>
+            <span class="mock-fade absolute inset-0 flex items-center justify-center gap-0.5 rounded-button border border-success-border bg-success-bg text-[8px] leading-none text-success-text" data-on="3"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Added</span>
+          </div>
+        </div>
+      </div>
+      <div class="mock-fade absolute inset-0 p-3" data-on="5">
+        <p class="flex items-center gap-1.5 text-[9px] font-medium leading-none text-text-primary">From marketplaces you added <span class="rounded-full bg-surface-subtle px-1.5 py-0.5 text-[7px] font-normal leading-none text-text-muted">6</span></p>
+        <div class="mock-press mt-2" data-on="7">
+          <div class="mock-active flex items-center justify-between rounded-button border border-border-default bg-white p-2" data-on="7">
+            <div class="min-w-0">
+              <p class="font-mono text-[10px] font-medium leading-none text-text-primary">Elaniin Style</p>
+              <div class="mt-1.5 h-1.5 w-24 rounded-full bg-border-default"></div>
+            </div>
+            <span class="text-[12px] leading-none text-text-muted" aria-hidden="true">›</span>
+          </div>
         </div>
       </div>
     </div>
@@ -334,7 +349,7 @@ team_steps = "\n".join([
          '<ol class="mt-3 list-decimal space-y-1 pl-5 text-body-sm text-text-secondary"><li>Choose <strong>Add from a repository</strong>.</li><li>Paste the address in the <strong>URL</strong> box.</li><li>Click <strong>Sync</strong>.</li></ol>'
          '<p class="mt-3 rounded-card bg-surface-subtle p-4 text-body-sm text-text-secondary"><strong>A red notice will appear. Relax, it is normal.</strong> Claude shows it for every marketplace that is not from Anthropic. This repository is Elaniin\'s and public, so you can go ahead.</p>'
          f'<div class="mt-4">{code(SRC_URL, "address")}</div>', mock=MOCK_3),
-    step("04", "Install elaniin-style", "Open the <strong>Plugins</strong> page and go to the <strong>Yours</strong> tab. Find <strong>Elaniin Style</strong> and click the plugin itself, not Add. It is saved to your account, so it is also available in chat, Cowork and Claude Code.", mock=MOCK_4),
+    step("04", "Install elaniin-style", "In <strong>Discover</strong> the marketplace shows an <strong>Elaniin style</strong> card: click <strong>Add</strong> and it changes to <strong>Added</strong>. Then open the <strong>Yours</strong> tab and click the <strong>Elaniin Style</strong> card. It is saved to your account, so it is also available in chat, Cowork and Claude Code.", mock=MOCK_4),
     step("05", "Check that updates are on", "In the same <strong>Yours</strong> tab, open the Elaniin marketplace you added. Check that the <strong>Update</strong> switch is on. If it is off, turn it on so the plugin always stays up to date.", mock=MOCK_5),
     step("06", "Use it", "In any chat type " + ic("/") + " in the message box, type <strong>elaniin</strong> and pick <strong>Elaniin Style</strong>, then write what you want, for example “Create a pitch deck in the Elaniin style”. You can also just describe the task: Claude loads the skill when it matches.", mock=MOCK_6),
 ])
