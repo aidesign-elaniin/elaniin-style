@@ -16,9 +16,9 @@ Una sola vía: **plugin de Claude** desde este repositorio (marketplace `elaniin
 1. En la app de Claude haz clic en tu nombre o correo (abajo a la izquierda) → **Settings** (o `⌘ ,`) y, en el grupo **Customize**, **Plugins**. En claude.ai también sirve https://claude.ai/customize/plugins.
 2. Pulsa **Add → Add marketplace**.
 3. Elige **Add from a repository**, pega en **URL** la dirección completa, siempre la misma, `https://github.com/aidesign-elaniin/elaniin-style` (repositorio público), y pulsa **Sync**. El aviso rojo es normal: Claude lo muestra con cualquier marketplace que no sea de Anthropic.
-4. En **Discover** busca **elaniin-style** y pulsa **Add**. Queda en tu cuenta (chat, Cowork y Claude Code).
-5. En **Plugins**, en el marketplace de Elaniin, activa **Sync automatically** (o **Check for updates** a mano).
-6. Úsalo: en un chat escribe `/`, luego `elaniin`, elige **elaniin-style** y pide lo que necesites.
+4. Ve a la pestaña **Yours**, busca **Elaniin Style** y haz clic sobre el plugin, no en **Add**. Queda en tu cuenta (chat, Cowork y Claude Code).
+5. En la misma pestaña **Yours**, abre el marketplace de Elaniin y verifica que el switch **Update** esté activado. Si no lo está, actívalo para que el plugin siempre esté actualizado.
+6. Úsalo: en un chat escribe `/`, luego `elaniin`, elige **Elaniin Style** y pide lo que necesites.
 
 Si no ves **Add marketplace**, un administrador de tu plan de Claude controla si se permite: pídeselo.
 En la pestaña **Code** del escritorio llega en la siguiente sesión (o con `/reload-plugins`).
@@ -27,7 +27,7 @@ En la pestaña **Code** del escritorio llega en la siguiente sesión (o con `/re
 
 ```bash
 claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
-claude plugin install elaniin-style@elaniin-style-marketplace
+claude plugin install elaniin@elaniin-style-marketplace
 ```
 
 > **Usa siempre la misma dirección (la URL completa)** en la app, la CLI y los settings. Mezclar
@@ -44,7 +44,7 @@ Repo compartido: commitea en `.claude/settings.json`
       "autoUpdate": true
     }
   },
-  "enabledPlugins": { "elaniin-style@elaniin-style-marketplace": true }
+  "enabledPlugins": { "elaniin@elaniin-style-marketplace": true }
 }
 ```
 
@@ -55,7 +55,7 @@ Con `autoUpdate` activo se descarga solo unos minutos después de abrir una sesi
 sesión en curso aplica el cambio con `/reload-plugins` o al reiniciar.
 
 ```bash
-claude plugin update elaniin-style@elaniin-style-marketplace
+claude plugin update elaniin@elaniin-style-marketplace
 ```
 
 Auto-update obligatorio para toda la organización: `autoUpdate: true` en *managed settings*
@@ -64,7 +64,7 @@ Auto-update obligatorio para toda la organización: `autoUpdate: true` en *manag
 ## Usar / Use
 
 Claude carga la skill cuando el pedido encaja, o invócala con
-`/elaniin-style:elaniin-style`:
+`/elaniin:elaniin-style`:
 
 - "Crea un pitch deck de Serie A con el estilo Elaniin"
 - "Diseña un dashboard con nuestras métricas de Q4, estilo Elaniin"

@@ -7,7 +7,8 @@
   },
   "plugins": [
     {
-      "name": "elaniin-style",
+      "name": "elaniin",
+      "displayName": "Elaniin Style",
       "source": "./",
       "description": "Elaniin design system as a skill: decks, dashboards & reports, websites & landings, and Elaniin site development. Bilingüe EN/ES.",
       "author": {

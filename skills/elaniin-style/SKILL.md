@@ -6,7 +6,7 @@ description: >
   Elevate Blue detail-only accent, hairline grids, restrained motion). Also develops
   the Elaniin 2027 Next.js site. Bilingüe: sigue instrucciones en EN o ES.
   Use when the user asks for an "Elaniin" deck, dashboard, report, landing, website,
-  or to build/change the Elaniin site — or invokes /elaniin-style:elaniin-style.
+  or to build/change the Elaniin site — or invokes /elaniin:elaniin-style.
 license: MIT
 compatibility:
   requires_any_of:

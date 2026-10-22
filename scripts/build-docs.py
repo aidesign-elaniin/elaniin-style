@@ -274,33 +274,36 @@ MOCK_3 = stage("95%,95%|50%,73%|50%,73%|50%,73%|50%,64%|50%,64%|83%,80%|83%,80%|
     <div class="mock-press ml-auto mt-1.5 w-fit rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
-MOCK_4 = stage("95%,95%|84%,56%|84%,56%|84%,56%|84%,56%", """
-  <div class="space-y-2 p-3">
-    <div class="flex items-center justify-between rounded-button border border-border-default bg-white p-2 opacity-60">
-      <div class="space-y-1.5"><div class="h-2 w-16 rounded-full bg-border-strong"></div><div class="h-1.5 w-24 rounded-full bg-border-default"></div></div>
-      <div class="rounded-button border border-border-default px-3 py-1 text-[10px] leading-none text-text-muted">Add</div>
-    </div>
-    <div class="relative flex items-center justify-between rounded-button border border-border-ink bg-white p-2">
-      <div class="min-w-0"><p class="font-mono text-[10px] font-medium leading-none text-text-primary">elaniin-style</p><div class="mt-1.5 h-1.5 w-24 rounded-full bg-border-default"></div></div>
-      <div class="relative h-6 w-14 shrink-0">
-        <div class="mock-hide mock-press absolute inset-0 flex items-center justify-center rounded-button bg-elevate-blue text-[10px] leading-none text-white" data-on="3">Add</div>
-        <div class="mock-fade absolute inset-0 flex items-center justify-center gap-1 rounded-button border border-success-border bg-success-bg text-[10px] leading-none text-success-text" data-on="3"><span class="h-1.5 w-1.5 rounded-full bg-success-dot"></span>Added</div>
+MOCK_4 = stage("95%,95%|72%,13%|72%,13%|50%,47%|50%,47%|50%,47%", """
+  <div class="flex h-full flex-col bg-white">
+    <div class="flex items-center gap-3 border-b border-border-default px-3 py-2">
+      <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
+      <div class="ml-auto flex items-center gap-3">
+        <span class="text-[10px] leading-none text-text-muted">Discover</span>
+        <span class="mock-tab text-[10px] leading-none text-text-secondary" data-on="1">Yours</span>
       </div>
+    </div>
+    <div class="p-3">
+      <div class="mock-active mt-1 flex items-center justify-between rounded-button border border-border-default bg-white p-2" data-on="3">
+        <div class="min-w-0">
+          <p class="font-mono text-[10px] font-medium leading-none text-text-primary">Elaniin Style</p>
+          <div class="mt-1.5 h-1.5 w-24 rounded-full bg-border-default"></div>
+        </div>
+        <span class="text-[12px] leading-none text-text-muted" aria-hidden="true">›</span>
+      </div>
+      <p class="mock-fade mt-2 flex items-center gap-1 text-[9px] leading-none text-success-text" data-on="4"><span class="h-1.5 w-1.5 rounded-full bg-success-dot"></span>Installed</p>
     </div>
   </div>""")
 
 MOCK_5 = stage("95%,95%|88%,38%|88%,38%|88%,38%|88%,38%", """
-  <div class="space-y-2 p-3">
-    <div class="rounded-button border border-border-default bg-white p-2.5">
-      <p class="truncate font-mono text-[10px] font-medium leading-none text-text-primary">elaniin-style-marketplace</p>
-      <div class="mt-3 flex items-center justify-between gap-3">
-        <span class="text-[10px] leading-none text-text-secondary">Sync automatically</span>
-        <div class="mock-switch" data-on="2"><i></i></div>
+  <div class="h-full bg-white p-3">
+    <p class="truncate font-mono text-[10px] font-medium leading-none text-text-primary">elaniin-style-marketplace</p>
+    <div class="mt-3 flex items-center justify-between gap-3 rounded-button border border-border-default p-2.5">
+      <div class="min-w-0">
+        <p class="text-[10px] leading-none text-text-secondary">Update</p>
+        <p class="mt-1 text-[8px] leading-none text-text-muted">Always keep the plugin current</p>
       </div>
-    </div>
-    <div class="flex items-center justify-between px-1">
-      <span class="text-[10px] leading-none text-text-muted">Check for updates</span>
-      <div class="mock-fade flex items-center gap-1.5 rounded-button border border-success-border bg-success-bg px-2 py-1 text-[10px] leading-none text-success-text" data-on="3"><span class="h-1.5 w-1.5 rounded-full bg-success-dot"></span>Up to date</div>
+      <div class="mock-switch" data-on="2"><i></i></div>
     </div>
   </div>""")
 
@@ -328,14 +331,14 @@ team_steps = "\n".join([
          '<ol class="mt-3 list-decimal space-y-1 pl-5 text-body-sm text-text-secondary"><li>Choose <strong>Add from a repository</strong>.</li><li>Paste the address in the <strong>URL</strong> box.</li><li>Click <strong>Sync</strong>.</li></ol>'
          '<p class="mt-3 rounded-card bg-surface-subtle p-4 text-body-sm text-text-secondary"><strong>A red notice will appear. Relax, it is normal.</strong> Claude shows it for every marketplace that is not from Anthropic. This repository is Elaniin\'s and public, so you can go ahead.</p>'
          f'<div class="mt-4">{code(SRC_URL, "address")}</div>', mock=MOCK_3),
-    step("04", "Install elaniin-style", "Go to <strong>Discover</strong>, find <strong>elaniin-style</strong> and click <strong>Add</strong>. It is saved to your account, so it is also available in chat, Cowork and Claude Code.", mock=MOCK_4),
-    step("05", "Turn on automatic updates", "Back in <strong>Plugins</strong>, find the Elaniin marketplace you added and turn on <strong>Sync automatically</strong>. To refresh by hand at any time click <strong>Check for updates</strong>.", mock=MOCK_5),
-    step("06", "Use it", "In any chat type " + ic("/") + " in the message box, type <strong>elaniin</strong> and pick <strong>elaniin-style</strong>, then write what you want, for example “Create a pitch deck in the Elaniin style”. You can also just describe the task: Claude loads the skill when it matches.", mock=MOCK_6),
+    step("04", "Install elaniin-style", "Open the <strong>Plugins</strong> page and go to the <strong>Yours</strong> tab. Find <strong>Elaniin Style</strong> and click the plugin itself, not Add. It is saved to your account, so it is also available in chat, Cowork and Claude Code.", mock=MOCK_4),
+    step("05", "Check that updates are on", "In the same <strong>Yours</strong> tab, open the Elaniin marketplace you added. Check that the <strong>Update</strong> switch is on. If it is off, turn it on so the plugin always stays up to date.", mock=MOCK_5),
+    step("06", "Use it", "In any chat type " + ic("/") + " in the message box, type <strong>elaniin</strong> and pick <strong>Elaniin Style</strong>, then write what you want, for example “Create a pitch deck in the Elaniin style”. You can also just describe the task: Claude loads the skill when it matches.", mock=MOCK_6),
 ])
 
 team_check = """<div class="mt-8 max-w-[68ch] rounded-card border border-border-default bg-surface-subtle p-6">
   <h3 class="font-display font-medium text-h4">How to know it worked</h3>
-  <p class="mt-2 text-body text-text-secondary">Open <strong>Settings → Plugins</strong>: <strong>elaniin-style</strong> is listed and its <strong>Disable plugin</strong> toggle is on. If you type <code class=\"break-words rounded-tag bg-white px-1 font-mono text-code text-text-primary\">/elaniin</code> in a chat, the skill shows up in the menu.</p>
+  <p class="mt-2 text-body text-text-secondary">Open <strong>Settings → Plugins</strong>: <strong>Elaniin Style</strong> is listed and its <strong>Disable plugin</strong> toggle is on. If you type <code class=\"break-words rounded-tag bg-white px-1 font-mono text-code text-text-primary\">/elaniin</code> in a chat, the skill shows up in the menu.</p>
 </div>
 
 <details class="group mt-4 max-w-[68ch] rounded-card border border-border-default py-1">
@@ -343,7 +346,7 @@ team_check = """<div class="mt-8 max-w-[68ch] rounded-card border border-border-
   <div class="space-y-3 px-6 pb-5 text-body text-text-secondary">
     <p>A plugin you add from <strong>Settings → Plugins</strong> is downloaded to the Code tab the next time you start a session signed in to the same account.</p>
     <p>If it is not there yet, type <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/reload-plugins</code> in the session, or start a new one. You can also click <strong>+</strong> next to the prompt box and choose <strong>Add plugins</strong> or <strong>Manage plugins</strong>.</p>
-    <p>In the Code tab invoke it by typing <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/elaniin-style:elaniin-style</code>. Plugins are available in local and SSH sessions, not in cloud sessions.</p>
+    <p>In the Code tab invoke it by typing <code class=\"break-words rounded-tag bg-surface-subtle px-1 font-mono text-code text-text-primary\">/elaniin:elaniin-style</code>. Plugins are available in local and SSH sessions, not in cloud sessions.</p>
   </div>
 </details>"""
 
@@ -362,8 +365,8 @@ team_prompts = "\n".join(
 faq = [
     ("Do I have to install anything on my computer?", "No. It installs inside Claude, from the Plugins screen. No terminal needed."),
     ("I do not see “Add marketplace”", "On company Claude plans an administrator decides whether people can add their own marketplaces. Ask the person who manages your Claude workspace to allow it or to add Elaniin Style for you."),
-    ("It does not show up when I type /", "Open <strong>Settings → Plugins</strong> and check that <strong>elaniin-style</strong> is on. Then start a new conversation. In the Code tab type /reload-plugins or start a new session."),
-    ("When do improvements arrive?", "On their own if you turned on <strong>Sync automatically</strong>. If not, open Plugins and click <strong>Check for updates</strong>."),
+    ("It does not show up when I type /", "Open <strong>Settings → Plugins</strong> and check that <strong>Elaniin Style</strong> is on. Then start a new conversation. In the Code tab type /reload-plugins or start a new session."),
+    ("When do improvements arrive?", "On their own while the <strong>Update</strong> switch is on in the Elaniin marketplace. If it is off, open <strong>Plugins → Yours</strong> and turn it on."),
     ("I get an error saying “network source differs”", "You had already added Elaniin Style with a different form of address. In Plugins open the Elaniin marketplace, click <strong>Remove</strong>, and add it again pasting the full address from step 03."),
     ("Claude asks me to connect GitHub", "The Elaniin repository is public, so this is not normally needed. If it still asks, check that you pasted the full address starting with <strong>https://github.com/</strong>, and if it persists send the message to a developer."),
     ("My deck or page needs a fine tweak", "Ask Claude in the same conversation. If you need manual editing, hand the HTML file to a developer: it is built with Tailwind for exactly that."),
@@ -397,12 +400,12 @@ INSTALL = f'''# 1) add the marketplace
 claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
 
 # 2) install (user scope by default)
-claude plugin install elaniin-style@elaniin-style-marketplace
+claude plugin install elaniin@elaniin-style-marketplace
 
 # 3) verify
 claude plugin list'''
 INSIDE = '''/plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
-/plugin install elaniin-style@elaniin-style-marketplace
+/plugin install elaniin@elaniin-style-marketplace
 /reload-plugins'''
 PROJECT_JSON = '''{
   "extraKnownMarketplaces": {
@@ -412,17 +415,17 @@ PROJECT_JSON = '''{
     }
   },
   "enabledPlugins": {
-    "elaniin-style@elaniin-style-marketplace": true
+    "elaniin@elaniin-style-marketplace": true
   }
 }'''
 UPDATE = '''# update manually
-claude plugin update elaniin-style@elaniin-style-marketplace
+claude plugin update elaniin@elaniin-style-marketplace
 # or from a session
 /plugin marketplace update elaniin-style-marketplace
 /reload-plugins
 
 # uninstall / remove the marketplace
-claude plugin uninstall elaniin-style@elaniin-style-marketplace
+claude plugin uninstall elaniin@elaniin-style-marketplace
 claude plugin marketplace remove elaniin-style-marketplace'''
 PRIVATE = '''# HTTPS
 gh auth login
@@ -458,7 +461,7 @@ claude plugin marketplace remove elaniin-style-marketplace
 claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
 
 claude plugin list              # is it installed and enabled?
-claude plugin details elaniin-style
+claude plugin details elaniin
 /status                         # which settings apply?'''
 
 
@@ -584,7 +587,7 @@ dev_blocks = "\n".join([
     block(4, "Repository access", p("The repository is <strong>public</strong>: no GitHub account, token or permissions are needed to install or update. If it ever becomes private, Claude Code will use the user's git credentials (<code class=\"font-mono text-code text-text-primary\">gh auth login</code> and <code class=\"font-mono text-code text-text-primary\">gh auth setup-git</code> over HTTPS, or an SSH key in ssh-agent).")),
     block(5, "Update and uninstall", p("The plugin does not define <code class=\"font-mono text-code text-text-primary\">version</code>: every commit in the repo counts as a new version. With <code class=\"font-mono text-code text-text-primary\">autoUpdate</code> on it downloads by itself a few minutes after opening a session; the running session keeps the loaded version until <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or a restart.") + code(UPDATE)),
     block(6, "Use the skill", p("Claude loads it on its own when the request fits. You can also invoke it by its namespaced name:") +
-          code("/elaniin-style:elaniin-style", "claude code") +
+          code("/elaniin:elaniin-style", "claude code") +
           p("Four modes: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> and <strong>site-dev</strong> (the Elaniin 2027 site in Next.js). Ask in Spanish or English; the skill answers in your language. The script that installs <code class=\"font-mono text-code text-text-primary\">motion</code> runs silently only if the project has a <code class=\"font-mono text-code text-text-primary\">package.json</code>.")),
     block(7, "Edit a generated deck or page", p("Deliverables are <strong>a single self-contained HTML file</strong>: they carry Tailwind v4 (<code class=\"font-mono text-code text-text-primary\">@tailwindcss/browser</code> pinned to 4.3.3) and the token block embedded. They do not depend on the plugin staying installed and do not update on their own: they belong to the project. Edit them with Tailwind classes like any HTML.") +
           '<div class="border-b border-border-default">' + tokens_rows + "</div>" +
@@ -696,7 +699,7 @@ def toc_list(extra=""):
 accordions = "\n".join(accordion(k) for k in ORDER)
 
 QUICK = """claude plugin marketplace add https://github.com/aidesign-elaniin/elaniin-style
-claude plugin install elaniin-style@elaniin-style-marketplace"""
+claude plugin install elaniin@elaniin-style-marketplace"""
 
 TASKS = [
     ("Install", "Two commands and you are done.", "dev-1"),
