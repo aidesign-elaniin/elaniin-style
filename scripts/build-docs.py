@@ -274,22 +274,24 @@ MOCK_3 = stage("95%,95%|50%,73%|50%,73%|50%,73%|50%,64%|50%,64%|83%,80%|83%,80%|
     <div class="mock-press ml-auto mt-1.5 w-fit rounded-button bg-elevate-blue px-3 py-1 text-[10px] leading-none text-white" data-on="7" data-off="8">Sync</div>
   </div>""")
 
-MOCK_4 = stage("95%,95%|72%,13%|72%,13%|72%,13%", """
+MOCK_4 = stage("95%,95%|50%,40%|50%,40%|50%,40%", """
   <div class="flex h-full flex-col bg-white">
     <div class="flex items-center gap-3 border-b border-border-default px-3 py-2">
       <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
       <div class="ml-auto flex items-center gap-3">
+        <span class="mock-tab text-[10px] leading-none text-text-secondary" data-on="0">Yours</span>
         <span class="text-[10px] leading-none text-text-muted">Discover</span>
-        <span class="mock-tab text-[10px] leading-none text-text-secondary" data-on="1">Yours</span>
       </div>
     </div>
-    <div class="mock-fade p-3" data-on="1">
-      <div class="flex items-center justify-between rounded-button border border-border-default bg-white p-2">
-        <div class="min-w-0">
-          <p class="font-mono text-[10px] font-medium leading-none text-text-primary">Elaniin Style</p>
-          <div class="mt-1.5 h-1.5 w-24 rounded-full bg-border-default"></div>
+    <div class="p-3">
+      <div class="mock-press" data-on="1" data-off="2">
+        <div class="mock-active flex items-center justify-between rounded-button border border-border-default bg-white p-2" data-on="1">
+          <div class="min-w-0">
+            <p class="font-mono text-[10px] font-medium leading-none text-text-primary">Elaniin Style</p>
+            <div class="mt-1.5 h-1.5 w-24 rounded-full bg-border-default"></div>
+          </div>
+          <span class="text-[12px] leading-none text-text-muted" aria-hidden="true">›</span>
         </div>
-        <span class="text-[12px] leading-none text-text-muted" aria-hidden="true">›</span>
       </div>
     </div>
   </div>""")
