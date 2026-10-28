@@ -35,6 +35,9 @@ Duraciones: `instant 100 · fast 150 · base 200 · slow 300 · reveal 500` ms.
   es transform-only y se detiene con reduced-motion).
 - **Glow motif (`glow-scroll`):** solo diagonales azules que scrollean horizontalmente en el
   CTA final; `transform: translate3d` puro (compositor); estático con reduced-motion.
+- **Rendimiento del glow (v1.69.4):** el desenfoque (`blur`) del grupo de franjas solo se aplica desde
+  1024px (en teléfonos, blur sobre capas en movimiento hacía tartamudear); bajo 768px se omite la
+  tercera tesela de cada capa. Solo anima `transform`, timing lineal.
 - **Deck:** transiciones de slide 200–300ms, sin ken-burns ni partículas.
 - **Dashboard:** contadores animados bien; gráficos animan entrada una vez, no en loop.
 

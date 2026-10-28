@@ -61,7 +61,8 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 | `font-display` | Instrument Sans | `font-display` |
 | `font-text` | DM Sans (body default) | `font-text` |
 | `font-mono` | Geist Mono | `font-mono` / `mono-label` |
-| `text-display-xl` | `clamp(40px, 6.25vw - 8px, 72px)` ls -0.035em | `text-display-xl` |
+| `text-display-xl` | `clamp(38px, 6.25vw - 16px, 64px)` ls -0.035em | `text-display-xl` |
+| `text-tag-sm` | 11px, lh 1 (tag pequeño oficial, con `mono-label`) | `text-tag-sm` |
 | `text-display-lg` | `clamp(36px, 3.906vw + 6px, 56px)` ls -0.03em | `text-display-lg` |
 | `text-h1 … text-h4` | clamp 32→48 · 28→36 · 22→28 · 20→22 | `text-h1` … `text-h4` |
 | `text-lead` | 18→20 | `text-lead` |

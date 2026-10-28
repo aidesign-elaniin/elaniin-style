@@ -1,6 +1,6 @@
 # Tokens / Tokens
 
-> Fuente única de verdad: `DESIGN.md` v1.51.2 del sitio Elaniin 2027.
+> Fuente única de verdad: `DESIGN.md` v1.86.2 del sitio Elaniin 2027.
 > Copia para proyectos: `templates/tokens.css`.
 
 ## Color
@@ -46,7 +46,7 @@
 | text | párrafos, UI, forms | DM Sans (400) |
 | mono | tags, labels de dato, code | Geist Mono (400), feature `zero` 1 |
 
-Escala fluida (desktop → mobile): `display-xl 72→40` · `display-lg 56→36` · `h1 48→32` · `h2 36→28` · `h3 28→22` · `h4 22→20` · `lead 20→18` · `body-lg 18→17` · `body 16` · `body-sm 14` · `caption 13` · `label 13 mono uppercase +0.05em` · `code 13`.
+Escala fluida (desktop → mobile): `display-xl 64→38` (v1.70.6: the hero headline fits at most 4 lines and the lead at most 2) · `tag-sm 11` (the small tag, mono) · `display-lg 56→36` · `h1 48→32` · `h2 36→28` · `h3 28→22` · `h4 22→20` · `lead 20→18` · `body-lg 18→17` · `body 16` · `body-sm 14` · `caption 13` · `label 13 mono uppercase +0.05em` · `code 13`.
 
 Measure: **body 68ch · lead 56ch · heading 20ch**.
 
@@ -64,3 +64,20 @@ Measure: **body 68ch · lead 56ch · heading 20ch**.
 
 ## Sin gradientes
 **No hay gradientes decorativos.** Ni barras escalonadas de azul (el antiguo “stepped blue ramp” se eliminó), ni fondos degradados, ni blobs. Solo se permiten los resplandores radiales sutiles del puntero (`spotlight`, `card-glow`).
+
+## Botones (DESIGN.md `components.button`)
+
+Alturas `sm 32 · md 40 · lg 48`, radio `button` (6), `width: fit-content` (a ancho completo solo en
+las pilas de hero/CTA bajo 768px). Un `primary` por región de vista.
+
+| Variante | Fondo / texto | Hover · active |
+|---|---|---|
+| `primary` | elevate-blue / blanco | `blue-600` · `blue-700` |
+| `dark` (alternativa de igual peso; elegir UNA para el nav y el sitio, nunca ambas en el mismo grupo) | excellence-blue / blanco | `blue-800` · `#010F20` |
+| `secondary` | blanco + borde `border-strong` / excellence-blue | `surface-subtle` · `border-default` |
+| `tertiary` | transparente / `text-link` + flecha | `text-link-hover`, subrayado |
+| `on-dark` primary | blanco / excellence-blue | `inspire-grey` |
+| `on-dark` secondary | transparente + borde `on-dark-strong` / blanco | blanco 8 % |
+| `disabled` | `border-default` / `text-disabled`, `not-allowed` | sin hover |
+
+El CTA del nav es un `primary md` (o `dark md`), alineado a la derecha, sin buscador ni login.

@@ -20,11 +20,11 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 
 # Elaniin Style
 
-> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.51.2).
+> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.86.2).
 > Use it to design and build decks, dashboards & reports, websites & landings, and to
 > develop the Elaniin 2027 site. Always work in the user's language (EN or ES).
 >
-> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.51.2).
+> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.86.2).
 > Úsala para diseñar y construir decks, dashboards & reports, websites & landings, y
 > para desarrollar el sitio Elaniin 2027. Trabaja siempre en el idioma del usuario (EN o ES).
 
@@ -183,7 +183,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    The deck controls (counter, dots, "Full") sit in a bottom bar of their own, outside the canvas, so they stay readable on white slides.
 18. **Isometric resources follow the approved bar (non-negotiable).** A hero or section whose content
    is a structure (a stack, a flow, an architecture) may use an animated isometric resource, never as
-   decoration and never inside cards or lists. Use the kit (`templates/iso-stack.js` for HTML,
+   decoration and never inside cards or lists (v1.86: it may also be drawn in the `dark` look on a dark surface, still no frost there). Use the kit (`templates/iso-stack.js` for HTML,
    `templates/iso/` for React/Next): true isometric at 30°, inline SVG, frosted-glass slabs (14px frost),
    the defined color of each entity, fine textures, labels with generic lucide icons (never third-party
    brand logos), one 12s clock that runs only on screen, `iso-levitate` over a small shadow, reduced

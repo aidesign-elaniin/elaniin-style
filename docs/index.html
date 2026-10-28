@@ -28,7 +28,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style type="text/tailwindcss">
 /*
-  Elaniin tokens — single source of truth (DESIGN.md v1.51.2 · Tailwind v4).
+  Elaniin tokens — single source of truth (DESIGN.md v1.86.2 · Tailwind v4).
 
   CONTRACT — Tailwind-first API:
     1. Every design value lives in @theme (or in :root when it is a layout/duration
@@ -136,9 +136,11 @@
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* ---------- typography: scale (fluid between mobile and desktop values) ---------- */
-  --text-display-xl: clamp(40px, 6.25vw - 8px, 72px);
+  --text-display-xl: clamp(38px, 6.25vw - 16px, 64px);
   --text-display-xl--line-height: 1;
   --text-display-xl--letter-spacing: -0.035em;
+  --text-tag-sm: 11px; /* the small tag (official, DESIGN.md v1.64): mono, with mono-label */
+  --text-tag-sm--line-height: 1;
   --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
   --text-display-lg--line-height: 1.04;
   --text-display-lg--letter-spacing: -0.03em;
@@ -540,6 +542,7 @@
 @theme {
   --animate-iso-levitate: iso-levitate 3s var(--ease-standard) infinite alternate;
   --animate-iso-float: iso-float 2s var(--ease-standard) infinite alternate;
+  --animate-accent-flow: accent-flow 5s var(--ease-in-out, ease-in-out) infinite alternate;
   @keyframes iso-levitate {
     from { transform: translateY(0); }
     to { transform: translateY(-6px); }
@@ -548,11 +551,34 @@
     from { transform: translateY(0); }
     to { transform: translateY(-4px); }
   }
+  @keyframes accent-flow {
+    from { background-position: var(--af-from, 0%) 0%; }
+    to { background-position: var(--af-to, 65%) 0%; }
+  }
 }
 @utility iso-levitate {
   animation: var(--animate-iso-levitate);
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
+/* accent-flow: the hero accent words (DESIGN.md components.hero.heading.accent, v1.76): a gradient of the blue ramp that
+   flows through the word, Elevate Blue to blue-400 and back. Offset the next word with --af-from/--af-to (+35%) and
+   --af-delay (+0.5s) so two words are never the same tone. Resting state (reduced motion): plain Elevate Blue. */
+@utility accent-flow {
+  color: var(--color-elevate-blue);
+  background-image: linear-gradient(100deg, var(--color-elevate-blue) 0%, var(--color-blue-400) 20%, var(--color-elevate-blue) 40%, var(--color-blue-400) 60%, var(--color-elevate-blue) 80%, var(--color-blue-400) 100%);
+  background-size: 300% 100%;
+  background-position: var(--af-from, 0%) 0%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: var(--animate-accent-flow);
+  animation-delay: var(--af-delay, 0s);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
   }
 }
 @utility iso-float {

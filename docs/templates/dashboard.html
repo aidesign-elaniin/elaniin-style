@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style type="text/tailwindcss">
 /*
-  Elaniin tokens — single source of truth (DESIGN.md v1.51.2 · Tailwind v4).
+  Elaniin tokens — single source of truth (DESIGN.md v1.86.2 · Tailwind v4).
 
   CONTRACT — Tailwind-first API:
     1. Every design value lives in @theme (or in :root when it is a layout/duration
@@ -120,9 +120,11 @@
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* ---------- typography: scale (fluid between mobile and desktop values) ---------- */
-  --text-display-xl: clamp(40px, 6.25vw - 8px, 72px);
+  --text-display-xl: clamp(38px, 6.25vw - 16px, 64px);
   --text-display-xl--line-height: 1;
   --text-display-xl--letter-spacing: -0.035em;
+  --text-tag-sm: 11px; /* the small tag (official, DESIGN.md v1.64): mono, with mono-label */
+  --text-tag-sm--line-height: 1;
   --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
   --text-display-lg--line-height: 1.04;
   --text-display-lg--letter-spacing: -0.03em;

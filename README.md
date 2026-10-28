@@ -101,7 +101,7 @@ skills/elaniin-style/
 - **Textura firma:** `module-field` (cuadritos que se encienden con el mouse) en el hero y el CTA de toda landing. Pídela como "textura interactiva" o "module field".
 - **Solo tokens:** colores, tipos, radios, sombras y duraciones salen de `@theme`.
 
-Fuente de verdad / Source of truth: `DESIGN.md` v1.51.2 (Elaniin 2027 site).
+Fuente de verdad / Source of truth: `DESIGN.md` v1.86.2 (Elaniin 2027 site).
 
 ## License
 

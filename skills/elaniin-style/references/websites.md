@@ -16,7 +16,11 @@ dominante por pieza.
 2. Hero             — dos variantes oficiales. SPLIT: texto a la izquierda y recurso isométrico a la
                       derecha desde 1024 px; por debajo todo centrado (lead máx. 40ch, h1 máx. 12ch);
                       ver `references/isometric.md`. CENTRADO: todo centrado, sin recurso visual.
-                      Blanco. Display-xl (max ~20ch), lead (56ch), 1 CTA primario + 1 secundario.
+                      Blanco. Display-xl 64px (máx. 4 líneas en cualquier ancho; split: 15ch), lead (56ch, máx. 2 líneas).
+                      **CTAs (v1.77):** primario corto de ventas (`Let's talk`, con flecha, lleva a contacto) +
+                      secundario blanco con borde (`How we work`); en fila con gap 12px, apilados y a ancho
+                      completo bajo 768px. Acento del titular: `accent-flow` (1–2 palabras, degradado azul
+                      que fluye; en reduced-motion queda en elevate-blue plano).
                       Fondo: **module field** (`module-field`, textura firma, obligatoria).
                       Opcional: producto/UI shot con sombra `product`. Nada de fondo azul.
 3. Social proof     — grey o blanco, hairline top. Logos en mono/gris, no multicolor.

@@ -6,7 +6,7 @@ import { type Origin, planeTransform, pointsAttr } from "./iso";
   fine texture on the top face that carries the identity of the nav card: software = module squares, AI = square grid,
   cloud = horizontal layer lines. `plate` is the bare glass of the base: no texture.
 */
-export type SlabLook = "software" | "ai" | "cloud" | "plate";
+export type SlabLook = "software" | "ai" | "cloud" | "brand" | "plate" | "dark";
 
 type Faces = { top: string; left: string; right: string };
 
@@ -19,8 +19,13 @@ const FACES: Record<SlabLook, Faces> = {
     left: "var(--color-border-default)",
     right: "var(--color-border-strong)",
   },
+  // Elaniin itself in the route scenes: the blue ramp, never Elevate Blue (a solid fill) and never Excellence Blue (that is AI).
+  brand: { top: "var(--color-blue-200)", left: "var(--color-blue-300)", right: "var(--color-blue-400)" },
   plate: { top: "var(--color-white)", left: "var(--color-blue-tint-50)", right: "var(--color-blue-100)" },
+  // For dark surfaces (the engagement scenes): clear glass, white at a different strength on each face.
+  dark: { top: "var(--color-white)", left: "var(--color-white)", right: "var(--color-white)" },
 };
+const DARK_OPACITY = { top: 0.12, left: 0.07, right: 0.18 };
 
 const GLASS = { opacity: 0.78, aiOpacity: 0.82, edge: "var(--color-excellence-blue)" };
 
@@ -35,7 +40,7 @@ export const topFace = ({ x, y, z, w, d, h }: SlabBox) => [
 ];
 
 /** Texture on the top face, drawn on the horizontal plane. */
-function TopTexture({ look, box, o }: { look: Exclude<SlabLook, "plate">; box: SlabBox; o: Origin }) {
+function TopTexture({ look, box, o }: { look: Exclude<SlabLook, "plate" | "dark">; box: SlabBox; o: Origin }) {
   const { x, y, w, d, z, h } = box;
   const items: React.ReactNode[] = [];
   const plane = planeTransform(o, z + h);
@@ -49,6 +54,20 @@ function TopTexture({ look, box, o }: { look: Exclude<SlabLook, "plate">; box: S
     }
     return (
       <g transform={plane} style={{ fill: "var(--color-blue-400)", opacity: 0.6 }}>
+        {items}
+      </g>
+    );
+  }
+
+  if (look === "brand") {
+    // The same module squares as software, in white on the darker blue.
+    for (let i = 12; i <= w - 12; i += 12) {
+      for (let j = 12; j <= d - 12; j += 12) {
+        items.push(<rect key={`${i}-${j}`} x={x + i - 1.5} y={y + j - 1.5} width={3} height={3} rx={0.5} />);
+      }
+    }
+    return (
+      <g transform={plane} style={{ fill: "var(--color-white)", opacity: 0.7 }}>
         {items}
       </g>
     );
@@ -74,10 +93,10 @@ function TopTexture({ look, box, o }: { look: Exclude<SlabLook, "plate">; box: S
   );
 }
 
-function SlabBase({ look, box, o }: { look: SlabLook; box: SlabBox; o: Origin }) {
+function SlabBase({ look, box, o, texture = true }: { look: SlabLook; box: SlabBox; o: Origin; texture?: boolean }) {
   const { x, y, z, w, d, h } = box;
   // AI is Excellence Blue itself, so its lines are the on-dark hairline; every other slab is outlined in Excellence Blue.
-  const dark = look === "ai";
+  const dark = look === "ai" || look === "dark";
   const edge = {
     stroke: dark ? "var(--color-border-on-dark-strong)" : GLASS.edge,
     strokeWidth: 1,
@@ -85,7 +104,9 @@ function SlabBase({ look, box, o }: { look: SlabLook; box: SlabBox; o: Origin })
     strokeOpacity: dark ? 1 : 0.9,
   };
   const faces = FACES[look];
-  const face = (fill: string) => ({ fill, fillOpacity: dark ? GLASS.aiOpacity : GLASS.opacity, ...edge });
+  const opacity = (name: keyof typeof DARK_OPACITY) =>
+    look === "dark" ? DARK_OPACITY[name] : dark ? GLASS.aiOpacity : GLASS.opacity;
+  const face = (fill: string, name: keyof typeof DARK_OPACITY) => ({ fill, fillOpacity: opacity(name), ...edge });
 
   const left = [
     { x, y: y + d, z },
@@ -102,10 +123,10 @@ function SlabBase({ look, box, o }: { look: SlabLook; box: SlabBox; o: Origin })
 
   return (
     <g>
-      <polygon points={pointsAttr(left, o)} style={face(faces.left)} />
-      <polygon points={pointsAttr(right, o)} style={face(faces.right)} />
-      <polygon points={pointsAttr(topFace(box), o)} style={face(faces.top)} />
-      {look !== "plate" && <TopTexture look={look} box={box} o={o} />}
+      <polygon points={pointsAttr(left, o)} style={face(faces.left, "left")} />
+      <polygon points={pointsAttr(right, o)} style={face(faces.right, "right")} />
+      <polygon points={pointsAttr(topFace(box), o)} style={face(faces.top, "top")} />
+      {texture && look !== "plate" && look !== "dark" && <TopTexture look={look} box={box} o={o} />}
     </g>
   );
 }

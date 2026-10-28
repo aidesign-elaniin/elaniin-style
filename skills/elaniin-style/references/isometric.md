@@ -150,13 +150,17 @@ Necesita `lucide-react`, `tokens.css` (`rise`, `iso-levitate`, `iso-float`) y co
 
 `project(p3, origin)` · `pointsAttr(points3, origin)` · `planeTransform(origin, z)` ·
 `pointAt(polyline, progress)` · `clamp01` · `easeInOut` · `slabSvg(look, box, origin)` (`look`:
-`software | ai | cloud | plate`) · `floorSvg(origin, x, y, w, d, z)` · `topFace(box)` ·
-`mountStack(host, labels)`. En React: `Slab`, `Floor`, `useClock(periodMs)`.
+`software | ai | cloud | brand | plate | dark`) · `floorSvg(origin, x, y, w, d, z)` · `topFace(box)` ·
+`mountStack(host, labels)`. En React: `Slab`, `Floor`, `IsoPill` (+ `pillLength`; `check` añade la marca verde), `IsoPulse` + `HaloFilter`, `IsoLogotipo` (`tone` blue|black, `face` right|top), `SCENE_W` (418) y `useClock(periodMs)`.
+
+**Looks extra (v1.55–v1.60, solo en el kit React por ahora):** `brand` = Elaniin mismo (rampa azul 200/300/400 con módulos blancos; lleva el logotipo en Elaniin Black, 6.4:1; nunca Elevate Blue ni Excellence Blue, que es de AI). `dark` = vidrio claro para superficies oscuras (caras blancas al 12 % top, 7 % izquierda, 18 % derecha, borde `border-on-dark-strong`, sin textura, sin frost ni diamante de sombra; la pill se queda blanca; único acento Elevate Blue).
 
 ## 8 · Lo que cambia entre recursos
 
 La **estructura** depende de la información que comunica. Lo que **no cambia** es la calidad y las
 reglas: la misma proyección, vidrio, frost, textura, etiquetas, levitación, sombra y movimiento.
+
+**Reglas añadidas (v1.71):** las escenas de una misma familia comparten el ancho del viewBox (`SCENE_W` 418) para que pills y texto tengan la misma escala; el lienzo de escenas pequeñas es 448×336 (viewBox `-24 -18 448 336`); el frost solo se usa donde el vidrio se superpone a algo que se vería a través (si no, cuesta blur sin ganar nada); las escenas pequeñas se limitan a 320px bajo 1024px; el frost nunca va sobre texto.
 
 ## 9 · Receta para un recurso nuevo
 

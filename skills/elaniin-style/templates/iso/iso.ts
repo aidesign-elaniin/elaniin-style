@@ -2,6 +2,9 @@
   Isometric kit (DESIGN.md motifs.isometric). One projection for the whole site: true isometric, axes at 30deg.
   World axes: x runs right and down, y runs left and down, z runs up. All numbers are SVG user units.
 */
+/** Width of the viewBox of the scenes of one family: same scale on every card, so pills and text match. */
+export const SCENE_W = 418;
+
 export const COS30 = Math.cos(Math.PI / 6);
 
 export type Pt3 = { x: number; y: number; z: number };

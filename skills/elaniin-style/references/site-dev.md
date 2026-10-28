@@ -1,7 +1,7 @@
 # Site development / Desarrollo del sitio
 
 > Desarrollo del sitio **Elaniin 2027** (Next.js App Router). Fuente de verdad del estilo:
-> `DESIGN.md` v1.51.2 en el repo del sitio. Esta skill replica sus tokens y patrones.
+> `DESIGN.md` v1.86.2 en el repo del sitio. Esta skill replica sus tokens y patrones.
 
 ## Stack
 
