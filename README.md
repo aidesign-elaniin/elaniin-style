@@ -107,11 +107,13 @@ Fuente de verdad / Source of truth: `DESIGN.md` v1.86.2 (Elaniin 2027 site).
 
 ## License
 
-MIT
+MIT for the code, documentation and templates (see `LICENSE`).
+
+**Exception:** the Elaniin logotipo files and favicon in `skills/elaniin-style/assets/` (and the copies of those marks inside the templates, the starter and `docs/`) are brand assets with **all rights reserved**, not MIT (see `skills/elaniin-style/assets/LICENSE`).
 
 ## Decisiones abiertas
 
-- **Logotipos y licencia.** El repositorio es público y MIT, e incluye los logotipos oficiales de Elaniin. La licencia MIT permite reutilizar esos archivos. Hay que confirmar con marca si eso es lo que se quiere (alternativa: licencia propia para `assets/` o repositorio privado).
+- **Logotipos y licencia.** Resuelto: MIT para el código, la documentación y las plantillas; derechos reservados de Elaniin para los logotipos y el favicon (`skills/elaniin-style/assets/LICENSE`). Falta confirmar con marca el texto de permisos: hoy el archivo no concede nada fuera de un permiso escrito de Elaniin, incluido el uso de los logos en entregables generados por el plugin.
 - **Red.** Los HTML autónomos cargan Google Fonts y el navegador de Tailwind por CDN: sin red la tipografía cae a Helvetica/Arial y los estilos no se compilan. El starter de Next.js no tiene ese problema (`next/font` y Tailwind se resuelven en el build).
 - **Verificación visual.** `scripts/check-system.py` mide el contraste de los pares de color documentados y que toda utility animada respete `prefers-reduced-motion`. El orden de foco con teclado y el movimiento fuera de `tokens.css` siguen dependiendo de revisión humana.
 - **Dos implementaciones de la barra.** `templates/nav-theme.js` (vanilla) y `nav.tsx` del starter (React) repiten el mismo algoritmo; `build-docs.py` comprueba que la copia en `landing.html` coincida con `nav-theme.js`, pero no que React y vanilla coincidan.

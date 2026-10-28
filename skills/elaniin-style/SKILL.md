@@ -10,7 +10,7 @@ description: >
   Use when the user asks for an "Elaniin" deck, dashboard, report, landing, website,
   a complete site / "sitio completo" / all its pages / sitemap / site architecture,
   or to build/change the Elaniin site — or invokes /elaniin:elaniin-style.
-license: MIT
+license: SEE LICENSE IN LICENSE
 compatibility:
   requires_any_of:
     - Claude Code
