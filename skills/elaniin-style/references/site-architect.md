@@ -95,7 +95,7 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 2. `scripts/check.mjs` lee ese manifest (**ninguna lista ni número de páginas escrito a mano**) y falla si: `site-map` ≠ `sitemap.xml` ≠ páginas exportadas; falta o sobra un `<h1>`; hay `href="#"`; falta el logotipo o el `lang`; hay enlaces internos rotos; `content` no coincide con las marcas `data-placeholder` en pantalla; hay `-mx-`, cualquier valor arbitrario (`max-w-[18ch]`, `gap-[…]`, `grid-cols-[…]`; solo se admiten las variantes `data-[…]`/`aria-[…]`), un `--section-y` en línea, `lift`/`card-glow` junto a `grid-hairline`, gradientes o imports con `@/`. Las medidas de línea son tokens: `max-w-body` 68ch, `max-w-lead` 56ch, `max-w-narrow` 40ch, `max-w-heading` 20ch, `max-w-hero` 18ch, `max-w-cta` 34ch.
 3. `npm run build` y `npm run check` en verde.
 4. **Prueba negativa:** cambia un `content` en `out/site-manifest.json` y confirma que `check` falla (exit 1); restaura y confirma que pasa.
-5. **Overflow en TODAS las páginas** a 375 y 768 px: `cp scripts/overflow.html out/`, sirve `out/` y abre `/overflow.html` (mide con iframes todas las rutas del manifest; título `OVERFLOW OK n`).
+5. **Overflow en TODAS las páginas** a 375 y 768 px: `cp scripts/overflow.html out/`, sirve `out/` y abre `/overflow.html` (mide con iframes todas las rutas del manifest; título `OVERFLOW OK n`). Alternativa sin navegador manual: `python3 <plugin>/scripts/browser-check.py out` (overflow a 375/768/1280, anillo de foco y animaciones infinitas con reduced-motion).
 6. Revisión visual por tipo de página a 1280 / 768 / 375 y checklist de `SKILL.md` §6.
 
 ## 8 · Entrega

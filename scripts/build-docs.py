@@ -1,49 +1,12 @@
 import html, pathlib, re
 
-# single source: templates/tokens.css. Everything that copies it is REGENERATED here, then guarded.
-_TD = str(pathlib.Path(__file__).resolve().parent.parent / "skills/elaniin-style/templates") + "/"
-
-
-def _blocks(text, kind):
-    """Top-level `@utility name { ... }` blocks (they end with a closing brace at column 0)."""
-    return {m.group(1): m.group(0) for m in re.finditer(r"^@" + kind + r" ([\w-]+) \{\n.*?^\}\n", text, re.S | re.M)}
-
-
-def _theme(text):
-    i = text.index("@theme static {")
-    return text[i:].split("\n}\n", 1)[0] + "\n}\n"
-
-
-def sync_tokens():
-    src = open(_TD + "tokens.css").read()
-    src_utils, src_theme = _blocks(src, "utility"), _theme(src)
-    changed = []
-    # the starter keeps an exact copy
-    dst = _TD + "site-starter/src/styles/tokens.css"
-    if open(dst).read() != src:
-        open(dst, "w").write(src)
-        changed.append("site-starter/src/styles/tokens.css")
-    # standalone templates embed the @theme block and the utilities they share with tokens.css
-    for name in ("landing", "deck", "dashboard"):
-        path = _TD + name + ".html"
-        text = open(path).read()
-        new = text.replace(_theme(text), src_theme, 1)
-        for uname, block in _blocks(new, "utility").items():
-            if uname in src_utils and block != src_utils[uname]:
-                new = new.replace(block, src_utils[uname], 1)
-        if new != text:
-            open(path, "w").write(new)
-            changed.append(name + ".html")
-    if changed:
-        print("synced from tokens.css:", ", ".join(changed))
-
-
-sync_tokens()
+# single source: templates/tokens.css. sync-tokens.py regenerates every copy; check-system.py guards contrast and motion.
 import subprocess, sys
-if subprocess.run([sys.executable, str(pathlib.Path(__file__).resolve().parent / "check-system.py")], stdout=subprocess.DEVNULL).returncode:
-    raise SystemExit("check-system.py failed: run it to see which contrast pair or animated utility broke the rules")
-assert open(_TD + "nav-theme.js").read().strip() in open(_TD + "landing.html").read(), "landing.html: inline nav-theme differs from nav-theme.js"
-assert open(_TD + "iso-stack.js").read().strip() in open(_TD + "landing.html").read(), "landing.html: inline iso-stack differs from iso-stack.js"
+_TD = str(pathlib.Path(__file__).resolve().parent.parent / "skills/elaniin-style/templates") + "/"
+_SC = pathlib.Path(__file__).resolve().parent
+for _script, _msg in (("sync-tokens.py", "an inline script in landing.html differs from its template"), ("check-system.py", "a contrast pair or an animated utility broke the rules")):
+    if subprocess.run([sys.executable, str(_SC / _script)]).returncode:
+        raise SystemExit(f"{_script} failed: {_msg}. Run it to see the details.")
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent  # repo root
 src = (ROOT / "skills/elaniin-style/templates/landing.html").read_text().split("\n")
@@ -832,7 +795,9 @@ skills/elaniin-style/
                        module-field.js / .tsx, drawer.js, nav-theme.js,
                        iso-stack.js + iso/ (isometric resource),
                        site-starter/ (Next.js static project for complete sites)
-docs/ejemplos/         nova-logistica: 30-page demo master project''', "tree")),
+docs/ejemplos/         nova-logistica: 30-page demo master project
+scripts/               verify.sh, sync-tokens.py, check-system.py, browser-check.py,
+                       check-design-source.py (one command checks tokens, contrast, motion, nav, docs)''', "tree")),
 ])
 
 

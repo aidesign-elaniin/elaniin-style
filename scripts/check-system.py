@@ -81,6 +81,27 @@ for m in re.finditer(r"^@utility ([\w-]+) \{\n(.*?)^\}\n", CSS, re.S | re.M):
         motion_bad.append(name)
 print("reduced motion:", "ok, every animated utility has an override" if not motion_bad else "MISSING in " + ", ".join(motion_bad))
 
-if bad or motion_bad:
+
+# the nav-bar theme exists twice (vanilla for standalone HTML, React for the starter): both must keep the same algorithm
+print()
+vanilla = (ROOT / "skills/elaniin-style/templates/nav-theme.js").read_text()
+react = (ROOT / "skills/elaniin-style/templates/site-starter/src/components/layout/nav.tsx").read_text()
+MARKERS = [
+    (r"\[data-nav-theme\]", "selects the sections that declare a theme"),
+    (r"navTheme\s*===\s*['\"]black['\"]", "black tone for data-nav-theme=black"),
+    (r"offsetHeight\s*(\?\?[^)]*\))?\s*/\s*2", "uses the middle of the bar"),
+    (r"r\.top\s*<=\s*mid\s*&&\s*r\.bottom\s*>\s*mid", "the section crossing the middle wins"),
+    (r"requestAnimationFrame", "rAF-throttled"),
+    (r"['\"]scroll['\"]", "listens to scroll"),
+    (r"['\"]resize['\"]", "listens to resize"),
+]
+parity_bad = []
+for pat, what in MARKERS:
+    for name, src in (("nav-theme.js", vanilla), ("nav.tsx", react)):
+        if not re.search(pat, src):
+            parity_bad.append(f"{name}: {what}")
+print("nav parity:", "ok, vanilla and React share the same algorithm markers" if not parity_bad else "MISSING " + "; ".join(parity_bad))
+
+if bad or motion_bad or parity_bad:
     sys.exit(1)
 print("\ncheck-system: ok")

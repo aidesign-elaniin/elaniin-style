@@ -111,9 +111,25 @@ MIT for the code, documentation and templates (see `LICENSE`).
 
 **Exception:** the Elaniin logotipo files and favicon in `skills/elaniin-style/assets/` (and the copies of those marks inside the templates, the starter and `docs/`) are brand assets with **all rights reserved**, not MIT (see `skills/elaniin-style/assets/LICENSE`).
 
+## Cómo se verifica
+
+```bash
+scripts/verify.sh                    # estático: tokens, contraste, reduced-motion, paridad de la barra, docs, plugin
+scripts/verify.sh docs/templates     # + navegador sobre una carpeta (o el out/ de un sitio)
+```
+
+| Script | Qué hace |
+|---|---|
+| `scripts/sync-tokens.py` | `templates/tokens.css` es la única fuente. Regenera la copia del starter y el bloque `@theme` y las utilities compartidas de las tres plantillas. `--check` no escribe: sale con 1 y lista lo que se desfasó. También comprueba que las copias en línea de `nav-theme.js` e `iso-stack.js` dentro de `landing.html` coincidan. `build-docs.py` lo corre en cada ejecución. |
+| `scripts/check-system.py` | 14 pares de color con su contraste mínimo WCAG, que toda utility animada tenga `prefers-reduced-motion`, y que la barra vanilla (`nav-theme.js`) y la de React (`nav.tsx`) conserven los mismos marcadores del algoritmo. |
+| `scripts/browser-check.py <carpeta>` | Chrome headless carga cada página en un iframe a 375/768/1280 px y mide: overflow horizontal, anillo de foco en todo lo enfocable, y que no quede ninguna animación infinita con reduced-motion. Verifica antes que los tokens estén cargados. Comprobado con controles negativos. |
+| `scripts/check-design-source.py` | Dice si el repositorio de referencia se movió desde el commit fijado en `references/source-of-truth.md` (informativo; `--strict` sale con 1). |
+| `site-starter/scripts/check.mjs` | La compuerta de un sitio generado (sitemap, páginas, h1, enlaces, marcas de relleno, reglas del código). |
+
+Lo que sigue dependiendo de revisión humana: el orden de foco con teclado, el contraste de píxeles ya renderizados y el comportamiento en dispositivos reales.
+
 ## Decisiones abiertas
 
-- **Logotipos y licencia.** Resuelto: MIT para el código, la documentación y las plantillas; derechos reservados de Elaniin para los logotipos y el favicon (`skills/elaniin-style/assets/LICENSE`). Falta confirmar con marca el texto de permisos: hoy el archivo no concede nada fuera de un permiso escrito de Elaniin, incluido el uso de los logos en entregables generados por el plugin.
-- **Red.** Los HTML autónomos cargan Google Fonts y el navegador de Tailwind por CDN: sin red la tipografía cae a Helvetica/Arial y los estilos no se compilan. El starter de Next.js no tiene ese problema (`next/font` y Tailwind se resuelven en el build).
-- **Verificación visual.** `scripts/check-system.py` mide el contraste de los pares de color documentados y que toda utility animada respete `prefers-reduced-motion`. El orden de foco con teclado y el movimiento fuera de `tokens.css` siguen dependiendo de revisión humana.
-- **Dos implementaciones de la barra.** `templates/nav-theme.js` (vanilla) y `nav.tsx` del starter (React) repiten el mismo algoritmo; `build-docs.py` comprueba que la copia en `landing.html` coincida con `nav-theme.js`, pero no que React y vanilla coincidan.
+- **Red.** Los HTML autónomos cargan Google Fonts y el navegador de Tailwind por CDN: sin red la tipografía cae a Helvetica/Arial y los estilos no se compilan (`browser-check.py` lo detecta y avisa). El starter de Next.js no tiene ese problema (`next/font` y Tailwind se resuelven en el build). Para trabajar sin red con una plantilla, llévala a Vite o Next (guía en la landing, sección de devs).
+- **Referencia en v1.87.2.** El plugin implementa v1.86.2; la referencia ya trae los íconos oficiales de software, AI y cloud. Pendiente hasta que su validación se cierre; ver `references/source-of-truth.md`.
+- **Permisos de los logotipos.** `skills/elaniin-style/assets/LICENSE` reserva todos los derechos; falta que marca confirme si los entregables generados por el plugin pueden llevar el logotipo y con qué texto.
