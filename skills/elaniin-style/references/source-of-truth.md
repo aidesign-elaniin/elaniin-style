@@ -7,15 +7,17 @@ La skill replica sus tokens, componentes y reglas; si algo aquí contradice a es
 |---|---|
 | Repositorio | `https://github.com/roger-elaniin/elaniin-2027-website` |
 | Archivo | `DESIGN.md` (y `src/app/globals.css`, `src/components/ui/iso/`) |
-| Versión implementada por el plugin | **v1.86.2** |
-| Commit contra el que se sincronizó | `65653e9` (28 oct 2026) |
+| Versión implementada por el plugin | **v1.87.2** |
+| Commit contra el que se sincronizó | `5fa8a6c` (28 oct 2026) |
 
-## Pendiente de adoptar
+## Adoptado en v1.87
 
-La referencia ya está en **v1.87.2** (commit `5fa8a6c`): trae tres **íconos oficiales de Elaniin** (software, AI y cloud) que
-sustituyen a los de Lucide en las soluciones y en las losas del recurso isométrico del hero. Su propio `DESIGN.md` lo marca
-como "to be validated applied", así que el plugin sigue usando los íconos genéricos de Lucide hasta que se valide. Los SVG
-fuente están en `public/assets/icons/` del repositorio del sitio (son activos de marca: irían en `assets/`, bajo su licencia reservada).
+Los **tres íconos oficiales de Elaniin** (software, AI y cloud) sustituyen a los de Lucide en las losas del recurso isométrico del
+hero. Son los íconos de las **soluciones de Elaniin** y del detalle de AI; todo lo demás (flechas, cerrar, personas, etc.) sigue en Lucide.
+Los SVG fuente están en `assets/icons/` (activos de marca, bajo su licencia reservada). Se dibujan al 90 % alrededor del centro de la
+celda de 24 con el trazo dividido por 0.9, para conservar el peso de línea del sistema (React: `templates/iso/elaniin-icons.tsx`; HTML:
+el mapa `ICONS` de `templates/iso-stack.js`). El `DESIGN.md` de la referencia aún los marca "to be validated applied": si la validación
+cambia algo, se ajusta aquí.
 
 ## Cómo actualizar
 

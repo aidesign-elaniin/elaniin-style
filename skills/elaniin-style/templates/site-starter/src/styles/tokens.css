@@ -1,5 +1,5 @@
 /*
-  Elaniin tokens — single source of truth (DESIGN.md v1.86.2 · Tailwind v4).
+  Elaniin tokens — single source of truth (DESIGN.md v1.87.2 · Tailwind v4).
 
   CONTRACT — Tailwind-first API:
     1. Every design value lives in @theme (or in :root when it is a layout/duration

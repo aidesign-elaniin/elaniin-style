@@ -103,7 +103,7 @@ skills/elaniin-style/
 - **Textura firma:** `module-field` (cuadritos que se encienden con el mouse) en el hero y el CTA de toda landing. Pídela como "textura interactiva" o "module field".
 - **Solo tokens:** colores, tipos, radios, sombras y duraciones salen de `@theme`.
 
-Fuente de verdad / Source of truth: `DESIGN.md` v1.86.2 (Elaniin 2027 site).
+Fuente de verdad / Source of truth: `DESIGN.md` v1.87.2 (Elaniin 2027 site).
 
 ## License
 
@@ -131,5 +131,5 @@ Lo que sigue dependiendo de revisión humana: el orden de foco con teclado, el c
 ## Decisiones abiertas
 
 - **Red.** Los HTML autónomos cargan Google Fonts y el navegador de Tailwind por CDN: sin red la tipografía cae a Helvetica/Arial y los estilos no se compilan (`browser-check.py` lo detecta y avisa). El starter de Next.js no tiene ese problema (`next/font` y Tailwind se resuelven en el build). Para trabajar sin red con una plantilla, llévala a Vite o Next (guía en la landing, sección de devs).
-- **Referencia en v1.87.2.** El plugin implementa v1.86.2; la referencia ya trae los íconos oficiales de software, AI y cloud. Pendiente hasta que su validación se cierre; ver `references/source-of-truth.md`.
+- **Referencia.** El plugin implementa v1.87.2 (commit `5fa8a6c`), incluidos los íconos oficiales de software, AI y cloud. Si el `DESIGN.md` cambia después, `scripts/check-design-source.py` lo avisa; ver `references/source-of-truth.md`.
 - **Permisos de los logotipos.** `skills/elaniin-style/assets/LICENSE` reserva todos los derechos; falta que marca confirme si los entregables generados por el plugin pueden llevar el logotipo y con qué texto.

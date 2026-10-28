@@ -4,7 +4,7 @@
 Everything that copies it is derived from it:
   - site-starter/src/styles/tokens.css           exact copy
   - landing.html, deck.html, dashboard.html      the @theme static block and every @utility they share with tokens.css
-  - landing.html also inlines nav-theme.js and iso-stack.js (checked, not regenerated)
+  - landing.html also inlines nav-theme.js and iso-stack.js (regenerated from the files)
 
   python3 scripts/sync-tokens.py            rewrite the copies that drifted (build-docs.py does this on every run)
   python3 scripts/sync-tokens.py --check    change nothing; exit 1 and list what drifted (use it in review or CI)
@@ -49,24 +49,37 @@ def run(write):
             if write:
                 path.write_text(new)
 
-    landing = (TD / "landing.html").read_text()
+    # landing.html inlines two scripts: find the old copy by the first lines of the file and swap it for the current one
+    landing_path = TD / "landing.html"
+    landing = landing_path.read_text()
     for js in ("nav-theme.js", "iso-stack.js"):
-        if (TD / js).read_text().strip() not in landing:
-            drift.append(f"landing.html (inline {js} differs from templates/{js}: paste the file again)")
+        current = (TD / js).read_text().strip()
+        if current in landing:
+            continue
+        head = "\n".join(current.split("\n")[:3])
+        i = landing.find(head)
+        j = landing.find("</script>", i) if i >= 0 else -1
+        if i < 0 or j < 0:
+            drift.append(f"landing.html (inline {js} not found: paste templates/{js} again)")
+            continue
+        drift.append(f"landing.html (inline {js})")
+        landing = landing[:i] + current + "\n" + landing[j:]
+        if write:
+            landing_path.write_text(landing)
     return drift
 
 
 if __name__ == "__main__":
     check = "--check" in sys.argv
     drift = run(write=not check)
-    inline = [d for d in drift if "inline" in d]
+    inline = [d for d in drift if "not found" in d]
     if check:
         if drift:
             print("drift from tokens.css:\n  - " + "\n  - ".join(drift))
             sys.exit(1)
         print("sync-tokens: ok, every copy matches tokens.css")
     else:
-        fixed = [d for d in drift if "inline" not in d]
+        fixed = [d for d in drift if "not found" not in d]
         if fixed:
             print("synced from tokens.css:", ", ".join(fixed))
         if inline:

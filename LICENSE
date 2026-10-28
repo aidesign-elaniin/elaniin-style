@@ -23,8 +23,8 @@ SOFTWARE.
 EXCEPTION: ELANIIN BRAND ASSETS
 
 The MIT license above does NOT cover the Elaniin brand assets: the logotipo
-files and the favicon in skills/elaniin-style/assets/, which are governed by
-skills/elaniin-style/assets/LICENSE (all rights reserved). The same marks are
+files, the favicon and the official icons in skills/elaniin-style/assets/, which are governed by
+skills/elaniin-style/assets/LICENSE (all rights reserved). The same marks and icons are
 also embedded as copies in other places of this repository (the templates, the
 site starter's public/brand/ and src/app/icon.svg, and the generated docs/);
 wherever they appear, they are brand assets under that same reserved license

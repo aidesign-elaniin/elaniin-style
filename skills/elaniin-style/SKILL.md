@@ -23,11 +23,11 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 
 # Elaniin Style
 
-> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.86.2).
+> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.87.2).
 > Use it to design and build decks, dashboards & reports, websites & landings, and to
 > develop the Elaniin 2027 site. Always work in the user's language (EN or ES).
 >
-> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.86.2).
+> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.87.2).
 > Úsala para diseñar y construir decks, dashboards & reports, websites & landings, y
 > para desarrollar el sitio Elaniin 2027. Trabaja siempre en el idioma del usuario (EN o ES).
 
@@ -194,7 +194,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    is a structure (a stack, a flow, an architecture) may use an animated isometric resource, never as
    decoration and never inside cards or lists (v1.86: it may also be drawn in the `dark` look on a dark surface, still no frost there). Use the kit (`templates/iso-stack.js` for HTML,
    `templates/iso/` for React/Next): true isometric at 30°, inline SVG, frosted-glass slabs (14px frost),
-   the defined color of each entity, fine textures, labels with generic lucide icons (never third-party
+   the defined color of each entity, fine textures, labels with the official Elaniin icons for software, AI and cloud (`assets/icons/`) and generic Lucide icons for anything else (never third-party
    brand logos), one 12s clock that runs only on screen, `iso-levitate` over a small shadow, reduced
    motion = assembled state. The blue logotipo appears only on the software slab. Full rules, exact
    geometry and the recipe for a new resource: `references/isometric.md`. Wait for approval before

@@ -90,8 +90,8 @@ border-strong`; placa y riser `white / blue-tint-50 / blue-100`; texturas `blue-
 9. **Énfasis:** cuando un pulso llega a una losa, se desliza 28 u hacia adelante en x (el brazo se
    telescopa con ella para no desprenderse) y su borde superior se enciende; las demás bajan a 60% de
    opacidad. Luego vuelve.
-10. **Etiquetas:** pastilla blanca de 38 u de alto con el icono de la entidad (lucide genérico de 20 u,
-    **nunca el logo de una marca de terceros**) y su nombre corto (Instrument Sans 500, 15 u), tendida
+10. **Etiquetas:** pastilla blanca de 38 u de alto con el icono de la entidad (los tres oficiales de Elaniin para software, AI y cloud;
+    Lucide genérico de 20 u para cualquier otro; **nunca el logo de una marca de terceros**) y su nombre corto (Instrument Sans 500, 15 u), tendida
     sobre la franja visible de la cara superior y leyendo hacia arriba a la derecha. Flota 4 px (`iso-float`).
 11. **Texto en la escena:** solo el logotipo (nunca el símbolo) y las etiquetas de la regla 10.
 12. **Movimiento:** un reloj por escena, bucle de 12 s, solo en pantalla. Ensamble único con `rise`
@@ -152,6 +152,8 @@ Necesita `lucide-react`, `tokens.css` (`rise`, `iso-levitate`, `iso-float`) y co
 `pointAt(polyline, progress)` · `clamp01` · `easeInOut` · `slabSvg(look, box, origin)` (`look`:
 `software | ai | cloud | brand | plate | dark`) · `floorSvg(origin, x, y, w, d, z)` · `topFace(box)` ·
 `mountStack(host, labels)`. En React: `Slab`, `Floor`, `IsoPill` (+ `pillLength`; `check` añade la marca verde), `IsoPulse` + `HaloFilter`, `IsoLogotipo` (`tone` blue|black, `face` right|top), `SCENE_W` (418) y `useClock(periodMs)`.
+
+**Íconos (v1.87):** las pills de software, AI y cloud llevan los tres íconos oficiales de Elaniin (`assets/icons/`, `iso/elaniin-icons.tsx`), dibujados al 90 % con el trazo dividido por 0.9; cualquier otra pill usa Lucide genérico, nunca el logo de una marca de terceros.
 
 **Looks extra (v1.55–v1.60, solo en el kit React por ahora):** `brand` = Elaniin mismo (rampa azul 200/300/400 con módulos blancos; lleva el logotipo en Elaniin Black, 6.4:1; nunca Elevate Blue ni Excellence Blue, que es de AI). `dark` = vidrio claro para superficies oscuras (caras blancas al 12 % top, 7 % izquierda, 18 % derecha, borde `border-on-dark-strong`, sin textura, sin frost ni diamante de sombra; la pill se queda blanca; único acento Elevate Blue).
 

@@ -2,13 +2,14 @@
   Elaniin isometric hero resource, React / Next build. Source: elaniin-2027-website
   (src/components/ui/iso + sections/hero/hero-stack.tsx, DESIGN.md motifs.isometric). Same scene as the vanilla
   build in templates/iso-stack.js. Needs: tokens.css (colors, `rise`, `iso-levitate`, `iso-float`), lucide-react,
-  and public/assets/logotipo-elaniin-blue.svg. Usage: <HeroStack labels={{ software: "Software", ai: "AI", cloud: "Cloud" }} />
+  and public/assets/logotipo-elaniin-blue.svg. The slab icons are the three official Elaniin icons (./elaniin-icons.tsx). Usage: <HeroStack labels={{ software: "Software", ai: "AI", cloud: "Cloud" }} />
   Rules and recipe for new resources: references/isometric.md.
 */
 "use client";
 
 import { Fragment, useId } from "react";
-import { Cloud, Code, Sparkles, type LucideIcon } from "lucide-react";
+import { type LucideIcon } from "lucide-react";
+import { AiIcon, CloudIcon, SoftwareDevelopmentIcon } from "./elaniin-icons";
 import { Floor } from "./floor";
 import { COS30, clamp01, easeInOut, planeTransform, pointAt, pointsAttr, project } from "./iso";
 import { Slab, type SlabBox, type SlabLook, topFace } from "./slab";
@@ -41,9 +42,9 @@ type Station = { look: Exclude<SlabLook, "plate">; icon: LucideIcon; box: SlabBo
   its label sits). All left faces share one plane, so the arms run along the same line.
 */
 const STATIONS: Station[] = [
-  { look: "cloud", icon: Cloud, box: { x: 0, y: 0, z: 12, w: 230, d: D, h: 40 }, tile: { x: 195, y: 100 } },
-  { look: "software", icon: Code, box: { x: 0, y: 0, z: 72, w: 160, d: D, h: 80 }, tile: { x: 125, y: 100 } },
-  { look: "ai", icon: Sparkles, box: { x: 0, y: 0, z: 172, w: 90, d: D, h: 40 }, tile: { x: 45, y: 100 } },
+  { look: "cloud", icon: CloudIcon, box: { x: 0, y: 0, z: 12, w: 230, d: D, h: 40 }, tile: { x: 195, y: 100 } },
+  { look: "software", icon: SoftwareDevelopmentIcon, box: { x: 0, y: 0, z: 72, w: 160, d: D, h: 80 }, tile: { x: 125, y: 100 } },
+  { look: "ai", icon: AiIcon, box: { x: 0, y: 0, z: 172, w: 90, d: D, h: 40 }, tile: { x: 45, y: 100 } },
 ];
 const levelOf = (s: Station) => s.box.z + s.box.h / 2;
 
