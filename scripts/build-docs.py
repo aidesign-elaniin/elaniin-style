@@ -952,11 +952,11 @@ body = f'''
 
   <section id="sites" class="section-y-compact border-t border-border-default bg-surface-subtle">
     <div class="container-site">
-      <h2 class="max-w-[24ch] break-words font-display font-medium text-h2 text-text-primary">A whole site, one stage at a time</h2>
-      <p class="mt-4 max-w-[60ch] break-words text-lead text-text-secondary">Give the plugin a sitemap, a diagram or a .md file. It builds the master project with every page and the architecture, using placeholder text. That is the starting point: each page then gets its own iteration, with its real content, one at a time.</p>
-      <div class="grid-page mt-10 items-start">
+      <div class="grid-page items-start">
         <div class="col-span-12 min-w-0 lg:col-span-5">
-          <ol class="space-y-2" data-sites-steps>
+          <h2 class="max-w-[16ch] break-words font-display font-medium text-h2 text-text-primary">A whole site, one stage at a time</h2>
+          <p class="mt-4 max-w-[44ch] break-words text-body text-text-secondary">Give the plugin a sitemap, a diagram or a .md file. It builds the master project with every page and the architecture, using placeholder text. That is the starting point: each page then gets its own iteration, with its real content, one at a time.</p>
+          <ol class="mt-8 space-y-2" data-sites-steps>
             <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
               <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg></span>
               <div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">You bring the map</h3><p class="mt-1 text-body-sm text-text-secondary">A sitemap as an image, a Mermaid diagram, an outline or a .md. You do not need the content of every page.</p></div>
