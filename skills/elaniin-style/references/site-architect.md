@@ -128,5 +128,7 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 - **Pie en móvil:** separación vertical entre columnas (`mb-6 lg:mb-0`).
 - **Card clicable:** enlace en el `h3` con `after:absolute after:inset-0`, no un `<a>` absoluto que contenga el texto.
 - **Cards con `lift`/`card-glow`:** `rounded-card` + `border` + `pad-card` siempre; el wrapper de `Reveal` lleva `h-full min-w-0`.
+- **Chip dentro de un título:** hereda el `letter-spacing` negativo del heading y el texto se ve amontonado. Todo chip, tag o pastilla que pueda vivir dentro de un h1–h4 lleva `tracking-normal` (o su propio tracking, como `mono-label`).
+- **Escenas isométricas en páginas internas:** son decorativas (`aria-hidden`), usan el kit de `templates/iso/` y comparten un mismo lienzo; las etiquetas de las pills van fijas a 6–7 letras con `length` explícito para que no se salgan del slab.
 - **`trailingSlash`:** los `href` internos terminan en "/"; no busques `a[href="/casos"]`.
 - **Qué NO hacer:** un archivo de contenido por página cuando es una colección; navegación escrita a mano; rutas fuera de `site-map.ts`; subir de escalón "por si acaso"; abstracciones sin segundo uso.
