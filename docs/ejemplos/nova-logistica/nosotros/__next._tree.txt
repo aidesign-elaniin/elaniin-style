@@ -4,4 +4,4 @@
 :HL["/elaniin-style/ejemplos/nova-logistica/_next/static/media/660acf689794c992-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"nosotros","h":64,"c":"$Q2"}]]
-0:{"b":"CJJ2i0ZHG06ZaYwctww5e","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"fiX0NbHUxH04d-S1Dn6XR","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
