@@ -1,0 +1,39 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Overflow check</title>
+<!--
+  Measures horizontal overflow of EVERY page at 375 and 768 px, with iframes.
+  Use:  cp scripts/overflow.html out/ && npx serve out   (or any static server), then open /overflow.html
+  The pages come from /site-manifest.json (no list written by hand).
+  Result: the table on screen and window.__overflow = { checked, bad: [...] }.
+-->
+<style>body{font:14px system-ui;margin:16px}td,th{padding:2px 10px;text-align:left}.bad{color:#b00020}iframe{position:absolute;left:-9999px;top:0;height:900px;border:0}</style>
+<h1>Overflow check</h1>
+<pre id="out">running…</pre>
+<script>
+(async function () {
+  const { routes } = await (await fetch("/site-manifest.json")).json();
+  const bad = [];
+  let checked = 0;
+  const lines = [];
+  for (const width of [375, 768]) {
+    for (const r of routes) {
+      const f = document.createElement("iframe");
+      f.style.width = width + "px";
+      f.src = r.path;
+      document.body.appendChild(f);
+      await new Promise((ok) => (f.onload = ok));
+      await new Promise((ok) => setTimeout(ok, 250));
+      const d = f.contentDocument.documentElement;
+      const over = d.scrollWidth - width;
+      checked++;
+      if (over > 0) bad.push({ path: r.path, width, over });
+      lines.push((over > 0 ? "BAD " : "ok  ") + width + "  " + r.path + (over > 0 ? "  +" + over + "px" : ""));
+      f.remove();
+    }
+  }
+  window.__overflow = { checked, bad };
+  document.getElementById("out").textContent = lines.join("\n") + "\n\n" + checked + " checked, " + bad.length + " with overflow";
+  document.title = bad.length ? "OVERFLOW " + bad.length : "OVERFLOW OK " + checked;
+})();
+</script>
