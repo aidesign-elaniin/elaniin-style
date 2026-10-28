@@ -34,7 +34,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         <div className="container-site grid-page">
           <div className="col-span-12 min-w-0 space-y-5 md:col-span-7">
             {item.body.map((p, i) => (
-              <p key={i} className="max-w-[68ch] break-words text-body text-text-secondary">
+              <p key={i} className="max-w-body break-words text-body text-text-secondary">
                 {p}
               </p>
             ))}

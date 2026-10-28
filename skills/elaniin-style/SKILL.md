@@ -234,12 +234,12 @@ Full map in `references/tokens.md`; copy-paste source in `templates/tokens.css`;
 
 **EN** — Never ask the user to install `motion`. Run the skill's own `scripts/ensure-motion.sh`
 (`${CLAUDE_SKILL_DIR}` = this skill folder) passing the project root as argument:
-`bash "${CLAUDE_SKILL_DIR}/scripts/ensure-motion.sh" "$PWD"`. It detects the lockfile and installs silently; if there is no `package.json`
+`bash "${CLAUDE_SKILL_DIR}/scripts/ensure-motion.sh" "$PWD"`. It detects the lockfile, says in one line what it will run (it edits `package.json` and the lockfile), skips if `motion` is already there, never prompts and reports a failure on stderr (`ENSURE_MOTION_STRICT=1` makes it exit 1); if there is no `package.json`
 it leaves the CSS-only ladder in place.
 
 **ES** — Nunca pidas al usuario instalar `motion`. Ejecuta el `scripts/ensure-motion.sh` de esta skill
 (`${CLAUDE_SKILL_DIR}` = carpeta de la skill) pasando la raíz del proyecto como argumento:
-`bash "${CLAUDE_SKILL_DIR}/scripts/ensure-motion.sh" "$PWD"`. Detecta el lockfile e instala en silencio; si no hay `package.json`,
+`bash "${CLAUDE_SKILL_DIR}/scripts/ensure-motion.sh" "$PWD"`. Detecta el lockfile, avisa en una línea qué va a ejecutar (edita `package.json` y el lockfile), no hace nada si `motion` ya está, nunca pregunta y reporta el fallo por stderr (`ENSURE_MOTION_STRICT=1` sale con código 1); si no hay `package.json`,
 deja la escalera CSS-only.
 
 In Claude Artifacts (no npm): use the CSS ladder (`rise` + keyframes from `tokens.css`);

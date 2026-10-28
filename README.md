@@ -87,7 +87,7 @@ skills/elaniin-style/
 ├── SKILL.md              pipeline de 5 fases, routing, UX core
 ├── assets/               logos oficiales y favicon
 ├── references/           tokens, tailwind-api, motion, ux-a11y, websites, site-architect, decks, dashboards, site-dev…
-├── scripts/              ensure-motion.sh (instala motion en silencio si hay package.json)
+├── scripts/              ensure-motion.sh (añade motion si hay package.json: avisa qué ejecuta, no pregunta, reporta fallos)
 └── templates/            tokens.css, landing.html, dashboard.html, deck.html, motion-presets.ts,
                           module-field.js / module-field.tsx (textura interactiva del hero),
                           iso-stack.js + iso/ (recurso isométrico del hero: HTML y React),
@@ -108,3 +108,10 @@ Fuente de verdad / Source of truth: `DESIGN.md` v1.86.2 (Elaniin 2027 site).
 ## License
 
 MIT
+
+## Decisiones abiertas
+
+- **Logotipos y licencia.** El repositorio es público y MIT, e incluye los logotipos oficiales de Elaniin. La licencia MIT permite reutilizar esos archivos. Hay que confirmar con marca si eso es lo que se quiere (alternativa: licencia propia para `assets/` o repositorio privado).
+- **Red.** Los HTML autónomos cargan Google Fonts y el navegador de Tailwind por CDN: sin red la tipografía cae a Helvetica/Arial y los estilos no se compilan. El starter de Next.js no tiene ese problema (`next/font` y Tailwind se resuelven en el build).
+- **Verificación visual.** `scripts/check-system.py` mide el contraste de los pares de color documentados y que toda utility animada respete `prefers-reduced-motion`. El orden de foco con teclado y el movimiento fuera de `tokens.css` siguen dependiendo de revisión humana.
+- **Dos implementaciones de la barra.** `templates/nav-theme.js` (vanilla) y `nav.tsx` del starter (React) repiten el mismo algoritmo; `build-docs.py` comprueba que la copia en `landing.html` coincida con `nav-theme.js`, pero no que React y vanilla coincidan.

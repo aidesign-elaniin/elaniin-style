@@ -19,10 +19,10 @@ export function PageHeader({ title, lead, trail = [], placeholder = false }: { t
           </nav>
         )}
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="max-w-[20ch] break-words font-display font-medium text-h1 text-balance text-text-primary">{title}</h1>
+          <h1 className="max-w-heading break-words font-display font-medium text-h1 text-balance text-text-primary">{title}</h1>
           {placeholder && <PlaceholderChip />}
         </div>
-        {lead && <p className="mt-5 max-w-[56ch] text-lead text-text-secondary">{lead}</p>}
+        {lead && <p className="mt-5 max-w-lead text-lead text-text-secondary">{lead}</p>}
       </div>
     </section>
   );

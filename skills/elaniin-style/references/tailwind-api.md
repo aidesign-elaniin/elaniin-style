@@ -191,6 +191,7 @@ Comportamiento en `templates/drawer.js` (marcadores `data-menu-button`, `data-dr
 | Clase | Qué hace |
 |---|---|
 | `nav-link` | opción A: underline 2px `scaleX` desde la izquierda al hover/focus (por defecto en landing y footer) |
+| `max-w-body` · `max-w-lead` · `max-w-narrow` · `max-w-heading` · `max-w-hero` · `max-w-cta` | medidas de línea como tokens: 68 · 56 · 40 · 20 · 18 · 34 ch (`--container-*` en `@theme`). Sustituyen a `max-w-[68ch]` y similares |
 | `nav-bar` | barra sticky de `--nav-height`: blanco al 80 % bajo blur 8px; con `data-theme="dark"` (+ `data-tone="black"`) adopta el color de la sección (Excellence Blue u Elaniin Black al 80 %). Script: `templates/nav-theme.js` |
 | `nav-item` | enlace o disparador de la barra, el de la referencia principal: pill 40px, `body-sm` 500 en fuente display, `surface-subtle` al hover (blanco 10 % sobre oscuro) |
 | `nav-toggle` | botón hamburguesa de 40px bajo `lg` (borde `border-strong`) |

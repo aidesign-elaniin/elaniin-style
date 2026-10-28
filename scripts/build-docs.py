@@ -1,13 +1,48 @@
 import html, pathlib, re
 
-# drift guards: the templates are standalone files, so shared pieces are copied; fail the build if copies diverge
-def _theme(path):
-    h = open(path).read()
-    return h[h.index("@theme static {"):].split("\n}\n", 1)[0]
+# single source: templates/tokens.css. Everything that copies it is REGENERATED here, then guarded.
 _TD = str(pathlib.Path(__file__).resolve().parent.parent / "skills/elaniin-style/templates") + "/"
-for _n in ("landing", "deck", "dashboard"):
-    assert _theme(_TD + _n + ".html") == _theme(_TD + "tokens.css"), _n + ".html: @theme static differs from tokens.css"
-assert open(_TD + "tokens.css").read() == open(_TD + "site-starter/src/styles/tokens.css").read(), "site-starter/src/styles/tokens.css differs from tokens.css"
+
+
+def _blocks(text, kind):
+    """Top-level `@utility name { ... }` blocks (they end with a closing brace at column 0)."""
+    return {m.group(1): m.group(0) for m in re.finditer(r"^@" + kind + r" ([\w-]+) \{\n.*?^\}\n", text, re.S | re.M)}
+
+
+def _theme(text):
+    i = text.index("@theme static {")
+    return text[i:].split("\n}\n", 1)[0] + "\n}\n"
+
+
+def sync_tokens():
+    src = open(_TD + "tokens.css").read()
+    src_utils, src_theme = _blocks(src, "utility"), _theme(src)
+    changed = []
+    # the starter keeps an exact copy
+    dst = _TD + "site-starter/src/styles/tokens.css"
+    if open(dst).read() != src:
+        open(dst, "w").write(src)
+        changed.append("site-starter/src/styles/tokens.css")
+    # standalone templates embed the @theme block and the utilities they share with tokens.css
+    for name in ("landing", "deck", "dashboard"):
+        path = _TD + name + ".html"
+        text = open(path).read()
+        new = text.replace(_theme(text), src_theme, 1)
+        for uname, block in _blocks(new, "utility").items():
+            if uname in src_utils and block != src_utils[uname]:
+                new = new.replace(block, src_utils[uname], 1)
+        if new != text:
+            open(path, "w").write(new)
+            changed.append(name + ".html")
+    if changed:
+        print("synced from tokens.css:", ", ".join(changed))
+
+
+sync_tokens()
+import subprocess, sys
+if subprocess.run([sys.executable, str(pathlib.Path(__file__).resolve().parent / "check-system.py")], stdout=subprocess.DEVNULL).returncode:
+    raise SystemExit("check-system.py failed: run it to see which contrast pair or animated utility broke the rules")
+assert open(_TD + "nav-theme.js").read().strip() in open(_TD + "landing.html").read(), "landing.html: inline nav-theme differs from nav-theme.js"
 assert open(_TD + "iso-stack.js").read().strip() in open(_TD + "landing.html").read(), "landing.html: inline iso-stack differs from iso-stack.js"
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent  # repo root

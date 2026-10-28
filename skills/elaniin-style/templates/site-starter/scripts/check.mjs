@@ -6,7 +6,8 @@
     - a page lacks its h1 or has more than one, has href="#", lacks the logotipo or lang
     - an internal link is broken (links end with "/" because of trailingSlash)
     - the `content` of a route does not match the data-placeholder marks drawn on screen
-    - the source uses -mx-, gap-[..], grid-cols-[..], lift/card-glow inside grid-hairline, or gradients
+    - the source uses -mx-, any arbitrary value (max-w-[18ch], gap-[..], grid-cols-[..]…), an inline --section-y,
+      lift/card-glow inside grid-hairline, or gradients
     - an image has no alt, or is a data: / remote image
 */
 import fs from "node:fs";
@@ -98,8 +99,9 @@ for (const f of src) {
   const t = read(f);
   const code = t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/.*$/gm, "$1");
   if (/(^|[\s"'`])-mx-/.test(code)) fail.push(`${f}: negative margin (-mx-)`);
-  if (/gap-\[/.test(code)) fail.push(`${f}: arbitrary gap (gap-[…])`);
-  if (/grid-cols-\[/.test(code)) fail.push(`${f}: arbitrary grid-cols-[…]`);
+  // tokens only: any arbitrary value (max-w-[18ch], gap-[…], grid-cols-[…], bg-[#fff]…) except the data-/aria- state variants
+  for (const m of code.matchAll(/(?:^|[\s"'`])((?!data-|group-data-|peer-data-|aria-|group-aria-)[a-z][\w:-]*-\[[^\]\s]+\])/g)) fail.push(`${f}: arbitrary value ${m[1]} (use a token)`);
+  if (/"--section-y"|--section-y:/.test(code)) fail.push(`${f}: inline --section-y (use section-y, section-y-statement or section-y-compact)`);
   if (/gradient/i.test(code)) fail.push(`${f}: gradient`);
   if (/grid-hairline/.test(code) && /\b(lift|card-glow)\b/.test(code)) fail.push(`${f}: lift/card-glow in a file that uses grid-hairline`);
   if (/from\s+["']@\//.test(code)) fail.push(`${f}: "@/" alias import (use relative imports)`);

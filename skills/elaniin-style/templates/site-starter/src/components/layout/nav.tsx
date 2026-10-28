@@ -13,6 +13,7 @@ const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1
 
 /*
   Nav bar of the reference site (DESIGN.md components.nav):
+  - (the same algorithm lives in templates/nav-theme.js for standalone HTML: change both together)
   - glass bar of 64px (`nav-bar`: white 80% under an 8px blur) that ADOPTS the color of the section under it. Sections with a
     dark background of their own declare data-nav-theme="blue" | "black"; this component sets data-theme / data-tone on the bar,
   - items are 40px pills (`nav-item`) with a subtle surface on hover; one primary CTA of height 40 on the right,

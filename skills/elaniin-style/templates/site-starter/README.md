@@ -4,7 +4,7 @@ Next.js (export estático) + Tailwind v4 con el design system de Elaniin.
 
 ## Comandos
 ```bash
-npm install
+npm ci              # versiones exactas del package-lock.json (usa `npm install` solo para añadir dependencias)
 npm run dev        # http://localhost:3000
 npm run build      # genera el sitio estático en out/
 npm run check      # compuerta: sitemap, páginas, h1, enlaces, marcas de relleno, reglas

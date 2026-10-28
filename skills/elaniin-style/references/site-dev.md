@@ -60,7 +60,7 @@ export const duration = { instant: 0.1, fast: 0.15, base: 0.2, slow: 0.3, reveal
 Ladder: CSS `rise` para entradas simples que deben correr sin hidratación; `motion` para
 coreografía (stagger de contenedores, page transitions).
 
-## Instalación de motion (silenciosa)
+## Instalación de motion (sin preguntar)
 
 `scripts/ensure-motion.sh` detecta package manager e instala `motion` sin preguntar.
 Si no hay `package.json`, no hace nada (modo CSS-only). **Nunca** pedir al usuario

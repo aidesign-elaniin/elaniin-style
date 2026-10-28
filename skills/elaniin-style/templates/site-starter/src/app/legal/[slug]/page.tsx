@@ -28,7 +28,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
       <section className="section-y">
         <div className="container-site space-y-5">
           {item.body.map((p, i) => (
-            <p key={i} className="max-w-[68ch] break-words text-body text-text-secondary">
+            <p key={i} className="max-w-body break-words text-body text-text-secondary">
               {p}
             </p>
           ))}

@@ -124,6 +124,13 @@
   --text-display-xl--letter-spacing: -0.035em;
   --text-tag-sm: 11px; /* the small tag (official, DESIGN.md v1.64): mono, with mono-label */
   --text-tag-sm--line-height: 1;
+  /* Measures (line length): max-w-body 68ch · max-w-lead 56ch · max-w-narrow 40ch · max-w-heading 20ch · max-w-hero 18ch · max-w-cta 34ch */
+  --container-body: 68ch;
+  --container-lead: 56ch;
+  --container-narrow: 40ch;
+  --container-heading: 20ch;
+  --container-hero: 18ch;
+  --container-cta: 34ch;
   --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
   --text-display-lg--line-height: 1.04;
   --text-display-lg--letter-spacing: -0.03em;
@@ -435,6 +442,9 @@
 }
 @utility row-hover {
   transition: background-color var(--dur-fast) var(--ease-standard);
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 /* ---------- utilities: living mockups (loops) ---------- */

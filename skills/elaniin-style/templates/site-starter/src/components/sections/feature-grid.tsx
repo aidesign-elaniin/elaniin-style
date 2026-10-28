@@ -18,7 +18,7 @@ export function FeatureGrid({ title, items, placeholder = false }: { title: stri
               <Reveal i={i}>
                 <div className="card-glow lift h-full rounded-card border border-border-default bg-surface-card pad-card">
                   <h3 className="font-display font-medium text-h3 text-text-primary">{it.title}</h3>
-                  <p className="mt-3 max-w-[40ch] break-words text-body text-text-secondary">{it.text}</p>
+                  <p className="mt-3 max-w-narrow break-words text-body text-text-secondary">{it.text}</p>
                 </div>
               </Reveal>
             </div>
