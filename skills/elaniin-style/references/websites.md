@@ -54,7 +54,12 @@ dominante por pieza.
   (base de `tokens.css`) el enlace `#sección` deja el inicio de la sección justo bajo el nav.
 - **Grids:** `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`, mobile first y `min-w-0`
   en hijos (recetas en `references/grids.md`). Nada de `-mx-*` ni gaps arbitrarios.
-- **CTA del nav = `button.primary md`** (fondo elevate-blue, texto blanco, hover `blue-600`, active `blue-700`); el outline gris no es el CTA del nav. Los links del nav usan `nav-link` (underline) o `nav-link-pill` (referencia principal); una sola opción por sitio.
+- **CTA del nav = `button.primary md`** (fondo elevate-blue, texto blanco, hover `blue-600`, active `blue-700`); el outline gris no es el CTA del nav. **Nav y pie = los de la referencia principal (DESIGN.md components.nav / components.footer):**
+  barra `nav-bar` de 64px (blanco 80 % + blur 8px) que adopta el color de la sección bajo ella (las secciones con fondo
+  oscuro propio declaran `data-nav-theme="blue|black"`; el CTA final y el pie son blue); links `nav-item` (pill de 40px,
+  `surface-subtle` al hover); CTA primary md a la derecha; hamburguesa de 40px bajo `lg` (1024px). Pie en **Excellence Blue**
+  (nunca Elaniin Black): logotipo blanco, lema (lead blanco + resto secundario), columnas con título display y enlaces
+  `footer-link`, fila legal sobre hairline. `nav-link` (underline) queda solo como opción para enlaces dentro de texto.
 - **Superficies con hover = cards con padding.** Toda celda que use `lift` o `card-glow`
   lleva `rounded-card border bg-surface-card pad-card`. Sin padding el hover se ve como una
   caja con el texto pegado al borde: prohibido. Nada de `-mx-*` para disimularlo.

@@ -380,19 +380,113 @@
 }
 
 /* ---------- utilities: interactions ---------- */
-@utility nav-link-pill {
-  /* reference-site nav link (DESIGN.md components.nav.link): 40px pill, subtle surface on hover */
+/* ---------- utilities: nav bar and footer (DESIGN.md components.nav / components.footer) ---------- */
+/* nav-bar: glass sticky bar of --nav-height, white at 80% under an 8px blur. It ADOPTS the color of the section under it:
+   a script sets data-theme="light|dark" and data-tone="blue|black" on it (templates/nav-theme.js, or the hook of the
+   site-starter). Only whole SECTIONS declare data-nav-theme="blue|black" (those with a dark background of their own). */
+@utility nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--nav-height);
+  border-bottom: 1px solid var(--color-border-default);
+  background: rgb(255 255 255 / 0.8);
+  backdrop-filter: blur(8px);
+  transition: background-color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
+  &[data-theme="dark"] {
+    border-color: var(--color-border-on-dark);
+    background: color-mix(in srgb, var(--color-surface-dark) 80%, transparent);
+  }
+  &[data-theme="dark"][data-tone="black"] {
+    background: color-mix(in srgb, var(--color-surface-dark-alt) 80%, transparent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+/* nav-item: link or menu trigger of the bar. 40px pill, body-sm 500 in the display font; subtle surface on hover (white 10% over dark). */
+@utility nav-item {
   display: inline-flex;
-  align-items: center;
   height: 2.5rem;
-  padding-inline: 0.75rem;
+  align-items: center;
+  gap: 0.375rem;
+  white-space: nowrap;
   border-radius: var(--radius-button);
+  padding-inline: 0.75rem;
+  font-family: var(--font-display);
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm--line-height);
   font-weight: 500;
   color: var(--color-text-primary);
-  transition: background-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  transition: background-color var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
   &:hover {
     background: var(--color-surface-subtle);
-    color: var(--color-text-link);
+  }
+  :where([data-theme="dark"]) & {
+    color: var(--color-text-on-dark);
+  }
+  :where([data-theme="dark"]) &:hover {
+    background: rgb(255 255 255 / 0.1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+/* nav-toggle: the 40px hamburger button below lg. */
+@utility nav-toggle {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  :where([data-theme="dark"]) & {
+    border-color: var(--color-border-on-dark-strong);
+    background: transparent;
+    color: var(--color-text-on-dark);
+  }
+}
+/* Two logotipos in the bar: the dark one on light, the white one on the dark themes. */
+@utility nav-logo-light {
+  :where([data-theme="dark"]) & {
+    display: none;
+  }
+}
+@utility nav-logo-dark {
+  display: none;
+  :where([data-theme="dark"]) & {
+    display: block;
+  }
+}
+/* footer-link: body-sm, on-dark secondary, white on hover; no underline. */
+@utility footer-link {
+  border-radius: var(--radius-tag);
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm--line-height);
+  color: var(--color-text-on-dark-secondary);
+  transition: color var(--dur-fast) var(--ease-standard);
+  &:hover {
+    color: var(--color-text-on-dark);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+/* footer-social: 40px bordered icon button of the footer, white 8% on hover. */
+@utility footer-social {
+  display: grid;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  place-items: center;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--color-border-on-dark);
+  color: var(--color-text-on-dark-secondary);
+  transition: background-color var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+  &:hover {
+    background: rgb(255 255 255 / 0.08);
+    color: var(--color-text-on-dark);
   }
   @media (prefers-reduced-motion: reduce) {
     transition: none;
@@ -800,29 +894,29 @@
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-button focus:border focus:border-border-default focus:shadow-menu">Skip to content</a>
 
 <!-- NAV -->
-<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-border-default">
-  <div class="container-site flex h-16 items-center justify-between">
-    <a href="#main" class="flex items-center" aria-label="Elaniin home">
-      <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo"/></svg>
+<header class="nav-bar" data-nav-bar>
+  <div class="container-site flex h-full items-center gap-4 xl:gap-6">
+    <a href="#main" class="shrink-0 rounded-button focus-ring" aria-label="Elaniin, home">
+      <svg class="nav-logo-light h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo"/></svg>
+      <svg class="nav-logo-dark h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo-white"/></svg>
     </a>
-    <nav class="hidden md:flex items-center gap-8 text-body-sm text-text-secondary" aria-label="Primary">
-      <a href="#features" class="nav-link hover:text-text-primary transition-colors duration-base">Features</a>
-      <a href="#product" class="nav-link hover:text-text-primary transition-colors duration-base">Product</a>
-      <a href="#stats" class="nav-link hover:text-text-primary transition-colors duration-base">Results</a>
-      <a href="#contact" class="ml-2 inline-flex h-10 items-center gap-2 rounded-button bg-elevate-blue px-4 text-body-sm font-display font-medium text-white hover:bg-blue-600 active:bg-blue-700 transition-colors duration-base btn-arrow focus-ring">Start a project</a>
+    <nav class="hidden items-center gap-1 lg:flex xl:ml-4" aria-label="Primary">
+      <a href="#features" class="nav-item focus-ring">Features</a>
+      <a href="#product" class="nav-item focus-ring">Product</a>
+      <a href="#stats" class="nav-item focus-ring">Results</a>
     </nav>
-    <div class="flex items-center gap-2 md:hidden">
-      <a href="#contact" class="inline-flex h-11 items-center rounded-button bg-elevate-blue px-4 text-body-sm font-display font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Start</a>
-      <button type="button" data-menu-button aria-controls="app-drawer" aria-expanded="false" class="inline-flex h-11 w-11 items-center justify-center rounded-button border border-border-default transition-colors duration-base hover:bg-surface-subtle focus-ring" aria-label="Open menu">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    <div class="ml-auto flex items-center gap-3">
+      <a href="#contact" class="btn-arrow inline-flex h-10 items-center rounded-button bg-elevate-blue px-4 font-display text-body-sm font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Start a project</a>
+      <button type="button" data-menu-button aria-controls="app-drawer" aria-expanded="false" class="nav-toggle focus-ring lg:hidden" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
   </div>
 </header>
 
 <!-- MOBILE MENU (drawer, < md) -->
-<div class="scrim md:hidden" data-scrim aria-hidden="true"></div>
-<aside id="app-drawer" data-drawer data-drawer-from="md" class="drawer flex flex-col border-r border-border-default bg-white md:hidden" aria-label="Primary">
+<div class="scrim lg:hidden" data-scrim aria-hidden="true"></div>
+<aside id="app-drawer" data-drawer class="drawer flex flex-col border-r border-border-default bg-white lg:hidden" aria-label="Primary">
   <div class="flex h-16 items-center justify-between border-b border-border-default pl-6 pr-3">
     <svg class="h-6 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo"/></svg>
     <button type="button" data-menu-close class="inline-flex h-11 w-11 items-center justify-center rounded-button text-text-secondary transition-colors duration-base hover:bg-surface-subtle focus-ring" aria-label="Close menu">
@@ -909,7 +1003,7 @@
 </section>
 
   <!-- PRODUCT (dark band) -->
-  <section id="product" class="section-y bg-excellence-blue text-white">
+  <section id="product" data-nav-theme="blue" class="section-y bg-excellence-blue text-white">
     <div class="container-site grid items-center gap-12 lg:grid-cols-2">
       <div class="min-w-0 reveal" style="--i:0">
 <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-white">One workspace for the whole product cycle</h2>
@@ -972,7 +1066,7 @@
   </section>
 
   <!-- CTA -->
-  <section id="contact" class="relative isolate overflow-hidden section-y bg-excellence-blue text-white">
+  <section id="contact" data-nav-theme="blue" class="relative isolate overflow-hidden section-y bg-excellence-blue text-white">
     <div class="module-field module-field-dark module-field-mask-left" data-module-field aria-hidden="true"></div>
     <div class="container-site relative text-center">
       <h2 class="mx-auto max-w-[20ch] break-words font-display font-medium text-h2 text-white reveal">Ready to build something people love?</h2>
@@ -986,31 +1080,75 @@
 
 <!-- FOOTER -->
 <!-- Footer page links are placeholders: point them to the real pages. -->
-<footer class="bg-elaniin-black text-white">
-  <div class="container-site py-16">
-    <div class="grid-page border-b border-border-on-dark pb-12">
-      <div class="col-span-12 min-w-0 md:col-span-3">
-        <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo-white"/></svg>
-        <p class="mt-3 max-w-[28ch] break-words text-body-sm text-text-on-dark-muted">Digital product studio. Strategy, design and engineering.</p>
+<!-- Footer = Excellence Blue (never Elaniin Black), white logotipo only, columns with display headings, plain links. Page links are placeholders: point them to real pages. -->
+<footer data-nav-theme="blue" class="relative overflow-hidden border-t border-border-on-dark bg-surface-dark text-text-on-dark-secondary">
+  <div class="container-site pb-8 pt-16 max-md:pt-12">
+    <div class="grid-page">
+      <div class="col-span-12 flex min-w-0 flex-col gap-8 lg:col-span-4">
+        <svg class="h-7 w-auto self-start" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo-white"/></svg>
+        <p class="font-display text-lead text-text-on-dark">Make complexity work.<span class="block text-text-on-dark-secondary">Strategy, design and engineering for teams that ship.</span></p>
+        <p class="text-caption text-text-on-dark-muted">Digital product studio</p>
+        <!-- Social links: 40px icon buttons with the `footer-social` utility and the official glyph of each network (never drawn by hand). -->
       </div>
-      <div class="col-span-12 min-w-0 md:col-span-3">
-        <p class="mono-label text-caption text-text-on-dark-muted">Company</p>
-        <ul class="mt-4 space-y-2 text-body-sm text-text-on-dark-secondary"><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">About</a></li><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">Careers</a></li><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">Contact</a></li></ul>
-      </div>
-      <div class="col-span-12 min-w-0 md:col-span-3">
-        <p class="mono-label text-caption text-text-on-dark-muted">Services</p>
-        <ul class="mt-4 space-y-2 text-body-sm text-text-on-dark-secondary"><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">Product design</a></li><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">Engineering</a></li><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">Research</a></li></ul>
-      </div>
-      <div class="col-span-12 min-w-0 md:col-span-3">
-        <p class="mono-label text-caption text-text-on-dark-muted">Legal</p>
-        <ul class="mt-4 space-y-2 text-body-sm text-text-on-dark-secondary"><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">Privacy</a></li><li><a href="#" class="nav-link hover:text-white transition-colors duration-base">Terms</a></li></ul>
-      </div>
+      <nav aria-label="Footer" class="col-span-12 grid min-w-0 grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4 lg:col-span-8">
+          <div class="min-w-0">
+            <h2 class="font-display text-body font-medium text-text-on-dark">Company</h2>
+            <ul class="mt-5 flex flex-col gap-3"><li><a href="#" class="footer-link focus-ring-on-dark">About</a></li><li><a href="#" class="footer-link focus-ring-on-dark">Careers</a></li><li><a href="#" class="footer-link focus-ring-on-dark">Contact</a></li></ul>
+          </div>
+          <div class="min-w-0">
+            <h2 class="font-display text-body font-medium text-text-on-dark">Services</h2>
+            <ul class="mt-5 flex flex-col gap-3"><li><a href="#" class="footer-link focus-ring-on-dark">Product design</a></li><li><a href="#" class="footer-link focus-ring-on-dark">Engineering</a></li><li><a href="#" class="footer-link focus-ring-on-dark">Research</a></li></ul>
+          </div>
+          <div class="min-w-0">
+            <h2 class="font-display text-body font-medium text-text-on-dark">Resources</h2>
+            <ul class="mt-5 flex flex-col gap-3"><li><a href="#" class="footer-link focus-ring-on-dark">Cases</a></li><li><a href="#" class="footer-link focus-ring-on-dark">Blog</a></li><li><a href="#" class="footer-link focus-ring-on-dark">Guides</a></li></ul>
+          </div>
+          <div class="min-w-0">
+            <h2 class="font-display text-body font-medium text-text-on-dark">Legal</h2>
+            <ul class="mt-5 flex flex-col gap-3"><li><a href="#" class="footer-link focus-ring-on-dark">Privacy</a></li><li><a href="#" class="footer-link focus-ring-on-dark">Terms</a></li></ul>
+          </div>
+      </nav>
     </div>
-    <p class="mono-label mt-8 text-caption text-text-on-dark-muted">© 2026 Elaniin. All rights reserved.</p>
+    <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-border-on-dark pt-6 text-body-sm text-text-on-dark-muted">
+      <span>© 2026 Elaniin</span>
+      <a href="#" class="footer-link focus-ring-on-dark">Privacy</a>
+      <a href="#" class="footer-link focus-ring-on-dark">Terms</a>
+    </div>
   </div>
 </footer>
 </div>
 
+<script>
+/*
+  Elaniin nav theme (vanilla). The sticky bar (`nav-bar`) adopts the color of the section under it:
+  - whole SECTIONS with a dark background of their own declare data-nav-theme="blue" (Excellence Blue) or "black" (Elaniin Black);
+    the closing CTA and the footer are blue. The color of the SECTION decides, never the color of the resources inside it.
+  - this script (rAF-throttled, also on resize) finds the section that crosses the middle of the bar and sets
+    data-theme="light|dark" and data-tone="blue|black" on the header.
+  Markup:  <header class="nav-bar" data-nav-bar> … <section data-nav-theme="blue"> …
+  While a menu or the mobile drawer is open keep the bar light: set data-nav-lock on the header.
+*/
+(function () {
+  var bar = document.querySelector('[data-nav-bar]');
+  if (!bar) return;
+  var raf = null;
+  function update() {
+    raf = null;
+    if (bar.hasAttribute('data-nav-lock')) { bar.dataset.theme = 'light'; return; }
+    var mid = bar.offsetHeight / 2, theme = 'light', tone = 'blue';
+    document.querySelectorAll('[data-nav-theme]').forEach(function (s) {
+      var r = s.getBoundingClientRect();
+      if (r.top <= mid && r.bottom > mid) { theme = 'dark'; tone = s.dataset.navTheme === 'black' ? 'black' : 'blue'; }
+    });
+    bar.dataset.theme = theme;
+    bar.dataset.tone = tone;
+  }
+  function schedule() { if (raf === null) raf = requestAnimationFrame(update); }
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule);
+  update();
+})();
+</script>
 <script>
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -5,5 +5,6 @@ export const site = {
   url: "https://example.com", // replace with the real domain (used by sitemap.xml)
   description: "Texto de relleno: descripción corta del sitio para buscadores.",
   email: "hola@example.com",
-  footerBlurb: "Texto de relleno: una línea sobre la empresa.",
+  tagline: { lead: "Texto de relleno.", rest: "Una línea sobre lo que hace la empresa." },
+  entity: "Texto de relleno: descriptor de la empresa",
 };

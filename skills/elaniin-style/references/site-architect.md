@@ -75,7 +75,7 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
    src/styles/tokens.css   (copia exacta de templates/tokens.css; no se edita a mano)
    public/brand, public/images/…       scripts/check.mjs, scripts/overflow.html
    ```
-7. **Design system:** `tokens.css` completo + `globals.css` (`@import "tailwindcss"; @import "../styles/tokens.css"` y las fuentes de `next/font` apuntando a los tokens). Logotipo oficial como `<symbol>` + `<use>` definido UNA vez en el layout (`LogoSprite`), **sin clases, color por `fill` del `<g>`**, solo el logotipo (sin símbolo ni tagline). Favicon de la skill (`assets/favicon.svg` → `src/app/icon.svg`). Sin gradientes ni eyebrows.
+7. **Design system:** `tokens.css` completo + `globals.css` (`@import "tailwindcss"; @import "../styles/tokens.css"` y las fuentes de `next/font` apuntando a los tokens). Logotipo oficial como `<symbol>` + `<use>` definido UNA vez en el layout (`LogoSprite`), **sin clases, color por `fill` del `<g>`**, solo el logotipo (sin símbolo ni tagline). Favicon de la skill (`assets/favicon.svg` → `src/app/icon.svg`). Sin gradientes ni eyebrows. **Nav y pie de la referencia** (`nav-bar`, `nav-item`, `nav-toggle`, `footer-link`; pie en Excellence Blue; secciones oscuras con `data-nav-theme`): `references/websites.md` y regla 19 de `SKILL.md`.
 
 ## 5 · Assets
 

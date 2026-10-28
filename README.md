@@ -91,6 +91,7 @@ skills/elaniin-style/
 └── templates/            tokens.css, landing.html, dashboard.html, deck.html, motion-presets.ts,
                           module-field.js / module-field.tsx (textura interactiva del hero),
                           iso-stack.js + iso/ (recurso isométrico del hero: HTML y React),
+                          nav-theme.js (la barra adopta el color de la sección bajo ella),
                           site-starter/ (proyecto Next.js estático para sitios completos)
 ```
 

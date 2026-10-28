@@ -191,7 +191,12 @@ Comportamiento en `templates/drawer.js` (marcadores `data-menu-button`, `data-dr
 | Clase | Qué hace |
 |---|---|
 | `nav-link` | opción A: underline 2px `scaleX` desde la izquierda al hover/focus (por defecto en landing y footer) |
-| `nav-link-pill` | opción B, la de la referencia principal (DESIGN.md `components.nav.link`): pill 40px, fondo `surface-subtle` y color `text-link` al hover. Elegir UNA opción por sitio |
+| `nav-bar` | barra sticky de `--nav-height`: blanco al 80 % bajo blur 8px; con `data-theme="dark"` (+ `data-tone="black"`) adopta el color de la sección (Excellence Blue u Elaniin Black al 80 %). Script: `templates/nav-theme.js` |
+| `nav-item` | enlace o disparador de la barra, el de la referencia principal: pill 40px, `body-sm` 500 en fuente display, `surface-subtle` al hover (blanco 10 % sobre oscuro) |
+| `nav-toggle` | botón hamburguesa de 40px bajo `lg` (borde `border-strong`) |
+| `nav-logo-light` / `nav-logo-dark` | dos logotipos en la barra: oscuro sobre claro, blanco sobre los temas oscuros |
+| `footer-link` | enlace del pie: `body-sm`, `on-dark-secondary`, blanco al hover, sin subrayado |
+| `footer-social` | botón de red social de 40px con borde `border-on-dark` y blanco 8 % al hover |
 | `btn-arrow` | `svg` `translateX(4px)` al hover + `scale(.98)` al active |
 | `lift` | `translateY(-4px)` + `shadow-menu` al hover |
 | `row-hover` | respuesta de fila en tablas |

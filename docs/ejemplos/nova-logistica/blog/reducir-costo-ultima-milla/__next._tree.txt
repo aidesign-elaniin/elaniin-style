@@ -1,8 +1,8 @@
-:HL["/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/0ygw_x_9-agx2.css","style"]
+:HL["/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/3ah23d909ikqy.css","style"]
 :HL["/elaniin-style/ejemplos/nova-logistica/_next/static/media/07a39a8a4660cc7c-s.p.0r6juujl39pe6.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/elaniin-style/ejemplos/nova-logistica/_next/static/media/4cf231d25563e07b-s.p.2874ccu1_u7jf.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/elaniin-style/ejemplos/nova-logistica/_next/static/media/660acf689794c992-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"reducir-costo-ultima-milla","s":[]},"h":65632,"c":"$Q3"}]]
 1:[["children",{"s":"blog","h":131136,"c":"$Q2"}]]
-0:{"b":"fiX0NbHUxH04d-S1Dn6XR","t":{"t":{"s":"","h":131088,"c":"$Q1"}}}
+0:{"b":"ABSKReWpq9yr_5iAhYPiK","t":{"t":{"s":"","h":131088,"c":"$Q1"}}}

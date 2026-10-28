@@ -199,6 +199,13 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    motion = assembled state. The blue logotipo appears only on the software slab. Full rules, exact
    geometry and the recipe for a new resource: `references/isometric.md`. Wait for approval before
    reusing a new resource elsewhere.
+19. **Nav bar and footer are the reference site's (non-negotiable).** Never improvise them. Nav: `nav-bar`
+   (64px, white 80% + 8px blur) that adopts the color of the section under it (sections with their own
+   dark background declare `data-nav-theme="blue|black"`; `templates/nav-theme.js` or the hook of the
+   site-starter sets `data-theme`/`data-tone`), links as `nav-item` (40px pill, subtle surface on hover),
+   one primary md CTA, a 40px `nav-toggle` below `lg`. Footer: Excellence Blue (never Elaniin Black), white
+   logotipo only, tagline, columns with display-font headings and plain `footer-link`s, a legal row on a
+   hairline. Details: `references/websites.md`; spec: DESIGN.md components.nav / components.footer.
 
 ---
 

@@ -12,13 +12,19 @@ type NavItem = { path: string; title: string };
 const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
 
 /*
-  Sticky bar of 64px (bg-white/90 + 8px blur is the one allowed blur) and a real drawer below md:
-  44px targets, aria-expanded, focus moves in, Tab is trapped, Esc / scrim / link close it and give the focus back,
-  scroll is locked while open and it closes by itself when the viewport grows.
+  Nav bar of the reference site (DESIGN.md components.nav):
+  - glass bar of 64px (`nav-bar`: white 80% under an 8px blur) that ADOPTS the color of the section under it. Sections with a
+    dark background of their own declare data-nav-theme="blue" | "black"; this component sets data-theme / data-tone on the bar,
+  - items are 40px pills (`nav-item`) with a subtle surface on hover; one primary CTA of height 40 on the right,
+  - below lg a 40px hamburger opens a real drawer: aria-expanded, focus moves in, Tab is trapped, Esc / scrim / link close it
+    and give the focus back, scroll is locked while open and it closes by itself when the viewport grows.
 */
 export function Nav({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [tone, setTone] = useState<"blue" | "black">("blue");
+  const bar = useRef<HTMLElement>(null);
   const btn = useRef<HTMLButtonElement>(null);
   const drawer = useRef<HTMLElement>(null);
 
@@ -28,6 +34,37 @@ export function Nav({ items }: { items: NavItem[] }) {
   };
 
   useEffect(() => setOpen(false), [pathname]);
+
+  // The bar takes the theme of the section that crosses its middle (rAF-throttled).
+  useEffect(() => {
+    let raf: number | null = null;
+    const update = () => {
+      raf = null;
+      const mid = (bar.current?.offsetHeight ?? 64) / 2;
+      let next: "light" | "dark" = "light";
+      let nextTone: "blue" | "black" = "blue";
+      document.querySelectorAll<HTMLElement>("[data-nav-theme]").forEach((s) => {
+        const r = s.getBoundingClientRect();
+        if (r.top <= mid && r.bottom > mid) {
+          next = "dark";
+          nextTone = s.dataset.navTheme === "black" ? "black" : "blue";
+        }
+      });
+      setTheme(next);
+      setTone(nextTone);
+    };
+    const schedule = () => {
+      if (raf === null) raf = requestAnimationFrame(update);
+    };
+    update();
+    addEventListener("scroll", schedule, { passive: true });
+    addEventListener("resize", schedule);
+    return () => {
+      removeEventListener("scroll", schedule);
+      removeEventListener("resize", schedule);
+      if (raf !== null) cancelAnimationFrame(raf);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("overflow-hidden", open);
@@ -47,7 +84,7 @@ export function Nav({ items }: { items: NavItem[] }) {
         first.focus();
       }
     };
-    const mq = matchMedia("(min-width: 48rem)");
+    const mq = matchMedia("(min-width: 64rem)");
     const onGrow = () => mq.matches && close(false);
     addEventListener("keydown", onKey);
     mq.addEventListener("change", onGrow);
@@ -59,25 +96,25 @@ export function Nav({ items }: { items: NavItem[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const linkClass = "nav-link transition-colors duration-base hover:text-text-primary";
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-border-default bg-white/90 backdrop-blur">
-        <div className="container-site flex h-16 items-center justify-between">
-          <Link href="/" aria-label="Inicio" className="focus-ring">
-            <Logo />
+      <header ref={bar} className="nav-bar" data-theme={open ? "light" : theme} data-tone={tone}>
+        <div className="container-site flex h-full items-center gap-4 xl:gap-6">
+          <Link href="/" aria-label="Inicio" className="shrink-0 rounded-button focus-ring">
+            <Logo className="nav-logo-light h-7 w-auto" />
+            <Logo variant="white" className="nav-logo-dark h-7 w-auto" />
           </Link>
-          <nav className="hidden items-center gap-8 text-body-sm text-text-secondary md:flex" aria-label="Principal">
+          <nav className="hidden items-center gap-1 lg:flex xl:ml-4" aria-label="Principal">
             {items.map((r) => (
-              <Link key={r.path} href={r.path} className={linkClass} aria-current={pathname === r.path ? "page" : undefined}>
+              <Link key={r.path} href={r.path} className="nav-item focus-ring" aria-current={pathname === r.path ? "page" : undefined}>
                 {r.title}
               </Link>
             ))}
-            <LinkButton href={cta.href} s="md" arrow className="ml-2">
+          </nav>
+          <div className="ml-auto flex items-center gap-3">
+            <LinkButton href={cta.href} s="md">
               {cta.label}
             </LinkButton>
-          </nav>
-          <div className="flex items-center gap-2 md:hidden">
             <button
               ref={btn}
               type="button"
@@ -85,9 +122,9 @@ export function Nav({ items }: { items: NavItem[] }) {
               aria-expanded={open}
               aria-label="Abrir menú"
               onClick={() => setOpen(true)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-button border border-border-default transition-colors duration-base hover:bg-surface-subtle focus-ring"
+              className="nav-toggle focus-ring lg:hidden"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                 <path d="M4 7h16M4 12h16M4 17h16" />
               </svg>
             </button>
@@ -95,12 +132,12 @@ export function Nav({ items }: { items: NavItem[] }) {
         </div>
       </header>
 
-      <div className="scrim md:hidden" data-open={open} aria-hidden="true" onClick={() => close()} />
+      <div className="scrim lg:hidden" data-open={open} aria-hidden="true" onClick={() => close()} />
       <aside
         ref={drawer}
         id="app-drawer"
         data-open={open}
-        className="drawer flex flex-col border-r border-border-default bg-white md:hidden"
+        className="drawer flex flex-col border-r border-border-default bg-white lg:hidden"
         aria-label="Principal"
       >
         <div className="flex h-16 items-center justify-between border-b border-border-default pl-6 pr-3">
