@@ -1777,27 +1777,40 @@ skills/elaniin-style/
 
   <section id="sites" class="section-y-compact border-t border-border-default bg-surface-subtle">
     <div class="container-site">
-      <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Complete websites, built in stages</h2>
-<p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Describe the site with a sitemap, a diagram or a .md file and the plugin builds the master project: every page, the architecture and the foundations, with placeholder text. It is a starting point: from there each page gets its own iteration, one at a time, as its real content arrives.</p>
+      <h2 class="max-w-[24ch] break-words font-display font-medium text-h2 text-text-primary">A whole site, one stage at a time</h2>
+      <p class="mt-4 max-w-[60ch] break-words text-lead text-text-secondary">Give the plugin a sitemap, a diagram or a .md file. It builds the master project with every page and the architecture, using placeholder text. That is the starting point: each page then gets its own iteration, with its real content, one at a time.</p>
       <div class="grid-page mt-10 items-start">
         <div class="col-span-12 min-w-0 lg:col-span-5">
-          <ol class="space-y-5">
-            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">01</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">You bring the map</h3><p class="mt-1 text-body-sm text-text-secondary">A sitemap as an image, a Mermaid diagram, an outline or a .md. You do not need the content of every page.</p></div></li>
-            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">02</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">You approve the site map</h3><p class="mt-1 text-body-sm text-text-secondary">First a table with each page, its route, its type and whether its text is real or placeholder. Nothing is generated until you say OK.</p></div></li>
-            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">03</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">The master project appears</h3><p class="mt-1 text-body-sm text-text-secondary">Next.js static with Tailwind and the design system. Every route works, repeated pages share one template, and placeholder text is marked on screen.</p></div></li>
-            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">04</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">Then you iterate page by page</h3><p class="mt-1 text-body-sm text-text-secondary">When a page's real content arrives, that page is designed on its own, without touching the rest. A quality check runs before every delivery.</p></div></li>
+          <ol class="space-y-2" data-sites-steps>
+            <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg></span>
+              <div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">You bring the map</h3><p class="mt-1 text-body-sm text-text-secondary">A sitemap as an image, a Mermaid diagram, an outline or a .md. You do not need the content of every page.</p></div>
+            </li>
+            <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg></span>
+              <div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">You approve the site map</h3><p class="mt-1 text-body-sm text-text-secondary">First a table with each page, its route, its type and whether its text is real or placeholder. Nothing is generated until you say OK.</p></div>
+            </li>
+            <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></span>
+              <div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">The master project appears</h3><p class="mt-1 text-body-sm text-text-secondary">Next.js static with Tailwind and the design system. Every route works, repeated pages share one template, and placeholder text is marked on screen.</p></div>
+            </li>
+            <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span>
+              <div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">Then you iterate page by page</h3><p class="mt-1 text-body-sm text-text-secondary">When a page's real content arrives, that page is designed on its own, without touching the rest. A quality check runs before every delivery.</p></div>
+            </li>
           </ol>
-          <div class="mt-8 rounded-card border border-border-default bg-white p-6">
-            <h3 class="font-display font-medium text-h4 text-text-primary">Nova Logística: a demo master project</h3>
-            <p class="mt-2 text-body-sm text-text-secondary">30 pages, 4 collections, one site map file. Only the home page and one service have real text; everything else is placeholder and says so. It is the first stage, not a finished site.</p>
-            <a href="ejemplos/nova-logistica/" target="_blank" rel="noopener" class="btn-arrow mt-5 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Open the live demo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
-          </div>
         </div>
-        <div class="col-span-12 hidden min-w-0 lg:col-span-7 lg:block">
-          <div class="overflow-hidden rounded-card border border-border-default bg-white shadow-product">
-            <div class="flex h-9 items-center border-b border-border-default px-4 font-mono text-caption text-text-muted">Nova Logística · demo</div>
-            <div data-scale-frame data-w="1280" data-h="760" class="relative w-full overflow-hidden">
-              <iframe src="ejemplos/nova-logistica/" title="Demo site Nova Logística" loading="lazy" tabindex="-1" class="absolute left-0 top-0 origin-top-left border-0" style="width:1280px;height:760px"></iframe>
+        <div class="col-span-12 min-w-0 lg:col-span-7">
+          <div class="overflow-hidden rounded-card border border-border-default bg-white">
+            <div class="relative isolate overflow-hidden border-b border-border-default bg-white">
+              <div class="module-field" data-module-field aria-hidden="true"></div>
+              <div class="relative mx-auto w-full max-w-[560px] px-4 pt-6" data-sites-iso></div>
+            </div>
+            <div class="p-6 md:p-8">
+              <h3 class="font-display font-medium text-h3 text-text-primary">Nova Logística: a demo master project</h3>
+              <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2"><li class="flex items-center gap-2 text-body-sm text-text-secondary"><span class="text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 7h-3a2 2 0 0 1-2-2V2"/><path d="M21 6v6.5c0 .8-.7 1.5-1.5 1.5h-7c-.8 0-1.5-.7-1.5-1.5v-9c0-.8.7-1.5 1.5-1.5H17Z"/><path d="M7 8v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H15"/><path d="M3 12v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H11"/></svg></span><span><strong class="font-medium text-text-primary">30</strong> pages</span></li><li class="flex items-center gap-2 text-body-sm text-text-secondary"><span class="text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></span><span><strong class="font-medium text-text-primary">4</strong> collections</span></li><li class="flex items-center gap-2 text-body-sm text-text-secondary"><span class="text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg></span><span><strong class="font-medium text-text-primary">1</strong> site map file</span></li></ul>
+              <p class="mt-4 max-w-[56ch] text-body-sm text-text-secondary">Only the home page and one service have real text; everything else is placeholder and says so. It is the first stage, not a finished site: each page is meant to be iterated on from here.</p>
+              <a href="ejemplos/nova-logistica/" target="_blank" rel="noopener" class="btn-arrow mt-6 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Open the live demo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
             </div>
           </div>
         </div>
@@ -2007,18 +2020,6 @@ skills/elaniin-style/
     new IntersectionObserver(function (es) {
       es.forEach(function (en) { if (en.isIntersecting) start(); else stop(); });
     }, { threshold: 0.3 }).observe(stage);
-  });
-
-  /* demo frame: the iframe keeps its desktop size and is scaled down to the width of its box */
-  document.querySelectorAll('[data-scale-frame]').forEach(function (box) {
-    var w = +box.dataset.w, h = +box.dataset.h, f = box.querySelector('iframe');
-    function fit() {
-      var s = box.clientWidth / w;
-      f.style.transform = 'scale(' + s + ')';
-      box.style.height = (h * s) + 'px';
-    }
-    fit();
-    new ResizeObserver(fit).observe(box);
   });
 
   /* mouse-reactive spotlight + card glow */
@@ -2439,6 +2440,93 @@ skills/elaniin-style/
       cloud: host.dataset.cloud || 'Cloud'
     });
   });
+})();
+</script>
+<script>
+
+/* "Complete sites": the steps light up in turn while on screen, and the isometric scene shows pages going
+   from placeholder (grey) to real (blue) one by one. Both rest on their finished state with reduced motion. */
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var steps = document.querySelector('[data-sites-steps]');
+  if (steps && !reduce) {
+    var items = Array.prototype.slice.call(steps.children), cur = -1, timer = null;
+    var tick = function () { cur = (cur + 1) % items.length; items.forEach(function (li, i) { li.dataset.on = String(i === cur); }); };
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (en.isIntersecting && timer === null) { tick(); timer = setInterval(tick, 2400); }
+        else if (!en.isIntersecting && timer !== null) { clearInterval(timer); timer = null; }
+      });
+    }, { threshold: 0.3 }).observe(steps);
+  }
+
+  var host = document.querySelector('[data-sites-iso]');
+  var K = window.ElaniinIso;
+  if (!host || !K) return;
+  var NS = 'http://www.w3.org/2000/svg', O = { x: 290, y: 130 };
+  var PLATE = { x: -130, y: -90, z: 0, w: 350, d: 290, h: 10 };
+  var MASTER = { x: -30, y: -70, z: 10, w: 170, d: 80, h: 50 };
+  var TILES = [{ x: -105, label: 'Services' }, { x: -5, label: 'Cases' }, { x: 95, label: 'Blog' }].map(function (t) {
+    return { x: t.x, y: 90, z: 10, w: 80, d: 70, h: 22, label: t.label };
+  });
+  var PERIOD = 9600;
+
+  function pill(z, cx, cy, text) {
+    var w = 22 + text.length * 8, h = 26;
+    var plane = K.planeTransform(O, z) + ' matrix(0 -1 1 0 ' + (cx - h / 2) + ' ' + (cy + w / 2) + ')';
+    return '<g transform="' + plane + '"><rect width="' + w + '" height="' + h + '" rx="7" style="fill:var(--color-white);stroke:var(--color-excellence-blue);stroke-opacity:.9"/>' +
+      '<text x="' + (w / 2) + '" y="17" text-anchor="middle" style="fill:var(--color-text-primary);font-family:var(--font-display);font-size:13px;font-weight:500">' + text + '</text></g>';
+  }
+  function line3(pts, z) {
+    return '<polyline points="' + K.pointsAttr(pts.map(function (p) { return { x: p[0], y: p[1], z: z }; }), O) +
+      '" style="fill:none;stroke:var(--color-excellence-blue);stroke-width:1;stroke-opacity:.35;stroke-linejoin:round"/>';
+  }
+  var MX = MASTER.x + MASTER.w / 2, MY = MASTER.y + MASTER.d, BY = 60;
+  var base = K.floorSvg(O, PLATE.x + 20, PLATE.y + 20, PLATE.w - 40, PLATE.d - 40, -34) +
+    K.slabSvg('plate', PLATE, O) + K.slabSvg('software', MASTER, O) +
+    line3([[MX, MY], [MX, BY]], 10.5) +
+    line3([[TILES[0].x + 40, BY], [TILES[2].x + 40, BY]], 10.5) +
+    TILES.map(function (t) { return line3([[t.x + 40, BY], [t.x + 40, t.y]], 10.5); }).join('');
+  var tiles = TILES.map(function (t, i) {
+    return '<g data-grey="' + i + '">' + K.slabSvg('cloud', t, O) + '</g><g data-blue="' + i + '" style="opacity:0">' + K.slabSvg('software', t, O) + '</g>';
+  }).join('');
+  var pills = pill(MASTER.z + MASTER.h, MX, MASTER.y + MASTER.d / 2, 'Site map') +
+    TILES.map(function (t) { return pill(t.z + t.h, t.x + t.w / 2, t.y + t.d / 2, t.label); }).join('');
+  var pulse = '<g data-pulse style="opacity:0"><circle r="11" style="fill:var(--color-blue-400);opacity:.4"/><circle r="4" style="fill:var(--color-elevate-blue)"/><circle r="1.5" style="fill:var(--color-white)"/></g>';
+  host.innerHTML = '<svg viewBox="0 0 580 330" class="block w-full" focusable="false" aria-hidden="true"><g class="iso-levitate">' + base + tiles + pills + pulse + '</g></svg>';
+  host.setAttribute('aria-hidden', 'true');
+
+  var greys = host.querySelectorAll('[data-grey]'), blues = host.querySelectorAll('[data-blue]');
+  var pulseEl = host.querySelector('[data-pulse]');
+  function path(i) {
+    var cx = TILES[i].x + 40, pts = [[MX, MY], [MX, BY], [cx, BY], [cx, TILES[i].y]].map(function (p) { return K.project({ x: p[0], y: p[1], z: 10.5 }, O); });
+    return pts;
+  }
+  var paths = TILES.map(function (_, i) { return path(i); });
+  function render(t) {
+    for (var i = 0; i < 3; i++) {
+      var start = 400 + i * 2400, trav = K.clamp01((t - start) / 1100);
+      var on = K.clamp01((t - (start + 1100)) / 400) * (1 - K.clamp01((t - 8800) / 600));
+      blues[i].style.opacity = on;
+      if (i === activeLeg(t)) {
+        var p = K.pointAt(paths[i], K.easeInOut(trav));
+        pulseEl.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ')');
+        pulseEl.style.opacity = trav > 0 && trav < 1 ? 1 : 0;
+      }
+    }
+  }
+  function activeLeg(t) { return Math.max(0, Math.min(2, Math.floor((t - 400) / 2400))); }
+  if (reduce) { for (var k = 0; k < 3; k++) blues[k].style.opacity = 1; return; }
+  render(0);
+  var raf = null, t0 = 0;
+  new IntersectionObserver(function (es) {
+    es.forEach(function (en) {
+      if (en.isIntersecting && raf === null) {
+        t0 = performance.now();
+        raf = requestAnimationFrame(function loop(now) { render((now - t0) % PERIOD); raf = requestAnimationFrame(loop); });
+      } else if (!en.isIntersecting && raf !== null) { cancelAnimationFrame(raf); raf = null; }
+    });
+  }, { threshold: 0.3 }).observe(host);
 })();
 </script>
 </body>
