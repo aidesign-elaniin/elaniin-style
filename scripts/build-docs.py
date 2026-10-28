@@ -624,7 +624,9 @@ src/components/     layout/ (nav, footer, logo), sections/, ui/
 src/content/        site.ts, <page>.ts, <collection>.ts  (text and image alt)
 src/lib/site-map.ts the ONLY list of routes (+ content: real | mixed | placeholder)
 src/styles/tokens.css   copy of the design tokens (do not edit by hand)
-public/brand, public/images/…   scripts/check.mjs, scripts/overflow.html"""
+public/brand, public/images/…   scripts/check.mjs, scripts/overflow.html
+MAINTENANCE.md      how the site is maintained, by whom, and how a change is reverted
+CLAUDE.md           rules for Claude Code in this site (use the skill, branch, gate)"""
 SITE_CMDS = """npm install
 npm run dev        # http://localhost:3000
 npm run build      # static site in out/
@@ -636,7 +638,8 @@ site_rules = "\n".join(
     for x in [
         "<strong>A. Master project.</strong> From a sitemap, a diagram or a .md: Claude shows the site map and waits for your OK, then builds every route, the architecture and placeholder text that is marked on screen.",
         "<strong>B. Page by page.</strong> When the real content of a page arrives, that page is designed on its own with the design system, and the quality gate runs again.",
-        "<strong>Complexity ladder.</strong> Static Next.js first. API, languages or a CMS only when the brief needs them, with a one-line justification.",
+        "<strong>Complexity ladder.</strong> Static Next.js first. API or languages only when the brief needs them, with a one-line justification.",
+        "<strong>Maintenance.</strong> Claude Code is the CMS: one or two people keep the site up by asking for changes, always through the skill. Every site ships with <code class=\"font-mono text-code text-text-primary\">MAINTENANCE.md</code> for the company and <code class=\"font-mono text-code text-text-primary\">CLAUDE.md</code> for Claude Code.",
     ])
 
 tokens_rows = "\n".join([
@@ -768,6 +771,10 @@ dev_blocks = "\n".join([
           code(SITE_CMDS) +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">The quality gate</h4>' +
           p("<code class=\"font-mono text-code text-text-primary\">npm run check</code> reads <code class=\"font-mono text-code text-text-primary\">out/site-manifest.json</code> and fails if the site map, <code class=\"font-mono text-code text-text-primary\">sitemap.xml</code> and the exported pages differ; a page lacks its single h1, the logotipo or the <code class=\"font-mono text-code text-text-primary\">lang</code>; a link is broken; the real/placeholder marks on screen do not match the site map; or the source breaks a rule (negative margins, arbitrary grids, gradients). <code class=\"font-mono text-code text-text-primary\">scripts/overflow.html</code> measures horizontal overflow of every page at 375 and 768px.") +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Maintenance: Claude Code is the CMS</h4>' +
+          p("A site is kept up by one or two people with Claude Code and this skill. There is no panel and no external CMS. A change goes: new branch, you ask for it in plain language, Claude edits the content files, <code class=\"font-mono text-code text-text-primary\">npm run build &amp;&amp; npm run check</code> must be green, you review it on screen, one commit per change. To undo one: <code class=\"font-mono text-code text-text-primary\">git revert</code>. <code class=\"font-mono text-code text-text-primary\">MAINTENANCE.md</code> answers how, who, flow and rollback for the company; hosting and domain stay marked PENDIENTE until they are defined. Recipes: <code class=\"font-mono text-code text-text-primary\">references/maintenance.md</code>.") +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Blog, cases and docs: MDX</h4>' +
+          p("Editorial pages are <code class=\"font-mono text-code text-text-primary\">.mdx</code> files, one per entry. Claude detects them (blog, cases, news, docs, or long repeated pages) and puts the collection in the site map from the start; there is no page-count threshold. Moving an existing collection to MDX is proposed first and waits for your OK. Adding an article is a new file with its frontmatter; the menu, breadcrumbs and sitemap update on their own. Install, frontmatter and traps: <code class=\"font-mono text-code text-text-primary\">references/mdx.md</code>.") +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Prompt</h4>' + code(SITE_PROMPT, "claude code") +
           p("Repeated pages (services, cases, posts) are a <strong>collection</strong>: one JSON or TS file per item and one shared template, so a site with 100 pages does not need 100 designs. To customize one page, create a fixed route (<code class=\"font-mono text-code text-text-primary\">app/&lt;collection&gt;/&lt;slug&gt;/page.tsx</code> wins over <code class=\"font-mono text-code text-text-primary\">[slug]</code>) and keep its item in <code class=\"font-mono text-code text-text-primary\">content/</code>. Full method, the complexity ladder and known traps: <code class=\"font-mono text-code text-text-primary\">references/site-architect.md</code>. Live example: <a href=\"ejemplos/nova-logistica/\" target=\"_blank\" rel=\"noopener\" class=\"font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring\">Nova Logística, 30 pages</a>.")),
     block(13, "Isometric resource", p("The approved way to explain how pieces fit: three frosted-glass slabs on a base plate, a riser that feeds each slab through its own arm, a pulse of light that travels the structure, and the slab that receives it sliding forward. It is the hero of this very page: <strong>Marketplace → Plugin → Claude</strong>.") +
@@ -789,12 +796,13 @@ skills/elaniin-style/
 ├── SKILL.md           5-phase pipeline and rules
 ├── assets/            official logos and favicon
 ├── references/        tokens, tailwind-api, grids, motion, ux-a11y, websites, site-architect,
-│                      isometric, decks, dashboards, site-dev
+│                      isometric, decks, dashboards, site-dev, maintenance, mdx
 ├── scripts/           ensure-motion.sh
 └── templates/         tokens.css, landing.html, dashboard.html, deck.html,
                        module-field.js / .tsx, drawer.js, nav-theme.js,
                        iso-stack.js + iso/ (isometric resource),
-                       site-starter/ (Next.js static project for complete sites)
+                       site-starter/ (Next.js static project for complete sites),
+                       mdx-collection/ (blog, cases and docs as .mdx files)
 docs/ejemplos/         nova-logistica: 30-page demo master project
 scripts/               verify.sh, sync-tokens.py, check-system.py, browser-check.py,
                        check-design-source.py (one command checks tokens, contrast, motion, nav, docs)''', "tree")),
@@ -992,7 +1000,7 @@ body = f'''
       <div class="grid-page items-stretch">
         <div class="col-span-12 min-w-0 lg:col-span-5">
           <h2 class="max-w-[16ch] break-words font-display font-medium text-h2 text-text-primary">A whole site, one stage at a time</h2>
-          <p class="mt-4 max-w-[44ch] break-words text-body text-text-secondary">Give the plugin a sitemap, a diagram or a .md file. It builds the master project with every page and the architecture, using placeholder text. That is the starting point: each page then gets its own iteration, with its real content, one at a time.</p>
+          <p class="mt-4 max-w-[44ch] break-words text-body text-text-secondary">Give the plugin a sitemap, a diagram or a .md file. It builds the master project with every page and the architecture, using placeholder text. That is the starting point: each page then gets its own iteration, with its real content, one at a time. After launch, Claude Code is the CMS: new pages and articles are a request away.</p>
           <ol class="mt-8 space-y-2" data-sites-steps>
             <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
               <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg></span>
@@ -1009,6 +1017,10 @@ body = f'''
             <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
               <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span>
               <div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">Then you iterate page by page</h3><p class="mt-1 text-body-sm text-text-secondary">When a page's real content arrives, that page is designed on its own, without touching the rest. A quality check runs before every delivery.</p></div>
+            </li>
+            <li data-on="false" class="group flex gap-4 rounded-card border border-transparent p-3 transition-colors duration-base data-[on=true]:border-border-default data-[on=true]:bg-white">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-button border border-border-default bg-white text-text-secondary transition-colors duration-base group-data-[on=true]:border-elevate-blue group-data-[on=true]:text-elevate-blue"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span>
+              <div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">Claude Code keeps it up</h3><p class="mt-1 text-body-sm text-text-secondary">New page, new article or a text change: you ask, Claude edits the files and runs the checks. Blog and case studies are MDX files. Every site ships with a maintenance guide and a one-command rollback.</p></div>
             </li>
           </ol>
         </div>
