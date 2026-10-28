@@ -18,10 +18,10 @@
 
 Elige **el escalón más simple que cubra el insumo** y justifícalo en UNA línea (va al informe).
 
-1. **Next.js estático** (`output: "export"`, `trailingSlash: true`) — punto de partida. Sin formularios con API, ni idiomas, ni CMS, es este. HTML puro en `out/`.
+1. **Next.js estático** (`output: "export"`, `trailingSlash: true`) — punto de partida. Sin formularios con API, ni idiomas, es este. HTML puro en `out/`.
 2. **+ API**: formularios que envían datos, webhooks. Quita `output: "export"` y usa route handlers.
 3. **+ i18n**: ruteo por idioma (`/es`, `/en`). `references/site-dev.md` y DESIGN.md §13.
-4. **+ CMS / contenido dinámico**: muchos autores o cambios frecuentes. MDX primero; CMS después.
+4. **+ contenido dinámico**: datos en vivo que no caben en archivos. El contenido editorial NO sube de escalón: va en MDX (`references/mdx.md`) y **el CMS es Claude Code**.
 
 Subir un escalón se justifica por escrito. **Criterio de parada:** si una decisión no cambia lo que se ve ni el mantenimiento, no se documenta ni se implementa.
 
@@ -36,7 +36,7 @@ Entrada: diagrama o flujo en cualquier formato (imagen, outline, Mermaid/Markdow
    | Página | Ruta | Tipo | Colección | Contenido (real / mixto / relleno) |
    |---|---|---|---|---|
 
-   Cada página recibe un **tipo** (§3). Las que se repiten se agrupan en una **colección** con una sola ruta `[slug]`. Lo que el insumo no dice NO se pregunta; solo se pregunta lo que cambia la arquitectura (¿login?, ¿CMS?, ¿varios idiomas?).
+   Cada página recibe un **tipo** (§3). Las que se repiten se agrupan en una **colección** con una sola ruta `[slug]`. Lo que el insumo no dice NO se pregunta; solo se pregunta lo que cambia la arquitectura (¿login?, ¿varios idiomas?).
 2. **Escalón** (§1), en una línea.
 3. **Crear el proyecto** copiando `templates/site-starter/` y adaptándolo (§4).
 4. **Compuerta** (§7). Se entrega con todas las rutas del mapa funcionando, aunque todo sea relleno.
@@ -56,7 +56,7 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 | `legal` | texto largo; `/legal/` redirige a su primera hija | `src/app/legal/` |
 
 - **Una colección por grupo repetido**, nunca páginas sueltas: `src/content/<colección>.ts` + plantilla de listado + plantilla de detalle.
-- A partir de ~30 páginas editoriales: MDX. Con muchos autores: CMS (escalón 4).
+- **Contenido editorial repetido (blog, casos, noticias, docs): colección MDX desde el inicio**, sin esperar a cierto número de páginas; Claude lo detecta y lo pone en el mapa. Detección, instalación y mantenimiento: `references/mdx.md`. El CMS es Claude Code: no se agrega ni se propone otro.
 - Generar por lotes: plantillas primero con 1 o 2 ítems por tipo, aprobarlas, luego el resto desde los datos.
 
 ## 4 · Arquitectura (obligatoria)
@@ -102,6 +102,7 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 
 - **`README.md`:** comandos, dónde vive cada cosa, cómo agregar una página a una colección, y cómo personalizar UNA sola página (una ruta fija `app/<colección>/<slug>/page.tsx` gana sobre `[slug]`; dejar el ítem en `content/` para que `site-map` lo siga listando; actualizar `placeholder` cuando pase a texto real).
 - **`INFORME.md`:** qué es real y qué es relleno, decisiones a revisar, qué se revisó visualmente (1280/768/375) y qué **NO** se revisó (reduced-motion, foco con Tab, contraste, páginas no vistas una por una), y el aviso del redirect de `/legal`.
+- **`MAINTENANCE.md` y `CLAUDE.md`** (vienen en el starter): cómo se mantiene el sitio con Claude Code y la skill, quién, flujo y cómo revertir. Se llenan con `references/maintenance.md` §1; lo desconocido (hosting, dominio, personas) queda como `PENDIENTE:`.
 - **`git init` y un primer commit** al terminar.
 
 ## 9 · Tabla de enlaces: decisión → regla exacta
@@ -119,6 +120,8 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 | Dashboards dentro del sitio | `references/dashboards.md` |
 | Stack Next.js, i18n, deploy | `references/site-dev.md` |
 | Logo, favicon, overflow | `SKILL.md` §7a, §7c · reglas UX 10–18 |
+| Blog, casos, docs en MDX: detectar, instalar, mantener | `references/mdx.md` · `templates/mdx-collection/` |
+| Mantenimiento, recetario, revertir, traspaso | `references/maintenance.md` · `MAINTENANCE.md` y `CLAUDE.md` del starter |
 
 ## 10 · Trampas conocidas (ya dieron problemas)
 

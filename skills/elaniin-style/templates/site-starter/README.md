@@ -11,6 +11,8 @@ npm run check      # compuerta: sitemap, páginas, h1, enlaces, marcas de rellen
 ```
 Antes de entregar: `npm run build && npm run check` en verde.
 
+Mantenimiento (quién, flujo, cómo revertir): `MAINTENANCE.md`. Reglas para Claude Code: `CLAUDE.md`.
+
 ## Dónde vive cada cosa
 | Qué | Dónde |
 |---|---|

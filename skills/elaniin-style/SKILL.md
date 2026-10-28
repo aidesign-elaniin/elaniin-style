@@ -110,7 +110,7 @@ See `references/motion.md`.
   keyframes in `@theme`, durations via `duration-*` (never `duration-200`). Raw class
   selectors are forbidden. Class → token inventory: `references/tailwind-api.md`.
 - **Elaniin site:** follow `references/site-dev.md` (Next.js 16, motion 14).
-- **Complete websites (many pages):** follow `references/site-architect.md`: one technical path (Next.js static + Tailwind v4), a complexity ladder justified in writing, page types + collections, real asset folders (no inlined logos/images), and a mandatory gate (`npm run build && npm run check`) before delivering.
+- **Complete websites (many pages):** follow `references/site-architect.md`: one technical path (Next.js static + Tailwind v4), a complexity ladder justified in writing, page types + collections, real asset folders (no inlined logos/images), and a mandatory gate (`npm run build && npm run check`) before delivering. Every site ships with `MAINTENANCE.md` + `CLAUDE.md` (maintenance by 1–2 people with Claude Code and this skill, Claude Code is the CMS: no panel or external CMS): `references/maintenance.md`. Editorial collections (blog, cases, docs) are MDX files from the start, detected and proposed by Claude: `references/mdx.md`.
 - Always include: focus rings, hover/active/disabled states, mobile layout, reduced-motion.
 
 ---
