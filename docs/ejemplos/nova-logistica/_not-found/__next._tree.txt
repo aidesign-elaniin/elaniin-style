@@ -1,0 +1,4 @@
+:HL["/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/0k3nnpm9ikrpx.css","style"]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"/_not-found","h":64,"c":"$Q2"}]]
+0:{"b":"sdVj_IWRb2xu2wyze4BvI","t":{"t":{"s":"","h":16,"c":"$Q1"}}}

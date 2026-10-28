@@ -793,6 +793,7 @@ body = f'''
       <a href="#install" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Install</a>
       <a href="#how" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">How it works</a>
       <a href="#examples" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Examples</a>
+      <a href="#sites" class="nav-link transition-colors duration-base hover:text-text-primary focus-ring">Complete sites</a>
       <a href="{REPO}" class="ml-2 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 font-display text-body-sm font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">{GITHUB}GitHub</a>
     </nav>
     <div class="flex items-center gap-2 md:hidden">
@@ -858,6 +859,36 @@ body = f'''
       {eyebrow_h2("Examples", "See it working", "Three sample pieces made with the skill. Open them, resize the window and move the mouse.")}
       <div class="grid-auto mt-10" style="--card-min:18rem">
         {example_cards}
+      </div>
+    </div>
+  </section>
+
+
+  <section id="sites" class="section-y-compact border-t border-border-default bg-surface-subtle">
+    <div class="container-site">
+      {eyebrow_h2("Complete sites", "Complete websites, built in stages", "Describe the site with a sitemap, a diagram or a .md file and the plugin builds the master project: every page, the architecture and the foundations, with placeholder text. It is a starting point: from there each page gets its own iteration, one at a time, as its real content arrives.")}
+      <div class="grid-page mt-10 items-start">
+        <div class="col-span-12 min-w-0 lg:col-span-5">
+          <ol class="space-y-5">
+            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">01</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">You bring the map</h3><p class="mt-1 text-body-sm text-text-secondary">A sitemap as an image, a Mermaid diagram, an outline or a .md. You do not need the content of every page.</p></div></li>
+            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">02</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">You approve the site map</h3><p class="mt-1 text-body-sm text-text-secondary">First a table with each page, its route, its type and whether its text is real or placeholder. Nothing is generated until you say OK.</p></div></li>
+            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">03</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">The master project appears</h3><p class="mt-1 text-body-sm text-text-secondary">Next.js static with Tailwind and the design system. Every route works, repeated pages share one template, and placeholder text is marked on screen.</p></div></li>
+            <li class="flex gap-4"><span class="mono-label shrink-0 pt-1 text-code text-elevate-blue">04</span><div class="min-w-0"><h3 class="font-display font-medium text-h4 text-text-primary">Then you iterate page by page</h3><p class="mt-1 text-body-sm text-text-secondary">When a page's real content arrives, that page is designed on its own, without touching the rest. A quality check runs before every delivery.</p></div></li>
+          </ol>
+          <div class="mt-8 rounded-card border border-border-default bg-white p-6">
+            <h3 class="font-display font-medium text-h4 text-text-primary">Nova Logística: a demo master project</h3>
+            <p class="mt-2 text-body-sm text-text-secondary">30 pages, 4 collections, one site map file. Only the home page and one service have real text; everything else is placeholder and says so. It is the first stage, not a finished site.</p>
+            <a href="ejemplos/nova-logistica/" target="_blank" rel="noopener" class="btn-arrow mt-5 inline-flex h-12 items-center gap-2 rounded-button bg-elevate-blue px-6 font-display text-body font-medium text-white transition-colors duration-base hover:bg-blue-600 active:bg-blue-700 focus-ring">Open the live demo {ARROW}</a>
+          </div>
+        </div>
+        <div class="col-span-12 hidden min-w-0 lg:col-span-7 lg:block">
+          <div class="overflow-hidden rounded-card border border-border-default bg-white shadow-product">
+            <div class="flex h-9 items-center border-b border-border-default px-4 font-mono text-caption text-text-muted">Nova Logística · demo</div>
+            <div data-scale-frame data-w="1280" data-h="760" class="relative w-full overflow-hidden">
+              <iframe src="ejemplos/nova-logistica/" title="Demo site Nova Logística" loading="lazy" tabindex="-1" class="absolute left-0 top-0 origin-top-left border-0" style="width:1280px;height:760px"></iframe>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1066,6 +1097,18 @@ script = r'''
     new IntersectionObserver(function (es) {
       es.forEach(function (en) { if (en.isIntersecting) start(); else stop(); });
     }, { threshold: 0.3 }).observe(stage);
+  });
+
+  /* demo frame: the iframe keeps its desktop size and is scaled down to the width of its box */
+  document.querySelectorAll('[data-scale-frame]').forEach(function (box) {
+    var w = +box.dataset.w, h = +box.dataset.h, f = box.querySelector('iframe');
+    function fit() {
+      var s = box.clientWidth / w;
+      f.style.transform = 'scale(' + s + ')';
+      box.style.height = (h * s) + 'px';
+    }
+    fit();
+    new ResizeObserver(fit).observe(box);
   });
 
   /* mouse-reactive spotlight + card glow */
