@@ -621,17 +621,39 @@ G_HAIR = """<div class="grid-hairline grid-cols-2 md:grid-cols-4">
 </div>"""
 G_AUDIT = r"""grep -n -E '\-mx-|gap-\[|grid-cols-\[' file.html            # must print nothing"""
 
+SITE_TREE = """src/app/            layout, pages, sitemap.ts, robots.ts, site-manifest.json/route.ts
+src/components/     layout/ (nav, footer, logo), sections/, ui/
+src/content/        site.ts, <page>.ts, <collection>.ts  (text and image alt)
+src/lib/site-map.ts the ONLY list of routes (+ content: real | mixed | placeholder)
+src/styles/tokens.css   copy of the design tokens (do not edit by hand)
+public/brand, public/images/…   scripts/check.mjs, scripts/overflow.html"""
+SITE_CMDS = """npm install
+npm run dev        # http://localhost:3000
+npm run build      # static site in out/
+npm run check      # gate: sitemap, pages, h1, links, filler marks, rules"""
+SITE_PROMPT = """With the Elaniin plugin, site mode: build the master project of this site from the attached .md.
+Show me the site map first (page, route, type, collection, real or placeholder) and wait for my OK."""
+site_rules = "\n".join(
+    f'<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">{x}</span></li>'
+    for x in [
+        "<strong>A. Master project.</strong> From a sitemap, a diagram or a .md: Claude shows the site map and waits for your OK, then builds every route, the architecture and placeholder text that is marked on screen.",
+        "<strong>B. Page by page.</strong> When the real content of a page arrives, that page is designed on its own with the design system, and the quality gate runs again.",
+        "<strong>Complexity ladder.</strong> Static Next.js first. API, languages or a CMS only when the brief needs them, with a one-line justification.",
+    ])
+
 tokens_rows = "\n".join([
     row("Color", "bg-elevate-blue · bg-excellence-blue · bg-inspire-grey · text-text-primary · text-text-secondary · text-text-muted", "elevate-blue only as a detail (&lt;5% of the area)."),
-    row("Typography", "font-display · font-text · font-mono · text-display-xl · text-h1…h4 · text-lead · text-body · text-caption", "Fluid scale; do not use loose sizes."),
+    row("Typography", "font-display · font-text · font-mono · text-display-xl · text-h1…h4 · text-lead · text-body · text-caption · text-tag-sm", "Fluid scale (display-xl 64 to 38px); do not use loose sizes."),
     row("Shape and shadow", "rounded-button · rounded-card · rounded-input · shadow-card-rest · shadow-menu · shadow-product", "Radii and shadows come from @theme."),
     row("Layout", "container-site · section-y · section-y-statement · section-y-compact · pad-card", "Responsive gutter and vertical rhythm."),
     row("Motion", "duration-fast · duration-base · duration-slow · duration-reveal · rise · reveal · card-glow · lift · btn-arrow", "Named durations: never duration-200."),
     row("Focus", "focus-ring · focus-ring-on-dark", "Visible double ring on :focus-visible."),
     row("Hover cards", "lift · card-glow + rounded-card border bg-surface-card pad-card", "Always padded: never text touching the edge."),
-    row("Grids", "gap-grid · grid-page · grid-auto · grid-hairline", "Section 11. No negative margins."),
-    row("Mobile navigation", "drawer · scrim + drawer.js", "A 44px menu button that opens a real drawer."),
-    row("Signature texture", "module-field · module-field-dark · module-field-mask-left", "Section 10. Hero and final CTA."),
+    row("Grids", "gap-grid · grid-page · grid-auto · grid-hairline", "Section 12. No negative margins."),
+    row("Nav bar", "nav-bar · nav-item · nav-toggle · nav-logo-light / nav-logo-dark + nav-theme.js", "The reference nav: glass bar that adopts the color of the section under it, 40px pill links, one primary CTA."),
+    row("Footer", "footer-link · footer-social · bg-surface-dark", "Excellence Blue (never Elaniin Black), white logotipo, display-font column headings, plain links."),
+    row("Mobile navigation", "drawer · scrim + drawer.js · nav-toggle", "A 40px menu button below lg (1024px) that opens a real drawer."),
+    row("Signature texture", "module-field · module-field-dark · module-field-mask-left", "Section 11. Hero and final CTA."),
     row("Breakpoints", "sm 640 · md 768 · lg 1024 · xl 1280", "Tailwind defaults are reset on purpose."),
 ])
 
@@ -645,6 +667,7 @@ rules = "\n".join(
         "Keep <code class=\"font-mono text-code text-text-primary\">min-w-0</code> on grid/flex children and <code class=\"font-mono text-code text-text-primary\">overflow-hidden</code> on cards: zero overflow.",
         "Any element with <code class=\"font-mono text-code text-text-primary\">lift</code> or <code class=\"font-mono text-code text-text-primary\">card-glow</code> is a card: it gets <code class=\"font-mono text-code text-text-primary\">rounded-card border bg-surface-card pad-card</code>. Never text touching the hover edge, never negative margins.",
         "Mobile navigation: if a nav is hidden below its breakpoint it needs a 44px menu button that opens a real drawer (<code class=\"font-mono text-code text-text-primary\">drawer</code> + <code class=\"font-mono text-code text-text-primary\">scrim</code> + <code class=\"font-mono text-code text-text-primary\">drawer.js</code>). A hamburger with no action is a bug; test at 375, 768 and 1280 px.",
+        "Nav and footer are the reference site's: <code class=\"font-mono text-code text-text-primary\">nav-bar</code> + <code class=\"font-mono text-code text-text-primary\">nav-item</code>, dark sections declare <code class=\"font-mono text-code text-text-primary\">data-nav-theme</code>, and the footer is Excellence Blue. Never improvise them.",
         "Respect reduced motion: every new animation must switch off with <code class=\"font-mono text-code text-text-primary\">prefers-reduced-motion</code>.",
     ])
 
@@ -702,7 +725,7 @@ dev_blocks = "\n".join([
     block(5, "Update and uninstall", p("The plugin does not define <code class=\"font-mono text-code text-text-primary\">version</code>: every commit in the repo counts as a new version. With <code class=\"font-mono text-code text-text-primary\">autoUpdate</code> on it downloads by itself a few minutes after opening a session; the running session keeps the loaded version until <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or a restart.") + code(UPDATE)),
     block(6, "Use the skill", p("Claude loads it on its own when the request fits. You can also invoke it by its namespaced name:") +
           code("/elaniin:elaniin-style", "claude code") +
-          p("Four modes: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> and <strong>site-dev</strong> (the Elaniin 2027 site in Next.js). Ask in Spanish or English; the skill answers in your language. The script that installs <code class=\"font-mono text-code text-text-primary\">motion</code> runs silently only if the project has a <code class=\"font-mono text-code text-text-primary\">package.json</code>.")),
+          p("Five modes: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> (one landing), <strong>site</strong> (complete multi-page websites, block 10) and <strong>site-dev</strong> (the Elaniin 2027 site in Next.js). Ask in Spanish or English; the skill answers in your language. The script that installs <code class=\"font-mono text-code text-text-primary\">motion</code> runs silently only if the project has a <code class=\"font-mono text-code text-text-primary\">package.json</code>.")),
     block(7, "Edit a generated deck or page", p("Deliverables are <strong>a single self-contained HTML file</strong>: they carry Tailwind v4 (<code class=\"font-mono text-code text-text-primary\">@tailwindcss/browser</code> pinned to 4.3.3) and the token block embedded. They do not depend on the plugin staying installed and do not update on their own: they belong to the project. Edit them with Tailwind classes like any HTML.") +
           '<div class="border-b border-border-default">' + tokens_rows + "</div>" +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules when editing</h4><ul class="space-y-3">' + rules + "</ul>" +
@@ -725,7 +748,8 @@ dev_blocks = "\n".join([
     block(9, "Organization-wide rollout", p("To make auto-update mandatory so nobody can switch it off, put it in <em>managed settings</em> (Organization settings → Claude Code → Managed settings, MDM or <code class=\"font-mono text-code text-text-primary\">managed-settings.json</code>). With <code class=\"font-mono text-code text-text-primary\">autoUpdate</code> defined there, the <code class=\"font-mono text-code text-text-primary\">/plugin</code> toggle is locked.") + code(MANAGED, "json") +
           p("If you use <code class=\"font-mono text-code text-text-primary\">DISABLE_AUTOUPDATER=1</code>, add <code class=\"font-mono text-code text-text-primary\">FORCE_AUTOUPDATE_PLUGINS=1</code> to keep plugin updates running.")),
     block(10, "Troubleshooting", code(TS) +
-          p("Clone fails? Check your git credentials (block 04). Command missing? Run <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or open a new session. Still on the old version? <code class=\"font-mono text-code text-text-primary\">claude plugin update</code> and reload.")),
+          p("Clone fails? Check your git credentials (block 04). Command missing? Run <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or open a new session. Still on the old version? <code class=\"font-mono text-code text-text-primary\">claude plugin update</code> and reload.") +
+          p("The skill shows as <code class=\"font-mono text-code text-text-primary\">elaniin-style:elaniin-style</code>? That is the old plugin name (it is now <code class=\"font-mono text-code text-text-primary\">elaniin</code>, so the skill reads <code class=\"font-mono text-code text-text-primary\">elaniin:elaniin-style</code>). Remove the old plugin and its marketplace, then repeat the install. Updates for the current plugin arrive on their own while <strong>Update</strong> is on.")),
     block(11, "Grids", p("Tailwind already ships <code class=\"font-mono text-code text-text-primary\">grid-cols-*</code> and <code class=\"font-mono text-code text-text-primary\">col-span-*</code>. The plugin adds four utilities that connect them to the Elaniin tokens: always use them instead of building grids with loose values.") +
           '<div class="border-b border-border-default">' +
           row("gap-grid", "Token gap: 24px, 16px on mobile.", "For any grid or flex.") +
@@ -739,12 +763,21 @@ dev_blocks = "\n".join([
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3">' + g_rules + "</ul>" +
           code(G_AUDIT) +
           p("Full recipes (bento, aside, container queries) in <code class=\"font-mono text-code text-text-primary\">references/grids.md</code> inside the plugin.")),
+    block(14, "Complete websites: site mode", p("For a whole site with many pages, not a single landing. One technical path for everyone: <strong>Next.js static + Tailwind v4</strong> with the design system. Claude works in two phases, and the result is a starting point you keep iterating on page by page.") +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Two phases</h4><ul class="space-y-3">' + site_rules + "</ul>" +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">The starter</h4>' + code(SITE_TREE, "tree") +
+          p("Everything lives in <code class=\"font-mono text-code text-text-primary\">skills/elaniin-style/templates/site-starter/</code>. Text is in <code class=\"font-mono text-code text-text-primary\">src/content/</code>, so whoever does not code edits text there. Routes live only in <code class=\"font-mono text-code text-text-primary\">src/lib/site-map.ts</code>: the menu, footer, breadcrumbs and sitemap come from it.") +
+          code(SITE_CMDS) +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">The quality gate</h4>' +
+          p("<code class=\"font-mono text-code text-text-primary\">npm run check</code> reads <code class=\"font-mono text-code text-text-primary\">out/site-manifest.json</code> and fails if the site map, <code class=\"font-mono text-code text-text-primary\">sitemap.xml</code> and the exported pages differ; a page lacks its single h1, the logotipo or the <code class=\"font-mono text-code text-text-primary\">lang</code>; a link is broken; the real/placeholder marks on screen do not match the site map; or the source breaks a rule (negative margins, arbitrary grids, gradients). <code class=\"font-mono text-code text-text-primary\">scripts/overflow.html</code> measures horizontal overflow of every page at 375 and 768px.") +
+          '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Prompt</h4>' + code(SITE_PROMPT, "claude code") +
+          p("Repeated pages (services, cases, posts) are a <strong>collection</strong>: one JSON or TS file per item and one shared template, so a site with 100 pages does not need 100 designs. To customize one page, create a fixed route (<code class=\"font-mono text-code text-text-primary\">app/&lt;collection&gt;/&lt;slug&gt;/page.tsx</code> wins over <code class=\"font-mono text-code text-text-primary\">[slug]</code>) and keep its item in <code class=\"font-mono text-code text-text-primary\">content/</code>. Full method, the complexity ladder and known traps: <code class=\"font-mono text-code text-text-primary\">references/site-architect.md</code>. Live example: <a href=\"ejemplos/nova-logistica/\" target=\"_blank\" rel=\"noopener\" class=\"font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring\">Nova Logística, 30 pages</a>.")),
     block(13, "Isometric resource", p("The approved way to explain how pieces fit: three frosted-glass slabs on a base plate, a riser that feeds each slab through its own arm, a pulse of light that travels the structure, and the slab that receives it sliding forward. It is the hero of this very page: <strong>Marketplace → Plugin → Claude</strong>.") +
           '<div class="border-b border-border-default">' +
           row("iso-levitate", "The whole piece floats 6px, 3s.", "Utility in tokens.css.") +
           row("iso-float", "A label floats 4px, 2s, staggered with --d.", "Utility in tokens.css.") +
           row("iso-stack.js", "Vanilla build for self-contained HTML. Exposes window.ElaniinIso (project, slabSvg, floorSvg, mountStack…).", "templates/iso-stack.js") +
-          row("iso/", "React / Next build: HeroStack, Slab, Floor, iso.ts, use-clock.ts.", "templates/iso/") +
+          row("iso/", "React / Next build: HeroStack, Slab (looks software, ai, cloud, brand, dark), Floor, IsoPill, IsoPulse, IsoLogotipo, iso.ts, use-clock.ts.", "templates/iso/") +
           "</div>" +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">HTML</h4>' + code(ISO_HTML, "html") +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">React / Next.js</h4>' + code(ISO_REACT, "tsx") +
@@ -757,11 +790,14 @@ scripts/make-og.py     regenerates docs/og.png (share image)
 skills/elaniin-style/
 ├── SKILL.md           5-phase pipeline and rules
 ├── assets/            official logos and favicon
-├── references/        tokens, tailwind-api, grids, motion, ux-a11y, websites, decks, dashboards
+├── references/        tokens, tailwind-api, grids, motion, ux-a11y, websites, site-architect,
+│                      isometric, decks, dashboards, site-dev
 ├── scripts/           ensure-motion.sh
 └── templates/         tokens.css, landing.html, dashboard.html, deck.html,
-                       module-field.js / .tsx, drawer.js,
-                       iso-stack.js + iso/ (isometric resource)''', "tree")),
+                       module-field.js / .tsx, drawer.js, nav-theme.js,
+                       iso-stack.js + iso/ (isometric resource),
+                       site-starter/ (Next.js static project for complete sites)
+docs/ejemplos/         nova-logistica: 30-page demo master project''', "tree")),
 ])
 
 
@@ -779,13 +815,13 @@ example_cards = "\n".join(
 
 GROUPS = [
     ("Install", [1, 2, 3, 4, 5, 9, 10]),
-    ("Use & edit", [6, 7]),
+    ("Use & edit", [6, 7, 14]),
     ("Resources", [8, 11, 13, 12]),
 ]
 ORDER = [k for _, ks in GROUPS for k in ks]
 NUM = {k: n for n, k in enumerate(ORDER, 1)}
 SHORT = {1: "Install with the CLI", 2: "Scopes", 3: "Shared repo", 4: "Access", 5: "Update", 9: "Organization", 10: "Troubleshooting",
-         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource"}
+         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource", 14: "Complete websites"}
 
 
 def accordion(k):
@@ -820,6 +856,7 @@ TASKS = [
     ("Share with my team", "Commit it in settings.json.", "dev-3"),
     ("Edit a piece", "Change a deck or page with the tokens.", "dev-9"),
     ("Move it to Next", "Vite or PostCSS in a real project.", "dev-9-build"),
+    ("Build a whole site", "Master project first, then page by page.", "dev-10"),
     ("Fix an error", "Find the fix by symptom.", "dev-7"),
     ("Org rollout", "Managed settings and auto-update.", "dev-6"),
 ]
