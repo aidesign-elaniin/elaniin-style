@@ -66,6 +66,8 @@ Run the phases in order. Do not skip Phase 0.
 2. ¿Tienes referencias visuales adjuntas (imágenes) o links (Dribbble, Behance, un sitio)?
 3. ¿Qué contenido debe aparecer (secciones, datos, diapositivas)?
 
+**Source of truth:** DESIGN.md lives in the Elaniin 2027 site repository (`roger-elaniin/elaniin-2027-website`), not in this plugin; this skill tracks the version stated above. If a rule here disagrees with that file, the file wins.
+
 **References rule (DESIGN.md §11):** A reference may inspire layout and structure, never
 colors or fonts. Transpose it to Elaniin tokens. If the user has no references, propose
 2–3 directions using the keywords in `references/search-keywords.md`.
@@ -129,7 +131,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 6. **Reduced motion:** `prefers-reduced-motion: reduce` disables `rise`, glow, spotlight
    textures, and all `motion` transforms. Content must be fully readable with zero animation.
 7. **Touch targets:** ≥ 44×44px.
-8. **Language:** produce all UI copy in the user's language (EN or ES). Never mix.
+8. **Language:** produce all UI copy in the user's language (EN or ES). Never mix. The templates ship with English demo copy and `<html lang="en">`: when the user writes in Spanish, translate every string AND set `lang="es"`.
 9. **Alive by default.** Every deliverable includes (a) a mouse-reactive texture/spotlight
    and (b) microinteractions — see §7. Static, lifeless compositions are not Elaniin.
 10. **Hover surfaces always have padding (non-negotiable).** Any element that shows a
@@ -176,6 +178,8 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    **One exception:** inside an isometric resource (rule 18) blur is allowed in exactly two places: the
    14px frost of its glass slabs and the halo of its travelling pulse. It never reaches the page
    background, the text or any other component, and there are still no gradients.
+   **Second exception:** the sticky top bar (landing nav, dashboard topbar) may use `bg-white/90 backdrop-blur`
+   (8px, as the reference site's nav bar). Nothing else.
 17. **Decks end with a closing slide and device frames hide their seams (non-negotiable).**
    Every deck finishes with a closing slide: official logo, one closing line, contact. Device
    mockups (`phone-frame`) draw the bezel ABOVE the screens (overlay `::after`, higher z-index);

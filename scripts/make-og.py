@@ -68,9 +68,15 @@ p.lead{{position:absolute;left:72px;top:420px;width:640px;font-size:26px;line-he
 (OUT / "og.html").write_text(html)
 print(len(squares), "lit squares")
 
-# render with headless Chrome -> docs/og.png (macOS path; adjust CHROME elsewhere)
+# render with headless Chrome -> docs/og.png (set CHROME=/path/to/chrome to override)
 import subprocess
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+import os, shutil
+CHROME = (
+    os.environ.get("CHROME")
+    or shutil.which("google-chrome")
+    or shutil.which("chromium")
+    or "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+)
 subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--allow-file-access-from-files",
                 "--force-device-scale-factor=1", f"--window-size={W},{H}", "--virtual-time-budget=8000",
                 f"--screenshot={ROOT / 'docs/og.png'}", (OUT / "og.html").as_uri()], check=True, capture_output=True)

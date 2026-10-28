@@ -70,7 +70,7 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 | `text-caption / code / button / button-lg` | 13 / 13 / 14 / 16 | `text-caption` … |
 
 > Fuera de escala: los tamaños arbitrarios solo se permiten donde el diseño de referencia
-> lo exige (`text-[28px]`, `text-[32px]`, `text-[40px]` en cifras de deck/report).
+> lo exige (`text-[32px]`, `text-[40px]` en cifras de KPI del dashboard, deck y report). `28px` ya es `text-h3`: úsalo.
 
 ### Layout (`:root`, responsive en 1023/767)
 | Token | valor · tablet · móvil | Utility |

@@ -10,9 +10,10 @@ if [ ! -f package.json ]; then
   exit 0
 fi
 
+failed=0
 run() {
   if [ -n "${DEBUG:-}" ]; then printf '+ %s\n' "$*"; fi
-  "$@" >/dev/null 2>&1 || true
+  "$@" >/dev/null 2>&1 || failed=1
 }
 
 if [ -f pnpm-lock.yaml ] || grep -q '"packageManager": *"pnpm' package.json 2>/dev/null; then
@@ -27,4 +28,7 @@ else
   run npm install motion --no-fund --no-audit
 fi
 
+if [ "$failed" -ne 0 ]; then
+  echo "ensure-motion: could not install motion (continuing with the CSS-only ladder; run it by hand to see the error)" >&2
+fi
 exit 0

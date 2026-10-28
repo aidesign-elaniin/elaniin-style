@@ -33,7 +33,7 @@ Duraciones: `instant 100 · fast 150 · base 200 · slow 300 · reveal 500` ms.
 - **Movimiento con propósito:** reveal (entrada), stagger ( jerarquía de datos), hoverLift
   (respuesta a pointer). Nada de parallax decorativo infinito (excepto el glow motif, que
   es transform-only y se detiene con reduced-motion).
-- **Glow motif (`glow-scroll`):** solo diagonales azules que scrollean horizontalmente en el
+- **Glow motif (`glow-scroll`, recurso del sitio, no incluido en los templates):** solo diagonales azules que scrollean horizontalmente en el
   CTA final; `transform: translate3d` puro (compositor); estático con reduced-motion.
 - **Rendimiento del glow (v1.69.4):** el desenfoque (`blur`) del grupo de franjas solo se aplica desde
   1024px (en teléfonos, blur sobre capas en movimiento hacía tartamudear); bajo 768px se omite la

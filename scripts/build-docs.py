@@ -1,5 +1,14 @@
 import html, pathlib, re
 
+# drift guards: the templates are standalone files, so shared pieces are copied; fail the build if copies diverge
+def _theme(path):
+    h = open(path).read()
+    return h[h.index("@theme static {"):].split("\n}\n", 1)[0]
+_TD = str(pathlib.Path(__file__).resolve().parent.parent / "skills/elaniin-style/templates") + "/"
+for _n in ("landing", "deck", "dashboard"):
+    assert _theme(_TD + _n + ".html") == _theme(_TD + "tokens.css"), _n + ".html: @theme static differs from tokens.css"
+assert open(_TD + "iso-stack.js").read().strip() in open(_TD + "landing.html").read(), "landing.html: inline iso-stack differs from iso-stack.js"
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent  # repo root
 src = (ROOT / "skills/elaniin-style/templates/landing.html").read_text().split("\n")
 b_i = src.index("<body>")
