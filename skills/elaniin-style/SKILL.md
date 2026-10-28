@@ -3,9 +3,12 @@ name: elaniin-style
 description: >
   Elaniin design system skill. Produces pitch decks, dashboards & reports, and websites
   & landings in the Elaniin 2027 style (white/grey base, Excellence Blue dark bands,
-  Elevate Blue detail-only accent, hairline grids, restrained motion). Also develops
-  the Elaniin 2027 Next.js site. Bilingüe: sigue instrucciones en EN o ES.
+  Elevate Blue detail-only accent, hairline grids, restrained motion). Also builds
+  COMPLETE multi-page websites from a sitemap, diagram or .md (Website Architect mode:
+  Next.js static + Tailwind, master project with placeholder content, then page by page)
+  and develops the Elaniin 2027 Next.js site. Bilingüe: sigue instrucciones en EN o ES.
   Use when the user asks for an "Elaniin" deck, dashboard, report, landing, website,
+  a complete site / "sitio completo" / all its pages / sitemap / site architecture,
   or to build/change the Elaniin site — or invokes /elaniin:elaniin-style.
 license: MIT
 compatibility:
