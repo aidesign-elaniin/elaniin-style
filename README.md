@@ -86,11 +86,12 @@ scripts/make-og.py        regenera la imagen para compartir `docs/og.png`
 skills/elaniin-style/
 ├── SKILL.md              pipeline de 5 fases, routing, UX core
 ├── assets/               logos oficiales y favicon
-├── references/           tokens, tailwind-api, motion, ux-a11y, websites, decks, dashboards, site-dev…
+├── references/           tokens, tailwind-api, motion, ux-a11y, websites, site-architect, decks, dashboards, site-dev…
 ├── scripts/              ensure-motion.sh (instala motion en silencio si hay package.json)
 └── templates/            tokens.css, landing.html, dashboard.html, deck.html, motion-presets.ts,
                           module-field.js / module-field.tsx (textura interactiva del hero),
-                          iso-stack.js + iso/ (recurso isométrico del hero: HTML y React)
+                          iso-stack.js + iso/ (recurso isométrico del hero: HTML y React),
+                          site-starter/ (proyecto Next.js estático para sitios completos)
 ```
 
 ## No negociables / Non-negotiables

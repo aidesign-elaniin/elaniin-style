@@ -38,7 +38,8 @@ Detect the deliverable from the request and load only what you need:
 |---|---|---|
 | **deck** | pitch deck, presentation, slides, informe presentado | `references/decks.md` + `templates/deck.html` |
 | **dashboard** | dashboard, admin, analytics, report, panel | `references/dashboards.md` + `templates/dashboard.html` |
-| **website** | landing, website, homepage, web page, sitio web | `references/websites.md` + `templates/landing.html` (+ `references/isometric.md` when a hero or section must explain how pieces fit) |
+| **website** | single landing, one web page, quick landing | `references/websites.md` + `templates/landing.html` (+ `references/isometric.md` when a hero or section must explain how pieces fit) |
+| **site** (Website Architect) | complete website, many pages, sitemap/diagram, subsites, "sitio completo", "todas sus páginas" | `references/site-architect.md` + `templates/site-starter/` (Next.js static + Tailwind). Phase A: master project from a diagram with placeholder content; phase B: design page by page when real content arrives |
 | **site-dev** | build/change the Elaniin 2027 site (Next.js) | `references/site-dev.md` |
 
 For every mode you also need:
@@ -106,6 +107,7 @@ See `references/motion.md`.
   keyframes in `@theme`, durations via `duration-*` (never `duration-200`). Raw class
   selectors are forbidden. Class → token inventory: `references/tailwind-api.md`.
 - **Elaniin site:** follow `references/site-dev.md` (Next.js 16, motion 14).
+- **Complete websites (many pages):** follow `references/site-architect.md`: one technical path (Next.js static + Tailwind v4), a complexity ladder justified in writing, page types + collections, real asset folders (no inlined logos/images), and a mandatory gate (`npm run build && npm run check`) before delivering.
 - Always include: focus rings, hover/active/disabled states, mobile layout, reduced-motion.
 
 ---

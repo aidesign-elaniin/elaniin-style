@@ -1,0 +1,13 @@
+{
+  "slug": "ingenieria",
+  "title": "Ingeniería",
+  "summary": "Texto de relleno: resumen de ingeniería en una o dos frases.",
+  "body": [
+    "Texto de relleno: primer párrafo que explica el servicio, para quién es y qué resuelve.",
+    "Texto de relleno: segundo párrafo con el proceso, los entregables y los tiempos habituales."
+  ],
+  "image": {
+    "src": "/images/servicios/placeholder.svg",
+    "alt": "Imagen de relleno de ingeniería"
+  }
+}

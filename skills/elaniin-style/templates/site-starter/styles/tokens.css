@@ -1,0 +1,712 @@
+/*
+  Elaniin tokens — single source of truth (DESIGN.md v1.86.2 · Tailwind v4).
+
+  CONTRACT — Tailwind-first API:
+    1. Every design value lives in @theme (or in :root when it is a layout/duration
+       var consumed by a utility — theme keys alone do NOT generate duration-* utilities).
+    2. Every named CSS resource is an @utility. Raw class selectors inside plain
+       <style> blocks are forbidden: they are invisible to the utility API.
+    3. Animations are tokens: --animate-* + @keyframes inside @theme, so `animate-*`
+       utilities exist — and every motion utility honors prefers-reduced-motion itself.
+    4. Durations are named: instant 100 · fast 150 · base 200 · slow 300 · reveal 500.
+       Use `duration-base`, never `duration-200`.
+
+    5. @theme is STATIC: every token is emitted as a CSS variable even when no utility uses it, so inline
+       styles and JS can reference var(--color-*) (the isometric resource does). Without `static`,
+       Tailwind v4 prunes unused variables and a missing var() silently renders black.
+
+  USAGE:
+    - Tailwind v4 project: include tailwindcss first, then this file (or paste it).
+       (Never spell out the import directive inside this comment: mentioning it
+       anywhere in the block breaks @tailwindcss/browser.)
+    - Standalone HTML: load https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3 and paste
+      this file inside a <style type="text/tailwindcss"> block (templates embed a copy —
+      keep both in sync when editing).
+  Defaults (palette/radii/shadows/breakpoints) are reset on purpose: only the tokens
+  below exist, so a stray `bg-blue-500` simply does not compile.
+*/
+
+@theme static {
+  /* ---------- reset defaults ---------- */
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --ease-*: initial;
+
+  /* ---------- breakpoints: mobile-lg 640 / tablet 768 / desktop 1024 / wide 1280 ---------- */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* ---------- color: brand ---------- */
+  --color-elevate-blue: #1054ff;     /* DETAIL accent only (buttons, links, focus, active, symbol) */
+  --color-inspire-grey: #f0f0f3;
+  --color-excellence-blue: #01172e;  /* the strong color: dark bands, case stages, CTA, footer, code */
+  --color-elaniin-black: #141414;
+  --color-dynamic-blue: #4d75fd;     /* non-text accents only */
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* ---------- color: blue ramp ---------- */
+  --color-blue-100: #d7e2f8;
+  --color-blue-200: #b9cefb;
+  --color-blue-300: #6a9aff;
+  --color-blue-400: #4d75fd;
+  --color-blue-500: #1054ff;
+  --color-blue-600: #0848cc;
+  --color-blue-700: #023ca0;
+  --color-blue-800: #022b63;
+  --color-blue-900: #01172e;
+  --color-blue-tint-50: #e7eeff;
+  --color-blue-active-dark: #010f20;
+
+  /* ---------- color: text ---------- */
+  --color-text-primary: #141414;
+  --color-text-secondary: #4a4d57;
+  --color-text-muted: #656873;
+  --color-text-link: #1054ff;
+  --color-text-link-hover: #0848cc;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-secondary: #a9b8cc;
+  --color-text-on-dark-muted: #8ea0b8;
+  --color-text-on-dark-accent: #7b9bff;
+  --color-text-disabled: #8c8f9b;
+
+  /* ---------- color: surface ---------- */
+  --color-surface-page: #ffffff;
+  --color-surface-subtle: #f0f0f3;
+  --color-surface-card: #ffffff;
+  --color-surface-dark: #01172e;
+  --color-surface-dark-alt: #141414;
+  --color-surface-code: #01172e;
+
+  /* ---------- color: border ---------- */
+  --color-border-default: #e4e4ea;
+  --color-border-strong: #d3d4dc;
+  --color-border-input: #8c8f9b;
+  --color-border-ink: #141414;
+  --color-border-on-dark: rgba(255, 255, 255, 0.12);
+  --color-border-on-dark-strong: rgba(255, 255, 255, 0.24);
+  --color-surface-dark-card: rgba(255, 255, 255, 0.04);
+
+  /* ---------- color: status (state only, never decoration) ---------- */
+  --color-success-text: #136c42; --color-success-bg: #e3f4ea; --color-success-border: #b6e0c8; --color-success-dot: #1f9d61;
+  --color-warning-text: #8a5300; --color-warning-bg: #fff3d9; --color-warning-border: #f2d58f; --color-warning-dot: #b87700;
+  --color-error-text: #a3201f;   --color-error-bg: #fde7e7;   --color-error-border: #f1b5b5;   --color-error-dot: #d6322f;
+  --color-info-text: #0848cc;    --color-info-bg: #e7eeff;    --color-info-border: #b9cefb;    --color-info-dot: #1054ff;
+  --color-neutral-text: #4a4d57; --color-neutral-bg: #f0f0f3; --color-neutral-border: #e4e4ea; --color-neutral-dot: #8c8f9b;
+
+  /* ---------- typography: families ---------- */
+  --font-display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---------- typography: scale (fluid between mobile and desktop values) ---------- */
+  --text-display-xl: clamp(38px, 6.25vw - 16px, 64px);
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-tag-sm: 11px; /* the small tag (official, DESIGN.md v1.64): mono, with mono-label */
+  --text-tag-sm--line-height: 1;
+  --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-h1: clamp(32px, 3.125vw + 8px, 48px);
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(28px, 1.562vw + 16px, 36px);
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(22px, 1.172vw + 13px, 28px);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h4: clamp(20px, 0.3906vw + 17px, 22px);
+  --text-h4--line-height: 1.25;
+  --text-h4--letter-spacing: -0.015em;
+  --text-lead: clamp(18px, 0.3906vw + 15px, 20px);
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.005em;
+  --text-body-lg: clamp(17px, 0.1953vw + 15.5px, 18px);
+  --text-body-lg--line-height: 1.55;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.5;
+  --text-caption: 13px;
+  --text-caption--line-height: 1.4;
+  --text-code: 13px;
+  --text-code--line-height: 1.63;
+  --text-button: 14px;
+  --text-button--line-height: 1;
+  --text-button-lg: 16px;
+  --text-button-lg--line-height: 1;
+
+  /* ---------- radius ---------- */
+  --radius-button: 6px;
+  --radius-input: 6px;
+  --radius-tag: 6px;
+  --radius-card: 12px;
+  --radius-media: 12px;
+  --radius-code: 12px;
+  --radius-menu: 8px;
+  --radius-modal: 16px;
+  --radius-tooltip: 6px;
+  --radius-device: 32px;
+  --radius-module: 2px;
+  --radius-full: 9999px;
+
+  /* ---------- shadow ---------- */
+  --shadow-none: none;
+  --shadow-card-rest: 0 0 1px rgba(1, 30, 61, 0.03), 0 1px 2px rgba(1, 30, 61, 0.06);
+  --shadow-menu: 0 8px 24px -8px rgba(1, 30, 61, 0.18), 0 0 0 1px rgba(1, 30, 61, 0.06);
+  --shadow-product: 0 30px 45px -30px rgba(1, 30, 61, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.1);
+  --shadow-focus: 0 0 0 2px #ffffff, 0 0 0 4px #1054ff;
+  --shadow-focus-on-dark: 0 0 0 2px #01172e, 0 0 0 4px #7b9bff;
+
+  /* ---------- motion: easings ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---------- motion: animation tokens (each generates an animate-* utility) ---------- */
+  --animate-rise: rise var(--dur-reveal) var(--ease-emphasized) both;
+  --animate-draw-line: draw-line 1.6s var(--ease-emphasized) 0.25s both;
+  --animate-float-chip: float-chip 4s ease-in-out infinite;
+  --animate-typing-dot: typing-dot 0.9s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 0.9s linear infinite;
+  --animate-ping-soft: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-sheen: sheen 5s linear infinite;
+
+  /* ---------- motion: keyframes (paired with the tokens above) ---------- */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(var(--reveal-distance)); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes draw-line {
+    from { stroke-dashoffset: var(--len, 1200); }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes float-chip {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes typing-dot {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50% { transform: translateY(-3px); opacity: 1; }
+  }
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes ping-soft {
+    0% { transform: scale(1); opacity: 0.8; }
+    75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes sheen {
+    from { transform: translate3d(-140%, 0, 0); }
+    to { transform: translate3d(420%, 0, 0); }
+  }
+}
+
+:root {
+  color-scheme: light;
+
+  /* layout */
+  --container-max: 1280px;
+  --gutter: 48px;
+  --grid-gap: 24px;
+  --nav-height: 64px;
+  --section-y: 96px;
+  --section-y-statement: 128px;
+  --section-y-compact: 64px;
+  --card-padding: 32px;
+  --card-min: 16rem;
+  --drawer-width: 18rem;
+  --sidebar-width: 15rem;
+  --module-size: 2px;
+  --module-pitch: 16px;
+
+  /* motion durations — consumed by the duration-* utilities (see contract §4) */
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --dur-reveal: 500ms;
+  --reveal-distance: 16px;
+  --reveal-stagger: 60ms;
+
+}
+
+@media (max-width: 1023px) {
+  :root { --gutter: 32px; --section-y: 72px; --section-y-statement: 96px; --section-y-compact: 48px; }
+}
+@media (max-width: 767px) {
+  :root { --gutter: 20px; --grid-gap: 16px; --section-y: 56px; --section-y-statement: 72px; --section-y-compact: 40px; --card-padding: 24px; }
+}
+
+/* ---------- utilities: layout & type ---------- */
+@utility mono-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@utility section-y {
+  padding-block: var(--section-y);
+}
+@utility section-y-statement {
+  padding-block: var(--section-y-statement);
+}
+@utility section-y-compact {
+  padding-block: var(--section-y-compact);
+}
+@utility pad-card {
+  padding: var(--card-padding);
+}
+
+/* ---------- utilities: focus ---------- */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+  }
+}
+@utility focus-ring-on-dark {
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus-on-dark);
+  }
+}
+
+/* ---------- utilities: named durations (contract §4) ---------- */
+@utility duration-instant { transition-duration: var(--dur-instant); }
+@utility duration-fast { transition-duration: var(--dur-fast); }
+@utility duration-base { transition-duration: var(--dur-base); }
+@utility duration-slow { transition-duration: var(--dur-slow); }
+@utility duration-reveal { transition-duration: var(--dur-reveal); }
+
+/* ---------- utilities: entrance ---------- */
+/* Time-based entrance: runs without waiting for hydration. Stagger with style="--i: n". */
+@utility rise {
+  animation: var(--animate-rise);
+  animation-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Scroll entrance (vanilla counterpart of the site's Reveal): hidden only when JS is
+   on (html.js), revealed by IntersectionObserver adding .is-visible. */
+@utility reveal {
+  transition: opacity var(--dur-reveal) var(--ease-emphasized), transform var(--dur-reveal) var(--ease-emphasized);
+  transition-delay: calc(var(--i, 0) * var(--reveal-stagger));
+  html.js &:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js &:not(.is-visible),
+    & {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+/* SVG line draw: pair with style="--len: <path length>". */
+@utility draw-line {
+  stroke-dasharray: var(--len, 1200);
+  animation: var(--animate-draw-line);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- utilities: surfaces ---------- */
+@utility spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(600px circle at var(--mx, 70%) var(--my, 20%), rgba(77, 117, 253, 0.07), transparent 62%);
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+@utility card-glow {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 50%), rgba(16, 84, 255, 0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* ---------- utilities: interactions ---------- */
+@utility nav-link-pill {
+  /* reference-site nav link (DESIGN.md components.nav.link): 40px pill, subtle surface on hover */
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-button);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: background-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  &:hover {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-link);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+@utility nav-link {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 100%;
+    background: var(--color-elevate-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
+  }
+}
+@utility btn-arrow {
+  &:active {
+    transform: scale(0.98);
+  }
+  & svg {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  &:hover svg,
+  &:focus-visible svg {
+    transform: translateX(4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & svg {
+      transition: none;
+    }
+  }
+}
+@utility lift {
+  transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-menu);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+@utility row-hover {
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+/* ---------- utilities: living mockups (loops) ---------- */
+/* 3-dot typing indicator. Markup: <span class="typing-dots"><i></i><i></i><i></i></span> */
+@utility typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  & > i {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: currentColor;
+    animation: var(--animate-typing-dot);
+  }
+  & > i:nth-child(2) { animation-delay: 0.12s; }
+  & > i:nth-child(3) { animation-delay: 0.24s; }
+  @media (prefers-reduced-motion: reduce) {
+    & > i {
+      animation: none;
+      opacity: 0.6;
+    }
+  }
+}
+/* Gentle vertical float for decorative chips. */
+@utility float-chip {
+  animation: var(--animate-float-chip);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Tiny spinner. Markup: <span class="spinner"></span> */
+@utility spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-default);
+  border-top-color: var(--color-elevate-blue);
+  animation: var(--animate-spin-slow);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Live-data dot with soft ping. Markup: <span class="live-dot"></span> */
+@utility live-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-success-dot);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    background: var(--color-success-dot);
+    animation: var(--animate-ping-soft);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}
+
+/* ---------- isometric resources: levitation and floating (DESIGN.md motifs.isometric) ---------- */
+/* iso-levitate: the whole piece floats 6px, 3s. iso-float: a label floats 4px, 2s, staggered with --d. */
+@theme {
+  --animate-iso-levitate: iso-levitate 3s var(--ease-standard) infinite alternate;
+  --animate-iso-float: iso-float 2s var(--ease-standard) infinite alternate;
+  --animate-accent-flow: accent-flow 5s var(--ease-in-out, ease-in-out) infinite alternate;
+  @keyframes iso-levitate {
+    from { transform: translateY(0); }
+    to { transform: translateY(-6px); }
+  }
+  @keyframes iso-float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+  }
+  @keyframes accent-flow {
+    from { background-position: var(--af-from, 0%) 0%; }
+    to { background-position: var(--af-to, 65%) 0%; }
+  }
+}
+@utility iso-levitate {
+  animation: var(--animate-iso-levitate);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* accent-flow: the hero accent words (DESIGN.md components.hero.heading.accent, v1.76): a gradient of the blue ramp that
+   flows through the word, Elevate Blue to blue-400 and back. Offset the next word with --af-from/--af-to (+35%) and
+   --af-delay (+0.5s) so two words are never the same tone. Resting state (reduced motion): plain Elevate Blue. */
+@utility accent-flow {
+  color: var(--color-elevate-blue);
+  background-image: linear-gradient(100deg, var(--color-elevate-blue) 0%, var(--color-blue-400) 20%, var(--color-elevate-blue) 40%, var(--color-blue-400) 60%, var(--color-elevate-blue) 80%, var(--color-blue-400) 100%);
+  background-size: 300% 100%;
+  background-position: var(--af-from, 0%) 0%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: var(--animate-accent-flow);
+  animation-delay: var(--af-delay, 0s);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+@utility iso-float {
+  animation: var(--animate-iso-float);
+  animation-delay: calc(var(--d, 0) * 400ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* ---------- utilities: grids (on top of Tailwind's native grid-cols / col-span) ---------- */
+/* gap-grid: the responsive gap token (24px, 16px on mobile). grid-page: 12-col page grid —
+   children carry col-span-12 md:col-span-N. grid-auto: auto-fit cards of unknown count
+   (override --card-min per grid via style). grid-hairline: cells separated by 1px lines,
+   no negative margins; add grid-cols-N / md:grid-cols-N and give children pad-card. */
+@utility gap-grid {
+  gap: var(--grid-gap);
+}
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+  gap: var(--grid-gap);
+}
+@utility grid-hairline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card);
+  background: var(--color-border-default);
+  & > * {
+    min-width: 0;
+    background: var(--color-surface-card);
+  }
+}
+
+/* ---------- utilities: drawer (off-canvas mobile nav) ---------- */
+/* Mobile: panel that slides in from the left; closed = visibility hidden (out of tab order).
+   lg+: sticky full-height sidebar (pinned, only the content scrolls). For a landing's mobile menu add `md:hidden` to drawer and scrim.
+   Behavior: templates/drawer.js (toggle data-open, focus, Esc, scroll lock). */
+@utility drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 50;
+  width: min(var(--drawer-width), 85vw);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform var(--dur-slow) var(--ease-emphasized), visibility 0s linear var(--dur-slow);
+  &[data-open="true"] {
+    transform: none;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  @variant lg {
+    /* persistent sidebar: pinned to the viewport; only the page content scrolls */
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    height: 100vh;
+    height: 100dvh;
+    z-index: auto;
+    width: var(--sidebar-width);
+    transform: none;
+    visibility: visible;
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+@utility scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(1, 23, 46, 0.48);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  &[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @variant lg {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* ---------- utilities: module field (signature texture of hero / CTA) ---------- */
+/* Resting grid = pure CSS: 2px squares on a 16px pitch, grey at 45%, masked toward the bottom.
+   Pointer trail = templates/module-field.js (canvas, off for touch + reduced-motion).
+   Markup: <div class="module-field" data-module-field aria-hidden="true"></div> as the first
+   child of a `relative isolate overflow-hidden` host. Variants: module-field-dark,
+   module-field-mask-left, module-field-mask-none. */
+@utility module-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --module-lit-1: var(--color-blue-500);
+  --module-lit-2: var(--color-blue-400);
+  --module-lit-3: var(--color-blue-300);
+  -webkit-mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  mask-image: var(--module-mask, linear-gradient(to bottom, #000 35%, transparent 100%));
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.45;
+    background-image: conic-gradient(from 270deg at var(--module-size) var(--module-size), var(--module-color, var(--color-border-strong)) 0 90deg, transparent 0);
+    background-size: var(--module-pitch) var(--module-pitch);
+    background-position: calc((var(--module-pitch) - var(--module-size)) / 2) calc((var(--module-pitch) - var(--module-size)) / 2);
+  }
+  & > canvas {
+    position: absolute;
+    inset: 0;
+  }
+}
+@utility module-field-dark { --module-color: var(--color-border-on-dark-strong); }
+@utility module-field-mask-left { --module-mask: linear-gradient(to right, transparent 8%, #000 60%); }
+@utility module-field-mask-none { --module-mask: none; }
+
+/* ---------- base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+  body {
+    background: var(--color-surface-page);
+    color: var(--color-text-primary);
+    font-family: var(--font-text);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    overflow-x: clip;
+  }
+  [id] {
+    scroll-margin-top: calc(var(--nav-height) + 1px);
+  }
+  ::selection {
+    background: var(--color-blue-200);
+    color: var(--color-excellence-blue);
+  }
+  :focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-focus);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}
