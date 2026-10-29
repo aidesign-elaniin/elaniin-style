@@ -9,6 +9,8 @@ for _script, _msg in (("sync-tokens.py", "an inline script in landing.html diffe
         raise SystemExit(f"{_script} failed: {_msg}. Run it to see the details.")
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent  # repo root
+import json
+VERSION = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())["version"]
 src = (ROOT / "skills/elaniin-style/templates/landing.html").read_text().split("\n")
 b_i = src.index("<body>")
 e_i = next(i for i in range(b_i, len(src)) if src[i].strip() == "</svg>")
@@ -726,7 +728,7 @@ dev_blocks = "\n".join([
           row("local", ".claude/settings.local.json", "Only you, only this repo.") + "</div>"),
     block(3, "Enable it in a shared repo", p("Commit this in <code class=\"font-mono text-code text-text-primary\">.claude/settings.json</code> so the whole team sees the marketplace. It applies after accepting the folder trust prompt, and each person still runs <code class=\"font-mono text-code text-text-primary\">claude plugin install … --scope project</code> once.") + code(PROJECT_JSON, "json")),
     block(4, "Repository access", p("The repository is <strong>public</strong>: no GitHub account, token or permissions are needed to install or update. If it ever becomes private, Claude Code will use the user's git credentials (<code class=\"font-mono text-code text-text-primary\">gh auth login</code> and <code class=\"font-mono text-code text-text-primary\">gh auth setup-git</code> over HTTPS, or an SSH key in ssh-agent).")),
-    block(5, "Update and uninstall", p("The plugin does not define <code class=\"font-mono text-code text-text-primary\">version</code>: every commit in the repo counts as a new version. With <code class=\"font-mono text-code text-text-primary\">autoUpdate</code> on it downloads by itself a few minutes after opening a session; the running session keeps the loaded version until <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or a restart.") + code(UPDATE)),
+    block(5, "Update and uninstall", p("The plugin is versioned (<code class=\"font-mono text-code text-text-primary\">plugin.json</code>, currently <strong>v" + VERSION + "</strong>). A new version ships only when a release is cut: the Changelog block lists what each one changed. With <code class=\"font-mono text-code text-text-primary\">autoUpdate</code> on it downloads by itself a few minutes after opening a session; the running session keeps the loaded version until <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or a restart.") + code(UPDATE)),
     block(6, "Use the skill", p("Claude loads it on its own when the request fits. You can also invoke it by its namespaced name:") +
           code("/elaniin:elaniin-style", "claude code") +
           p("Five modes: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> (one landing), <strong>site</strong> (complete multi-page websites, block 10) and <strong>site-dev</strong> (the Elaniin 2027 site in Next.js). Ask in Spanish or English; the skill answers in your language. The script that installs <code class=\"font-mono text-code text-text-primary\">motion</code> runs silently only if the project has a <code class=\"font-mono text-code text-text-primary\">package.json</code>.")),
@@ -836,15 +838,33 @@ example_cards = "\n".join(
         ("Deck", "16:9 presentation deck", "Fixed 1280×720 canvas with keyboard navigation and living slides.", "templates/deck.html"),
     ])
 
+# Changelog: CHANGELOG.md is the single source (released with scripts/release.sh, published by .github/workflows/release.yml)
+
+
+def changelog_html():
+    out = ""
+    for ver, date, body in re.findall(r"^## \[([^\]]+)\] - (\S+)\n(.*?)(?=^## \[|\Z)", (ROOT / "CHANGELOG.md").read_text(), re.M | re.S):
+        sec = ""
+        for kind, items in re.findall(r"^### (.+)\n((?:- .*\n?)+)", body, re.M):
+            lis = "".join(f'<li class="min-w-0 break-words">{re.sub(r"`([^`]+)`", r"<code class=\"font-mono text-code text-text-primary\">\1</code>", html.escape(i[2:], quote=False))}</li>' for i in items.strip().split("\n"))
+            sec += f'<p class="mono-label mt-4 text-caption text-text-muted">{kind}</p><ul class="mt-2 list-disc space-y-1 pl-5 text-body-sm text-text-secondary">{lis}</ul>'
+        tag = f'<span class="mono-label ml-3 text-caption text-elevate-blue">Latest</span>' if ver == VERSION else ""
+        out += f'''<div class="min-w-0 border-t border-border-default py-5"><h4 class="font-display font-medium text-h3 text-text-primary">v{ver}{tag}</h4>
+<p class="mono-label text-caption text-text-muted">{date} · <a href="{REPO}/releases/tag/v{ver}" class="text-elevate-blue focus-ring">GitHub release</a></p>{sec}</div>'''
+    return out
+
+
+block(17, "Changelog", p("Every version of the plugin, newest first. Each one is also a <a href=\"" + REPO + "/releases\" class=\"text-elevate-blue focus-ring\">GitHub release</a> with the same notes.") + changelog_html())
+
 GROUPS = [
-    ("Install", [1, 2, 3, 4, 5, 9, 10]),
+    ("Install", [1, 2, 3, 4, 5, 17, 9, 10]),
     ("Use & edit", [6, 7, 14]),
     ("Resources", [8, 11, 13, 15, 16, 12]),
 ]
 ORDER = [k for _, ks in GROUPS for k in ks]
 NUM = {k: n for n, k in enumerate(ORDER, 1)}
 SHORT = {1: "Install with the CLI", 2: "Scopes", 3: "Shared repo", 4: "Access", 5: "Update", 9: "Organization", 10: "Troubleshooting",
-         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource", 14: "Complete websites", 15: "Components", 16: "Bilingual"}
+         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource", 14: "Complete websites", 15: "Components", 16: "Bilingual", 17: "Changelog"}
 
 
 def accordion(k):
@@ -877,11 +897,11 @@ claude plugin install elaniin@elaniin-style-marketplace"""
 TASKS = [
     ("Install", "Two commands and you are done.", "dev-1"),
     ("Share with my team", "Commit it in settings.json.", "dev-3"),
-    ("Edit a piece", "Change a deck or page with the tokens.", "dev-9"),
+    ("Edit a piece", "Change a deck or page with the tokens.", f"dev-{NUM[7]}"),
     ("Move it to Next", "Vite or PostCSS in a real project.", "dev-9-build"),
-    ("Build a whole site", "Master project first, then page by page.", "dev-10"),
-    ("Fix an error", "Find the fix by symptom.", "dev-7"),
-    ("Org rollout", "Managed settings and auto-update.", "dev-6"),
+    ("Build a whole site", "Master project first, then page by page.", f"dev-{NUM[14]}"),
+    ("Fix an error", "Find the fix by symptom.", f"dev-{NUM[10]}"),
+    ("Org rollout", "Managed settings and auto-update.", f"dev-{NUM[9]}"),
 ]
 task_cards = "\n".join(
     f'''<a href="#{target}" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">

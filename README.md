@@ -50,9 +50,11 @@ Repo compartido: commitea en `.claude/settings.json`
 
 ## Actualizar / Update
 
-El plugin **no define `version`**: cada commit de este repo es una versión nueva.
+El plugin está versionado (`version` en `plugin.json`, historial en [`CHANGELOG.md`](CHANGELOG.md) y en [Releases](https://github.com/aidesign-elaniin/elaniin-style/releases)): una versión nueva solo llega cuando se publica un release.
 Con `autoUpdate` activo se descarga solo unos minutos después de abrir una sesión; la
 sesión en curso aplica el cambio con `/reload-plugins` o al reiniciar.
+
+**Publicar una versión:** anota los cambios bajo `## [Unreleased]` en `CHANGELOG.md` y corre `scripts/release.sh 1.2.0`. Sube versión, regenera el landing público (`docs/`), crea el tag y GitHub publica el Release.
 
 ```bash
 claude plugin update elaniin@elaniin-style-marketplace

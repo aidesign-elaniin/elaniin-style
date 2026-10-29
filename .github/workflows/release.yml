@@ -1,0 +1,22 @@
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag matches plugin.json and CHANGELOG
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          test "$(jq -r .version .claude-plugin/plugin.json)" = "$v" || { echo "plugin.json version != $v"; exit 1; }
+          grep -q "^## \[$v\] - " CHANGELOG.md || { echo "CHANGELOG.md has no entry for $v"; exit 1; }
+          grep -q "currently <strong>v$v</strong>" docs/index.html || { echo "docs/ not rebuilt: run scripts/build-docs.py"; exit 1; }
+          awk -v v="$v" '$0 ~ "^## \\[" v "\\]"{f=1;next} /^## \[/{f=0} f' CHANGELOG.md > notes.md
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag

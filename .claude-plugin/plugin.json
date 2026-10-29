@@ -1,6 +1,7 @@
 {
   "name": "elaniin",
   "displayName": "Elaniin Style",
+  "version": "1.1.0",
   "description": "Elaniin design system as a skill. Produces decks, dashboards & reports, websites & landings in the Elaniin style, and develops the Elaniin 2027 site. Bilingüe EN/ES.",
   "author": {
     "name": "Elaniin",
