@@ -2,17 +2,20 @@
   Elaniin isometric hero resource, React / Next build. Source: elaniin-2027-website
   (src/components/ui/iso + sections/hero/hero-stack.tsx, DESIGN.md motifs.isometric). Same scene as the vanilla
   build in templates/iso-stack.js. Needs: tokens.css (colors, `rise`, `iso-levitate`, `iso-float`), lucide-react,
-  and public/assets/logotipo-elaniin-blue.svg. The slab icons are the three official Elaniin icons (./elaniin-icons.tsx). Usage: <HeroStack labels={{ software: "Software", ai: "AI", cloud: "Cloud" }} />
+  and public/assets/logotipo-elaniin-blue.svg. The slab icons are the three official Elaniin icons (./elaniin-icons.tsx). Usage: <HeroStack labels={{ software: "Software", ai: "AI", cloud: "Cloud" }} /> (add `staged` for the staged loop of hero proposal 1)
   Rules and recipe for new resources: references/isometric.md.
 */
+
 "use client";
 
 import { Fragment, useId } from "react";
 import { type LucideIcon } from "lucide-react";
 import { AiIcon, CloudIcon, SoftwareDevelopmentIcon } from "./elaniin-icons";
 import { Floor } from "./floor";
-import { COS30, clamp01, easeInOut, planeTransform, pointAt, pointsAttr, project } from "./iso";
-import { Slab, type SlabBox, type SlabLook, topFace } from "./slab";
+import { IsoLogotipo } from "./logotipo";
+import { IsoPill } from "./pill";
+import { COS30, clamp01, easeInOut, pointAt, pointsAttr, project } from "./iso";
+import { Slab, type SlabBox, topFace } from "./slab";
 import { useClock } from "./use-clock";
 
 /*
@@ -23,19 +26,19 @@ import { useClock } from "./use-clock";
   One clock (12s loop) drives everything; the slabs assemble once with the CSS `rise` entrance. Under
   prefers-reduced-motion the clock rests on the assembled state: nothing slides, no pulse.
 */
-const VB = { x: 67, y: 30, w: 640, h: 500 }; // x centers the art: its horizontal extent is about 123 to 651
+export const VB = { x: 67, y: 30, w: 640, h: 500 }; // x centers the art: its horizontal extent is about 123 to 651
 const VIEWBOX = `${VB.x} ${VB.y} ${VB.w} ${VB.h}`;
-const O = { x: 400, y: 246 };
+export const O = { x: 400, y: 246 };
 /** The piece levitates this many units above its shadow, a diamond a little smaller than the base plate. */
-const LIFT = 36;
+export const LIFT = 36;
 const D = 200;
 
-const PLATE: SlabBox = { x: -90, y: -30, z: 0, w: 350, d: 260, h: 12 };
+export const PLATE: SlabBox = { x: -90, y: -30, z: 0, w: 350, d: 260, h: 12 };
 const RISER: SlabBox = { x: -68, y: 192, z: 12, w: 16, d: 16, h: 200 };
 const RISER_X = RISER.x + RISER.w; // the face the arms leave from
 const RISER_Y = RISER.y + RISER.d / 2; // the arms run along the plane of the slabs' left faces
 
-type Station = { look: Exclude<SlabLook, "plate">; icon: LucideIcon; box: SlabBox; tile: { x: number; y: number } };
+type Station = { look: "software" | "ai" | "cloud"; icon: LucideIcon; box: SlabBox; tile: { x: number; y: number } };
 
 /*
   Bottom to top, each slab narrower than the one below so a strip of every top face stays in view (the strip is where
@@ -79,14 +82,22 @@ const envelope = (t: number, a: number) => {
   return 0;
 };
 
+/* STAGED loop (proposal 1 of the hero): each slab slides out when its arm arrives, all stay out together, then they go back in the same order. */
+const STAGED_BACK = 7900;
+const stagedEnvelope = (t: number, a: number, index: number) => {
+  const out = easeInOut(clamp01((t - a) / T.up));
+  const back = easeInOut(clamp01((t - (STAGED_BACK + index * T.down)) / T.down));
+  return out * (1 - back);
+};
+
 type Labels = { software: string; ai: string; cloud: string };
 
-export function HeroStack({ labels }: { labels: Labels }) {
+export function HeroStack({ labels, staged = false }: { labels: Labels; staged?: boolean }) {
   const { ref, t } = useClock(12000);
   const glowId = useId();
 
-  const envs = TIMES.map((row) => envelope(t, row.A));
-  const emphasis = Math.max(...envs);
+  const envs = TIMES.map((row, i) => (staged ? stagedEnvelope(t, row.A, i) : envelope(t, row.A)));
+  const emphasis = staged ? 0 : Math.max(...envs);
 
   /*
     Layers, bottom to top: the base svg, then for every slab a frost (CSS backdrop blur clipped to the slab's
@@ -145,8 +156,16 @@ export function HeroStack({ labels }: { labels: Labels }) {
                 <g className="rise" style={{ "--i": 2 + i * 2 } as React.CSSProperties}>
                   <g transform={`translate(${(off * COS30).toFixed(2)} ${(off * 0.5).toFixed(2)})`} style={{ opacity }}>
                     <Slab look={station.look} box={station.box} o={O} />
-                    {station.look === "software" && <Logotipo box={station.box} />}
-                    <Tile station={station} index={i} name={labels[station.look]} />
+                    {station.look === "software" && <IsoLogotipo o={O} box={station.box} />}
+                    <IsoPill
+                      o={O}
+                      z={station.box.z + station.box.h}
+                      cx={station.tile.x}
+                      cy={station.tile.y}
+                      name={labels[station.look]}
+                      icon={station.icon}
+                      index={i}
+                    />
                     {env > 0 && (
                       <polygon
                         points={pointsAttr(topFace(station.box), O)}
@@ -201,79 +220,6 @@ function Frost({ box, off, opacity, index }: { box: SlabBox; off: number; opacit
         }}
       />
     </div>
-  );
-}
-
-/*
-  A white pill with the solution icon and name, lying on the top face and reading in the direction of the logotipo
-  (rising to the right). It floats 4px and keeps a flat shadow on the glass.
-*/
-const PILL_H = 38;
-const pillLength = (name: string) => 56 + name.length * 9;
-
-function Tile({ station, index, name }: { station: Station; index: number; name: string }) {
-  const { box, icon: Icon } = station;
-  const length = pillLength(name);
-  const plane = `${planeTransform(O, box.z + box.h)} matrix(0 -1 1 0 ${station.tile.x - PILL_H / 2} ${station.tile.y + length / 2})`;
-  return (
-    <g>
-      <g transform={plane} style={{ fill: "var(--color-blue-300)", opacity: 0.35 }}>
-        <rect x={0} y={0} width={length} height={PILL_H} rx={8} />
-      </g>
-      <g className="iso-float" style={{ "--d": index } as React.CSSProperties}>
-        <g transform={plane}>
-          <rect
-            x={0}
-            y={0}
-            width={length}
-            height={PILL_H}
-            rx={8}
-            style={{
-              fill: "var(--color-white)",
-              stroke: "var(--color-excellence-blue)",
-              strokeWidth: 1,
-              strokeOpacity: 0.9,
-            }}
-          />
-          <Icon
-            x={12}
-            y={(PILL_H - 20) / 2}
-            width={20}
-            height={20}
-            strokeWidth={1.5}
-            style={{ color: "var(--color-elevate-blue)" }}
-          />
-          <text
-            x={42}
-            y={PILL_H / 2 + 5}
-            style={{
-              fill: "var(--color-text-primary)",
-              fontFamily: "var(--font-display)",
-              fontSize: 15,
-              fontWeight: 500,
-            }}
-          >
-            {name}
-          </text>
-        </g>
-      </g>
-    </g>
-  );
-}
-
-/* The logotipo lies on the right face of the software slab: a skew that follows the face plane. */
-function Logotipo({ box }: { box: SlabBox }) {
-  const { w, d, z, h } = box;
-  const width = 88;
-  const height = width * (75.91 / 281.45);
-  const u = (d - width) / 2;
-  const zTop = z + h - (h - height) / 2;
-  const e = O.x + (w - d) * COS30;
-  const f = O.y + (w + d) / 2 - zTop;
-  return (
-    <g transform={`matrix(${COS30} -0.5 0 1 ${e} ${f})`}>
-      <image href="/assets/logotipo-elaniin-blue.svg" x={u} y={0} width={width} height={height} />
-    </g>
   );
 }
 

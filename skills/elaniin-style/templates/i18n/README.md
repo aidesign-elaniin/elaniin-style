@@ -20,3 +20,6 @@ prefix-both variant described in `references/i18n.md`.
 
 Layout it expects: `src/lib/*` (these files), `src/proxy.ts`, `src/app/[lang]/…` (the folder is named after the ENGLISH slug), `src/content/{en,es}/<section>.ts`
 typed against `src/content/schema.ts`. Read `references/i18n.md` before using it.
+
+**Verified:** the kit type-checks and its logic tests (routes, proxy rules, metadata, formats, region, template, i18n) pass in a Next 16 project. The three guard tests (`copy-guard`, `jsx-literals`, `anchors`) scan the whole `src/` and are meant for a project that has adopted the dictionaries: they fail by design on the single-language `site-starter`, whose components still carry Spanish text. Turn them on once every section reads its strings from `src/content/{en,es}/`.
+The scenes of `templates/iso/scenes/` type-check against `templates/iso/` (hero-stack, `useClock(periodMs, tickMs, restMs, enabled)`, `easeOutCubic`).

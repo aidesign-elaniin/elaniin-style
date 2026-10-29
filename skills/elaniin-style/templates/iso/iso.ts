@@ -52,3 +52,4 @@ export function pointAt(line: Pt2[], progress: number): Pt2 {
 
 export const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 export const easeInOut = (v: number) => (v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2);
+export const easeOutCubic = (v: number) => 1 - Math.pow(1 - clamp01(v), 3);
