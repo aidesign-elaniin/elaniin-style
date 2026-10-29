@@ -86,13 +86,13 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 
 ## 6 · Vida y UX (mínimos)
 
-- **Module field** en el hero y en el CTA final; spotlight global y `card-glow` que sigue al puntero (`Fx`); **count-up** en cifras (`CountUp`); `Reveal` con IntersectionObserver (`<html class="js">`); **≥1 loop vivo** que pausa fuera de pantalla y queda estático con reduced-motion (`Pipeline`).
-- **Nav sticky 64 px** con drawer móvil real: targets ≥ 44 px, `aria-expanded`, foco dentro, Esc / scrim / enlace cierran y devuelven el foco, Tab atrapado, scroll bloqueado, cierra al crecer el viewport. Skip-link. Anclas con `id` en `<section>`.
+- **Module field** en el hero y en el CTA final; sin spotlight ni glow en hover (DESIGN.md §7); **count-up** en cifras (`CountUp`); `Reveal` con IntersectionObserver (`<html class="js">`); **≥1 loop vivo** que pausa fuera de pantalla y queda estático con reduced-motion (`Pipeline`).
+- **Nav sticky 64 px** con drawer móvil real: targets ≥ 40 px, `aria-expanded`, foco dentro, Esc / scrim / enlace cierran y devuelven el foco, Tab atrapado, scroll bloqueado, cierra al crecer el viewport. Skip-link. Anclas con `id` en `<section>`.
 
 ## 7 · Compuerta de calidad (obligatoria antes de entregar)
 
 1. `src/app/site-manifest.json/route.ts` (force-static) emite `{ routes }` desde `site-map.ts` a `out/site-manifest.json`.
-2. `scripts/check.mjs` lee ese manifest (**ninguna lista ni número de páginas escrito a mano**) y falla si: `site-map` ≠ `sitemap.xml` ≠ páginas exportadas; falta o sobra un `<h1>`; hay `href="#"`; falta el logotipo o el `lang`; hay enlaces internos rotos; `content` no coincide con las marcas `data-placeholder` en pantalla; hay `-mx-`, cualquier valor arbitrario (`max-w-[18ch]`, `gap-[…]`, `grid-cols-[…]`; solo se admiten las variantes `data-[…]`/`aria-[…]`), un `--section-y` en línea, `lift`/`card-glow` junto a `grid-hairline`, gradientes o imports con `@/`. Las medidas de línea son tokens: `max-w-body` 68ch, `max-w-lead` 56ch, `max-w-narrow` 40ch, `max-w-heading` 20ch, `max-w-hero` 18ch, `max-w-cta` 34ch.
+2. `scripts/check.mjs` lee ese manifest (**ninguna lista ni número de páginas escrito a mano**) y falla si: `site-map` ≠ `sitemap.xml` ≠ páginas exportadas; falta o sobra un `<h1>`; hay `href="#"`; falta el logotipo o el `lang`; hay enlaces internos rotos; `content` no coincide con las marcas `data-placeholder` en pantalla; hay `-mx-`, cualquier valor arbitrario (`max-w-[18ch]`, `gap-[…]`, `grid-cols-[…]`; solo se admiten las variantes `data-[…]`/`aria-[…]`), un `--section-y` en línea, `card-hover`/`card-glow` junto a `grid-hairline`, hover con lift/scale/glow, gradientes o imports con `@/`. Las medidas de línea son tokens: `max-w-body` 68ch, `max-w-lead` 56ch, `max-w-narrow` 40ch, `max-w-heading` 20ch, `max-w-hero` 18ch, `max-w-cta` 34ch.
 3. `npm run build` y `npm run check` en verde.
 4. **Prueba negativa:** cambia un `content` en `out/site-manifest.json` y confirma que `check` falla (exit 1); restaura y confirma que pasa.
 5. **Overflow en TODAS las páginas** a 375 y 768 px: `cp scripts/overflow.html out/`, sirve `out/` y abre `/overflow.html` (mide con iframes todas las rutas del manifest; título `OVERFLOW OK n`). Alternativa sin navegador manual: `python3 <plugin>/scripts/browser-check.py out` (overflow a 375/768/1280, anillo de foco y animaciones infinitas con reduced-motion).
@@ -130,7 +130,7 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 - **Títulos de CTA:** `max-w` ≥ 34ch en sm+, o caen en 3 líneas.
 - **Pie en móvil:** separación vertical entre columnas (`mb-6 lg:mb-0`).
 - **Card clicable:** enlace en el `h3` con `after:absolute after:inset-0`, no un `<a>` absoluto que contenga el texto.
-- **Cards con `lift`/`card-glow`:** `rounded-card` + `border` + `pad-card` siempre; el wrapper de `Reveal` lleva `h-full min-w-0`.
+- **Cards con `card-hover`:** `rounded-card` + `border` + `pad-card` siempre; el wrapper de `Reveal` lleva `h-full min-w-0`.
 - **Chip dentro de un título:** hereda el `letter-spacing` negativo del heading y el texto se ve amontonado. Todo chip, tag o pastilla que pueda vivir dentro de un h1–h4 lleva `tracking-normal` (o su propio tracking, como `mono-label`).
 - **Escenas isométricas en páginas internas:** son decorativas (`aria-hidden`), usan el kit de `templates/iso/` y comparten un mismo lienzo; las etiquetas de las pills van fijas a 6–7 letras con `length` explícito para que no se salgan del slab.
 - **`trailingSlash`:** los `href` internos terminan en "/"; no busques `a[href="/casos"]`.

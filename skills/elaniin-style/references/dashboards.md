@@ -19,7 +19,7 @@
 ```
 
 Mobile (<1024px): la sidebar pasa a **drawer** (`drawer` + `scrim` + `templates/drawer.js`),
-abierto con un botón hamburguesa de 44px (`aria-expanded`, Esc, scrim y foco de regreso).
+abierto con un botón hamburguesa de 40px (`aria-expanded`, Esc, scrim y foco de regreso).
 Topbar a 375px: hamburguesa + **título** (prioridad, trunca al final) + acciones solo-icono
 (`aria-label`) bajo `md`; el logo vive en la cabecera del drawer. KPIs 1 col <640, 2 col ≥640,
 4 col ≥1280; charts full-width; tabla con scroll horizontal dentro de su card.
@@ -127,6 +127,6 @@ En reportes ejecutivos (no dashboards operativos) se permite una banda excellenc
 - [ ] Cada ítem del nav abre una vista real (probado ruta por ruta); sin `href="#"`; sin bloque de usuario, pie legal.
 - [ ] Export, New report y los controles de cada vista funcionan; vacíos, toasts y diálogos probados.
 - [ ] Mobile sin pérdida crítica de datos.
-- [ ] La hamburguesa abre el drawer (probado); topbar legible a 375px; targets ≥44px; probado en 375/768/1280.
+- [ ] La hamburguesa abre el drawer (probado); topbar legible a 375px; targets ≥40px; probado en 375/768/1280.
 - [ ] ≥1 dato vivo (deriva de KPI + redibujado del chart + `live-dot`): pausa fuera de
       pantalla; con reduced-motion el valor queda fijo en su estado final.

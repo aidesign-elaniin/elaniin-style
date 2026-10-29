@@ -11,7 +11,7 @@
 - Un slide por `<section class="slide">`. Navegación: ←/→, swipe, dots, `hash #3`.
 - Autocontenido: Tailwind CDN + `@theme` inline (`tokens.css`) + Google Fonts + logos
   oficiales incrustados como `<symbol>` (`assets/`).
-- Motion: spotlight reactivo por slide + `rise` stagger al activar; transición 200–300ms;
+- Motion: `rise` stagger al activar (sin spotlight); transición 200–300ms;
   `prefers-reduced-motion` → crossfade instantáneo sin transforms.
 
 ## Anti-overflow (obligatorio — el bug más común)
@@ -63,8 +63,7 @@ hallazgos → recomendaciones → next steps. Mismos tokens.
 - **elevate-blue:** datos principales, subrayados, un acento por slide como máximo.
 - **Navy:** slides de peso (problema fuerte, demo, ask). Alternar ritmo claro/oscuro.
 - **Números:** grandes, `tabular-nums`, con unidad y período.
-- **Vivo:** spotlight reactivo por slide + microinteracciones (ver `motion.md` §Living
-  surfaces). Los charts se dibujan al activar el slide; los números hacen count-up.
+- **Vivo:** `rise` stagger + microinteracciones sin hover lift/glow (ver `motion.md`). Los charts se dibujan al activar el slide; los números hacen count-up.
 - **Living loop:** ≥1 mockup en loop por deck (phone de pantallas swiping con la utility
   `phone-track`, chip ETA flotante, spinner/typing — CSS puro, estático bajo
   reduced-motion) — `motion.md` §Living mockups. CSS: `references/tailwind-api.md`.

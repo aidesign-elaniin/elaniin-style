@@ -19,7 +19,7 @@ export default function ArticlesPage() {
           <div className="grid-auto" style={{ "--card-min": "18rem" } as React.CSSProperties}>
             {items.map((a, i) => (
               <Reveal key={a.slug} i={i}>
-                <article className="card-glow lift relative flex h-full min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card">
+                <article className="card-hover relative flex h-full min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card">
                   <ImagePlaceholder src={a.image.src} alt={a.image.alt} className="mb-5" />
                   <p className="mono-label text-tag-sm text-text-muted">
                     <time dateTime={a.date}>{a.date}</time>

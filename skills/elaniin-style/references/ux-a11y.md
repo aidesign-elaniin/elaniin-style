@@ -8,7 +8,7 @@
 |---|---|
 | **rest** | Token base. Nunca "casi invisible". |
 | **hover** | Cambio real (fill, border, o color de texto). Botón primario: elevate-blue → blue-600. |
-| **active / pressed** | blue-700 en primario; translateY(1px) o sombra reducida. |
+| **active / pressed** | blue-700 en primario (`#010F20` en dark); solo cambia el color, sin transform. |
 | **focus** | `focus-ring` siempre visible con teclado. Nunca `outline: none` sin reemplazo. |
 | **disabled** | Text `disabled #8C8F9B`, sin hover, `cursor: not-allowed`, contraste ≥ 3:1. |
 | **loading** (botones) | Spinner o texto "…", **mismo ancho** que el estado rest (sin layout shift). Bloquea re-click. |
@@ -59,19 +59,19 @@ elemento cortado, ningún scroll interno no deseado.
 
 - `<MotionConfig reducedMotion="user">` en el raíz del sitio.
 - CSS: `@media (prefers-reduced-motion: reduce)` anula `rise`, `glow-scroll`, el
-  **spotlight reactivo**, el card glow, los count-ups y cualquier transform/transition no
+  `section-glow`, `glow-stripes`, la deriva de `card-glow`, los count-ups y cualquier transform/transition no
   esencial. El contenido queda completo y estático.
 - Nunca relies en animación para comunicar estado (usar color + icono + texto).
 
 ## Touch & responsive
 
-- Targets táctiles ≥ 44×44px.
+- Targets táctiles: elementos interactivos ≥ 40px de alto (inputs 44px) y ≥ 8px entre targets (DESIGN.md §8).
 - Inputs ≥ 16px de font-size en mobile (evita zoom automático iOS).
 - Nada depende solo de hover en mobile: estados activos/selected visibles.
 - **Sin eyebrows:** ningún texto mono/uppercase pequeño sobre un heading; el heading va solo.
 - **Anclas:** los enlaces `#id` apuntan a `<section id>` y aterrizan con el inicio de la sección
   bajo el nav sticky (`scroll-margin-top: var(--nav-height)` en `[id]`). Probar a 375 y 1280.
-- **Navegación móvil:** toda nav oculta bajo su breakpoint tiene botón de menú (≥44px,
+- **Navegación móvil:** toda nav oculta bajo su breakpoint tiene botón de menú (≥40px,
   `aria-label` + `aria-controls` + `aria-expanded`) que abre un drawer funcional:
   `drawer`/`scrim` + `templates/drawer.js` — foco al entrar, Esc/scrim/enlace/cerrar lo
   cierran devolviendo el foco, Tab atrapado, scroll bloqueado, cierra al pasar a desktop.

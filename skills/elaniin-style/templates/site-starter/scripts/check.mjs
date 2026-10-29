@@ -7,7 +7,7 @@
     - an internal link is broken (links end with "/" because of trailingSlash)
     - the `content` of a route does not match the data-placeholder marks drawn on screen
     - the source uses -mx-, any arbitrary value (max-w-[18ch], gap-[..], grid-cols-[..]…), an inline --section-y,
-      lift/card-glow inside grid-hairline, or gradients
+      card-hover/card-glow inside grid-hairline, hover lift/scale/glow (DESIGN.md section 7), or gradients
     - an image has no alt, or is a data: / remote image
 */
 import fs from "node:fs";
@@ -103,7 +103,8 @@ for (const f of src) {
   for (const m of code.matchAll(/(?:^|[\s"'`])((?!data-|group-data-|peer-data-|aria-|group-aria-)[a-z][\w:-]*-\[[^\]\s]+\])/g)) fail.push(`${f}: arbitrary value ${m[1]} (use a token)`);
   if (/"--section-y"|--section-y:/.test(code)) fail.push(`${f}: inline --section-y (use section-y, section-y-statement or section-y-compact)`);
   if (/gradient/i.test(code)) fail.push(`${f}: gradient`);
-  if (/grid-hairline/.test(code) && /\b(lift|card-glow)\b/.test(code)) fail.push(`${f}: lift/card-glow in a file that uses grid-hairline`);
+  if (/grid-hairline/.test(code) && /\b(card-hover|card-glow)\b/.test(code)) fail.push(`${f}: card-hover/card-glow in a file that uses grid-hairline`);
+  if (/(^|[\s"'`])(lift|spotlight|(?:hover|active|focus-visible):(?:-?translate-|scale-|shadow-))/.test(code)) fail.push(`${f}: hover lift/scale/glow or spotlight (DESIGN.md section 7: hover changes color, background or border only)`);
   if (/from\s+["']@\//.test(code)) fail.push(`${f}: "@/" alias import (use relative imports)`);
 }
 

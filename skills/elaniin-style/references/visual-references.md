@@ -33,7 +33,7 @@ usando `search-keywords.md` (p. ej. "bento grid SaaS" vs "editorial big-type" vs
 | Tipografía | **Descartar**; Instrument Sans / DM Sans / Geist Mono |
 | Sombras / bordes | Simplificar a hairlines + sombras mínimas del sistema |
 | Motion | Reducir a ladder CSS/`motion` con presets Elaniin; respetar reduced-motion |
-| Decoración (gradientes, barras de color, blobs, glass) | Eliminar por completo |
+| Decoración (gradientes, barras de color, blobs, glass) | Eliminar, salvo los motivos de la lista de SKILL.md regla 16 |
 
 ## Ejemplo de transposición
 

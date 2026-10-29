@@ -46,6 +46,8 @@ Detect the deliverable from the request and load only what you need:
 | **site-dev** | build/change the Elaniin 2027 site (Next.js) | `references/site-dev.md` |
 
 For every mode you also need:
+- `references/components.md` — the specified components (mega-menu, hero, logo strip, solutions, cases, research, FAQ, CTA, 404, footer…) and primitives.
+- `references/i18n.md` — only when the site is bilingual or Spanish (routes, dictionaries, SEO, formats).
 - `references/tokens.md` (or `templates/tokens.css`) — the color/type/motion vocabulary.
 - `references/motion.md` — the animation language.
 - `references/ux-a11y.md` — states, focus, contrast, reduced-motion.
@@ -133,32 +135,38 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 4. **Every interactive element has 4 states:** rest, hover, active, disabled. Buttons carry
    a loading state that preserves width.
 5. **Contrast:** body text ≥ 4.5:1; borders-for-inputs use `--color-border-input` (3.22:1).
-6. **Reduced motion:** `prefers-reduced-motion: reduce` disables `rise`, glow, spotlight
-   textures, and all `motion` transforms. Content must be fully readable with zero animation.
-7. **Touch targets:** ≥ 44×44px.
+6. **Reduced motion:** `prefers-reduced-motion: reduce` disables transforms and parallax
+   (`rise`, `glow-stripes`, `section-glow` drift, the module-field trail, count-ups, every `motion`
+   transform); opacity fades stay, ≤150ms. Content must be fully readable with zero animation.
+7. **Touch targets:** interactive elements ≥ 40px high (inputs 44px) with ≥ 8px between targets (DESIGN.md §8).
 8. **Language:** produce all UI copy in the user's language (EN or ES). Never mix. The templates ship with English demo copy and `<html lang="en">`: when the user writes in Spanish, translate every string AND set `lang="es"`.
-9. **Alive by default.** Every deliverable includes (a) a mouse-reactive texture/spotlight
-   and (b) microinteractions — see §7. Static, lifeless compositions are not Elaniin.
+9. **Hover changes color, background or border only (DESIGN.md §7, non-negotiable).** 150ms,
+   standard easing. **No lift, no scale, no glow, no pointer spotlight, no `translateY` on press.**
+   A card's only hover is `card-hover` (border-default → border-strong). Motion shows structure
+   (a grid assembling, a module placing) and never decorates. Liveliness comes from: the
+   `module-field` pointer trail (hero and closing CTA of landings), scroll `reveal`/`rise`,
+   `count-up` (once), `draw-line` on charts, the arrow of a link or tertiary button that slides
+   4px, and at least one living loop (§7b).
 10. **Hover surfaces always have padding (non-negotiable).** Any element that shows a
-   surface on hover — `lift`, `card-glow`, hover borders/shadows — is a real card: it MUST
+   surface on hover (`card-hover`, a hover background or border) is a real card: it MUST
    carry `rounded-card border border-border-default bg-surface-card pad-card` (or `p-6`/`p-8`
    at least). Never leave text flush against the edge of a box that appears on hover, and
    never fake the padding with negative margins (`-mx-*`). Hairline cells without a hover
-   surface may stay padding-free; the moment they lift or glow they become cards.
+   surface may stay padding-free; the moment they get a hover surface they become cards.
 11. **Mobile navigation is never lost, and it works (non-negotiable).** Any nav that
-   disappears below its breakpoint (sidebar, links) MUST have a menu button — ≥44×44px,
+   disappears below its breakpoint (sidebar, links) MUST have a menu button — ≥40×40px,
    `aria-label`, `aria-controls`, `aria-expanded` — that opens a drawer: `drawer` + `scrim`
    utilities and `templates/drawer.js` (focus moves in, Esc / scrim / link / close button
    dismiss and return focus, Tab trapped, scroll locked, closes on resize). A dead
    hamburger button is a bug. Topbar at 375px: page title keeps priority (truncates last),
    max 3 actions, secondary actions are icon-only below `md` with `aria-label`, the brand
-   logo lives in the drawer header. Every tap target ≥44px (`h-11`), page padding `p-4`
+   logo lives in the drawer header. Every tap target ≥40px (`h-10`), page padding `p-4`
    mobile → `p-6` md. Test 375 / 768 / 1280 before delivering.
 12. **Grids come from the Elaniin utilities (non-negotiable).** Layouts use `grid-page`
    (12 cols, fixed counts), `grid-auto` (unknown counts) or `grid-hairline` (shared 1px lines),
    plus Tailwind's native `col-span-*` / `grid-cols-*`, and `gap-grid` for any other gap.
    Mobile first (`col-span-12` then `md:` / `xl:`), `min-w-0` on every child, no negative
-   margins, no `gap-[…]`, no `lift`/`card-glow` inside `grid-hairline`. Deck keeps explicit
+   margins, no `gap-[…]`, no `card-hover`/`card-glow` inside `grid-hairline`. Deck keeps explicit
    columns. Recipes: `references/grids.md`.
 13. **No eyebrows (non-negotiable).** Never put a small mono/uppercase label above a heading
    ("Plugin para Claude", "01 — Discover", "The platform"): it is the tell-tale of generic
@@ -176,15 +184,17 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    settings that persist), Export is real and disabled where there is no data, and there is
    no SaaS user block: the sidebar is pinned to the viewport (`sticky`, `100dvh`) and only the content scrolls, with a thin one-line legal strip (Privacy · Terms · ©) in its bottom corner. A dashboard is not a
    SaaS. Details and minimum views: `references/dashboards.md`.
-16. **No decorative gradients or color bars (non-negotiable).** No stepped/segmented blue
-   bars, ramp strips, gradient backgrounds, blobs or glass. Structure comes from hairlines,
-   flat surfaces and the `module-field` texture. The only soft glows allowed are the pointer
-   `spotlight` and `card-glow`. The blue ramp tokens exist for states, never as a decorative strip.
-   **One exception:** inside an isometric resource (rule 18) blur is allowed in exactly two places: the
-   14px frost of its glass slabs and the halo of its travelling pulse. It never reaches the page
-   background, the text or any other component, and there are still no gradients.
-   **Second exception:** the sticky top bar (landing nav, dashboard topbar) may use `bg-white/90 backdrop-blur`
-   (8px, as the reference site's nav bar). Nothing else.
+16. **Gradients: only the ones DESIGN.md §2 rule 6 lists (non-negotiable).** The system is flat: hairlines,
+   flat surfaces, the `module-field` texture. The ONLY gradients and glows allowed, each in its place:
+   (a) `blue-steps`, the stepped blue motif (hard stops, ≤240px tall, one per page, aligned to the module grid,
+   never behind text); (b) `glow-stripes` (`glow-media` on the media stage of a case card, `glow-cta` on the
+   closing CTA, and the Blue Engine canvas) — animated blue stripes, never elsewhere; (c) `section-glow` behind a
+   `glass` panel (white 55% + blur) in the audience-routes section; (d) `card-glow` / `card-glow-quiet` INSIDE dark
+   cards (Excellence Blue / Elaniin Black) only; (e) the flow of the hero accent words (`accent-flow`, the only
+   gradient on text; lightest stop blue-400); (f) a soft blue glow behind the glass browser window of a hero
+   proposal; (g) inside an isometric resource: the 14px frost and the 3-unit halo of a pulse. Anything else
+   (gradient backgrounds, blobs, neon, circuit lines, particles, a blue-violet gradient on dark) is a violation.
+   The sticky top bar may use white 80% + `backdrop-blur` (8px). Nothing else.
 17. **Decks end with a closing slide and device frames hide their seams (non-negotiable).**
    Every deck finishes with a closing slide: official logo, one closing line, contact. Device
    mockups (`phone-frame`) draw the bezel ABOVE the screens (overlay `::after`, higher z-index);
@@ -206,6 +216,54 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    one primary md CTA, a 40px `nav-toggle` below `lg`. Footer: Excellence Blue (never Elaniin Black), white
    logotipo only, tagline, columns with display-font headings and plain `footer-link`s, a legal row on a
    hairline. Details: `references/websites.md`; spec: DESIGN.md components.nav / components.footer.
+20. **Elevate Blue `#1054FF` has a closed list of uses (non-negotiable).** Allowed: primary button fill (one per
+   action group; `dark` is the equal-weight alternative, never both together), running-text links and tertiary
+   buttons, focus ring, active/selected indicators (tab underline 2px, current nav item, selected row marker),
+   on-state of controls (checkbox, radio, switch, slider), small icons and 6–8px dots, the brand tag and info
+   status, the first chart series and progress bars ≤4px, ONE highlighted word per headline (two on the Elaniin
+   home: the hero and BLUE ENGINE©, no other), the `blue-steps` motif, and the logotipo on the software slab of
+   the isometric hero. Forbidden: section or card backgrounds, whole headlines or paragraphs, any single element
+   larger than ~120×120px (except buttons and `blue-steps`). Budget: well under 5% of the visible area at any scroll
+   position. Never blue text on Excellence Blue (use `text-on-dark-accent #7B9BFF`); Dynamic Blue is never text.
+21. **Typography discipline.** Geist Mono has three default uses: tags/badges (`tag`, `status-badge`), eyebrows only
+   when they carry information the heading does not, and code. Small descriptive text in mono (`mono-detail`,
+   dates, sources, legal lines) is OPT-IN, only when the team asks, case by case. Never mono for headlines,
+   paragraphs, navigation, buttons, form fields, figures, or the interface drawn inside case scenes. Never use DM
+   Sans for headlines. **No decorative numbering** (`01 · Software`, `Step 02`, section counters): a number appears
+   only when it is content (a metric, a price, a date, a sequence the user must follow).
+22. **Compose, do not scatter (DESIGN.md §9).** The pieces of one visual (a phone and its data card, a window and
+   its chips) form ONE composition centered as a group: they overlap or touch, instead of sitting at opposite
+   edges. Keep the safe margin, never fill free space on purpose, and give the overlapping piece `shadow-menu`.
+23. **Shape and content don'ts.** Buttons and cards are not pills and not sharp (radii only from the table in
+   `references/tokens.md`); never three identical cards in a row (a bento varies span and content); no emoji, no
+   filled or multi-color icons, no abstract illustrations of people; photography is real people, real places,
+   natural light, radius 12px; icons are stroke-based, `currentColor`, 1.5px, 24px grid. Large soft shadows only on
+   product mockups (`product-frame`); `menu-panel` on dropdowns.
+24. **Section rhythm.** Alternate surfaces: white → subtle → white → dark band → white → subtle → footer. At most two
+   dark bands per page plus the footer, never two in a row, never more than one per narrative block. Composition is
+   asymmetric (headline left, support offset); full-bleed sections, boxed content; uneven spacing on purpose
+   (96–128px between sections, 12–16px inside a block).
+25. **Animated mocks and counters.** Every loop runs only while on screen (`IntersectionObserver` / `useInView`),
+   renders its final meaningful state under reduced motion, has a deterministic first render, holds the finished
+   state ~2.5s before restarting, advances in discrete steps up the blue ramp (never smooth color), never animates
+   a hairline cell background on reveal, and is `aria-hidden` (the meaning lives in the card text). `CountUp`
+   counts once. `body` uses `overflow-x: clip`, never `hidden` (it breaks the sticky nav when the page scroll is
+   locked). Focus returned by the page after closing a dialog may skip the ring (`data-focus-returned`) until the
+   next key press; Tab always shows it.
+26. **Components come from the spec, not from improvisation.** Mega-menu, hero (split/centered), logo strip,
+   engagement models, FAQ, audience routes, solutions grid/card/dialog, cases, research, closing CTA, 404, footer
+   (credentials, AI summary) and the primitives (`tag`, `status-badge`, `field`, `product-frame`, `code-block`,
+   `icon-box`, `dark-band`, `metric-*`, `menu-*`, `tooltip`, `tab`) are specified in `references/components.md`;
+   the React versions live in `templates/site-starter/src/components/`. Use them; do not invent a variant.
+27. **Bilingual sites are built bilingual from the first line.** English primary (no prefix), Spanish under `/es`
+   with translated slugs from ONE route table, `hreflang`/canonical per page, typed dictionaries (no visible string
+   in a component), numbers/dates through `Intl`, a language switch that links to the same page in the other
+   language. Spec and starter: `references/i18n.md`.
+28. **Work method (from the reference site's hand-off).** One section at a time, verified at 375 / 768 / 1024 /
+   1280 with the contrast of any new pair checked, then wait for approval. Read the design source before UI work;
+   if a token is missing, propose it, update the design source and its change log, then the CSS, then the code.
+   Never invent clients, figures, awards or facts; the isotipo and the tagline stay pending. Server Components by
+   default, `"use client"` only on the leaf that needs it.
 
 ---
 
@@ -264,9 +322,9 @@ Before delivering, verify:
 
 - [ ] **Official logotipo only** (dark on light, white on dark), 28px tall in nav/footer; no symbol, no tagline, no isologo, no text fallback; favicon = `assets/favicon.svg`.
 - [ ] **Zero overflow:** nothing clipped in viewport, slides, or cards; decks full-screen fixed canvas.
-- [ ] **Mouse-reactive texture/spotlight present** and disabled under reduced-motion.
+- [ ] **No hover lift, scale or glow, no pointer spotlight** (hover = color/background/border, 150ms).
 - [ ] **Landings/websites: `module-field` in the hero background (and final CTA)** with its pointer-trail script.
-- [ ] **Microinteractions present** (button arrow/press, card glow, counters, chart draw).
+- [ ] **Microinteractions present** (link/button arrow slides 4px, counters count once, chart draw, reveal).
 - [ ] Only Elaniin tokens used (no stray Tailwind default colors).
 - [ ] elevate-blue appears only in allowed detail roles, <5% area.
 - [ ] Alternating surfaces give the page rhythm.
@@ -277,23 +335,23 @@ Before delivering, verify:
       static end-state under reduced-motion. `motion.md` §Living mockups.
 - [ ] **No raw CSS:** all styling via `@theme`/`@utility` tokens — check against
       `references/tailwind-api.md` (no stray arbitrary values that exist as tokens).
-- [ ] **Every `lift` / `card-glow` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
+- [ ] **Every `card-hover` element has `pad-card` (or p-6/p-8), radius and border** — text never touches the hover edge; no negative margins.
 - [ ] **Decks:** last slide is a closing slide (logo + line + contact); device bezels sit above the screens, no visible seams; counter and dots match the slide count; counter, dots and the "Full" hint live in their own bottom bar (`hud`), never on top of a slide.
 - [ ] **Isometric resource (if used):** built with the kit and the 15 rules of `references/isometric.md`; frost only inside it; blue logotipo only on the software slab; checked on a phone and at 375/768/1024/1280.
-- [ ] **No gradients or color bars:** no stepped blue strip, gradient backgrounds, blobs or glass.
+- [ ] **Gradients only from the list of rule 16** (`blue-steps`, `glow-stripes`, `section-glow`+`glass`, `card-glow` on dark cards, `accent-flow`, iso frost); none anywhere else.
 - [ ] **Dashboards:** every nav item opens a real view; controls, Export and New report work; no user block, legal footer; no `href="#"`.
 - [ ] **No eyebrows:** no small mono/uppercase label above any heading.
 - [ ] **Anchors:** every `href="#id"` points at a `<section id>`; it lands with the section top under the sticky nav (`scroll-margin-top` via `[id]` base rule).
 - [ ] **Grids** use `grid-page` / `grid-auto` / `grid-hairline` + `gap-grid`; children `min-w-0`; no `-mx-*`, no arbitrary gaps (see `references/grids.md`).
-- [ ] **Mobile nav works:** hamburger opens a real drawer (aria-expanded, Esc, scrim, focus return); topbar fits at 375px with the title readable; tap targets ≥44px; checked at 375 / 768 / 1280.
+- [ ] **Mobile nav works:** hamburger opens a real drawer (aria-expanded, Esc, scrim, focus return); topbar fits at 375px with the title readable; tap targets ≥40px; checked at 375 / 768 / 1280.
 - [ ] Focus rings, hover/active/disabled states present.
-- [ ] Mobile layout considered; targets ≥44px.
+- [ ] Mobile layout considered; targets ≥40px (inputs 44px), ≥8px between them.
 - [ ] All copy in the user's language.
 - [ ] Standalone deliverables are one self-contained HTML file.
 
 ---
 
-## 7 · Mandatory liveliness & overflow rules / Reglas obligatorias de vitalidad y overflow
+## 7 · Mandatory motion & overflow rules / Reglas obligatorias de movimiento y overflow
 
 ### 7a · Logotipo oficial / Official logotipo
 Regla del sitio (DESIGN.md §logo, v1.50.3): **solo el logotipo** (el lettering). Sin símbolo
@@ -328,7 +386,7 @@ los apruebe. Los lockups con símbolo (isologo) se quitaron: no se publican ni s
   un favicon con símbolo.
 - **Prohibido** escribir "elaniin" como texto en lugar del logotipo, y usar el isotipo/isologo.
 
-### 7b · Texturas reactivas al mouse + microanimaciones (siempre)
+### 7b · Module field + microanimaciones (siempre)
 Toda propuesta (landing, dashboard, deck, reporte) DEBE incluir:
 0. **Module field (textura firma de Elaniin) — landings y websites, siempre:** cuadrícula
    de cuadritos 2px/16px al fondo del **hero** y del **CTA final** que se enciende celda por
@@ -338,18 +396,17 @@ Toda propuesta (landing, dashboard, deck, reporte) DEBE incluir:
    `templates/module-field.js` (vanilla) o `templates/module-field.tsx` (React/Next). Si el
    usuario dice "textura", "textura interactiva", "module field" o "como el sitio", es esto.
    Detalle: `references/motion.md` §Module field.
-1. **Spotlight / textura reactiva al mouse:** radial-gradient sutil que sigue al cursor
-   mediante CSS vars (`--mx`, `--my`) actualizadas en `mousemove`. Opacidad 4–8%,
-   tinte `blue-tint-50` o `dynamic-blue`. Estático bajo `prefers-reduced-motion`.
+1. **Sin spotlight del puntero** (DESIGN.md §7: hover = color/fondo/borde, sin glow). La única textura
+   reactiva al mouse es el `module-field` (punto 0), solo en hero y CTA final de landings y websites.
 2. **Microinteracciones como mínimo:**
-   - Botones: flecha que se desplaza al hover, `scale(0.98)` al press.
-   - Cards: glow/spotlight que sigue al mouse dentro de la card + lift sutil.
-   - Números/KPIs: count-up al entrar en viewport.
+   - Links y botones terciarios: la flecha se desplaza 4px al hover (`btn-arrow`); sin `scale` al presionar.
+   - Cards: solo `card-hover` (borde `border-default` → `border-strong`), sin lift ni glow.
+   - Números/KPIs: count-up al entrar en viewport, **una sola vez** (60 % visible); nunca reinicia.
    - Charts: trazo que se dibuja (`stroke-dashoffset`) al entrar en viewport.
-   - Links de nav: underline que entra desde la izquierda.
-   - Slides de deck: spotlight por slide + stagger de contenido.
+   - Links de nav: `nav-item` con superficie sutil al hover.
+   - Slides de deck: stagger de contenido (`rise`).
 Referencia de implementación: `references/motion.md` §"Living surfaces".
-Esto no es decoración opcional: una pieza estática no es una propuesta Elaniin.
+Una pieza sin movimiento que muestre estructura (reveal, count-up, un loop vivo) no es una propuesta Elaniin; pero el movimiento nunca decora.
 
 ### 7c · Anti-overflow (Tailwind + UX)
 - **Deck:** canvas fijo 1280×720 con `transform: scale()`; `.slide { overflow: hidden; }`;

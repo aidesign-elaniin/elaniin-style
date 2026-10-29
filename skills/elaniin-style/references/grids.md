@@ -18,8 +18,8 @@
 2. **`min-w-0` en cada hijo** de grid/flex que contenga texto, media o tablas.
 3. **Gap siempre del token** (`gap-grid`, o el que ya traen las utilities). Nada de `gap-[18px]`.
 4. **Nunca márgenes negativos** (`-mx-*`) para alinear bordes ni hover: es el bug clásico.
-5. **Si una celda tiene `lift`/`card-glow`, es una card**: `rounded-card border bg-surface-card pad-card`
-   dentro de un `grid-page`/`grid-auto`. **No** uses `grid-hairline` con `lift` (el `overflow:hidden`
+5. **Si una celda tiene `card-hover`, es una card**: `rounded-card border bg-surface-card pad-card`
+   dentro de un `grid-page`/`grid-auto`. **No** uses `grid-hairline` con `card-hover` (el `overflow:hidden`
    recorta la sombra).
 6. **`grid-hairline`:** las celdas llevan `pad-card`; define columnas con `grid-cols-N` /
    `md:grid-cols-N` para que la última fila quede completa (por defecto es 1 columna).
@@ -88,5 +88,5 @@ reset de breakpoints.
 ## Auditoría rápida
 ```bash
 grep -n -E '\-mx-|gap-\[|grid-cols-\[' archivo.html          # debe salir vacío
-grep -n -E 'grid-hairline' archivo.html | grep -E 'lift|card-glow'  # debe salir vacío
+grep -n -E 'grid-hairline' archivo.html | grep -E 'card-hover|card-glow'  # debe salir vacío
 ```

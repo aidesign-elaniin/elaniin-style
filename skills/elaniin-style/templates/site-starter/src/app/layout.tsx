@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Geist_Mono, Instrument_Sans } from "next/font/google";
 import { Footer } from "../components/layout/footer";
-import { Fx } from "../components/layout/fx";
 import { LogoSprite } from "../components/layout/logo-sprite";
 import { Nav } from "../components/layout/nav";
 import { site } from "../content/site";
@@ -28,7 +27,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <LogoSprite />
-        <Fx />
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-button focus:bg-white focus:px-4 focus:py-2">
           Saltar al contenido
         </a>

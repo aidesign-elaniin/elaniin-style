@@ -159,6 +159,8 @@
   --radius-card: 12px;
   --radius-media: 12px;
   --radius-code: 12px;
+  --radius-bento-outer: 12px;
+  --radius-app-icon: 18.5%;
   --radius-menu: 8px;
   --radius-modal: 16px;
   --radius-tooltip: 6px;
@@ -186,6 +188,9 @@
   --animate-spin-slow: spin-slow 0.9s linear infinite;
   --animate-ping-soft: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   --animate-sheen: sheen 5s linear infinite;
+  --animate-glow-drift: glow-drift 21s ease-in-out infinite alternate;
+  --animate-glow-scroll-blue: glow-scroll 16s linear infinite;
+  --animate-glow-scroll-light: glow-scroll 6s linear infinite;
 
   /* ---------- motion: keyframes (paired with the tokens above) ---------- */
   @keyframes rise {
@@ -210,6 +215,14 @@
   @keyframes ping-soft {
     0% { transform: scale(1); opacity: 0.8; }
     75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes glow-drift {
+    from { transform: translate3d(-3%, 2%, 0); }
+    to { transform: translate3d(3%, -2%, 0); }
+  }
+  @keyframes glow-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-706.16px, 0, 0); }
   }
   @keyframes sheen {
     from { transform: translate3d(-140%, 0, 0); }
@@ -340,36 +353,52 @@
   }
 }
 
-/* ---------- utilities: surfaces ---------- */
-@utility spotlight {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(600px circle at var(--mx, 70%) var(--my, 20%), rgba(77, 117, 253, 0.07), transparent 62%);
+
+/* ---------- utilities: card surfaces (DESIGN.md components.card, motifs.card-glow) ---------- */
+/* card-hover: the ONLY hover of a card: the border goes from border-default to border-strong. No lift, no scale, no glow
+   (DESIGN.md section 7). A card that changes on hover is a real card: rounded-card border bg-surface-card pad-card. */
+@utility card-hover {
+  transition: border-color var(--dur-fast) var(--ease-standard);
+  &:hover {
+    border-color: var(--color-border-strong);
+  }
   @media (prefers-reduced-motion: reduce) {
-    display: none;
+    transition: none;
   }
 }
+/* card-glow: ONE soft blue glow for DARK cards (DESIGN.md motifs.card-glow, v1.86). Lives INSIDE the card, behind its content,
+   clipped by the card; static and decorative. Default tone FEATURE (Excellence Blue cards): blue-700 80% top right, blue-600 60%
+   on the left a little under the middle, blue-700 100% bottom right. card-glow-quiet is for Elaniin Black cards: blue-800 70%
+   bottom right and blue-700 25% top left; never the main blue. Add ONE of them to a card that is dark (surface-dark / dark-alt). */
 @utility card-glow {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  &::after {
+  &::before {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: -1;
     pointer-events: none;
-    background: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 50%), rgba(16, 84, 255, 0.06), transparent 70%);
-    opacity: 0;
-    transition: opacity var(--dur-base) var(--ease-standard);
+    background:
+      radial-gradient(60% 55% at 100% 0%, color-mix(in srgb, var(--color-blue-700) 80%, transparent), transparent 70%),
+      radial-gradient(50% 45% at 0% 55%, color-mix(in srgb, var(--color-blue-600) 60%, transparent), transparent 70%),
+      radial-gradient(60% 55% at 100% 100%, var(--color-blue-700), transparent 70%);
   }
-  &:hover::after {
-    opacity: 1;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    &::after {
-      display: none;
-    }
+}
+@utility card-glow-quiet {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 55% at 100% 100%, color-mix(in srgb, var(--color-blue-800) 70%, transparent), transparent 70%),
+      radial-gradient(45% 40% at 0% 0%, color-mix(in srgb, var(--color-blue-700) 25%, transparent), transparent 70%);
   }
 }
 
@@ -511,9 +540,6 @@
   }
 }
 @utility btn-arrow {
-  &:active {
-    transform: scale(0.98);
-  }
   & svg {
     transition: transform var(--dur-base) var(--ease-standard);
   }
@@ -524,18 +550,6 @@
   @media (prefers-reduced-motion: reduce) {
     & svg {
       transition: none;
-    }
-  }
-}
-@utility lift {
-  transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-menu);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    &:hover {
-      transform: none;
     }
   }
 }
@@ -694,6 +708,343 @@
     min-width: 0;
     background: var(--color-surface-card);
   }
+}
+
+/* ---------- utilities: primitives (DESIGN.md components.tag / status-badge / link / input / metric / menu / tooltip / tab) ---------- */
+/* mono-detail: OPT-IN ONLY, when the team asks for small descriptive lines in mono (typography rule 4). Normal case. */
+@utility mono-detail {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-feature-settings: "zero" 1;
+}
+/* tag: mono UPPERCASE label, 24px high. Variants only set colors through --tag-*: tag-brand, tag-on-dark. tag-sm is the
+   OFFICIAL small tag (20px, tag-sm 11px) used by case cards and research rows. */
+@utility tag {
+  display: inline-flex;
+  height: 1.5rem;
+  width: fit-content;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: var(--radius-tag);
+  border: 1px solid var(--tag-border, var(--color-border-default));
+  background: var(--tag-bg, var(--color-surface-subtle));
+  color: var(--tag-text, var(--color-text-secondary));
+  padding-inline: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-feature-settings: "zero" 1;
+}
+@utility tag-brand {
+  --tag-bg: var(--color-blue-tint-50);
+  --tag-text: var(--color-blue-600);
+  --tag-border: var(--color-blue-200);
+}
+@utility tag-on-dark {
+  --tag-bg: rgb(255 255 255 / 0.06);
+  --tag-text: var(--color-text-on-dark-secondary);
+  --tag-border: var(--color-border-on-dark);
+}
+@utility tag-sm {
+  height: 1.25rem;
+  padding-inline: 0.375rem;
+  font-size: var(--text-tag-sm);
+}
+/* status-badge: like tag plus a 6px dot. Pick ONE status: badge-success|warning|error|info|neutral. State only, never decoration. */
+@utility status-badge {
+  display: inline-flex;
+  height: 1.5rem;
+  width: fit-content;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: var(--radius-tag);
+  border: 1px solid var(--b-border, var(--color-neutral-border));
+  background: var(--b-bg, var(--color-neutral-bg));
+  color: var(--b-text, var(--color-neutral-text));
+  padding-inline: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--b-dot, var(--color-neutral-dot));
+  }
+}
+@utility badge-success { --b-text: var(--color-success-text); --b-bg: var(--color-success-bg); --b-border: var(--color-success-border); --b-dot: var(--color-success-dot); }
+@utility badge-warning { --b-text: var(--color-warning-text); --b-bg: var(--color-warning-bg); --b-border: var(--color-warning-border); --b-dot: var(--color-warning-dot); }
+@utility badge-error { --b-text: var(--color-error-text); --b-bg: var(--color-error-bg); --b-border: var(--color-error-border); --b-dot: var(--color-error-dot); }
+@utility badge-info { --b-text: var(--color-info-text); --b-bg: var(--color-info-bg); --b-border: var(--color-info-border); --b-dot: var(--color-info-dot); }
+@utility badge-neutral { --b-text: var(--color-neutral-text); --b-bg: var(--color-neutral-bg); --b-border: var(--color-neutral-border); --b-dot: var(--color-neutral-dot); }
+/* link-text: running-text link, Elevate Blue, underlined 1px with 3px offset. Nav and footer links are NOT underlined. */
+@utility link-text {
+  color: var(--color-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-standard);
+  &:hover {
+    color: var(--color-text-link-hover);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+/* field: text input / select / textarea. 44px, border-input (3.22:1), Elevate Blue border + ring on focus. data-invalid or aria-invalid for error. */
+@utility field {
+  height: 2.75rem;
+  width: 100%;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--color-border-input);
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  padding-inline: 0.75rem;
+  transition: border-color var(--dur-fast) var(--ease-standard);
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+  &:hover {
+    border-color: var(--color-elaniin-black);
+  }
+  &:focus-visible {
+    outline: 2px solid transparent;
+    border-color: var(--color-elevate-blue);
+    box-shadow: var(--shadow-focus);
+  }
+  &[aria-invalid="true"] {
+    border-color: var(--color-error-dot);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+@utility field-on-dark {
+  background: rgb(255 255 255 / 0.04);
+  border-color: var(--color-border-on-dark-strong);
+  color: var(--color-text-on-dark);
+  &:focus-visible {
+    box-shadow: var(--shadow-focus-on-dark);
+  }
+}
+/* card-featured: the one featured card of a group (2px Excellence Blue border). */
+@utility card-featured {
+  border: 2px solid var(--color-excellence-blue);
+}
+/* product-frame: screenshots and UI mockups. The only place a large soft shadow is allowed. */
+@utility product-frame {
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-white);
+  box-shadow: var(--shadow-product);
+}
+/* code-block: Excellence Blue surface, Geist Mono 13px. Spans: code-comment (#8EA0B8), code-accent (#7B9BFF). */
+@utility code-block {
+  overflow-x: auto;
+  border-radius: var(--radius-code);
+  background: var(--color-surface-code);
+  color: var(--color-text-on-dark);
+  padding: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+  line-height: var(--text-code--line-height);
+}
+@utility code-comment { color: var(--color-text-on-dark-muted); }
+@utility code-accent { color: var(--color-text-on-dark-accent); }
+/* icon-box: 40px square that holds an icon (menu rows, solution cards, stage cards). icon-box-dark for dark surfaces. */
+@utility icon-box {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  place-items: center;
+  border-radius: var(--radius-menu);
+  border: 1px solid var(--color-blue-200);
+  background: var(--color-blue-tint-50);
+  color: var(--color-elevate-blue);
+}
+@utility icon-box-dark {
+  border-color: var(--color-border-on-dark);
+  background: rgb(255 255 255 / 0.06);
+  color: var(--color-text-on-dark-accent);
+}
+/* dark-band: full-bleed Excellence Blue section (dark-band-black: Elaniin Black). At most two per page plus the footer, never two in a row. */
+@utility dark-band {
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+}
+@utility dark-band-black {
+  background: var(--color-surface-dark-alt);
+  color: var(--color-text-on-dark);
+}
+/* metric: figure + label. */
+@utility metric-value {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+@utility metric-label {
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm--line-height);
+  color: var(--color-text-secondary);
+}
+/* menu-panel / menu-item: dropdowns (8px radius, shadow-menu); item 36px, subtle on hover. */
+@utility menu-panel {
+  border-radius: var(--radius-menu);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-white);
+  box-shadow: var(--shadow-menu);
+}
+@utility menu-item {
+  display: flex;
+  height: 2.25rem;
+  align-items: center;
+  padding-inline: 0.75rem;
+  font-size: var(--text-body-sm);
+  &:hover { background: var(--color-surface-subtle); }
+}
+/* tooltip: Elaniin Black, white caption, 6px radius. */
+@utility tooltip {
+  border-radius: var(--radius-tooltip);
+  background: var(--color-elaniin-black);
+  color: var(--color-white);
+  padding: 6px 10px;
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+}
+/* tab: text tab with a 2px Elevate Blue indicator when aria-selected="true" (or data-active). */
+@utility tab {
+  position: relative;
+  color: var(--color-text-secondary);
+  transition: color var(--dur-fast) var(--ease-standard);
+  &:hover { color: var(--color-text-primary); }
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-elevate-blue);
+    opacity: 0;
+  }
+  &[aria-selected="true"],
+  &[data-active] {
+    color: var(--color-text-primary);
+  }
+  &[aria-selected="true"]::after,
+  &[data-active]::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+/* accordion-panel: FAQ answer. Closed = grid rows 0fr + invisible; open ([data-open]) = 1fr in 300ms emphasized. The child needs overflow-hidden. */
+@utility accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows var(--dur-slow) var(--ease-emphasized), visibility 0s linear var(--dur-slow);
+  &[data-open] {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+/* hero-fill: from 1280px the hero is at least the screen height under the sticky bar, content centered (DESIGN.md components.hero.height). */
+@utility hero-fill {
+  @media (min-width: 80rem) {
+    display: flex;
+    min-height: calc(100dvh - var(--nav-height));
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* ---------- utilities: motifs (DESIGN.md motifs.*) ---------- */
+/* blue-steps: the stepped blue motif. Hard stops, never smooth; decorative, aligned to the module grid, max 240px tall, one per page, never behind text. */
+@utility blue-steps {
+  height: 16px;
+  background: linear-gradient(90deg, #d7e2f8 0 12.5%, #b9cefb 12.5% 25%, #6a9aff 25% 37.5%, #1054ff 37.5% 50%, #0848cc 50% 62.5%, #023ca0 62.5% 75%, #022b63 75% 87.5%, #01172e 87.5% 100%);
+}
+/* section-glow: decorative blue blobs rising from the bottom of a section, drifting slowly (transform only). ONLY behind a glass
+   panel (white 55% + blur), never on dark surfaces, never behind text without glass. Parent: relative isolate overflow-hidden. */
+@utility section-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 78% at 20% 100%, color-mix(in srgb, var(--color-blue-300) 45%, transparent), transparent 70%),
+    radial-gradient(45% 90% at 60% 100%, color-mix(in srgb, var(--color-blue-200) 75%, transparent), transparent 70%),
+    radial-gradient(40% 98% at 90% 100%, color-mix(in srgb, var(--color-blue-300) 32%, transparent), transparent 70%);
+  animation: var(--animate-glow-drift);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* glass: white 55% panel + blur, the surface that lets section-glow show through. */
+@utility glass {
+  background: rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(4px);
+}
+/* glow-stripes: the animated blue glow (motifs.glow), three uses only: the closing CTA, the media stage of case cards and the Blue Engine
+   canvas. Technique of the reference: two layers of 115deg stripes that scroll sideways (one repeat = 706.16px, so the loop has no seam).
+   Parent: relative isolate overflow-hidden on --glow-surface (Excellence Blue). Variants: glow-media (70%, 16s/6s), glow-cta (60%, masked). */
+@utility glow-stripes {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: var(--glow-opacity, 0.7);
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: 0;
+    width: calc(100% + 1412.32px);
+    background-size: 706.16px 100%;
+    will-change: transform;
+  }
+  &::before {
+    background-image: repeating-linear-gradient(115deg, var(--color-elevate-blue) 0 160px, color-mix(in srgb, var(--color-elevate-blue) 50%, transparent) 160px 320px, transparent 320px 640px);
+    animation: var(--animate-glow-scroll-blue);
+  }
+  &::after {
+    background-image: repeating-linear-gradient(115deg, var(--glow-surface, var(--color-surface-dark)) 0 200px, transparent 200px 640px);
+    animation: var(--animate-glow-scroll-light);
+  }
+  @media (min-width: 64rem) {
+    filter: blur(12px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::before,
+    &::after {
+      animation: none;
+    }
+  }
+}
+@utility glow-media { --glow-opacity: 0.7; }
+@utility glow-cta {
+  --glow-opacity: 0.6;
+  mask-image: radial-gradient(120% 100% at 50% 100%, #000 30%, transparent 85%);
 }
 
 /* ---------- utilities: drawer (off-canvas mobile nav) ---------- */

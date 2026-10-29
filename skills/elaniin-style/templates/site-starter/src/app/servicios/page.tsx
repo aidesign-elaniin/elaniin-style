@@ -20,7 +20,7 @@ export default function ServicesPage() {
           <div className="grid-auto" style={{ "--card-min": "18rem" } as React.CSSProperties}>
             {items.map((s, i) => (
               <Reveal key={s.slug} i={i}>
-                <article className="card-glow lift relative flex h-full min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card">
+                <article className="card-hover relative flex h-full min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card">
                   <ImagePlaceholder src={s.image.src} alt={s.image.alt} className="mb-5" />
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-display font-medium text-h4 text-text-primary">

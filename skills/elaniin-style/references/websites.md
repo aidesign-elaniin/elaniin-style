@@ -12,7 +12,7 @@ dominante por pieza.
 1. Nav              — 64px, hairline inferior, logo a la izq, links, CTA secundario.
                       En móvil (<md) los links van en un **drawer** (`drawer md:hidden` +
                       `scrim` + `templates/drawer.js`, `data-drawer-from="md"`) abierto por una
-                      hamburguesa de 44px junto al CTA; nunca dejar links inaccesibles.
+                      hamburguesa de 40px junto al CTA; nunca dejar links inaccesibles.
 2. Hero             — dos variantes oficiales. SPLIT: texto a la izquierda y recurso isométrico a la
                       derecha desde 1024 px; por debajo todo centrado (lead máx. 40ch, h1 máx. 12ch);
                       ver `references/isometric.md`. CENTRADO: todo centrado, sin recurso visual.
@@ -42,9 +42,8 @@ dominante por pieza.
   tagline. Nunca el wordmark escrito como texto. El `<svg>` consumidor lleva
   `viewBox="0 0 281.45 75.91"` (si no, el logo aparenta indentado; ver SKILL.md §7a).
   Favicon: `assets/favicon.svg` oficial (provisional, sin símbolo).
-- **Vivo por defecto:** spotlight reactivo al mouse en el hero (+ textura sutil),
-  card glow que sigue al cursor, microinteracciones en botones y links.
-  Ver `motion.md` §Living surfaces. Obligatorio en toda landing.
+- **Vivo sin glow:** `module-field` con rastro en el hero y en el CTA final, reveal, count-up (una vez), flecha de links que se desliza 4px. Sin spotlight, sin lift, sin glow en hover (DESIGN.md §7).
+  Ver `motion.md`. Obligatorio en toda landing.
 - **Living loop:** ≥1 mockup en loop por landing (pipeline CI con la utility `pipeline`,
   reloj pausable por IntersectionObserver) — `motion.md` §Living mockups. Todo el CSS sale
   del API `@theme`/`@utility` (ver `references/tailwind-api.md`).
@@ -60,7 +59,7 @@ dominante por pieza.
   `surface-subtle` al hover); CTA primary md a la derecha; hamburguesa de 40px bajo `lg` (1024px). Pie en **Excellence Blue**
   (nunca Elaniin Black): logotipo blanco, lema (lead blanco + resto secundario), columnas con título display y enlaces
   `footer-link`, fila legal sobre hairline. `nav-link` (underline) queda solo como opción para enlaces dentro de texto.
-- **Superficies con hover = cards con padding.** Toda celda que use `lift` o `card-glow`
+- **Superficies con hover = cards con padding.** Toda celda que use `card-hover`
   lleva `rounded-card border bg-surface-card pad-card`. Sin padding el hover se ve como una
   caja con el texto pegado al borde: prohibido. Nada de `-mx-*` para disimularlo.
 - **Hairlines dividen, no decoran.** `border-default #E4E4EA` en blanco/grey;
@@ -71,7 +70,7 @@ dominante por pieza.
 - **Anti-overflow:** grid/flex children con `min-w-0`; `break-words` en títulos largos;
   `overflow-hidden` en cards con media; verificar mobile sin recortes.
 - **Imágenes:** product shots con `shadow-product`; iconos lineales 1.5px stroke, no emojis.
-- **Gradientes:** prohibidos. Sin barras escalonadas de azul ni degradados decorativos; solo el spotlight del puntero y el `card-glow`.
+- **Gradientes:** solo los de la lista de SKILL.md regla 16 (`blue-steps`, `glow-stripes`, `section-glow`+`glass`, `card-glow` en cards oscuras, `accent-flow`). Ningún otro.
 - **Sombras:** solo `card-rest`, `menu`, `product`. Nunca sombras grandes difusas.
 - **Tipografía display:** Instrument Sans 500, tracking negativo en headings grandes.
 
@@ -91,9 +90,9 @@ Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
 - [ ] Spotlight reactivo + card glow + microinteracciones activos (y off con reduced-motion).
 - [ ] ≥1 living loop activo (pipeline CI u otro mockup en loop): pausa fuera de pantalla,
       estado final estático con reduced-motion.
-- [ ] Nav móvil: los links hidden <md están en un drawer que abre (hamburguesa 44px, Esc, scrim).
+- [ ] Nav móvil: los links hidden <md están en un drawer que abre (hamburguesa 40px, Esc, scrim).
 - [ ] Un solo CTA primario visible por viewport.
 - [ ] Ritmo de fondos alternado, no 10 secciones blancas seguidas.
 - [ ] Cero overflow: mobile sin recortes, CTAs full-width, grid colapsa a 1 col.
-- [ ] Cada celda con `lift`/`card-glow` tiene `pad-card`, radio y borde (texto nunca pegado al hover).
+- [ ] Cada celda con `card-hover` tiene `pad-card`, radio y borde (texto nunca pegado al hover).
 - [ ] Footer completo (no placeholder).

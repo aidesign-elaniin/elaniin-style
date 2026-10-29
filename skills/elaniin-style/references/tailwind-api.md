@@ -134,11 +134,12 @@ Classes: `bg-elevate-blue`, `text-text-muted`, `border-border-default`,
 > Requiere `<script>document.documentElement.classList.add('js')</script>` en el head
 > (landing/dashboard). Sin JS el contenido **siempre** es visible.
 
-### Superficies reactivas
+### Superficies de card
 | Clase | Qué hace |
 |---|---|
-| `spotlight` | radial 600px / 7% siguiendo `--mx,--my` (fixed, detrás del contenido) |
-| `card-glow` | glow radial 260px en `::after` siguiendo `--cx,--cy` al hover |
+| `card-hover` | único hover de una card: `border-default` → `border-strong` (150 ms) |
+| `card-glow` | resplandor azul estático para cards sobre Excellence Blue (3 manchas) |
+| `card-glow-quiet` | el mismo, más oscuro, para cards sobre Elaniin Black |
 
 > **`@theme static`:** el bloque principal de tokens es *static*: todas las variables se emiten aunque
 > ninguna utilidad las use, para que estilos en línea y JS puedan usar `var(--color-*)`. Sin `static`,
@@ -162,10 +163,10 @@ Ambas con `animation: none` bajo reduced-motion. Reglas, geometría y receta: `r
 Host: `relative isolate overflow-hidden`; contenido `relative`. Marcar con `data-module-field`
 y `aria-hidden="true"`. Rastro apagado en táctil y con reduced-motion.
 
-> **Regla de padding:** `lift` y `card-glow` crean una superficie al hacer hover. El elemento
+> **Regla de padding:** `card-hover` crea una superficie al hacer hover. El elemento
 > **siempre** lleva `rounded-card border border-border-default bg-surface-card pad-card`
 > (mínimo `p-6`). Nunca texto pegado al borde ni márgenes negativos para compensar.
-> Auditoría rápida: `grep -n -E 'class="[^"]*(card-glow|lift)' archivo.html | grep -v -E 'pad-card|p-[68]'` debe salir vacío.
+> Auditoría rápida: `grep -n -E 'class="[^"]*card-hover' archivo.html | grep -v -E 'pad-card|p-[68]'` debe salir vacío.
 
 ### Grids
 | Clase | Qué hace |
@@ -198,8 +199,7 @@ Comportamiento en `templates/drawer.js` (marcadores `data-menu-button`, `data-dr
 | `nav-logo-light` / `nav-logo-dark` | dos logotipos en la barra: oscuro sobre claro, blanco sobre los temas oscuros |
 | `footer-link` | enlace del pie: `body-sm`, `on-dark-secondary`, blanco al hover, sin subrayado |
 | `footer-social` | botón de red social de 40px con borde `border-on-dark` y blanco 8 % al hover |
-| `btn-arrow` | `svg` `translateX(4px)` al hover + `scale(.98)` al active |
-| `lift` | `translateY(-4px)` + `shadow-menu` al hover |
+| `btn-arrow` | `svg` `translateX(4px)` al hover (sin scale al active) |
 | `row-hover` | respuesta de fila en tablas |
 
 ### Living loops (mockups vivos — ver `motion.md` §Living mockups)

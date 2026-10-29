@@ -69,63 +69,39 @@ rampa `blue-300 (2px) → blue-400 (3px) → blue-500 (3px)` y se apagan en ~260
 Variantes: `module-field-dark` (cuadritos blancos), `module-field-mask-left` (desvanece a la
 izquierda), `module-field-mask-none`. Tokens: `--module-size` 2px · `--module-pitch` 16px.
 
-### 1 · Spotlight reactivo al mouse
-Radial-gradient sutil que sigue al cursor vía CSS vars.
+### 1 · Sin spotlight ni glow en hover (DESIGN.md §7)
+Hover y focus cambian **solo color, fondo y borde**, 150ms, easing estándar. No hay spotlight que siga
+al puntero, ni glow que siga al puntero dentro de la card, ni lift, ni scale. (v1.87 retira `spotlight` y
+`lift`; `card-glow` ahora es el resplandor ESTÁTICO de las cards oscuras.) La única textura reactiva
+al puntero es el `module-field`.
 
-```css
-.spotlight {
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 40%),
-    rgba(77, 117, 253, 0.07), transparent 65%);
-}
-@media (prefers-reduced-motion: reduce) { .spotlight { display: none; } }
-```
+### 2 · Resplandores permitidos (todos estáticos o de deriva lenta, solo `transform`)
+| Utilidad | Dónde | Detalle |
+|---|---|---|
+| `card-glow` | card sobre Excellence Blue | 3 manchas: blue-700 80 % arriba-derecha, blue-600 60 % a la izquierda, blue-700 100 % abajo-derecha. Dentro de la card, detrás del contenido |
+| `card-glow-quiet` | card sobre Elaniin Black | blue-800 70 % abajo-derecha + blue-700 25 % arriba-izquierda; el texto conserva >9:1 |
+| `section-glow` + `glass` | sección *audience routes* | 3 manchas radiales que suben desde abajo y derivan 17–25 s (`glow-drift`); solo se leen a través de `glass` (blanco 55 % + blur) |
+| `glow-stripes` (`glow-media`, `glow-cta`) | etapa de la card de caso, CTA de cierre, canvas de Blue Engine | franjas de 115° que se desplazan un repeat (706.16 px) en bucle sin costura; capa azul 16 s, capa de superficie 6 s; blur 12 px solo desde 1024 px |
+| `blue-steps` | un motivo por página | barra escalonada, ≤240 px de alto, alineada al módulo, nunca detrás de texto |
+| `accent-flow` | las palabras destacadas del titular del hero | único gradiente sobre texto; tono más claro blue-400 |
 
-```js
-addEventListener('mousemove', (e) => {
-  document.documentElement.style.setProperty('--mx', e.clientX + 'px');
-  document.documentElement.style.setProperty('--my', e.clientY + 'px');
-}, { passive: true });
-```
-
-### 2 · Card glow que sigue al mouse
-```js
-card.addEventListener('pointermove', (e) => {
-  const r = card.getBoundingClientRect();
-  card.style.setProperty('--cx', (e.clientX - r.left) + 'px');
-  card.style.setProperty('--cy', (e.clientY - r.top) + 'px');
-});
-```
-```css
-.card-glow { position: relative; overflow: hidden; }
-.card-glow::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(240px circle at var(--cx, 50%) var(--cy, 50%),
-    rgba(16, 84, 255, 0.06), transparent 70%);
-  opacity: 0; transition: opacity 200ms var(--ease-standard);
-}
-.card-glow:hover::after { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .card-glow::after { display: none; } }
-```
-
-### 3 · Microinteractions mínimas
+### 3 · Microinteracciones mínimas
 | Elemento | Microinteraction |
 |---|---|
-| Botón con flecha | `→` se desplaza +4px en X al hover; `scale(0.98)` al `:active` |
-| Card | `translateY(-4px)` al hover + card glow |
-| KPI / número grande | Count-up al entrar en viewport (`IntersectionObserver`) |
+| Link / botón terciario con flecha | `→` se desplaza +4px en X al hover (`btn-arrow`); sin `scale` al `:active` |
+| Card | `card-hover`: el borde pasa de `border-default` a `border-strong`; sin lift |
+| KPI / número grande | Count-up al entrar en viewport (`IntersectionObserver`), **una sola vez** (60 % visible) |
 | Chart (SVG) | Línea se dibuja con `stroke-dashoffset` al entrar en viewport |
-| Link de nav | Underline 2px que entra desde la izquierda (`scaleX` + origin-left) |
-| Slide de deck | Spotlight por slide + stagger `rise` del contenido |
+| Nav | `nav-item`: superficie `surface-subtle` al hover |
+| Slide de deck | stagger `rise` del contenido |
 | Input | Border elevate-blue + focus-ring al focus |
 
 ### 4 · Reglas
-- **Card glow y lift = card con padding.** La superficie que aparece al hover necesita
-  `pad-card` + `rounded-card` + borde; sin padding el texto queda pegado al borde.
-- Todo lo anterior se desactiva con `prefers-reduced-motion: reduce`.
+- **Superficie al hover = card con padding.** `pad-card` + `rounded-card` + borde.
+- Todo lo anterior se desactiva con `prefers-reduced-motion: reduce` (queda el estado final; los fades de opacidad ≤150 ms se conservan).
 - Performance: solo `transform`, `opacity`, `background-position` (compositor);
   nunca animar `top/left/width/height`.
-- El spotlight no compite con el contenido: opacidad ≤ 8%, detrás del texto (`z-index` bajo).
+- Reveal: fade + 16 px de subida, 500 ms, easing emphasized, stagger 60 ms, una vez (15 % en viewport). Paneles y menús: 200–300 ms emphasized.
 - En Artifacts: la escalera CSS + JS inline basta; `motion` solo si hay coreografía compleja.
 
 ## Living mockups (loops) / Mockups vivos (loops)

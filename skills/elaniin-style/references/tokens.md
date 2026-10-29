@@ -62,8 +62,8 @@ Measure: **body 68ch · lead 56ch · heading 20ch**.
 ## Motion
 `ease-standard cubic-bezier(0.4,0,0.2,1)` · `ease-emphasized cubic-bezier(0.25,1,0.5,1)` · durations `instant 100 · fast 150 · base 200 · slow 300 · reveal 500` ms · `reveal-distance 16px` · `reveal-stagger 60ms`.
 
-## Sin gradientes
-**No hay gradientes decorativos.** Ni barras escalonadas de azul (el antiguo “stepped blue ramp” se eliminó), ni fondos degradados, ni blobs. Solo se permiten los resplandores radiales sutiles del puntero (`spotlight`, `card-glow`).
+## Gradientes (DESIGN.md §2 regla 6)
+El sistema es plano. Solo existen: `blue-steps` (único gradiente, escalonado), `glow-stripes` (CTA, media de casos, canvas Blue Engine), `section-glow` tras un panel `glass`, `card-glow` / `card-glow-quiet` dentro de cards oscuras, `accent-flow` (palabras del titular del hero) y, dentro de los recursos isométricos, el frost y el halo del pulso. Cualquier otro degradado, mancha o glow es una violación. Hover: sin lift, sin scale, sin glow.
 
 ## Botones (DESIGN.md `components.button`)
 

@@ -42,12 +42,6 @@ export const revealStaggerChild = {
   transition: { duration: duration.reveal, ease: ease.emphasized },
 } as const;
 
-/** Hover lift for cards. */
-export const hoverLift = {
-  whileHover: { y: -4 },
-  transition: { duration: duration.base, ease: ease.standard },
-} as const;
-
 /** Route transition (in / out). */
 export const pageTransition = {
   initial: { opacity: 0, y: 8 },
