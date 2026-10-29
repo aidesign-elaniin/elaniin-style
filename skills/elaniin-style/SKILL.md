@@ -264,6 +264,14 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    if a token is missing, propose it, update the design source and its change log, then the CSS, then the code.
    Never invent clients, figures, awards or facts; the isotipo and the tagline stay pending. Server Components by
    default, `"use client"` only on the leaf that needs it.
+29. **Assets are copied, never embedded (non-negotiable for sites).** In a Next.js / multi-page project, brand files and glyphs are FILES under `public/` and packages in
+   `package.json`, not SVG paths pasted into code. Identify the need from the brief or `src/content/site.ts` and run
+   `bash "<skill folder>/scripts/add-assets.sh" "$PWD"` (no group = auto-detect): `brand` (logotipos → `public/brand/`, favicon → `src/app/icon.svg`), `certification`
+   (ONLY the badges the site lists in `credentials`, → `public/certification/`), `glyphs` (LinkedIn and ChatGPT SVG files → `public/icons/` and `npm install simple-icons`
+   for Instagram, Claude, Gemini and Perplexity), `solutions` (the three official icons → `public/assets/icons/`). Triggers: the brief mentions certifications, partners,
+   awards or badges (`credentials`), social networks (`social`), or "get an AI summary" (`aiSummary: true`). The badges are marks of their owners: a client site shows only
+   what its company really holds; Elaniin's own badges are for Elaniin sites. Never draw a third-party mark by hand and never paste its path into a component. Single-file
+   HTML deliverables (deck, dashboard, landing) are the only place where the logotipo is embedded as `<symbol>`, because they must be one file.
 
 ---
 

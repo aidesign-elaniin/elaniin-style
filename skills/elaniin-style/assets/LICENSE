@@ -4,7 +4,9 @@ Copyright (c) 2026 Elaniin. All rights reserved.
 
 This folder contains the official Elaniin logotipo files, favicon and icons
 (logotipo-elaniin.svg, white-logotipo-elaniin.svg, logotipo-elaniin-blue.svg,
-favicon.svg) and the three official Elaniin icons in icons/ (software development, AI, cloud). They are trademarks and brand assets of Elaniin and are NOT
+favicon.svg) and the three official Elaniin icons in icons/ (software development, AI, cloud).
+
+certification/ holds the credential badges of Elaniin (AWS, Google Cloud, Clutch, Great Place to Work, Claude partner, Webflow partner) and icons/brand/ the LinkedIn and OpenAI glyphs for the footer. They are marks of their respective owners, kept here only so a site can show a credential its company really holds; they are not licensed under MIT either. They are trademarks and brand assets of Elaniin and are NOT
 licensed under the MIT license that covers the rest of this repository.
 
 No right is granted to copy, modify, distribute, sublicense or use these files

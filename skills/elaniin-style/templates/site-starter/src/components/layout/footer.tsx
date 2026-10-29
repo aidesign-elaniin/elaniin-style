@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { site } from "../../content/site";
 import { collections, footerRoutes } from "../../lib/site-map";
+import { credentialCatalog } from "../../content/credentials";
+import { AiSummary } from "../sections/ai-summary";
+import { Glyph } from "../ui/brand-glyphs";
 import { Logo } from "./logo";
 
-/* Credentials: 8 badge files that are black on transparent; on the dark surface they are inverted to white at 80% (invert, not brightness-0: ribbons and inner text keep contrast). Square badges 64px high, a wide one 24px, last. Each needs an alt text from the dictionary. */
-export type Credential = { name: string; node: React.ReactNode };
 
 /*
   Footer of the reference site (DESIGN.md components.footer): Excellence Blue (never Elaniin Black), the white logotipo
@@ -12,7 +13,9 @@ export type Credential = { name: string; node: React.ReactNode };
   and plain links (`footer-link`), and a legal row on a hairline. Social links, when the site has them, are 40px icon buttons
   (`footer-social`) with the official glyph of each network. All links come from site-map.ts.
 */
-export function Footer({ switcher, aiSummary, credentials }: { switcher?: React.ReactNode; aiSummary?: React.ReactNode; credentials?: { label: string; items: Credential[] } }) {
+export function Footer({ switcher }: { switcher?: React.ReactNode }) {
+  // optional rows, all driven by content/site.ts (off by default)
+  const badges = site.credentials.map((id) => ({ id, ...credentialCatalog[id] }));
   const columns = [
     { heading: "Sitio", links: footerRoutes().filter((r) => r.type !== "legal" && r.type !== "listing").map((r) => ({ label: r.title, href: r.path })) },
     { heading: collections.services.label, links: collections.services.items.map((i) => ({ label: i.title, href: `${collections.services.base}${i.slug}/` })) },
@@ -47,13 +50,15 @@ export function Footer({ switcher, aiSummary, credentials }: { switcher?: React.
             ))}
           </nav>
         </div>
-        {credentials && (
+        {badges.length > 0 && (
           <div className="mt-10 border-t border-border-on-dark pt-8">
-            <p className="font-mono text-caption uppercase tracking-wider text-text-on-dark-muted">{credentials.label}</p>
-            <ul className="mt-5 flex flex-wrap items-center gap-6 invert opacity-80" aria-label={credentials.label}>
-              {credentials.items.map((c) => (
-                <li key={c.name} className="flex items-center">
-                  {c.node}
+            <p className="font-mono text-caption uppercase tracking-wider text-text-on-dark-muted">{site.credentialsLabel}</p>
+            <ul className="mt-5 flex flex-wrap items-center gap-6" aria-label={site.credentialsLabel}>
+              {badges.map((b) => (
+                <li key={b.id} className="flex items-center">
+                  {/* files are black on transparent: inverted to white at 80% on the dark surface (invert, not brightness-0: ribbons and inner text keep contrast) */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={b.src} alt={b.name} width={b.width} height={b.height} className={`${b.tall} w-auto invert opacity-80`} />
                 </li>
               ))}
             </ul>
@@ -68,8 +73,17 @@ export function Footer({ switcher, aiSummary, credentials }: { switcher?: React.
               {i.title}
             </Link>
           ))}
+          {site.social.map((s) => (
+            <a key={s.network} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer" className="footer-social focus-ring-on-dark">
+              <Glyph name={s.network} />
+            </a>
+          ))}
           {switcher}
-          {aiSummary && <div className="md:ml-auto">{aiSummary}</div>}
+          {site.aiSummary && (
+            <div className="md:ml-auto">
+              <AiSummary label={site.aiSummaryLabel} prompt={site.aiSummaryPrompt} siteUrl={site.url} />
+            </div>
+          )}
         </div>
       </div>
     </footer>
