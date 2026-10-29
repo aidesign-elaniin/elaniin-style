@@ -49,9 +49,9 @@ export function SolutionDialog({ detail, look, openLabel, buttonClass }: { detai
         onClose={onClose}
         aria-labelledby={`dlg-${look}`}
         onClick={(e) => e.target === ref.current && close()}
-        className="m-auto w-full max-w-5xl overflow-hidden rounded-modal border border-border-default bg-white p-0 text-text-primary shadow-menu backdrop:bg-excellence-blue/55"
+        className="m-auto w-full max-w-dialog overflow-hidden rounded-modal border border-border-default bg-white p-0 text-text-primary shadow-menu backdrop:bg-excellence-blue/55"
       >
-        <div className="grid max-h-dvh overflow-y-auto lg:grid-cols-2">
+        <div className="dialog-scroll grid lg:grid-cols-2">
           <div className="min-w-0 p-8">
             <h2 id={`dlg-${look}`} className="font-display font-medium text-h2 text-balance">
               {detail.title}

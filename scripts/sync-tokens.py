@@ -26,7 +26,7 @@ ENSURE = (
     "card-hover card-glow card-glow-quiet mono-detail tag tag-brand tag-on-dark tag-sm status-badge badge-success badge-warning "
     "badge-error badge-info badge-neutral link-text field field-on-dark card-featured product-frame code-block code-comment "
     "code-accent icon-box icon-box-dark dark-band dark-band-black metric-value metric-label menu-panel menu-item tooltip tab "
-    "accordion-panel hero-fill blue-steps section-glow glass glow-stripes glow-media glow-cta solution-software solution-ai solution-cloud module-field-mask-center engage-row engage-card"
+    "accordion-panel hero-fill blue-steps section-glow glass glow-stripes glow-media glow-cta solution-software solution-ai solution-cloud module-field-mask-center engage-row engage-card dialog-scroll"
 ).split()
 # utilities that no longer exist in the system (DESIGN.md section 7: no lift, no pointer glow)
 REMOVED = ("spotlight", "lift")

@@ -266,6 +266,7 @@ anillo global · reduce → scroll auto. (Dashboard añade `body { background: s
 | `menu-panel`, `menu-item` | dropdown (radio 8, `shadow-menu`) y su ítem de 36 px | §0 |
 | `tooltip` | Elaniin Black, caption blanco, radio 6 | §0 |
 | `tab` | pestaña con indicador de 2 px Elevate Blue (`aria-selected="true"` o `data-active`) | §0 |
+| `dialog-scroll` | cuerpo del diálogo de soluciones: `max-height: min(92dvh, 780px)` con scroll interno; ancho `max-w-dialog` (1080 px) | §8 |
 | `accordion-panel` | respuesta de FAQ: filas 0fr → 1fr en 300 ms; cerrada = `visibility: hidden`; `data-open` la abre | §6 |
 | `mono-detail` | mono 13 px normal case, **opt-in** | `tokens.md` |
 | `hero-fill` | desde 1280 px el hero mide al menos la altura de pantalla bajo la barra, contenido centrado | §2 |

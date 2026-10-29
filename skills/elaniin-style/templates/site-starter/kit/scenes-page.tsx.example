@@ -1,0 +1,47 @@
+"use client";
+
+/*
+  Every isometric scene of templates/iso/scenes on one page, with sample labels. Copy templates/iso/ into src/components/iso/ (it needs `lucide-react`),
+  save this file as src/app/scenes/page.tsx and fix the import prefix. Not for a delivered site: the gate wants every page in site-map.ts.
+*/
+import { AvailabilityVisual } from "../../components/iso/scenes/availability-visual";
+import { CloudVisual } from "../../components/iso/scenes/cloud-visual";
+import { CriticalVisual } from "../../components/iso/scenes/critical-visual";
+import { DeliveryVisual } from "../../components/iso/scenes/delivery-visual";
+import { HeroModernization } from "../../components/iso/scenes/hero-modernization";
+import { HeroStackPlus } from "../../components/iso/scenes/hero-stack-plus";
+import { ImpactVisual } from "../../components/iso/scenes/impact-visual";
+import { ModernizationVisual } from "../../components/iso/scenes/modernization-visual";
+import { ProductVisual } from "../../components/iso/scenes/product-visual";
+import { ProjectScene } from "../../components/iso/scenes/project-scene";
+import { SoftwareVisual } from "../../components/iso/scenes/software-visual";
+import { StaffScene } from "../../components/iso/scenes/staff-scene";
+import { StaffVisual } from "../../components/iso/scenes/staff-visual";
+import { TeamScene } from "../../components/iso/scenes/team-scene";
+import { HeroStack } from "../../components/iso/hero-stack";
+
+const cell = "min-w-0 rounded-card border border-border-default bg-white p-4";
+const dark = "min-w-0 rounded-card border border-border-on-dark bg-surface-dark-alt p-4";
+
+export default function Scenes() {
+  return (
+    <main className="container-site grid-auto gap-grid py-12" style={{ "--card-min": "22rem" } as React.CSSProperties}>
+      <div className={cell}><HeroStack labels={{ software: "Software", ai: "AI delivery", cloud: "Cloud" }} /></div>
+      <div className={cell}><HeroStack staged labels={{ software: "Software", ai: "AI delivery", cloud: "Cloud" }} /></div>
+      <div className={cell}><HeroStackPlus labels={{ software: "Software", ai: "AI delivery", cloud: "Cloud" }} /></div>
+      <div className={cell}><HeroModernization labels={{ legacy: "Legacy", modern: "Modern" }} /></div>
+      <div className={dark}><StaffScene active names={["Ana", "Luis", "Marta"]} /></div>
+      <div className={dark}><TeamScene active /></div>
+      <div className={dark}><ProjectScene active /></div>
+      <div className={cell}><StaffVisual labels={{ team: "Your team" }} /></div>
+      <div className={cell}><ModernizationVisual labels={{ legacy: "Legacy", modern: "Modern" }} /></div>
+      <div className={cell}><SoftwareVisual labels={{ product: "Your product" }} /></div>
+      <div className={cell}><CriticalVisual labels={{ label: "Critical" }} /></div>
+      <div className={cell}><ImpactVisual labels={{ label: "Service" }} /></div>
+      <div className={cell}><AvailabilityVisual labels={{ primary: "Primary", backup: "Backup" }} /></div>
+      <div className={cell}><DeliveryVisual bare copy={{ steps: ["Tests", "Review", "Staging", "Production"] }} /></div>
+      <div className={cell}><ProductVisual bare copy={{ platform: "Platform", web: "Web app", mobile: "Mobile" }} /></div>
+      <div className={cell}><CloudVisual bare copy={{ availability: "Availability" }} /></div>
+    </main>
+  );
+}

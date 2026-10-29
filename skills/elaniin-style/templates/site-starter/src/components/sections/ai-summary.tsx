@@ -29,7 +29,7 @@ export function AiSummary({ label, prompt, siteUrl, newTab, icons }: { label: st
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${base[k].name} (${newTab})`}
-              className="grid size-8 place-items-center rounded-button text-text-on-dark-secondary transition-colors duration-fast hover:bg-white/10 hover:text-text-on-dark focus-ring-on-dark"
+              className="grid h-8 min-w-8 place-items-center rounded-button px-1.5 text-text-on-dark-secondary transition-colors duration-fast hover:bg-white/10 hover:text-text-on-dark focus-ring-on-dark"
             >
               {icons?.[k] ?? <span className="text-caption">{base[k].name}</span>}
             </a>
