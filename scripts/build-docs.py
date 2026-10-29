@@ -728,7 +728,7 @@ dev_blocks = "\n".join([
           row("local", ".claude/settings.local.json", "Only you, only this repo.") + "</div>"),
     block(3, "Enable it in a shared repo", p("Commit this in <code class=\"font-mono text-code text-text-primary\">.claude/settings.json</code> so the whole team sees the marketplace. It applies after accepting the folder trust prompt, and each person still runs <code class=\"font-mono text-code text-text-primary\">claude plugin install … --scope project</code> once.") + code(PROJECT_JSON, "json")),
     block(4, "Repository access", p("The repository is <strong>public</strong>: no GitHub account, token or permissions are needed to install or update. If it ever becomes private, Claude Code will use the user's git credentials (<code class=\"font-mono text-code text-text-primary\">gh auth login</code> and <code class=\"font-mono text-code text-text-primary\">gh auth setup-git</code> over HTTPS, or an SSH key in ssh-agent).")),
-    block(5, "Update and uninstall", p("The plugin is versioned (<code class=\"font-mono text-code text-text-primary\">plugin.json</code>, currently <strong>v" + VERSION + "</strong>). A new version ships only when a release is cut: the Changelog block lists what each one changed. With <code class=\"font-mono text-code text-text-primary\">autoUpdate</code> on it downloads by itself a few minutes after opening a session; the running session keeps the loaded version until <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or a restart.") + code(UPDATE)),
+    block(5, "Update and uninstall", p("The plugin is versioned (<code class=\"font-mono text-code text-text-primary\">plugin.json</code>, currently <strong>v" + VERSION + "</strong>). A new version ships only when a release is cut: the Versions block lists what each one changed. With <code class=\"font-mono text-code text-text-primary\">autoUpdate</code> on it downloads by itself a few minutes after opening a session; the running session keeps the loaded version until <code class=\"font-mono text-code text-text-primary\">/reload-plugins</code> or a restart.") + code(UPDATE)),
     block(6, "Use the skill", p("Claude loads it on its own when the request fits. You can also invoke it by its namespaced name:") +
           code("/elaniin:elaniin-style", "claude code") +
           p("Five modes: <strong>deck</strong>, <strong>dashboard</strong>, <strong>website</strong> (one landing), <strong>site</strong> (complete multi-page websites, block 10) and <strong>site-dev</strong> (the Elaniin 2027 site in Next.js). Ask in Spanish or English; the skill answers in your language. The script that installs <code class=\"font-mono text-code text-text-primary\">motion</code> runs silently only if the project has a <code class=\"font-mono text-code text-text-primary\">package.json</code>.")),
@@ -838,7 +838,7 @@ example_cards = "\n".join(
         ("Deck", "16:9 presentation deck", "Fixed 1280×720 canvas with keyboard navigation and living slides.", "templates/deck.html"),
     ])
 
-# Changelog: CHANGELOG.md is the single source (released with scripts/release.sh, published by .github/workflows/release.yml)
+# Versions block: CHANGELOG.md is the single source (released with scripts/release.sh, published by .github/workflows/release.yml)
 
 
 def changelog_html():
@@ -854,7 +854,7 @@ def changelog_html():
     return out
 
 
-block(17, "Changelog", p("Every version of the plugin, newest first. Each one is also a <a href=\"" + REPO + "/releases\" class=\"text-elevate-blue focus-ring\">GitHub release</a> with the same notes.") + changelog_html())
+block(17, "Versions", p("Every version of the plugin, newest first. Each one is also a <a href=\"" + REPO + "/releases\" class=\"text-elevate-blue focus-ring\">GitHub release</a> with the same notes.") + changelog_html())
 
 GROUPS = [
     ("Install", [1, 2, 3, 4, 5, 17, 9, 10]),
@@ -864,7 +864,7 @@ GROUPS = [
 ORDER = [k for _, ks in GROUPS for k in ks]
 NUM = {k: n for n, k in enumerate(ORDER, 1)}
 SHORT = {1: "Install with the CLI", 2: "Scopes", 3: "Shared repo", 4: "Access", 5: "Update", 9: "Organization", 10: "Troubleshooting",
-         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource", 14: "Complete websites", 15: "Components", 16: "Bilingual", 17: "Changelog"}
+         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource", 14: "Complete websites", 15: "Components", 16: "Bilingual", 17: "Versions"}
 
 
 def accordion(k):
@@ -973,7 +973,7 @@ body = f'''
     <div class="module-field" data-module-field aria-hidden="true"></div>
     <div class="container-site relative grid-page items-center">
       <div class="col-span-12 flex min-w-0 flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
-        <a href="#dev-{NUM[17]}" class="mono-label mb-6 inline-flex min-h-11 items-center gap-2 rounded-button border border-border-default px-4 text-caption text-text-secondary transition-colors duration-base hover:text-elevate-blue focus-ring rise" style="--i:0">v{VERSION} <span class="text-text-muted" aria-hidden="true">·</span> <span class="text-elevate-blue">Changelog</span></a>
+        <a href="#dev-{NUM[17]}" class="mono-label mb-6 inline-flex min-h-11 items-center gap-2 rounded-button border border-border-default px-4 text-caption text-text-secondary transition-colors duration-base hover:text-elevate-blue focus-ring rise" style="--i:0">Version {VERSION} <span class="text-text-muted" aria-hidden="true">·</span> <span class="text-elevate-blue">What changed</span></a>
         <h1 class="max-w-[12ch] break-words text-balance font-display font-medium text-display-xl text-text-primary rise" style="--i:1">The Elaniin style, inside Claude</h1>
         <p class="mt-6 max-w-[56ch] text-lead text-text-secondary rise max-lg:max-w-[40ch] max-lg:text-balance" style="--i:2">Ask for a deck, a dashboard or a landing and Claude builds it with the Elaniin 2027 design system. Install it once and it updates itself.</p>
         <div class="mt-10 flex flex-wrap items-center justify-center gap-4 rise max-md:w-full max-md:flex-col lg:justify-start" style="--i:3">
@@ -1092,7 +1092,7 @@ body = f'''
     <div class="flex flex-wrap items-center justify-between gap-6 border-b border-border-on-dark pb-8">
       <svg class="h-7 w-auto" role="img" aria-label="Elaniin" viewBox="0 0 281.45 75.91"><use href="#elaniin-logo-white"/></svg>
       <a href="{REPO}" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-on-dark-secondary transition-colors duration-base hover:text-white focus-ring-on-dark">Repository on GitHub</a>
-      <a href="{REPO}/releases" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-on-dark-secondary transition-colors duration-base hover:text-white focus-ring-on-dark">v{VERSION} · Releases</a>
+      <a href="{REPO}/releases" class="nav-link inline-flex min-h-11 items-center text-body-sm text-text-on-dark-secondary transition-colors duration-base hover:text-white focus-ring-on-dark">Version {VERSION} · All versions</a>
     </div>
     <p class="mono-label mt-8 text-caption text-text-on-dark-muted">© 2026 Elaniin · Elaniin Style</p>
   </div>

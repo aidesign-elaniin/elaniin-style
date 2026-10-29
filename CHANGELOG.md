@@ -1,7 +1,7 @@
 # Changelog
 
 Every release of the Elaniin plugin. This file is the single source: `scripts/build-docs.py` renders it
-in the public landing (block 17) and `.github/workflows/release.yml` publishes each entry as a GitHub Release.
+in the public landing (the Versions block) and `.github/workflows/release.yml` publishes each entry as a GitHub Release.
 Format: `## [x.y.z] - YYYY-MM-DD`, then `### Added | Changed | Fixed` with `-` bullets. Newest first.
 Release with `scripts/release.sh <x.y.z>`.
 
