@@ -48,13 +48,15 @@
 
 Escala fluida (desktop → mobile): `display-xl 64→38` (v1.70.6: the hero headline fits at most 4 lines and the lead at most 2) · `tag-sm 11` (the small tag, mono) · `display-lg 56→36` · `h1 48→32` · `h2 36→28` · `h3 28→22` · `h4 22→20` · `lead 20→18` · `body-lg 18→17` · `body 16` · `body-sm 14` · `caption 13` · `label 13 mono uppercase +0.05em` · `code 13`.
 
-Measure: **body 68ch · lead 56ch · heading 20ch**.
+Measure: **body 68ch · lead 56ch · heading 20ch** (+ `narrow 40ch`, `hero 18ch`, `cta 34ch`, `statement 22ch`, `title 14ch`).
+
+Tipos extra: `tag-sm` 11 px mono (tag pequeño oficial); `detail` 13 px mono normal case (**opt-in**, solo si el equipo lo pide: `mono-detail`); `weights` regular 400 · medium 500 · semibold 600; Instrument Sans y DM Sans en 400/500/600, self-host woff2 `font-display: swap`; Geist Mono con `font-feature-settings: 'zero' 1`.
 
 ## Layout
 `container-max 1280px` · `gutter 48/32/20` · `grid-gap 24/16` · `nav-height 64` · `section-y 96/72/56` · `section-y-statement 128/96/72` · `section-y-compact 64/48/40` · `card-padding 32/24`.
 
 ## Radius
-`button/input/tag 6` · `card/media/code 12` · `menu 8` · `modal 16` · `tooltip 6` · `device 32` · `module 2` · `full 9999`.
+`button/input/tag/status-badge 6` · `card/media/code-block/bento-outer 12` · `menu 8` · `modal 16` · `tooltip 6` · `device 32` (solo marcos de teléfono de las escenas de casos) · `app-icon 18.5 %` (favicon provisional) · `module 2` (cuadritos decorativos, nunca más) · `full 9999` (SOLO puntos de estado, avatares e interruptores). Regla: botones y cards no son pills ni son filos; si cambias `radius.button` revisa `input` y `tag` (deben coincidir) y `card` (debe seguir mayor).
 
 ## Shadow
 `card-rest` (hairline + 2px) · `menu` · `product` (elevado, para product shots) · `focus` (2px blanco + 4px elevate-blue) · `focus-on-dark` (2px excellence-blue + 4px `#7B9BFF`).

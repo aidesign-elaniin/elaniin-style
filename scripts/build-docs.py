@@ -264,7 +264,7 @@ def code(text, label="bash"):
 
 
 def step(n, title, body, extra="", mock=""):
-    return f'''<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+    return f'''<li class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   {mock}
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">{n}</span>{title}</h3>
   <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">{body}</p>{extra}
@@ -463,7 +463,7 @@ team_check = """<div class="mt-8 max-w-[68ch] rounded-card border border-border-
 </details>"""
 
 team_prompts = "\n".join(
-    f'''<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+    f'''<div class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card p-6">
   <p class="break-words font-display font-medium text-h4 text-text-primary">{txt}</p>
   <button type="button" data-copy-text="{html.escape(txt, quote=True)}" class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request {ARROW}</button>
 </div>'''
@@ -647,9 +647,12 @@ tokens_rows = "\n".join([
     row("Typography", "font-display · font-text · font-mono · text-display-xl · text-h1…h4 · text-lead · text-body · text-caption · text-tag-sm", "Fluid scale (display-xl 64 to 38px); do not use loose sizes."),
     row("Shape and shadow", "rounded-button · rounded-card · rounded-input · shadow-card-rest · shadow-menu · shadow-product", "Radii and shadows come from @theme."),
     row("Layout", "container-site · section-y · section-y-statement · section-y-compact · pad-card", "Responsive gutter and vertical rhythm."),
-    row("Motion", "duration-fast · duration-base · duration-slow · duration-reveal · rise · reveal · card-glow · lift · btn-arrow", "Named durations: never duration-200."),
+    row("Motion", "duration-fast · duration-base · duration-slow · duration-reveal · rise · reveal · btn-arrow", "Named durations: never duration-200. Hover = color, background or border only."),
     row("Focus", "focus-ring · focus-ring-on-dark", "Visible double ring on :focus-visible."),
-    row("Hover cards", "lift · card-glow + rounded-card border bg-surface-card pad-card", "Always padded: never text touching the edge."),
+    row("Hover cards", "card-hover + rounded-card border bg-surface-card pad-card", "Border goes default to strong. No lift, scale or glow. Always padded."),
+    row("Dark cards", "card-glow (Excellence Blue) · card-glow-quiet (Elaniin Black)", "Static blue glow inside dark cards only."),
+    row("Primitives", "tag · tag-sm · status-badge · field · product-frame · code-block · icon-box · dark-band · metric-value · menu-panel · tooltip · tab", "Specified in references/components.md."),
+    row("Motifs", "blue-steps · glow-stripes · section-glow + glass · solution-software|ai|cloud · accent-flow", "The only gradients allowed (SKILL.md rule 16)."),
     row("Grids", "gap-grid · grid-page · grid-auto · grid-hairline", "Section 12. No negative margins."),
     row("Nav bar", "nav-bar · nav-item · nav-toggle · nav-logo-light / nav-logo-dark + nav-theme.js", "The reference nav: glass bar that adopts the color of the section under it, 40px pill links, one primary CTA."),
     row("Footer", "footer-link · footer-social · bg-surface-dark", "Excellence Blue (never Elaniin Black), white logotipo, display-font column headings, plain links."),
@@ -666,8 +669,8 @@ rules = "\n".join(
         "No loose class selectors in <code class=\"font-mono text-code text-text-primary\">&lt;style&gt;</code>: every new resource is a <code class=\"font-mono text-code text-text-primary\">@utility</code>.",
         "The deck has no responsive classes: its canvas is always 1280×720. Use <code class=\"font-mono text-code text-text-primary\">grid-cols-3</code>, not <code class=\"font-mono text-code text-text-primary\">md:grid-cols-3</code>.",
         "Keep <code class=\"font-mono text-code text-text-primary\">min-w-0</code> on grid/flex children and <code class=\"font-mono text-code text-text-primary\">overflow-hidden</code> on cards: zero overflow.",
-        "Any element with <code class=\"font-mono text-code text-text-primary\">lift</code> or <code class=\"font-mono text-code text-text-primary\">card-glow</code> is a card: it gets <code class=\"font-mono text-code text-text-primary\">rounded-card border bg-surface-card pad-card</code>. Never text touching the hover edge, never negative margins.",
-        "Mobile navigation: if a nav is hidden below its breakpoint it needs a 44px menu button that opens a real drawer (<code class=\"font-mono text-code text-text-primary\">drawer</code> + <code class=\"font-mono text-code text-text-primary\">scrim</code> + <code class=\"font-mono text-code text-text-primary\">drawer.js</code>). A hamburger with no action is a bug; test at 375, 768 and 1280 px.",
+        "Any element that shows a surface on hover (<code class=\"font-mono text-code text-text-primary\">card-hover</code>) is a card: it gets <code class=\"font-mono text-code text-text-primary\">rounded-card border bg-surface-card pad-card</code>. Never text touching the hover edge, never negative margins.",
+        "Mobile navigation: if a nav is hidden below its breakpoint it needs a 40px menu button that opens a real drawer (<code class=\"font-mono text-code text-text-primary\">drawer</code> + <code class=\"font-mono text-code text-text-primary\">scrim</code> + <code class=\"font-mono text-code text-text-primary\">drawer.js</code>). A hamburger with no action is a bug; test at 375, 768 and 1280 px.",
         "Nav and footer are the reference site's: <code class=\"font-mono text-code text-text-primary\">nav-bar</code> + <code class=\"font-mono text-code text-text-primary\">nav-item</code>, dark sections declare <code class=\"font-mono text-code text-text-primary\">data-nav-theme</code>, and the footer is Excellence Blue. Never improvise them.",
         "Respect reduced motion: every new animation must switch off with <code class=\"font-mono text-code text-text-primary\">prefers-reduced-motion</code>.",
     ])
@@ -690,7 +693,7 @@ g_rules = "\n".join(
         "Mobile first: every child of <code class=\"font-mono text-code text-text-primary\">grid-page</code> gets <code class=\"font-mono text-code text-text-primary\">col-span-12</code> and then scales up with <code class=\"font-mono text-code text-text-primary\">md:</code> or <code class=\"font-mono text-code text-text-primary\">xl:</code>.",
         "<code class=\"font-mono text-code text-text-primary\">min-w-0</code> on every grid or flex child with text, media or tables.",
         "No negative margins (<code class=\"font-mono text-code text-text-primary\">-mx-*</code>) and no arbitrary gaps (<code class=\"font-mono text-code text-text-primary\">gap-[18px]</code>).",
-        "Do not use <code class=\"font-mono text-code text-text-primary\">lift</code> or <code class=\"font-mono text-code text-text-primary\">card-glow</code> inside <code class=\"font-mono text-code text-text-primary\">grid-hairline</code>: the clipping hides the shadow. For hover cards use <code class=\"font-mono text-code text-text-primary\">grid-page</code> or <code class=\"font-mono text-code text-text-primary\">grid-auto</code>.",
+        "Do not use <code class=\"font-mono text-code text-text-primary\">card-hover</code> inside <code class=\"font-mono text-code text-text-primary\">grid-hairline</code>: its cells have no hover surface. For hover cards use <code class=\"font-mono text-code text-text-primary\">grid-page</code> or <code class=\"font-mono text-code text-text-primary\">grid-auto</code>.",
         "The deck keeps explicit columns (<code class=\"font-mono text-code text-text-primary\">grid-cols-3</code>): its canvas is always 1280 px.",
     ])
 
@@ -782,12 +785,22 @@ dev_blocks = "\n".join([
           row("iso-levitate", "The whole piece floats 6px, 3s.", "Utility in tokens.css.") +
           row("iso-float", "A label floats 4px, 2s, staggered with --d.", "Utility in tokens.css.") +
           row("iso-stack.js", "Vanilla build for self-contained HTML. Exposes window.ElaniinIso (project, slabSvg, floorSvg, mountStack…).", "templates/iso-stack.js") +
-          row("iso/", "React / Next build: HeroStack, Slab (looks software, ai, cloud, brand, dark), Floor, IsoPill, IsoPulse, IsoLogotipo, iso.ts, use-clock.ts.", "templates/iso/") +
+          row("iso/", "React / Next build: HeroStack, Slab (looks software, ai, cloud, brand, dark), Floor, IsoPill, IsoPulse, IsoLogotipo, iso.ts, use-clock.ts, plus scenes/ with 13 ready scenes.", "templates/iso/") +
           "</div>" +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">HTML</h4>' + code(ISO_HTML, "html") +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">React / Next.js</h4>' + code(ISO_REACT, "tsx") +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3">' + iso_rules + "</ul>" +
           p("Exact geometry, the 15 rules, the timeline and the recipe for a new resource are in <code class=\"font-mono text-code text-text-primary\">references/isometric.md</code> inside the plugin.")),
+    block(15, "Specified components", p("Since v1.87.2 the skill ships every component of the design system, not only the tokens and the nav. Claude builds them from the spec: <code class=\"font-mono text-code text-text-primary\">references/components.md</code>.") +
+          '<div class="border-b border-border-default">' +
+          row("Navigation", "mega-menu (solutions, engagement, resources), nav with language switch and secondary button, mobile accordions.", "templates/site-starter/src/components/layout/") +
+          row("Sections", "hero (centered | split), logo strip, audience routes, solutions grid + dialog, engagement models, cases, research, FAQ, closing CTA.", "templates/site-starter/src/components/sections/") +
+          row("Footer and 404", "credentials row, AI summary, four columns; 404 with a hairline grid of links.", "layout/footer.tsx, app/not-found.tsx") +
+          row("Primitives", "tag, status-badge, field, product-frame, code-block, icon-box, dark-band, metric, menu, tooltip, tab.", "utilities in tokens.css") +
+          row("Isometric scenes", "engagement (3), routes (6), solutions (3), hero proposals (2).", "templates/iso/scenes/") +
+          "</div>" +
+          p("Hover is color, background or border only (no lift, scale or glow, no pointer spotlight). The only gradients are the ones DESIGN.md lists. <code class=\"font-mono text-code text-text-primary\">templates/site-starter/kit/page.tsx.example</code> puts every component on one page with sample data.")),
+    block(16, "Bilingual sites (i18n)", p("English primary (no prefix), Spanish under <code class=\"font-mono text-code text-text-primary\">/es</code> with translated slugs from one route table, <code class=\"font-mono text-code text-text-primary\">hreflang</code> and canonical per page, typed dictionaries, <code class=\"font-mono text-code text-text-primary\">Intl</code> formats (en-US, es-SV) and a language switch that links to the same page. The kit is <code class=\"font-mono text-code text-text-primary\">templates/i18n/</code> (routes, proxy rules, metadata, formats, tests); the rules are in <code class=\"font-mono text-code text-text-primary\">references/i18n.md</code>. It needs a server proxy; on a static export use the prefix-both variant described there.")),
     block(12, "What the repository ships", code('''.claude-plugin/        marketplace.json + plugin.json
 docs/                  this landing and the sample templates
 scripts/build-docs.py  regenerates docs/ (landing + template copies)
@@ -795,12 +808,13 @@ scripts/make-og.py     regenerates docs/og.png (share image)
 skills/elaniin-style/
 ├── SKILL.md           5-phase pipeline and rules
 ├── assets/            official logos and favicon
-├── references/        tokens, tailwind-api, grids, motion, ux-a11y, websites, site-architect,
-│                      isometric, decks, dashboards, site-dev, maintenance, mdx
+├── references/        tokens, tailwind-api, components, i18n, grids, motion, ux-a11y, websites,
+│                      site-architect, isometric, decks, dashboards, site-dev, maintenance, mdx
 ├── scripts/           ensure-motion.sh
 └── templates/         tokens.css, landing.html, dashboard.html, deck.html,
                        module-field.js / .tsx, drawer.js, nav-theme.js,
-                       iso-stack.js + iso/ (isometric resource),
+                       iso-stack.js + iso/ (isometric resource) + iso/scenes/ (13 scenes),
+                       i18n/ (routes, proxy, metadata, formats, tests),
                        site-starter/ (Next.js static project for complete sites),
                        mdx-collection/ (blog, cases and docs as .mdx files)
 docs/ejemplos/         nova-logistica: 30-page demo master project
@@ -810,7 +824,7 @@ scripts/               verify.sh, sync-tokens.py, check-system.py, browser-check
 
 
 example_cards = "\n".join(
-    f'''<a href="{href}" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
+    f'''<a href="{href}" target="_blank" rel="noopener" class="card-hover btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
   <h3 class="font-display font-medium text-h3 text-text-primary">{title}</h3>
   <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">{desc}</p>
   <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Open example {ARROW}</span>
@@ -824,12 +838,12 @@ example_cards = "\n".join(
 GROUPS = [
     ("Install", [1, 2, 3, 4, 5, 9, 10]),
     ("Use & edit", [6, 7, 14]),
-    ("Resources", [8, 11, 13, 12]),
+    ("Resources", [8, 11, 13, 15, 16, 12]),
 ]
 ORDER = [k for _, ks in GROUPS for k in ks]
 NUM = {k: n for n, k in enumerate(ORDER, 1)}
 SHORT = {1: "Install with the CLI", 2: "Scopes", 3: "Shared repo", 4: "Access", 5: "Update", 9: "Organization", 10: "Troubleshooting",
-         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource", 14: "Complete websites"}
+         6: "Use the skill", 7: "Edit pieces", 8: "Module field", 11: "Grids", 12: "Repository", 13: "Isometric resource", 14: "Complete websites", 15: "Components", 16: "Bilingual"}
 
 
 def accordion(k):
@@ -869,7 +883,7 @@ TASKS = [
     ("Org rollout", "Managed settings and auto-update.", "dev-6"),
 ]
 task_cards = "\n".join(
-    f'''<a href="#{target}" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+    f'''<a href="#{target}" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">{name}</h3>
   <p class="mt-1 text-body-sm text-text-secondary">{desc}</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section {ARROW}</span>
@@ -911,7 +925,6 @@ panel_devs = f'''<div data-panel="devs" id="panel-devs" role="tabpanel" aria-lab
 
 # ------------------------------------------------------------------ page
 body = f'''
-<div class="spotlight" aria-hidden="true"></div>
 <div class="relative z-10">
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-button focus:border focus:border-border-default focus:shadow-menu">Skip to content</a>
 
@@ -1248,20 +1261,6 @@ script = r'''
     }, { threshold: 0.3 }).observe(stage);
   });
 
-  /* mouse-reactive spotlight + card glow */
-  if (!reduce) {
-    addEventListener('mousemove', function (e) {
-      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
-      document.documentElement.style.setProperty('--my', e.clientY + 'px');
-    }, { passive: true });
-    document.addEventListener('pointermove', function (e) {
-      var c = e.target.closest && e.target.closest('.card-glow');
-      if (!c) return;
-      var r = c.getBoundingClientRect();
-      c.style.setProperty('--cx', (e.clientX - r.left) + 'px');
-      c.style.setProperty('--cy', (e.clientY - r.top) + 'px');
-    });
-  }
 })();
 </script>
 <script>

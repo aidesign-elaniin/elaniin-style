@@ -141,13 +141,15 @@
   --text-display-xl--letter-spacing: -0.035em;
   --text-tag-sm: 11px; /* the small tag (official, DESIGN.md v1.64): mono, with mono-label */
   --text-tag-sm--line-height: 1;
-  /* Measures (line length): max-w-body 68ch · max-w-lead 56ch · max-w-narrow 40ch · max-w-heading 20ch · max-w-hero 18ch · max-w-cta 34ch */
+  /* Measures (line length): max-w-body 68ch · max-w-lead 56ch · max-w-narrow 40ch · max-w-heading 20ch · max-w-hero 18ch · max-w-cta 34ch · max-w-statement 22ch */
   --container-body: 68ch;
   --container-lead: 56ch;
   --container-narrow: 40ch;
   --container-heading: 20ch;
   --container-hero: 18ch;
   --container-cta: 34ch;
+  --container-statement: 22ch;
+  --container-title: 14ch;
   --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
   --text-display-lg--line-height: 1.04;
   --text-display-lg--letter-spacing: -0.03em;
@@ -188,6 +190,8 @@
   --radius-card: 12px;
   --radius-media: 12px;
   --radius-code: 12px;
+  --radius-bento-outer: 12px;
+  --radius-app-icon: 18.5%;
   --radius-menu: 8px;
   --radius-modal: 16px;
   --radius-tooltip: 6px;
@@ -215,6 +219,9 @@
   --animate-spin-slow: spin-slow 0.9s linear infinite;
   --animate-ping-soft: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   --animate-sheen: sheen 5s linear infinite;
+  --animate-glow-drift: glow-drift 21s ease-in-out infinite alternate;
+  --animate-glow-scroll-blue: glow-scroll 16s linear infinite;
+  --animate-glow-scroll-light: glow-scroll 6s linear infinite;
 
   /* ---------- motion: keyframes (paired with the tokens above) ---------- */
   @keyframes rise {
@@ -239,6 +246,14 @@
   @keyframes ping-soft {
     0% { transform: scale(1); opacity: 0.8; }
     75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes glow-drift {
+    from { transform: translate3d(-3%, 2%, 0); }
+    to { transform: translate3d(3%, -2%, 0); }
+  }
+  @keyframes glow-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-706.16px, 0, 0); }
   }
   @keyframes sheen {
     from { transform: translate3d(-140%, 0, 0); }
@@ -313,6 +328,11 @@
     outline: 2px solid transparent;
     box-shadow: var(--shadow-focus);
   }
+  /* ONE exception (DESIGN.md section 8): when the PAGE returns the focus after closing a dialog, the ring is not painted (after Escape it stayed on as a stray
+     line); it appears with the next key press. The opener sets data-focus-returned and removes it on the next keydown. Tab always shows the ring. */
+  &[data-focus-returned]:focus-visible {
+    box-shadow: none;
+  }
 }
 @utility focus-ring-on-dark {
   &:focus-visible {
@@ -370,35 +390,20 @@
 }
 
 /* ---------- utilities: surfaces ---------- */
-@utility spotlight {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(600px circle at var(--mx, 70%) var(--my, 20%), rgba(77, 117, 253, 0.07), transparent 62%);
-  @media (prefers-reduced-motion: reduce) {
-    display: none;
-  }
-}
 @utility card-glow {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  &::after {
+  &::before {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: -1;
     pointer-events: none;
-    background: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 50%), rgba(16, 84, 255, 0.06), transparent 70%);
-    opacity: 0;
-    transition: opacity var(--dur-base) var(--ease-standard);
-  }
-  &:hover::after {
-    opacity: 1;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    &::after {
-      display: none;
-    }
+    background:
+      radial-gradient(60% 55% at 100% 0%, color-mix(in srgb, var(--color-blue-700) 80%, transparent), transparent 70%),
+      radial-gradient(50% 45% at 0% 55%, color-mix(in srgb, var(--color-blue-600) 60%, transparent), transparent 70%),
+      radial-gradient(60% 55% at 100% 100%, var(--color-blue-700), transparent 70%);
   }
 }
 
@@ -540,9 +545,6 @@
   }
 }
 @utility btn-arrow {
-  &:active {
-    transform: scale(0.98);
-  }
   & svg {
     transition: transform var(--dur-base) var(--ease-standard);
   }
@@ -553,18 +555,6 @@
   @media (prefers-reduced-motion: reduce) {
     & svg {
       transition: none;
-    }
-  }
-}
-@utility lift {
-  transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-menu);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    &:hover {
-      transform: none;
     }
   }
 }
@@ -907,6 +897,472 @@
     }
   }
 }
+@utility card-hover {
+  transition: border-color var(--dur-fast) var(--ease-standard);
+  &:hover {
+    border-color: var(--color-border-strong);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@utility card-glow-quiet {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 55% at 100% 100%, color-mix(in srgb, var(--color-blue-800) 70%, transparent), transparent 70%),
+      radial-gradient(45% 40% at 0% 0%, color-mix(in srgb, var(--color-blue-700) 25%, transparent), transparent 70%);
+  }
+}
+
+@utility mono-detail {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-feature-settings: "zero" 1;
+}
+
+@utility tag {
+  display: inline-flex;
+  height: 1.5rem;
+  width: fit-content;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: var(--radius-tag);
+  border: 1px solid var(--tag-border, var(--color-border-default));
+  background: var(--tag-bg, var(--color-surface-subtle));
+  color: var(--tag-text, var(--color-text-secondary));
+  padding-inline: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-feature-settings: "zero" 1;
+}
+
+@utility tag-brand {
+  --tag-bg: var(--color-blue-tint-50);
+  --tag-text: var(--color-blue-600);
+  --tag-border: var(--color-blue-200);
+}
+
+@utility tag-on-dark {
+  --tag-bg: rgb(255 255 255 / 0.06);
+  --tag-text: var(--color-text-on-dark-secondary);
+  --tag-border: var(--color-border-on-dark);
+}
+
+@utility tag-sm {
+  height: 1.25rem;
+  padding-inline: 0.375rem;
+  font-size: var(--text-tag-sm);
+}
+
+@utility status-badge {
+  display: inline-flex;
+  height: 1.5rem;
+  width: fit-content;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: var(--radius-tag);
+  border: 1px solid var(--b-border, var(--color-neutral-border));
+  background: var(--b-bg, var(--color-neutral-bg));
+  color: var(--b-text, var(--color-neutral-text));
+  padding-inline: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--b-dot, var(--color-neutral-dot));
+  }
+}
+
+@utility link-text {
+  color: var(--color-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-standard);
+  &:hover {
+    color: var(--color-text-link-hover);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@utility field {
+  height: 2.75rem;
+  width: 100%;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--color-border-input);
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  padding-inline: 0.75rem;
+  transition: border-color var(--dur-fast) var(--ease-standard);
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+  &:hover {
+    border-color: var(--color-elaniin-black);
+  }
+  &:focus-visible {
+    outline: 2px solid transparent;
+    border-color: var(--color-elevate-blue);
+    box-shadow: var(--shadow-focus);
+  }
+  &[aria-invalid="true"] {
+    border-color: var(--color-error-dot);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@utility field-on-dark {
+  background: rgb(255 255 255 / 0.04);
+  border-color: var(--color-border-on-dark-strong);
+  color: var(--color-text-on-dark);
+  &:focus-visible {
+    box-shadow: var(--shadow-focus-on-dark);
+  }
+}
+
+@utility card-featured {
+  border: 2px solid var(--color-excellence-blue);
+}
+
+@utility product-frame {
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-white);
+  box-shadow: var(--shadow-product);
+}
+
+@utility code-block {
+  overflow-x: auto;
+  border-radius: var(--radius-code);
+  background: var(--color-surface-code);
+  color: var(--color-text-on-dark);
+  padding: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+  line-height: var(--text-code--line-height);
+}
+
+@utility icon-box {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  place-items: center;
+  border-radius: var(--radius-menu);
+  border: 1px solid var(--color-blue-200);
+  background: var(--color-blue-tint-50);
+  color: var(--color-elevate-blue);
+}
+
+@utility icon-box-dark {
+  border-color: var(--color-border-on-dark);
+  background: rgb(255 255 255 / 0.06);
+  color: var(--color-text-on-dark-accent);
+}
+
+@utility dark-band {
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+}
+
+@utility dark-band-black {
+  background: var(--color-surface-dark-alt);
+  color: var(--color-text-on-dark);
+}
+
+@utility metric-value {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+@utility metric-label {
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm--line-height);
+  color: var(--color-text-secondary);
+}
+
+@utility menu-panel {
+  border-radius: var(--radius-menu);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-white);
+  box-shadow: var(--shadow-menu);
+}
+
+@utility menu-item {
+  display: flex;
+  height: 2.25rem;
+  align-items: center;
+  padding-inline: 0.75rem;
+  font-size: var(--text-body-sm);
+  &:hover { background: var(--color-surface-subtle); }
+}
+
+@utility tooltip {
+  border-radius: var(--radius-tooltip);
+  background: var(--color-elaniin-black);
+  color: var(--color-white);
+  padding: 6px 10px;
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+}
+
+@utility tab {
+  position: relative;
+  color: var(--color-text-secondary);
+  transition: color var(--dur-fast) var(--ease-standard);
+  &:hover { color: var(--color-text-primary); }
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-elevate-blue);
+    opacity: 0;
+  }
+  &[aria-selected="true"],
+  &[data-active] {
+    color: var(--color-text-primary);
+  }
+  &[aria-selected="true"]::after,
+  &[data-active]::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@utility accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows var(--dur-slow) var(--ease-emphasized), visibility 0s linear var(--dur-slow);
+  &[data-open] {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@utility hero-fill {
+  @media (min-width: 80rem) {
+    display: flex;
+    min-height: calc(100dvh - var(--nav-height));
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@utility blue-steps {
+  height: 16px;
+  background: linear-gradient(90deg, #d7e2f8 0 12.5%, #b9cefb 12.5% 25%, #6a9aff 25% 37.5%, #1054ff 37.5% 50%, #0848cc 50% 62.5%, #023ca0 62.5% 75%, #022b63 75% 87.5%, #01172e 87.5% 100%);
+}
+
+@utility section-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 78% at 20% 100%, color-mix(in srgb, var(--color-blue-300) 45%, transparent), transparent 70%),
+    radial-gradient(45% 90% at 60% 100%, color-mix(in srgb, var(--color-blue-200) 75%, transparent), transparent 70%),
+    radial-gradient(40% 98% at 90% 100%, color-mix(in srgb, var(--color-blue-300) 32%, transparent), transparent 70%);
+  animation: var(--animate-glow-drift);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility glass {
+  background: rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(4px);
+}
+
+@utility glow-stripes {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: var(--glow-opacity, 0.7);
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: 0;
+    width: calc(100% + 1412.32px);
+    background-size: 706.16px 100%;
+    will-change: transform;
+  }
+  &::before {
+    background-image: repeating-linear-gradient(115deg, var(--color-elevate-blue) 0 160px, color-mix(in srgb, var(--color-elevate-blue) 50%, transparent) 160px 320px, transparent 320px 640px);
+    animation: var(--animate-glow-scroll-blue);
+  }
+  &::after {
+    background-image: repeating-linear-gradient(115deg, var(--glow-surface, var(--color-surface-dark)) 0 200px, transparent 200px 640px);
+    animation: var(--animate-glow-scroll-light);
+  }
+  @media (min-width: 64rem) {
+    filter: blur(12px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::before,
+    &::after {
+      animation: none;
+    }
+  }
+}
+
+@utility glow-cta {
+  --glow-opacity: 0.6;
+  mask-image: radial-gradient(120% 100% at 50% 100%, #000 30%, transparent 85%);
+}
+@utility solution-software {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-blue-tint-50);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: conic-gradient(from 270deg at 3px 3px, color-mix(in srgb, var(--color-blue-300) 55%, transparent) 0 90deg, transparent 0);
+    background-size: 16px 16px;
+    -webkit-mask-image: radial-gradient(90% 90% at 100% 0%, #000, transparent 80%);
+    mask-image: radial-gradient(90% 90% at 100% 0%, #000, transparent 80%);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(50% 45% at 0% 100%, color-mix(in srgb, var(--color-blue-200) 70%, transparent), transparent 70%);
+  }
+}
+
+@utility solution-ai {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.09) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: right top;
+    -webkit-mask-image: radial-gradient(100% 100% at 100% 0%, #000, transparent 85%);
+    mask-image: radial-gradient(100% 100% at 100% 0%, #000, transparent 85%);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 50% at 100% 0%, var(--color-blue-700), transparent 70%),
+      radial-gradient(50% 45% at 0% 100%, var(--color-blue-800), transparent 70%);
+  }
+}
+
+@utility solution-cloud {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-surface-subtle);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(to bottom, var(--color-border-strong) 0 1px, transparent 1px 12px);
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+    mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(50% 45% at 100% 0%, rgb(255 255 255 / 0.9), transparent 70%);
+  }
+}
+@utility module-field-mask-center {
+  --module-mask: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 0, #000 100%);
+}
+
+@utility engage-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  @media (min-width: 64rem) {
+    flex-direction: row;
+  }
+}
+
+@utility engage-card {
+  position: relative;
+  min-width: 0;
+  @media (min-width: 64rem) {
+    flex: 1 1 0%;
+    height: 28.75rem;
+    transition: flex-grow var(--dur-slow) var(--ease-emphasized);
+    &:hover,
+    &:focus-within {
+      flex-grow: 2.4;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
 
 /* ---------- docs-only: developer table of contents ---------- */
 @utility toc-link {
@@ -1038,7 +1494,6 @@
 <symbol id="elaniin-logo-blue" viewBox="0 0 281.45 75.91"><g fill="#1054ff"><g id="uuid-5492e3b7-2299-49d7-a0db-08f3ca1d8490"><path d="M41.42,59.92c.48-.5.79-.85.79-.85l8.06,5.28s-.25.53-.67,1.13c-5.63,7.9-15.43,11.26-25.28,10.25-11.26-1.15-20.35-9.09-23.18-19.59-1.59-5.91-1.52-12.11.29-17.93,1.36-4.38,3.81-8.15,7.21-11.37,5.09-4.82,11.61-7.14,18.75-7.02,15.03.25,25.49,11.65,25.49,26.29,0,4.22-.07,5.79-.07,5.79H10.41c1.24,8.21,7.61,13.56,16.36,13.82,5.64.16,10.81-1.79,14.64-5.79h0ZM35.95,32.59c-3.09-1.87-6.35-2.5-10.01-2.46-7.67.09-14.12,5.52-15.17,12.83l32.43-.02c-.77-4.48-3.4-8.15-7.24-10.35Z"/><polygon points="59.63 74.76 59.61 .06 70.15 0 70.16 74.77 59.63 74.76"/><path d="M129.19,74.78h-9.73l-.13-6.07c-3.67,4.24-8.58,6.7-14.17,7.11-4.34.32-8.69-.18-12.63-1.96-7.45-3.36-12.85-9.89-14.88-17.53-1.56-5.86-1.5-12.02.21-17.81,1.47-4.98,4.25-9.38,8.25-12.88,4.99-4.36,11.08-6.27,17.78-6.01,6.11.23,11.64,2.47,15.47,7.24l.03-6.46,11.21.02v54.35h-1.4ZM115.49,61.31c2.26-2.18,3.85-4.7,4.72-7.67,1.81-6.2.67-12.65-3.33-17.71-2.78-3.52-6.81-5.6-11.36-5.99-11.37-.96-19.09,7.9-18.82,18.56.27,10.39,8.34,18.42,19.22,17.24,3.7-.4,6.93-1.87,9.57-4.42h0Z"/><path d="M160.38,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><path d="M206.07,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/><path d="M254.15,29.59c-5.76.84-10,5.14-11.11,10.58-.46,2.26-.5,4.39-.49,6.78l.04,27.82h-10.68l-.05-54.35h10.66s.05,6.46.05,6.46c5.12-6.32,11.41-7.79,19.47-7.07,8.1.72,14.91,5.87,17.71,13.24,1.08,2.83,1.59,5.79,1.6,8.98l.1,32.76h-10.76v-29.8c0-2.36-.23-4.45-.94-6.61-2.16-6.58-8.48-9.83-15.6-8.78h0Z"/><circle cx="200.72" cy="9.03" r="5.47"/><circle cx="219.55" cy="9.03" r="5.47"/><path d="M224.9,20.4h-10.78v54.37h10.86s-.07-54.37-.07-54.37Z"/></g></g></symbol>
 </svg>
 
-<div class="spotlight" aria-hidden="true"></div>
 <div class="relative z-10">
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-white focus:px-4 focus:py-2 focus:rounded-button focus:border focus:border-border-default focus:shadow-menu">Skip to content</a>
 
@@ -1113,7 +1568,7 @@
     <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">Install it in 6 steps, no terminal</h2>
 <p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Everything happens inside Claude, in the Plugins page. It takes a couple of minutes and you only do it once.</p>
     <ol class="mt-10 grid-auto" style="--card-min:22rem">
-      <li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+      <li class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <div class="mock-stage mb-5" data-mock data-path="95%,92%|17%,84%|17%,84%|23%,33%|23%,33%|23%,33%|25%,85%|25%,85%|25%,85%" aria-hidden="true">
   <div class="mock-hide absolute inset-0" data-on="6">
     <div class="flex h-full">
@@ -1144,7 +1599,7 @@
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">01</span>Open Settings, then Plugins</h3>
   <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">In the Claude desktop app click your name or email at the bottom of the left sidebar and choose <strong>Settings</strong> (on Mac you can press <kbd class="rounded-tag bg-surface-subtle px-1 font-mono text-code">⌘ ,</kbd>). In the Settings list, under the <strong>Customize</strong> group, click <strong>Plugins</strong>. You must be signed in to your Claude account.</p><p class="mt-3 text-body-sm text-text-secondary">On claude.ai you can also go straight to <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener" class="font-medium text-elevate-blue underline underline-offset-4 hover:text-text-link-hover focus-ring">claude.ai/customize/plugins</a></p>
 </li>
-<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+<li class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <div class="mock-stage mb-5" data-mock data-path="95%,92%|89%,13%|89%,13%|73%,45%|73%,45%|73%,45%" aria-hidden="true">
   <div class="flex items-center justify-between border-b border-border-default bg-white px-3 py-2">
     <span class="text-[10px] font-medium leading-none text-text-primary">Plugins</span>
@@ -1158,7 +1613,7 @@
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">02</span>Choose Add, then Add marketplace</h3>
   <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">On the Plugins page click <strong>Add</strong>, then choose <strong>Add marketplace</strong>. A small window opens with two options.</p>
 </li>
-<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+<li class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <div class="mock-stage mb-5" data-mock data-path="95%,95%|50%,73%|50%,73%|50%,73%|50%,64%|50%,64%|83%,80%|83%,80%|83%,80%" aria-hidden="true">
   <div class="mock-hide absolute inset-x-4 inset-y-3 rounded-menu border border-border-default bg-white p-3 shadow-menu" data-on="4">
     <span class="text-[10px] font-medium leading-none text-text-primary">Add marketplace</span>
@@ -1180,7 +1635,7 @@
   <pre class="px-4 py-4 font-mono text-code text-text-on-dark whitespace-pre-wrap break-words"><code>https://github.com/aidesign-elaniin/elaniin-style</code></pre>
 </div></div>
 </li>
-<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+<li class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <div class="mock-stage mb-5" data-mock data-path="95%,95%|85%,47%|85%,47%|85%,47%|60%,12%|60%,12%|50%,59%|50%,59%|50%,59%" aria-hidden="true">
   <div class="flex h-full flex-col bg-white">
     <div class="flex items-center gap-3 border-b border-border-default px-3 py-2">
@@ -1222,7 +1677,7 @@
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">04</span>Install elaniin-style</h3>
   <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">In <strong>Discover</strong> the marketplace shows an <strong>Elaniin style</strong> card: click <strong>Add</strong> and it changes to <strong>Added</strong>. Then open the <strong>Yours</strong> tab and click the <strong>Elaniin Style</strong> card. It is saved to your account, so it is also available in chat, Cowork and Claude Code.</p>
 </li>
-<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+<li class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <div class="mock-stage mb-5" data-mock data-path="95%,95%|88%,38%|88%,38%|88%,38%|88%,38%" aria-hidden="true">
   <div class="h-full bg-white p-3">
     <p class="truncate font-mono text-[10px] font-medium leading-none text-text-primary">elaniin-style-marketplace</p>
@@ -1237,7 +1692,7 @@
   <h3 class="font-display font-medium text-h4 text-text-primary"><span class="mr-2 font-mono text-code text-elevate-blue">05</span>Check that updates are on</h3>
   <p class="mt-2 max-w-[56ch] break-words text-body text-text-secondary">In the same <strong>Yours</strong> tab, open the Elaniin marketplace you added. Check that the <strong>Update</strong> switch is on. If it is off, turn it on so the plugin always stays up to date.</p>
 </li>
-<li class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
+<li class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card pad-card">
   <div class="mock-stage mb-5" data-mock data-path="95%,35%|45%,79%|45%,79%|27%,45%|45%,79%|45%,79%|90%,79%|90%,79%|90%,79%" aria-hidden="true">
   <div class="mock-fade absolute left-3 top-3 w-28 rounded-button border border-border-default bg-white p-1.5" data-on="8">
     <div class="aspect-video rounded-tag bg-excellence-blue p-2"><div class="h-1.5 w-3/4 rounded-full bg-white"></div><div class="mt-1.5 h-1 w-1/2 rounded-full bg-text-on-dark-secondary"></div></div>
@@ -1273,19 +1728,19 @@
   </div>
   <div class="container-site pb-16">
     <h3 class="max-w-[28ch] break-words font-display font-medium text-h3 text-text-primary">Four requests to get started</h3>
-    <div class="mt-8 grid gap-6 md:grid-cols-2"><div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+    <div class="mt-8 grid gap-6 md:grid-cols-2"><div class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card p-6">
   <p class="break-words font-display font-medium text-h4 text-text-primary">Create an 8-slide pitch deck in the Elaniin style to present our digital product service.</p>
   <button type="button" data-copy-text="Create an 8-slide pitch deck in the Elaniin style to present our digital product service." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div>
-<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+<div class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card p-6">
   <p class="break-words font-display font-medium text-h4 text-text-primary">Design a dashboard in the Elaniin style with last quarter's metrics that I'm about to paste.</p>
   <button type="button" data-copy-text="Design a dashboard in the Elaniin style with last quarter&#x27;s metrics that I&#x27;m about to paste." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div>
-<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+<div class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card p-6">
   <p class="break-words font-display font-medium text-h4 text-text-primary">Build a landing page in the Elaniin style to present our new service.</p>
   <button type="button" data-copy-text="Build a landing page in the Elaniin style to present our new service." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div>
-<div class="card-glow lift min-w-0 rounded-card border border-border-default bg-surface-card p-6">
+<div class="card-hover min-w-0 rounded-card border border-border-default bg-surface-card p-6">
   <p class="break-words font-display font-medium text-h4 text-text-primary">Add the interactive module field texture to this page's hero, like on the Elaniin site.</p>
   <button type="button" data-copy-text="Add the interactive module field texture to this page&#x27;s hero, like on the Elaniin site." class="btn-arrow mono-label mt-5 inline-flex h-11 items-center gap-2 rounded-button border border-border-ink px-4 text-caption text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring">Copy request <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
 </div></div>
@@ -1337,37 +1792,37 @@ claude plugin install elaniin@elaniin-style-marketplace</code></pre>
 </div></div>
     </div>
     <h3 class="mt-12 font-display font-medium text-h3 text-text-primary">What do you want to do?</h3>
-    <div class="grid-auto mt-6" style="--card-min:15rem"><a href="#dev-1" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+    <div class="grid-auto mt-6" style="--card-min:15rem"><a href="#dev-1" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">Install</h3>
   <p class="mt-1 text-body-sm text-text-secondary">Two commands and you are done.</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="#dev-3" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+<a href="#dev-3" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">Share with my team</h3>
   <p class="mt-1 text-body-sm text-text-secondary">Commit it in settings.json.</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="#dev-9" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+<a href="#dev-9" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">Edit a piece</h3>
   <p class="mt-1 text-body-sm text-text-secondary">Change a deck or page with the tokens.</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="#dev-9-build" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+<a href="#dev-9-build" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">Move it to Next</h3>
   <p class="mt-1 text-body-sm text-text-secondary">Vite or PostCSS in a real project.</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="#dev-10" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+<a href="#dev-10" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">Build a whole site</h3>
   <p class="mt-1 text-body-sm text-text-secondary">Master project first, then page by page.</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="#dev-7" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+<a href="#dev-7" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">Fix an error</h3>
   <p class="mt-1 text-body-sm text-text-secondary">Find the fix by symptom.</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="#dev-6" data-jump class="card-glow lift btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
+<a href="#dev-6" data-jump class="card-hover btn-arrow flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card p-6 focus-ring">
   <h3 class="font-display font-medium text-h4 text-text-primary">Org rollout</h3>
   <p class="mt-1 text-body-sm text-text-secondary">Managed settings and auto-update.</p>
   <span class="mt-4 inline-flex items-center gap-2 font-display text-body-sm font-medium text-elevate-blue">Go to section <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
@@ -1380,11 +1835,11 @@ claude plugin install elaniin@elaniin-style-marketplace</code></pre>
         <span class="min-w-0 truncate">On this page <span class="text-text-muted" data-toc-now></span></span>
         <span class="mono-label shrink-0 text-caption text-elevate-blue" aria-hidden="true">+</span>
       </summary>
-      <nav aria-label="On this page" class="max-h-[60dvh] overflow-y-auto pb-3"><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Install</p><a href="#dev-1" data-toc-link="dev-1" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">01</span>Install with the CLI</a><a href="#dev-2" data-toc-link="dev-2" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">02</span>Scopes</a><a href="#dev-3" data-toc-link="dev-3" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">03</span>Shared repo</a><a href="#dev-4" data-toc-link="dev-4" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">04</span>Access</a><a href="#dev-5" data-toc-link="dev-5" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">05</span>Update</a><a href="#dev-6" data-toc-link="dev-6" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">06</span>Organization</a><a href="#dev-7" data-toc-link="dev-7" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">07</span>Troubleshooting</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Use & edit</p><a href="#dev-8" data-toc-link="dev-8" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">08</span>Use the skill</a><a href="#dev-9" data-toc-link="dev-9" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">09</span>Edit pieces</a><a href="#dev-10" data-toc-link="dev-10" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">10</span>Complete websites</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Resources</p><a href="#dev-11" data-toc-link="dev-11" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">11</span>Module field</a><a href="#dev-12" data-toc-link="dev-12" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">12</span>Grids</a><a href="#dev-13" data-toc-link="dev-13" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">13</span>Isometric resource</a><a href="#dev-14" data-toc-link="dev-14" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">14</span>Repository</a></nav>
+      <nav aria-label="On this page" class="max-h-[60dvh] overflow-y-auto pb-3"><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Install</p><a href="#dev-1" data-toc-link="dev-1" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">01</span>Install with the CLI</a><a href="#dev-2" data-toc-link="dev-2" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">02</span>Scopes</a><a href="#dev-3" data-toc-link="dev-3" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">03</span>Shared repo</a><a href="#dev-4" data-toc-link="dev-4" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">04</span>Access</a><a href="#dev-5" data-toc-link="dev-5" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">05</span>Update</a><a href="#dev-6" data-toc-link="dev-6" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">06</span>Organization</a><a href="#dev-7" data-toc-link="dev-7" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">07</span>Troubleshooting</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Use & edit</p><a href="#dev-8" data-toc-link="dev-8" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">08</span>Use the skill</a><a href="#dev-9" data-toc-link="dev-9" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">09</span>Edit pieces</a><a href="#dev-10" data-toc-link="dev-10" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">10</span>Complete websites</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Resources</p><a href="#dev-11" data-toc-link="dev-11" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">11</span>Module field</a><a href="#dev-12" data-toc-link="dev-12" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">12</span>Grids</a><a href="#dev-13" data-toc-link="dev-13" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">13</span>Isometric resource</a><a href="#dev-14" data-toc-link="dev-14" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">14</span>Components</a><a href="#dev-15" data-toc-link="dev-15" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">15</span>Bilingual</a><a href="#dev-16" data-toc-link="dev-16" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">16</span>Repository</a></nav>
     </details>
     <div class="grid-page mt-6 lg:mt-10">
       <aside class="col-span-3 hidden min-w-0 lg:block">
-        <nav aria-label="On this page" class="sticky top-20 max-h-[calc(100dvh-6rem)] overflow-y-auto"><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Install</p><a href="#dev-1" data-toc-link="dev-1" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">01</span>Install with the CLI</a><a href="#dev-2" data-toc-link="dev-2" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">02</span>Scopes</a><a href="#dev-3" data-toc-link="dev-3" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">03</span>Shared repo</a><a href="#dev-4" data-toc-link="dev-4" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">04</span>Access</a><a href="#dev-5" data-toc-link="dev-5" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">05</span>Update</a><a href="#dev-6" data-toc-link="dev-6" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">06</span>Organization</a><a href="#dev-7" data-toc-link="dev-7" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">07</span>Troubleshooting</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Use & edit</p><a href="#dev-8" data-toc-link="dev-8" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">08</span>Use the skill</a><a href="#dev-9" data-toc-link="dev-9" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">09</span>Edit pieces</a><a href="#dev-10" data-toc-link="dev-10" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">10</span>Complete websites</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Resources</p><a href="#dev-11" data-toc-link="dev-11" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">11</span>Module field</a><a href="#dev-12" data-toc-link="dev-12" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">12</span>Grids</a><a href="#dev-13" data-toc-link="dev-13" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">13</span>Isometric resource</a><a href="#dev-14" data-toc-link="dev-14" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">14</span>Repository</a></nav>
+        <nav aria-label="On this page" class="sticky top-20 max-h-[calc(100dvh-6rem)] overflow-y-auto"><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Install</p><a href="#dev-1" data-toc-link="dev-1" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">01</span>Install with the CLI</a><a href="#dev-2" data-toc-link="dev-2" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">02</span>Scopes</a><a href="#dev-3" data-toc-link="dev-3" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">03</span>Shared repo</a><a href="#dev-4" data-toc-link="dev-4" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">04</span>Access</a><a href="#dev-5" data-toc-link="dev-5" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">05</span>Update</a><a href="#dev-6" data-toc-link="dev-6" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">06</span>Organization</a><a href="#dev-7" data-toc-link="dev-7" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">07</span>Troubleshooting</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Use & edit</p><a href="#dev-8" data-toc-link="dev-8" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">08</span>Use the skill</a><a href="#dev-9" data-toc-link="dev-9" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">09</span>Edit pieces</a><a href="#dev-10" data-toc-link="dev-10" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">10</span>Complete websites</a><p class="mono-label px-3 pb-1 pt-4 text-caption text-text-muted">Resources</p><a href="#dev-11" data-toc-link="dev-11" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">11</span>Module field</a><a href="#dev-12" data-toc-link="dev-12" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">12</span>Grids</a><a href="#dev-13" data-toc-link="dev-13" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">13</span>Isometric resource</a><a href="#dev-14" data-toc-link="dev-14" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">14</span>Components</a><a href="#dev-15" data-toc-link="dev-15" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">15</span>Bilingual</a><a href="#dev-16" data-toc-link="dev-16" class="toc-link focus-ring"><span class="mr-2 font-mono text-code text-text-muted">16</span>Repository</a></nav>
       </aside>
       <div class="col-span-12 min-w-0 lg:col-span-9">
         <div class="flex justify-end pb-2">
@@ -1571,8 +2026,8 @@ claude plugin details elaniin
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Motion</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">duration-fast · duration-base · duration-slow · duration-reveal · rise · reveal · card-glow · lift · btn-arrow</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Named durations: never duration-200.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">duration-fast · duration-base · duration-slow · duration-reveal · rise · reveal · btn-arrow</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Named durations: never duration-200. Hover = color, background or border only.</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Focus</p>
@@ -1581,8 +2036,23 @@ claude plugin details elaniin
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Hover cards</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">lift · card-glow + rounded-card border bg-surface-card pad-card</p>
-  <p class="min-w-0 break-words text-body-sm text-text-muted">Always padded: never text touching the edge.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">card-hover + rounded-card border bg-surface-card pad-card</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Border goes default to strong. No lift, scale or glow. Always padded.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Dark cards</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">card-glow (Excellence Blue) · card-glow-quiet (Elaniin Black)</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Static blue glow inside dark cards only.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Primitives</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">tag · tag-sm · status-badge · field · product-frame · code-block · icon-box · dark-band · metric-value · menu-panel · tooltip · tab</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">Specified in references/components.md.</p>
+</div>
+<div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Motifs</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">blue-steps · glow-stripes · section-glow + glass · solution-software|ai|cloud · accent-flow</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">The only gradients allowed (SKILL.md rule 16).</p>
 </div>
 <div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">Grids</p>
@@ -1618,8 +2088,8 @@ claude plugin details elaniin
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">No loose class selectors in <code class="font-mono text-code text-text-primary">&lt;style&gt;</code>: every new resource is a <code class="font-mono text-code text-text-primary">@utility</code>.</span></li>
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">The deck has no responsive classes: its canvas is always 1280×720. Use <code class="font-mono text-code text-text-primary">grid-cols-3</code>, not <code class="font-mono text-code text-text-primary">md:grid-cols-3</code>.</span></li>
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Keep <code class="font-mono text-code text-text-primary">min-w-0</code> on grid/flex children and <code class="font-mono text-code text-text-primary">overflow-hidden</code> on cards: zero overflow.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Any element with <code class="font-mono text-code text-text-primary">lift</code> or <code class="font-mono text-code text-text-primary">card-glow</code> is a card: it gets <code class="font-mono text-code text-text-primary">rounded-card border bg-surface-card pad-card</code>. Never text touching the hover edge, never negative margins.</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Mobile navigation: if a nav is hidden below its breakpoint it needs a 44px menu button that opens a real drawer (<code class="font-mono text-code text-text-primary">drawer</code> + <code class="font-mono text-code text-text-primary">scrim</code> + <code class="font-mono text-code text-text-primary">drawer.js</code>). A hamburger with no action is a bug; test at 375, 768 and 1280 px.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Any element that shows a surface on hover (<code class="font-mono text-code text-text-primary">card-hover</code>) is a card: it gets <code class="font-mono text-code text-text-primary">rounded-card border bg-surface-card pad-card</code>. Never text touching the hover edge, never negative margins.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Mobile navigation: if a nav is hidden below its breakpoint it needs a 40px menu button that opens a real drawer (<code class="font-mono text-code text-text-primary">drawer</code> + <code class="font-mono text-code text-text-primary">scrim</code> + <code class="font-mono text-code text-text-primary">drawer.js</code>). A hamburger with no action is a bug; test at 375, 768 and 1280 px.</span></li>
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Nav and footer are the reference site's: <code class="font-mono text-code text-text-primary">nav-bar</code> + <code class="font-mono text-code text-text-primary">nav-item</code>, dark sections declare <code class="font-mono text-code text-text-primary">data-nav-theme</code>, and the footer is Excellence Blue. Never improvise them.</span></li>
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Respect reduced motion: every new animation must switch off with <code class="font-mono text-code text-text-primary">prefers-reduced-motion</code>.</span></li></ul><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Example</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
@@ -1825,7 +2295,7 @@ import { ModuleField } from &quot;@/components/module-field&quot;;
 </div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3"><li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Mobile first: every child of <code class="font-mono text-code text-text-primary">grid-page</code> gets <code class="font-mono text-code text-text-primary">col-span-12</code> and then scales up with <code class="font-mono text-code text-text-primary">md:</code> or <code class="font-mono text-code text-text-primary">xl:</code>.</span></li>
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary"><code class="font-mono text-code text-text-primary">min-w-0</code> on every grid or flex child with text, media or tables.</span></li>
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">No negative margins (<code class="font-mono text-code text-text-primary">-mx-*</code>) and no arbitrary gaps (<code class="font-mono text-code text-text-primary">gap-[18px]</code>).</span></li>
-<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Do not use <code class="font-mono text-code text-text-primary">lift</code> or <code class="font-mono text-code text-text-primary">card-glow</code> inside <code class="font-mono text-code text-text-primary">grid-hairline</code>: the clipping hides the shadow. For hover cards use <code class="font-mono text-code text-text-primary">grid-page</code> or <code class="font-mono text-code text-text-primary">grid-auto</code>.</span></li>
+<li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">Do not use <code class="font-mono text-code text-text-primary">card-hover</code> inside <code class="font-mono text-code text-text-primary">grid-hairline</code>: its cells have no hover surface. For hover cards use <code class="font-mono text-code text-text-primary">grid-page</code> or <code class="font-mono text-code text-text-primary">grid-auto</code>.</span></li>
 <li class="flex min-w-0 items-start gap-3"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-elevate-blue" aria-hidden="true"></span><span class="min-w-0 break-words text-body text-text-secondary">The deck keeps explicit columns (<code class="font-mono text-code text-text-primary">grid-cols-3</code>): its canvas is always 1280 px.</span></li></ul><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
     <span class="mono-label text-caption text-text-on-dark-muted">bash</span>
@@ -1853,7 +2323,7 @@ import { ModuleField } from &quot;@/components/module-field&quot;;
   <p class="min-w-0 break-words text-body-sm text-text-muted">templates/iso-stack.js</p>
 </div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
   <p class="min-w-0 break-words font-mono text-code text-text-primary">iso/</p>
-  <p class="min-w-0 break-words text-body-sm text-text-secondary">React / Next build: HeroStack, Slab (looks software, ai, cloud, brand, dark), Floor, IsoPill, IsoPulse, IsoLogotipo, iso.ts, use-clock.ts.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">React / Next build: HeroStack, Slab (looks software, ai, cloud, brand, dark), Floor, IsoPill, IsoPulse, IsoLogotipo, iso.ts, use-clock.ts, plus scenes/ with 13 ready scenes.</p>
   <p class="min-w-0 break-words text-body-sm text-text-muted">templates/iso/</p>
 </div></div><h4 class="pt-4 font-display font-medium text-h4 text-text-primary">HTML</h4><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
   <div class="flex items-center justify-between border-b border-border-on-dark px-4 py-1">
@@ -1881,7 +2351,41 @@ import { HeroStack } from &quot;@/components/iso/hero-stack&quot;;
 </details>
 <details id="dev-14" data-dev-section class="group scroll-mt-28 border-t border-border-default lg:scroll-mt-17">
   <summary class="flex min-h-14 cursor-pointer items-center justify-between gap-4 py-4 focus-ring">
-    <h3 class="min-w-0 break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">14</span>What the repository ships</h3>
+    <h3 class="min-w-0 break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">14</span>Specified components</h3>
+    <span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span>
+  </summary>
+  <div class="min-w-0 space-y-5 pb-10 pt-2"><p class="max-w-[68ch] break-words text-body text-text-secondary">Since v1.87.2 the skill ships every component of the design system, not only the tokens and the nav. Claude builds them from the spec: <code class="font-mono text-code text-text-primary">references/components.md</code>.</p><div class="border-b border-border-default"><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Navigation</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">mega-menu (solutions, engagement, resources), nav with language switch and secondary button, mobile accordions.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">templates/site-starter/src/components/layout/</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Sections</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">hero (centered | split), logo strip, audience routes, solutions grid + dialog, engagement models, cases, research, FAQ, closing CTA.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">templates/site-starter/src/components/sections/</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Footer and 404</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">credentials row, AI summary, four columns; 404 with a hairline grid of links.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">layout/footer.tsx, app/not-found.tsx</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Primitives</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">tag, status-badge, field, product-frame, code-block, icon-box, dark-band, metric, menu, tooltip, tab.</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">utilities in tokens.css</p>
+</div><div class="grid gap-2 border-t border-border-default py-4 md:grid-cols-3">
+  <p class="min-w-0 break-words font-mono text-code text-text-primary">Isometric scenes</p>
+  <p class="min-w-0 break-words text-body-sm text-text-secondary">engagement (3), routes (6), solutions (3), hero proposals (2).</p>
+  <p class="min-w-0 break-words text-body-sm text-text-muted">templates/iso/scenes/</p>
+</div></div><p class="max-w-[68ch] break-words text-body text-text-secondary">Hover is color, background or border only (no lift, scale or glow, no pointer spotlight). The only gradients are the ones DESIGN.md lists. <code class="font-mono text-code text-text-primary">templates/site-starter/kit/page.tsx.example</code> puts every component on one page with sample data.</p></div>
+</details>
+<details id="dev-15" data-dev-section class="group scroll-mt-28 border-t border-border-default lg:scroll-mt-17">
+  <summary class="flex min-h-14 cursor-pointer items-center justify-between gap-4 py-4 focus-ring">
+    <h3 class="min-w-0 break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">15</span>Bilingual sites (i18n)</h3>
+    <span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span>
+  </summary>
+  <div class="min-w-0 space-y-5 pb-10 pt-2"><p class="max-w-[68ch] break-words text-body text-text-secondary">English primary (no prefix), Spanish under <code class="font-mono text-code text-text-primary">/es</code> with translated slugs from one route table, <code class="font-mono text-code text-text-primary">hreflang</code> and canonical per page, typed dictionaries, <code class="font-mono text-code text-text-primary">Intl</code> formats (en-US, es-SV) and a language switch that links to the same page. The kit is <code class="font-mono text-code text-text-primary">templates/i18n/</code> (routes, proxy rules, metadata, formats, tests); the rules are in <code class="font-mono text-code text-text-primary">references/i18n.md</code>. It needs a server proxy; on a static export use the prefix-both variant described there.</p></div>
+</details>
+<details id="dev-16" data-dev-section class="group scroll-mt-28 border-t border-border-default lg:scroll-mt-17">
+  <summary class="flex min-h-14 cursor-pointer items-center justify-between gap-4 py-4 focus-ring">
+    <h3 class="min-w-0 break-words font-display font-medium text-h3 text-text-primary"><span class="mr-3 font-mono text-code text-elevate-blue">16</span>What the repository ships</h3>
     <span class="mono-label shrink-0 text-caption text-elevate-blue transition-transform duration-base group-open:rotate-45" aria-hidden="true">+</span>
   </summary>
   <div class="min-w-0 space-y-5 pb-10 pt-2"><div class="min-w-0 rounded-code border border-border-on-dark bg-surface-code">
@@ -1896,12 +2400,13 @@ scripts/make-og.py     regenerates docs/og.png (share image)
 skills/elaniin-style/
 ├── SKILL.md           5-phase pipeline and rules
 ├── assets/            official logos and favicon
-├── references/        tokens, tailwind-api, grids, motion, ux-a11y, websites, site-architect,
-│                      isometric, decks, dashboards, site-dev, maintenance, mdx
+├── references/        tokens, tailwind-api, components, i18n, grids, motion, ux-a11y, websites,
+│                      site-architect, isometric, decks, dashboards, site-dev, maintenance, mdx
 ├── scripts/           ensure-motion.sh
 └── templates/         tokens.css, landing.html, dashboard.html, deck.html,
                        module-field.js / .tsx, drawer.js, nav-theme.js,
-                       iso-stack.js + iso/ (isometric resource),
+                       iso-stack.js + iso/ (isometric resource) + iso/scenes/ (13 scenes),
+                       i18n/ (routes, proxy, metadata, formats, tests),
                        site-starter/ (Next.js static project for complete sites),
                        mdx-collection/ (blog, cases and docs as .mdx files)
 docs/ejemplos/         nova-logistica: 30-page demo master project
@@ -1920,17 +2425,17 @@ scripts/               verify.sh, sync-tokens.py, check-system.py, browser-check
       <h2 class="max-w-[20ch] break-words font-display font-medium text-h2 text-text-primary">See it working</h2>
 <p class="mt-4 max-w-[56ch] break-words text-lead text-text-secondary">Three sample pieces made with the skill. Open them, resize the window and move the mouse.</p>
       <div class="grid-auto mt-10" style="--card-min:18rem">
-        <a href="templates/landing.html" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
+        <a href="templates/landing.html" target="_blank" rel="noopener" class="card-hover btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
   <h3 class="font-display font-medium text-h3 text-text-primary">Product landing</h3>
   <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Hero with module field, features, looping pipeline, stats and mobile menu.</p>
   <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Open example <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="templates/dashboard.html" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
+<a href="templates/dashboard.html" target="_blank" rel="noopener" class="card-hover btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
   <h3 class="font-display font-medium text-h3 text-text-primary">Metrics dashboard</h3>
   <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Six working views plus legal pages: revenue range, customers search and sort, products, reports you can create and download, persistent settings.</p>
   <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Open example <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
 </a>
-<a href="templates/deck.html" target="_blank" rel="noopener" class="card-glow lift btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
+<a href="templates/deck.html" target="_blank" rel="noopener" class="card-hover btn-arrow group flex min-w-0 flex-col rounded-card border border-border-default bg-surface-card pad-card focus-ring">
   <h3 class="font-display font-medium text-h3 text-text-primary">16:9 presentation deck</h3>
   <p class="mt-2 max-w-[40ch] break-words text-body text-text-secondary">Fixed 1280×720 canvas with keyboard navigation and living slides.</p>
   <span class="mt-6 inline-flex items-center gap-2 font-display text-body font-medium text-elevate-blue">Open example <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
@@ -2191,20 +2696,6 @@ scripts/               verify.sh, sync-tokens.py, check-system.py, browser-check
     }, { threshold: 0.3 }).observe(stage);
   });
 
-  /* mouse-reactive spotlight + card glow */
-  if (!reduce) {
-    addEventListener('mousemove', function (e) {
-      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
-      document.documentElement.style.setProperty('--my', e.clientY + 'px');
-    }, { passive: true });
-    document.addEventListener('pointermove', function (e) {
-      var c = e.target.closest && e.target.closest('.card-glow');
-      if (!c) return;
-      var r = c.getBoundingClientRect();
-      c.style.setProperty('--cx', (e.clientX - r.left) + 'px');
-      c.style.setProperty('--cy', (e.clientY - r.top) + 'px');
-    });
-  }
 })();
 </script>
 <script>

@@ -3,13 +3,16 @@ import { site } from "../../content/site";
 import { collections, footerRoutes } from "../../lib/site-map";
 import { Logo } from "./logo";
 
+/* Credentials: 8 badge files that are black on transparent; on the dark surface they are inverted to white at 80% (invert, not brightness-0: ribbons and inner text keep contrast). Square badges 64px high, a wide one 24px, last. Each needs an alt text from the dictionary. */
+export type Credential = { name: string; node: React.ReactNode };
+
 /*
   Footer of the reference site (DESIGN.md components.footer): Excellence Blue (never Elaniin Black), the white logotipo
   as the only logo, tagline (lead in white + the rest in secondary), a caption, link columns with display-font headings
   and plain links (`footer-link`), and a legal row on a hairline. Social links, when the site has them, are 40px icon buttons
   (`footer-social`) with the official glyph of each network. All links come from site-map.ts.
 */
-export function Footer() {
+export function Footer({ switcher, aiSummary, credentials }: { switcher?: React.ReactNode; aiSummary?: React.ReactNode; credentials?: { label: string; items: Credential[] } }) {
   const columns = [
     { heading: "Sitio", links: footerRoutes().filter((r) => r.type !== "legal" && r.type !== "listing").map((r) => ({ label: r.title, href: r.path })) },
     { heading: collections.services.label, links: collections.services.items.map((i) => ({ label: i.title, href: `${collections.services.base}${i.slug}/` })) },
@@ -44,6 +47,18 @@ export function Footer() {
             ))}
           </nav>
         </div>
+        {credentials && (
+          <div className="mt-10 border-t border-border-on-dark pt-8">
+            <p className="font-mono text-caption uppercase tracking-wider text-text-on-dark-muted">{credentials.label}</p>
+            <ul className="mt-5 flex flex-wrap items-center gap-6 invert opacity-80" aria-label={credentials.label}>
+              {credentials.items.map((c) => (
+                <li key={c.name} className="flex items-center">
+                  {c.node}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-border-on-dark pt-6 text-body-sm text-text-on-dark-muted">
           <span>
             © {new Date().getFullYear()} {site.name}
@@ -53,6 +68,8 @@ export function Footer() {
               {i.title}
             </Link>
           ))}
+          {switcher}
+          {aiSummary && <div className="md:ml-auto">{aiSummary}</div>}
         </div>
       </div>
     </footer>

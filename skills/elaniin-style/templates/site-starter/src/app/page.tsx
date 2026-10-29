@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <PageShell path="/">
       <Hero {...home.hero} />
-      <LogoStrip label={home.clientsLabel} items={home.clients} />
+      <LogoStrip label={home.clientsLabel} logos={home.clients.map((name) => ({ name, node: <span className="text-body-sm">{name}</span> }))} />
       <FeatureGrid title={home.featuresTitle} items={home.features} placeholder />
       <Stats title={home.statsTitle} note={home.statsNote} items={home.stats} />
       <Pipeline title={home.loopTitle} steps={home.loopSteps} />

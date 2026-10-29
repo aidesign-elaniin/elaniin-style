@@ -245,3 +245,38 @@ anillo global · reduce → scroll auto. (Dashboard añade `body { background: s
 | `bg-[#f0f0f3] / #d7e2f8 / #e7eeff` | `bg-surface-subtle / bg-blue-100 / bg-blue-tint-50` |
 | status `text/bg/border-[#…]` | `text-success-text`, `bg-success-bg`, `border-success-border` (igual warning/error/info) |
 | `tabular` | `tabular-nums` (core) |
+
+
+## Primitivas y motivos añadidos en v1.87 (DESIGN.md `components.*` y `motifs.*`)
+
+| Utilidad | Qué hace | Referencia |
+|---|---|---|
+| `card-hover` | borde `border-default` → `border-strong` al hover (el único hover de una card) | `components.md` §0 |
+| `card-glow` / `card-glow-quiet` | resplandor azul ESTÁTICO dentro de cards oscuras (Excellence Blue / Elaniin Black) | `motion.md` §2 |
+| `card-featured` | borde 2 px excellence-blue (una por grupo como máximo) | §0 |
+| `tag`, `tag-brand`, `tag-on-dark`, `tag-sm` | tag mono UPPERCASE 24 px (variantes por `--tag-*`); `tag-sm` = 20 px / 11 px (oficial) | §0 |
+| `status-badge` + `badge-success|warning|error|info|neutral` | badge con punto de 6 px; solo estado | §0 |
+| `link-text` | enlace en texto corrido: Elevate Blue, subrayado 1 px / offset 3 px | §0 |
+| `field`, `field-on-dark` | input / select / textarea de 44 px con `border-input` y foco azul (`aria-invalid="true"` = error) | §0 |
+| `product-frame` | marco de producto: radio 12, borde, `shadow-product` | §0 |
+| `code-block`, `code-comment`, `code-accent` | superficie de código y sus spans | §0 |
+| `icon-box`, `icon-box-dark` | cuadro de 40 px para un ícono | §0 |
+| `dark-band`, `dark-band-black` | banda a ancho completo, Excellence Blue / Elaniin Black | §0 |
+| `metric-value`, `metric-label` | cifra display 36 px tabular + etiqueta | §0 |
+| `menu-panel`, `menu-item` | dropdown (radio 8, `shadow-menu`) y su ítem de 36 px | §0 |
+| `tooltip` | Elaniin Black, caption blanco, radio 6 | §0 |
+| `tab` | pestaña con indicador de 2 px Elevate Blue (`aria-selected="true"` o `data-active`) | §0 |
+| `accordion-panel` | respuesta de FAQ: filas 0fr → 1fr en 300 ms; cerrada = `visibility: hidden`; `data-open` la abre | §6 |
+| `mono-detail` | mono 13 px normal case, **opt-in** | `tokens.md` |
+| `hero-fill` | desde 1280 px el hero mide al menos la altura de pantalla bajo la barra, contenido centrado | §2 |
+| `solution-software`, `solution-ai`, `solution-cloud` | las tres superficies de solución (patrón + glow) compartidas por nav, grid y diálogo | §8 |
+| `engage-row`, `engage-card` | cards expandibles de engagement (flex-grow 1 → 2.4 en 300 ms; apiladas bajo 1024 px) | §4 |
+| `blue-steps` | el motivo azul escalonado (único gradiente de tope duro; ≤240 px, uno por página) | `motion.md` §2 |
+| `glow-stripes` + `glow-media` / `glow-cta` | glow azul animado (franjas de 115°, 706.16 px por repetición); solo CTA, etapa de casos y canvas de Blue Engine | `motion.md` §2 |
+| `section-glow` + `glass` | manchas azules que derivan tras un panel `glass` (audience routes) | `motion.md` §2 |
+| `module-field-mask-center` | el module field con el centro despejado (CTA de cierre) | §11 |
+| variante `touch:` | `@custom-variant touch (@media (hover: none))` para dispositivos sin hover | §7 |
+| tokens de medida | `max-w-narrow` 40ch · `max-w-hero` 18ch · `max-w-cta` 34ch · `max-w-statement` 22ch · `max-w-title` 14ch | `tokens.md` |
+| radios | `rounded-bento-outer` 12 · `rounded-app-icon` 18.5 % | `tokens.md` |
+
+**Retiradas (v1.87):** `spotlight`, `lift` y el `card-glow` que seguía al puntero. Hover = color, fondo o borde, 150 ms; sin lift, sin scale, sin glow (DESIGN.md §7).

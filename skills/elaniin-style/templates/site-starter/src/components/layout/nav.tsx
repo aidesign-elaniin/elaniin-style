@@ -6,8 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { LinkButton } from "../ui/button";
 import { cta } from "../../lib/site-map";
 import { Logo } from "./logo";
+import { MegaMenus, type MegaMenuData } from "./mega-menu";
 
-type NavItem = { path: string; title: string };
+/* An item is a plain link, or (with `menu`) a trigger of a mega-menu panel. */
+type NavItem = { path: string; title: string; menu?: MegaMenuData };
 
 const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
 
@@ -20,7 +22,7 @@ const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1
   - below lg a 40px hamburger opens a real drawer: aria-expanded, focus moves in, Tab is trapped, Esc / scrim / link close it
     and give the focus back, scroll is locked while open and it closes by itself when the viewport grows.
 */
-export function Nav({ items }: { items: NavItem[] }) {
+export function Nav({ items, switcher, secondary }: { items: NavItem[]; switcher?: React.ReactNode; secondary?: { label: string; href: string } }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -106,13 +108,20 @@ export function Nav({ items }: { items: NavItem[] }) {
             <Logo variant="white" className="nav-logo-dark h-7 w-auto" />
           </Link>
           <nav className="hidden items-center gap-1 lg:flex xl:ml-4" aria-label="Principal">
-            {items.map((r) => (
+            <MegaMenus menus={items.filter((r) => r.menu).map((r) => ({ id: r.menu!.id, label: r.title, data: r.menu! }))} />
+            {items.filter((r) => !r.menu).map((r) => (
               <Link key={r.path} href={r.path} className="nav-item focus-ring" aria-current={pathname === r.path ? "page" : undefined}>
                 {r.title}
               </Link>
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-3">
+            {switcher && <div className="hidden lg:block">{switcher}</div>}
+            {secondary && (
+              <LinkButton href={secondary.href} s="md" v="secondary" className="hidden lg:inline-flex">
+                {secondary.label}
+              </LinkButton>
+            )}
             <LinkButton href={cta.href} s="md">
               {cta.label}
             </LinkButton>
@@ -147,7 +156,7 @@ export function Nav({ items }: { items: NavItem[] }) {
             type="button"
             aria-label="Cerrar menú"
             onClick={() => close()}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-button text-text-secondary transition-colors duration-base hover:bg-surface-subtle focus-ring"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-button text-text-secondary transition-colors duration-base hover:bg-surface-subtle focus-ring"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" />
@@ -155,18 +164,44 @@ export function Nav({ items }: { items: NavItem[] }) {
           </button>
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Principal móvil">
-          {items.map((r) => (
-            <Link
-              key={r.path}
-              href={r.path}
-              onClick={() => close(false)}
-              className="flex h-11 items-center rounded-button px-3 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring"
-            >
-              {r.title}
-            </Link>
-          ))}
+          {items.map((r) =>
+            r.menu ? (
+              <details key={r.path} className="group">
+                <summary className="flex h-10 cursor-pointer list-none items-center justify-between rounded-button px-3 font-display text-body font-medium text-text-primary hover:bg-surface-subtle focus-ring">
+                  {r.title}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true" className="transition-transform duration-base group-open:rotate-180">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </summary>
+                <ul className="pb-2 pl-3">
+                  {[...(r.menu.rows ?? []), ...(r.menu.cards ?? [])].map((l) => (
+                    <li key={l.href}>
+                      <Link href={l.href} onClick={() => close(false)} className="flex h-10 items-center rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle focus-ring">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : (
+              <Link
+                key={r.path}
+                href={r.path}
+                onClick={() => close(false)}
+                className="flex h-10 items-center rounded-button px-3 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring"
+              >
+                {r.title}
+              </Link>
+            ),
+          )}
         </nav>
-        <div className="border-t border-border-default p-4">
+        <div className="flex flex-col gap-3 border-t border-border-default p-4">
+          {switcher}
+          {secondary && (
+            <LinkButton href={secondary.href} v="secondary" className="w-full">
+              {secondary.label}
+            </LinkButton>
+          )}
           <LinkButton href={cta.href} className="w-full">
             {cta.label}
           </LinkButton>

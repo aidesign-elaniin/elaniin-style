@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
   Elaniin module field for React / Next.js (same behavior as templates/module-field.js).
   Needs templates/tokens.css in the project: the resting grid is the `module-field` utility.
   Put it as the first child of a `relative isolate overflow-hidden` section; it listens on
-  its parent. Props: fade = "bottom" (default) | "left" | "none"; tone = "light" | "dark".
+  its parent. Props: fade = "bottom" (default) | "left" | "center" | "none"; tone = "light" | "dark".
 */
 const RADIUS = 6;
 const DECAY_MS = 260;
@@ -17,12 +17,13 @@ const STEPS = [
 ] as const;
 const FALLBACK = ["#1054ff", "#4d75fd", "#6a9aff"];
 
-type Fade = "bottom" | "left" | "none";
+type Fade = "bottom" | "left" | "center" | "none";
 type Tone = "light" | "dark";
 
 const fadeClass: Record<Fade, string> = {
   bottom: "",
   left: "module-field-mask-left",
+  center: "module-field-mask-center",
   none: "module-field-mask-none",
 };
 

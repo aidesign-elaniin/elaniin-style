@@ -99,7 +99,9 @@ skills/elaniin-style/
 
 - **Logo oficial siempre** (`assets/`), nunca el brand como texto.
 - **Cero overflow:** decks 16:9 con canvas fijo; nada se corta.
-- **Siempre vivo:** spotlight reactivo + microinteracciones, todo apagable con `prefers-reduced-motion`.
+- **Vivo sin glow:** reveal, count-up (una vez), `module-field` con rastro y loops en pantalla; hover = color/fondo/borde (sin lift, scale ni glow), todo apagable con `prefers-reduced-motion`.
+- **Componentes de la especificación:** mega-menu, hero split/centered, logo strip, soluciones, casos, investigación, FAQ, engagement, rutas, CTA, 404, footer con credenciales y resumen con IA: `references/components.md` + `templates/site-starter/src/components/`.
+- **Bilingüe desde la primera línea:** rutas, diccionarios, SEO y formatos en `templates/i18n/` + `references/i18n.md`.
 - **Textura firma:** `module-field` (cuadritos que se encienden con el mouse) en el hero y el CTA de toda landing. Pídela como "textura interactiva" o "module field".
 - **Solo tokens:** colores, tipos, radios, sombras y duraciones salen de `@theme`.
 

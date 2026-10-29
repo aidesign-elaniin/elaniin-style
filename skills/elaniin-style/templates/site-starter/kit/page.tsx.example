@@ -1,0 +1,35 @@
+import { AudienceRoutes } from "../../components/sections/audience-routes";
+import { CasesGrid } from "../../components/sections/cases";
+import { CtaBand } from "../../components/sections/cta-band";
+import { EngagementModels } from "../../components/sections/engagement";
+import { Faq } from "../../components/sections/faq";
+import { Hero } from "../../components/sections/hero";
+import { ResearchList } from "../../components/sections/research";
+import { SolutionsGrid } from "../../components/sections/solutions";
+import { LogoStrip } from "../../components/sections/logo-strip";
+import { StatusBadge, Tag } from "../../components/ui/tag";
+
+const ph = (h: string) => <div className={`${h} rounded-card border border-border-default bg-white/60`} />;
+const icon = <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="4" width="18" height="14" rx="2" /></svg>;
+const detail = { title: "Detail", intro: "Intro text.", bullets: [{ title: "One", text: "Text" }, { title: "Two", text: "Text" }], metrics: [{ value: "99%", label: "Uptime" }, { value: "3x", label: "Faster" }], cta: { label: "Explore", href: "/" }, closeLabel: "Close", visual: ph("h-40") };
+const sol = (id: string, look: "software" | "ai" | "cloud") => ({ id, look, name: id, lead: "Lead sentence here", rest: "Rest of the description with about a hundred characters of placeholder text so it wraps.", icon, visual: ph("h-40"), detail, openLabel: "Open" });
+const item = (id: string) => ({ id, lead: "Lead " + id, rest: "Description of the route placeholder.", href: "/contacto/", linkLabel: "Learn more", visual: ph("h-40"), cases: [{ title: "Case A", result: "Result sample", href: "/" }, { title: "Case B", result: "Result sample", href: "/" }] as [{ title: string; result: string; href: string }, { title: string; result: string; href: string }] });
+const sector = (id: string, label: string) => ({ id, label, items: [item(id + "1"), item(id + "2"), item(id + "3")] as [ReturnType<typeof item>, ReturnType<typeof item>, ReturnType<typeof item>] });
+const c = (id: string, layout: "wide" | "narrow") => ({ id, layout, client: "Client " + id, tags: ["Tag", "Tag"], title: "Case title for " + id, result: "A result sentence.", href: "/", linkLabel: "Read the case", scene: ph("h-40") });
+
+export default function Kit() {
+  return (
+    <>
+      <Hero variant="split" before="A " accent="kit" after=" page" lead="Lead." primary={{ label: "Talk", href: "/" }} secondary={{ label: "How", href: "/" }} visual={ph("h-80")} />
+      <LogoStrip label="Clients" logos={["A", "B", "C", "D", "E"].map((n) => ({ name: n, node: <span>{n}</span> }))} />
+      <AudienceRoutes title="Where do you need to move faster?" lead="Pick." toggleLabel="Sector" casesLabel="Success stories" closeLabel="Close" sectors={[sector("p", "Private"), sector("u", "Public")]} />
+      <CasesGrid title="Cases" lead="Proof first." leadRest="Results." action={{ label: "All", href: "/" }} items={[c("1", "wide"), c("2", "narrow"), c("3", "narrow"), c("4", "wide")]} />
+      <SolutionsGrid title="Solutions" lead="Lead." leadRest="Rest." items={[sol("AI", "ai"), sol("Software", "software"), sol("Cloud", "cloud")]} />
+      <EngagementModels title="Three ways to work with us." lead="Lead." items={["a", "b", "c"].map((id) => ({ id, name: "Model " + id, description: "Description.", fit: "Best for.", linkLabel: "Learn more", href: "/", icon, scene: ph("h-32") }))} />
+      <ResearchList title="Our research." lead="Lead paragraph." action={{ label: "Go to the blog", href: "/" }} items={[1, 2, 3].map((n) => ({ id: String(n), kind: "Research", title: "62% of pilots never reach production " + n, date: "Sep 2026", readTime: "8 min", href: "/" }))} />
+      <Faq title="Questions we hear often" items={[1, 2, 3].map((n) => ({ question: "Question " + n + "?", answer: "Answer text. ".repeat(10) }))} />
+      <div className="container-site flex gap-3 py-8"><Tag>Tag</Tag><Tag brand>Brand</Tag><StatusBadge state="success">OK</StatusBadge></div>
+      <CtaBand title="Ready to build something people love?" lead="Tell us." action={{ label: "Start", href: "/" }} secondary={{ label: "Blog", href: "/" }} />
+    </>
+  );
+}

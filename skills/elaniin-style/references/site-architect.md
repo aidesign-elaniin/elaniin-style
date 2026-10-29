@@ -135,3 +135,8 @@ Casi ningún sitio grande tiene 100 diseños distintos: tiene 5 a 8 **tipos** re
 - **Escenas isométricas en páginas internas:** son decorativas (`aria-hidden`), usan el kit de `templates/iso/` y comparten un mismo lienzo; las etiquetas de las pills van fijas a 6–7 letras con `length` explícito para que no se salgan del slab.
 - **`trailingSlash`:** los `href` internos terminan en "/"; no busques `a[href="/casos"]`.
 - **Qué NO hacer:** un archivo de contenido por página cuando es una colección; navegación escrita a mano; rutas fuera de `site-map.ts`; subir de escalón "por si acaso"; abstracciones sin segundo uso.
+
+
+## Biblioteca de componentes del starter (v1.87)
+
+`templates/site-starter/src/components/` trae, sin dependencias extra, los componentes especificados en `references/components.md`: `layout/mega-menu.tsx` (+ `nav.tsx` con interruptor de idioma y botón secundario), `layout/footer.tsx` (credenciales, resumen con IA, columnas), `sections/` → `hero` (centered | split), `logo-strip` (rotación por región), `audience-routes`, `solutions` + `solution-dialog`, `engagement`, `cases`, `research`, `faq` + `faq-accordion` (+ JSON-LD), `cta-band`, `ai-summary`, `app/not-found.tsx`, y `ui/` (`button` con 6 variantes y 3 tamaños, `tag`, `icon-box`, `glow`, `arrow`). `templates/site-starter/kit/page.tsx.example` los junta todos con datos de ejemplo (cópiala a `src/app/kit/page.tsx` para verlos; no la dejes en un sitio entregado: el gate exige que cada página esté en `site-map.ts`). Las escenas isométricas (`templates/iso/scenes/`) se pasan como `visual` / `scene` (necesitan `lucide-react`). Para sitios bilingües con servidor: `templates/i18n/` y `references/i18n.md`.

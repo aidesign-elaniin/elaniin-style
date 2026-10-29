@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/* Count-up when it enters the viewport. Renders the final value on the server and with reduced motion. */
+/* Counts ONCE: the first time it is 60% on screen, never again when the visitor leaves and returns (DESIGN.md section 12). Renders the final value on the server and with reduced motion. */
 export function CountUp({ value, suffix = "", decimals = 0 }: { value: number; suffix?: string; decimals?: number }) {
   const fmt = (n: number) => n.toLocaleString("es", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   const [text, setText] = useState(fmt(value));
@@ -25,7 +25,7 @@ export function CountUp({ value, suffix = "", decimals = 0 }: { value: number; s
         };
         requestAnimationFrame(step);
       },
-      { threshold: 0.4 },
+      { threshold: 0.6 },
     );
     io.observe(el);
     return () => io.disconnect();
