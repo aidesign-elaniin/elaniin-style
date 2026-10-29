@@ -10,7 +10,7 @@ import { ArrowIcon } from "../ui/arrow";
   switches) of two buttons, 40px, picks the sector; the selected one is Excellence Blue (NOT Elevate Blue) and slides; unselected is text-secondary.
   Semantics: a group with a label and two buttons with aria-pressed. The three cells change with the sector (fade out, new ones rise 8px, 200ms).
   Each cell (one click target): the isometric `visual` (decorative), the lead sentence (h4), the description (body, secondary) and a tertiary link with an arrow.
-  Each cell also carries 2 SUCCESS STORIES in a panel that covers the visual: soft glow of the blue ramp under white 70% + blur, glass cards (radius card, white 70%,
+  Each cell also carries 2 SUCCESS STORIES in a panel that covers the visual (visual and panel share ONE grid cell, so the stage is as tall as the taller of the two and the isometric stays centered in it): soft glow of the blue ramp under white 70% + blur, glass cards (radius card, white 70%,
   white hairline, card-rest). Hover or a focused LINK opens it (150ms). Touch (no hover): the button 'Success stories' opens it, an X (top right of the panel) closes it.
   The cases are NOT shown just by changing the toggle. Six visuals exist, one per item (templates/iso/scenes). The links go to # until the pages exist (the check gate rejects #).
 */
@@ -22,12 +22,12 @@ function Cell({ item, casesLabel, closeLabel }: { item: RouteItem; casesLabel: s
   const [touchOpen, setTouchOpen] = useState(false);
   return (
     <li className="group relative flex min-w-0 flex-col pad-card transition-colors duration-fast hover:bg-white/50">
-      <div className="relative">
-        <div aria-hidden="true" className="mx-auto max-w-sm">
+      <div className="relative grid">
+        <div aria-hidden="true" className="col-start-1 row-start-1 mx-auto w-full max-w-sm self-center">
           {item.visual}
         </div>
         <div
-          className={`absolute inset-0 overflow-hidden rounded-card border border-white/70 bg-white/70 p-3 backdrop-blur-sm transition-opacity duration-fast focus-within:opacity-100 group-hover:opacity-100 ${touchOpen ? "opacity-100" : "pointer-events-none opacity-0 focus-within:pointer-events-auto group-hover:pointer-events-auto"}`}
+          className={`relative z-10 col-start-1 row-start-1 overflow-hidden rounded-card border border-white/70 bg-white/70 p-3 backdrop-blur-sm transition-opacity duration-fast focus-within:opacity-100 group-hover:opacity-100 ${touchOpen ? "opacity-100" : "pointer-events-none opacity-0 focus-within:pointer-events-auto group-hover:pointer-events-auto"}`}
         >
           <p className="mono-label text-caption text-text-secondary">{casesLabel}</p>
           <ul className="mt-2 flex flex-col gap-3">
