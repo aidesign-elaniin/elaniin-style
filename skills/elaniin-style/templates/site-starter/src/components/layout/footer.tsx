@@ -4,6 +4,7 @@ import { collections, footerRoutes } from "../../lib/site-map";
 import { credentialCatalog } from "../../content/credentials";
 import { AiSummary } from "../sections/ai-summary";
 import { Glyph } from "../ui/brand-glyphs";
+import { asset } from "../../lib/asset";
 import { Logo } from "./logo";
 
 
@@ -58,7 +59,7 @@ export function Footer({ switcher }: { switcher?: React.ReactNode }) {
                 <li key={b.id} className="flex items-center">
                   {/* files are black on transparent: inverted to white at 80% on the dark surface (invert, not brightness-0: ribbons and inner text keep contrast) */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={b.src} alt={b.name} width={b.width} height={b.height} className={`${b.tall} w-auto invert opacity-80`} />
+                  <img src={asset(b.src)} alt={b.name} width={b.width} height={b.height} className={`${b.tall} w-auto invert opacity-80`} />
                 </li>
               ))}
             </ul>

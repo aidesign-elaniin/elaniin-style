@@ -1,3 +1,4 @@
+import { asset } from "../../lib/asset";
 import { siClaude, siGooglegemini, siInstagram, siPerplexity } from "simple-icons";
 
 /*
@@ -13,7 +14,7 @@ export type GlyphName = keyof typeof fromPackage | keyof typeof fromFile;
 
 export function Glyph({ name, size = 18 }: { name: GlyphName; size?: number }) {
   if (name in fromFile) {
-    const url = `url(${fromFile[name as keyof typeof fromFile]})`;
+    const url = `url(${asset(fromFile[name as keyof typeof fromFile])})`;
     return <span aria-hidden="true" className="inline-block bg-current" style={{ width: size, height: size, maskImage: url, WebkitMaskImage: url, maskRepeat: "no-repeat", maskPosition: "center", maskSize: "contain" }} />;
   }
   return (
