@@ -178,11 +178,12 @@ y `aria-hidden="true"`. Rastro apagado en táctil y con reduced-motion.
 
 Recetas y reglas: `references/grids.md`.
 
-### Navegación móvil — drawer
+### Navegación móvil — hoja (`sheet`) y drawer
 | Clase | Qué hace |
 |---|---|
 | `drawer` | Panel off-canvas `<lg` (ancho `--drawer-width`, 85vw máx.; cerrado = `visibility:hidden`); a `lg+` queda **fijo** (`sticky`, `100dvh`) con `--sidebar-width`; solo el contenido scrollea. Se abre con `data-open="true"` |
 | `scrim` | Telón oscuro 48% bajo el drawer; oculto a `lg+`. `data-open="true"` lo muestra |
+| `sheet` | **Menú móvil de un landing o sitio** (DESIGN.md components.nav.mobile): hoja blanca de alto completo bajo la barra de 64px, `visibility:hidden` hasta `data-open="true"`, oculta a `lg+`; sin scrim (dale `hidden` al scrim para `drawer.js`) |
 
 Para un menú móvil de landing: `drawer md:hidden` + `scrim md:hidden` + `data-drawer-from="md"`.
 Comportamiento en `templates/drawer.js` (marcadores `data-menu-button`, `data-drawer`,
@@ -272,12 +273,17 @@ anillo global · reduce → scroll auto. (Dashboard añade `body { background: s
 | `hero-fill` | desde 1280 px el hero mide al menos la altura de pantalla bajo la barra, contenido centrado | §2 |
 | `solution-software`, `solution-ai`, `solution-cloud` | las tres superficies de solución (patrón + glow) compartidas por nav, grid y diálogo | §8 |
 | `engage-row`, `engage-card` | cards expandibles de engagement (flex-grow 1 → 2.4 en 300 ms; apiladas bajo 1024 px) | §4 |
+| `icon-grow` | el ícono de expandir de la solution card escala 110 % al hover (150 ms): la ÚNICA excepción nombrada a "sin scale en hover" |
+| `card-bleed` | el isométrico de una solution card sale 24 px del padding por cada lado |
+| `menu-swap` | el contenido de un panel del mega-menú se desliza 24 px (`--from`) en 200 ms |
+| `section-glow` + `section-glow-blob` | contenedor y 3 manchas (`--x --y --w --h --c --o --d`) que derivan 17/21/25 s |
+| `footer-grid` | dos columnas del footer desde 1024 px: 26rem \| 1fr, gap 96 px (48 abajo) |
 | `blue-steps` | el motivo azul escalonado (único gradiente de tope duro; ≤240 px, uno por página) | `motion.md` §2 |
 | `glow-stripes` + `glow-media` / `glow-cta` | glow azul animado (franjas de 115°, 706.16 px por repetición); solo CTA, etapa de casos y canvas de Blue Engine | `motion.md` §2 |
 | `section-glow` + `glass` | manchas azules que derivan tras un panel `glass` (audience routes) | `motion.md` §2 |
 | `module-field-mask-center` | el module field con el centro despejado (CTA de cierre) | §11 |
 | variante `touch:` | `@custom-variant touch (@media (hover: none))` para dispositivos sin hover | §7 |
 | tokens de medida | `max-w-narrow` 40ch · `max-w-hero` 18ch · `max-w-cta` 34ch · `max-w-statement` 22ch · `max-w-title` 14ch | `tokens.md` |
-| radios | `rounded-bento-outer` 12 · `rounded-app-icon` 18.5 % | `tokens.md` |
+| radios | `rounded-app-icon` 18.5 % (la grilla hairline usa `rounded-card`; `bento-outer` se retiró en v1.87.3) | `tokens.md` |
 
 **Retiradas (v1.87):** `spotlight`, `lift` y el `card-glow` que seguía al puntero. Hover = color, fondo o borde, 150 ms; sin lift, sin scale, sin glow (DESIGN.md §7).

@@ -29,7 +29,7 @@ export function EngagementModels({ title, lead, items }: { title: string; lead: 
                 <article className="card-glow-quiet relative flex h-full min-w-0 flex-col overflow-hidden rounded-card border border-border-on-dark pad-card group-hover:border-border-on-dark-strong">
                   <div className="flex items-start justify-between">
                     <IconBox dark>{m.icon}</IconBox>
-                    <span aria-hidden="true" className="hidden text-text-on-dark-muted lg:block lg:group-hover:hidden lg:group-focus-within:hidden">
+                    <span aria-hidden="true" className="hidden text-text-on-dark-muted transition-transform duration-slow lg:block lg:group-hover:rotate-45 lg:group-focus-within:rotate-45">
                       <PlusIcon />
                     </span>
                   </div>

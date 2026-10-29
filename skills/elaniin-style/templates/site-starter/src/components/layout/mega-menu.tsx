@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { ArrowIcon } from "../ui/arrow";
 import { IconBox } from "../ui/icon-box";
 
@@ -126,6 +126,22 @@ export function MegaMenus({ menus, labels }: { menus: { id: string; label: strin
   const wrap = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggers = useRef<Record<string, HTMLButtonElement | null>>({});
+  // switching between triggers: the panel height animates to its content (300ms emphasized) and the content cross-slides 24px in the direction of travel (200ms emphasized)
+  const previous = useRef<string | null>(null);
+  const inner = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number | undefined>(undefined);
+  const from = previous.current && open && previous.current !== open ? (menus.findIndex((m) => m.id === open) > menus.findIndex((m) => m.id === previous.current) ? 24 : -24) : 0;
+  useEffect(() => {
+    previous.current = open;
+    if (!open) setHeight(undefined);
+  }, [open]);
+  useEffect(() => {
+    const el = inner.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setHeight(el.offsetHeight));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [open]);
   const schedule = (fn: () => void, ms: number) => {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(fn, ms);
@@ -186,7 +202,13 @@ export function MegaMenus({ menus, labels }: { menus: { id: string; label: strin
       {current && (
         <div id={`menu-${current.id}`} className="absolute inset-x-0 top-full z-40 bg-transparent" role="region" aria-label={current.label}>
           <div className="container-site">
-            <div className="menu-panel overflow-hidden rounded-t-none">{current.data.kind === "cards" ? <Cards menu={current.data} /> : <Rows menu={current.data} />}</div>
+            <div className="menu-panel overflow-hidden rounded-t-none" style={{ height, transition: "height var(--dur-slow) var(--ease-emphasized)" }}>
+              <div ref={inner}>
+                <div key={current.id} className={from ? "menu-swap" : ""} style={{ "--from": `${from}px` } as CSSProperties}>
+                  {current.data.kind === "cards" ? <Cards menu={current.data} /> : <Rows menu={current.data} />}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

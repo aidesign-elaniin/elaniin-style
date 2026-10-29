@@ -1,5 +1,5 @@
 /*
-  Elaniin tokens — single source of truth (DESIGN.md v1.87.2 · Tailwind v4).
+  Elaniin tokens — single source of truth (DESIGN.md v1.87.3 · Tailwind v4).
 
   CONTRACT — Tailwind-first API:
     1. Every design value lives in @theme (or in :root when it is a layout/duration
@@ -112,7 +112,7 @@
   --text-display-xl--letter-spacing: -0.035em;
   --text-tag-sm: 11px; /* the small tag (official, DESIGN.md v1.64): mono, with mono-label */
   --text-tag-sm--line-height: 1;
-  /* Measures (line length): max-w-body 68ch · max-w-lead 56ch · max-w-narrow 40ch · max-w-heading 20ch · max-w-hero 18ch · max-w-cta 34ch · max-w-statement 22ch · max-w-dialog 1080px */
+  /* Measures (line length): max-w-body 68ch · max-w-lead 56ch · max-w-narrow 40ch · max-w-heading 20ch · max-w-hero 18ch · max-w-cta 34ch · max-w-statement 22ch · max-w-dialog 1080px · max-w-note 48ch */
   --container-body: 68ch;
   --container-lead: 56ch;
   --container-narrow: 40ch;
@@ -122,6 +122,7 @@
   --container-statement: 22ch;
   --container-title: 14ch;
   --container-dialog: 1080px;
+  --container-note: 48ch;
   --text-display-lg: clamp(36px, 3.906vw + 6px, 56px);
   --text-display-lg--line-height: 1.04;
   --text-display-lg--letter-spacing: -0.03em;
@@ -162,7 +163,6 @@
   --radius-card: 12px;
   --radius-media: 12px;
   --radius-code: 12px;
-  --radius-bento-outer: 12px;
   --radius-app-icon: 18.5%;
   --radius-menu: 8px;
   --radius-modal: 16px;
@@ -227,6 +227,10 @@
     from { transform: translate3d(0, 0, 0); }
     to { transform: translate3d(-706.16px, 0, 0); }
   }
+  @keyframes menu-swap {
+    from { opacity: 0; transform: translateX(var(--from, 24px)); }
+    to { opacity: 1; transform: none; }
+  }
   @keyframes sheen {
     from { transform: translate3d(-140%, 0, 0); }
     to { transform: translate3d(420%, 0, 0); }
@@ -250,6 +254,7 @@
   --sidebar-width: 15rem;
   --module-size: 2px;
   --module-pitch: 16px;
+  --blue-steps: linear-gradient(90deg, #d7e2f8 0 12.5%, #b9cefb 12.5% 25%, #6a9aff 25% 37.5%, #1054ff 37.5% 50%, #0848cc 50% 62.5%, #023ca0 62.5% 75%, #022b63 75% 87.5%, #01172e 87.5% 100%);
 
   /* motion durations — consumed by the duration-* utilities (see contract §4) */
   --dur-instant: 100ms;
@@ -273,6 +278,40 @@
 @utility dialog-scroll {
   max-height: min(92dvh, 780px);
   overflow-y: auto;
+}
+
+/* icon-grow: the ONLY named exception to "no scale on hover" (DESIGN.md motion.hover): the expand icon of the solution card scales to 110% on hover, 150ms standard.
+   Put it on the button; it scales the svg inside. */
+@utility icon-grow {
+  & svg {
+    transition: transform var(--dur-fast) var(--ease-standard);
+  }
+  &:hover svg {
+    transform: scale(1.1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & svg {
+      transition: none;
+    }
+    &:hover svg {
+      transform: none;
+    }
+  }
+}
+/* card-bleed: the isometric of a solution card bleeds past the card padding (24px each side) so it is not drawn small (DESIGN.md components.solution-card.layout). */
+@utility card-bleed {
+  margin-inline: -1.5rem;
+}
+/* switch-bleed: pulls the language switch 8px to each side so its text (it has 8px of padding) lines up with the rest of the legal row (the reference uses -mx-2; the gate bans negative margins, so it is a named utility). */
+@utility switch-bleed {
+  margin-inline: -0.5rem;
+}
+/* menu-swap: content of a mega-menu panel cross-slides 24px in the direction of travel in 200ms emphasized; set --from to 24px or -24px. */
+@utility menu-swap {
+  animation: menu-swap var(--dur-base) var(--ease-emphasized) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 /* touch: devices without hover (the success-stories panel of the audience routes opens with a button there). */
@@ -761,10 +800,11 @@
   --tag-text: var(--color-blue-600);
   --tag-border: var(--color-blue-200);
 }
+/* tag-on-dark is NOT a variant of the site's Tag (default and brand only): it is the outlined small tag of the research row. Use it with tag-sm: no fill, 1px border-on-dark-strong, text on-dark-secondary. */
 @utility tag-on-dark {
-  --tag-bg: rgb(255 255 255 / 0.06);
+  --tag-bg: transparent;
   --tag-text: var(--color-text-on-dark-secondary);
-  --tag-border: var(--color-border-on-dark);
+  --tag-border: var(--color-border-on-dark-strong);
 }
 @utility tag-sm {
   height: 1.25rem;
@@ -876,21 +916,21 @@
 }
 @utility code-comment { color: var(--color-text-on-dark-muted); }
 @utility code-accent { color: var(--color-text-on-dark-accent); }
-/* icon-box: 40px square that holds an icon (menu rows, solution cards, stage cards). icon-box-dark for dark surfaces. */
+/* icon-box: 40px square (radius 6) that holds a 20px icon, stroke 1.5 (menu rows, solution cards, stage cards): light = border-default + white + Elevate Blue icon; icon-box-dark = border-on-dark + white 10% + on-dark-accent icon. */
 @utility icon-box {
   display: grid;
   width: 2.5rem;
   height: 2.5rem;
   flex: none;
   place-items: center;
-  border-radius: var(--radius-menu);
-  border: 1px solid var(--color-blue-200);
-  background: var(--color-blue-tint-50);
+  border-radius: var(--radius-tag);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-white);
   color: var(--color-elevate-blue);
 }
 @utility icon-box-dark {
   border-color: var(--color-border-on-dark);
-  background: rgb(255 255 255 / 0.06);
+  background: rgb(255 255 255 / 0.1);
   color: var(--color-text-on-dark-accent);
 }
 /* dark-band: full-bleed Excellence Blue section (dark-band-black: Elaniin Black). At most two per page plus the footer, never two in a row. */
@@ -996,20 +1036,27 @@
 /* blue-steps: the stepped blue motif. Hard stops, never smooth; decorative, aligned to the module grid, max 240px tall, one per page, never behind text. */
 @utility blue-steps {
   height: 16px;
-  background: linear-gradient(90deg, #d7e2f8 0 12.5%, #b9cefb 12.5% 25%, #6a9aff 25% 37.5%, #1054ff 37.5% 50%, #0848cc 50% 62.5%, #023ca0 62.5% 75%, #022b63 75% 87.5%, #01172e 87.5% 100%);
+  background: var(--blue-steps);
 }
-/* section-glow: decorative blue blobs rising from the bottom of a section, drifting slowly (transform only). ONLY behind a glass
-   panel (white 55% + blur), never on dark surfaces, never behind text without glass. Parent: relative isolate overflow-hidden. */
+/* section-glow: decorative blue blobs rising from the bottom of a section, each drifting slowly through transform only (keyframes glow-drift, alternate, ease-in-out).
+   ONLY behind a `glass` panel (audience routes), never on dark surfaces, never behind text without glass, never more than one per page region. Parent: relative isolate overflow-hidden.
+   Markup: <div class="section-glow"><span class="section-glow-blob" style="--x:-8%;--y:-18%;--w:58%;--h:98%;--c:var(--color-blue-300);--o:45%;--d:17s"></span> ...3 blobs</div>
+   (components/ui/glow.tsx does it): blue-300 45% (left -8%, bottom -18%, 58% x 98%, 17s) · blue-200 75% (right -8%, bottom -10%, 54% x 90%, 21s) · blue-300 32% (left 22%, bottom -24%, 56% x 78%, 25s). */
 @utility section-glow {
   position: absolute;
   inset: 0;
   z-index: -10;
+  overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(50% 78% at 20% 100%, color-mix(in srgb, var(--color-blue-300) 45%, transparent), transparent 70%),
-    radial-gradient(45% 90% at 60% 100%, color-mix(in srgb, var(--color-blue-200) 75%, transparent), transparent 70%),
-    radial-gradient(40% 98% at 90% 100%, color-mix(in srgb, var(--color-blue-300) 32%, transparent), transparent 70%);
-  animation: var(--animate-glow-drift);
+}
+@utility section-glow-blob {
+  position: absolute;
+  bottom: var(--y);
+  left: var(--x);
+  width: var(--w);
+  height: var(--h);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--c) var(--o), transparent), transparent);
+  animation: glow-drift var(--d, 17s) ease-in-out infinite alternate;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
@@ -1017,7 +1064,9 @@
 /* glass: white 55% panel + blur, the surface that lets section-glow show through. */
 @utility glass {
   background: rgb(255 255 255 / 0.55);
-  backdrop-filter: blur(4px);
+  @media (min-width: 64rem) {
+    backdrop-filter: blur(4px);
+  }
 }
 /* glow-stripes: the animated blue glow (motifs.glow), three uses only: the closing CTA, the media stage of case cards and the Blue Engine
    canvas. Technique of the reference: two layers of 115deg stripes that scroll sideways (one repeat = 706.16px, so the loop has no seam).
@@ -1178,8 +1227,51 @@
       flex-grow: 2.4;
     }
   }
+  /* the quiet card glow is at 60% while the card is closed and 100% when it opens (300ms), with a slow drift (transform only, still under reduced motion) */
+  & .card-glow-quiet::before {
+    opacity: 0.6;
+    transition: opacity var(--dur-slow) var(--ease-standard);
+    animation: glow-drift 19s ease-in-out infinite alternate;
+  }
+  &:hover .card-glow-quiet::before,
+  &:focus-within .card-glow-quiet::before {
+    opacity: 1;
+  }
   @media (prefers-reduced-motion: reduce) {
     transition: none;
+    & .card-glow-quiet::before {
+      transition: none;
+    }
+  }
+}
+
+/* footer-grid: the footer's two columns from 1024px: the brand column (max 26rem) | the four link columns, gap 96px (48px below). DESIGN.md components.footer. */
+@utility footer-grid {
+  display: grid;
+  gap: 3rem;
+  @media (min-width: 64rem) {
+    grid-template-columns: 26rem minmax(0, 1fr);
+    gap: 6rem;
+  }
+}
+
+/* sheet: the mobile menu of a landing or site (DESIGN.md components.nav.mobile): a full-height white sheet under the 64px bar, NOT a side drawer. Same behavior script
+   as the drawer (templates/drawer.js: data-drawer, data-menu-button; give the scrim the `hidden` class: there is no scrim). Closed = visibility hidden (out of tab order). */
+@utility sheet {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--nav-height);
+  bottom: 0;
+  z-index: 40;
+  overflow-y: auto;
+  border-top: 1px solid var(--color-border-default);
+  background: var(--color-white);
+  visibility: hidden;
+  &[data-open="true"] {
+    visibility: visible;
+  }
+  @variant lg {
+    display: none;
   }
 }
 

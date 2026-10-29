@@ -1,3 +1,4 @@
+/* Home order of the reference site (DESIGN.md v1.87.3): Hero, Clients, AudienceRoutes, Solutions, Engagement, Cases, Research, Cta, Footer. The FAQ is NOT on the home (a reusable spec for other pages); it is here only to show it. */
 import { AudienceRoutes } from "../../components/sections/audience-routes";
 import { CasesGrid } from "../../components/sections/cases";
 import { CtaBand } from "../../components/sections/cta-band";
@@ -23,9 +24,9 @@ export default function Kit() {
       <Hero variant="split" before="A " accent="kit" after=" page" lead="Lead." primary={{ label: "Talk", href: "/" }} secondary={{ label: "How", href: "/" }} visual={ph("h-80")} />
       <LogoStrip label="Clients" logos={["A", "B", "C", "D", "E"].map((n) => ({ name: n, node: <span>{n}</span> }))} />
       <AudienceRoutes title="Where do you need to move faster?" lead="Pick." toggleLabel="Sector" casesLabel="Success stories" closeLabel="Close" sectors={[sector("p", "Private"), sector("u", "Public")]} />
-      <CasesGrid title="Cases" lead="Proof first." leadRest="Results." action={{ label: "All", href: "/" }} items={[c("1", "wide"), c("2", "narrow"), c("3", "narrow"), c("4", "wide")]} />
       <SolutionsGrid title="Solutions" lead="Lead." leadRest="Rest." items={[sol("AI", "ai"), sol("Software", "software"), sol("Cloud", "cloud")]} />
       <EngagementModels title="Three ways to work with us." lead="Lead." items={["a", "b", "c"].map((id) => ({ id, name: "Model " + id, description: "Description.", fit: "Best for.", linkLabel: "Learn more", href: "/", icon, scene: ph("h-32") }))} />
+      <CasesGrid title="Cases" lead="Proof first." leadRest="Results." action={{ label: "All", href: "/" }} items={[c("1", "wide"), c("2", "narrow"), c("3", "narrow"), c("4", "wide")]} />
       <ResearchList title="Our research." lead="Lead paragraph." action={{ label: "Go to the blog", href: "/" }} items={[1, 2, 3].map((n) => ({ id: String(n), kind: "Research", title: "62% of pilots never reach production " + n, date: "Sep 2026", readTime: "8 min", href: "/" }))} />
       <Faq title="Questions we hear often" items={[1, 2, 3].map((n) => ({ question: "Question " + n + "?", answer: "Answer text. ".repeat(10) }))} />
       <div className="container-site flex gap-3 py-8"><Tag>Tag</Tag><Tag brand>Brand</Tag><StatusBadge state="success">OK</StatusBadge></div>

@@ -1,4 +1,4 @@
-:HL["/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/3n0-giepixf6p.css","style"]
+:HL["/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/07voe7ucn2hr2.css","style"]
 :HL["/elaniin-style/ejemplos/nova-logistica/certification/badge-clutch-aws.svg","image"]
 :HL["/elaniin-style/ejemplos/nova-logistica/certification/gcp.svg","image"]
 :HL["/elaniin-style/ejemplos/nova-logistica/certification/badge-clutch-global.svg","image"]
@@ -9,4 +9,4 @@
 :HL["/elaniin-style/ejemplos/nova-logistica/certification/webflow.svg","image"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":64,"c":"$Q2"}]]
-0:{"b":"29DwWRIboBLfD4OyKZd4z","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"3B2qGkYtCDIcz6R5TrHMh","t":{"t":{"s":"","h":16,"c":"$Q1"}}}

@@ -11,7 +11,7 @@ import { ModuleField } from "../ui/module-field";
 */
 export function CtaBand({ title, lead, action, secondary }: { title: string; lead: string; action: { label: string; href: string }; secondary?: { label: string; href: string } }) {
   return (
-    <section id="contacto" data-nav-theme="blue" className="relative isolate overflow-hidden border-t border-border-on-dark bg-surface-dark text-text-on-dark section-y-statement">
+    <section id="contact" data-nav-theme="blue" className="relative isolate overflow-hidden border-t border-border-on-dark bg-surface-dark text-text-on-dark section-y-statement">
       <GlowStripes variant="cta" />
       <ModuleField tone="dark" fade="center" />
       <div className="container-site relative z-10 mx-auto max-w-4xl text-center">

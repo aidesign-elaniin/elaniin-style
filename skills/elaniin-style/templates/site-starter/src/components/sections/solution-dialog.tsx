@@ -38,7 +38,7 @@ export function SolutionDialog({ detail, look, openLabel, buttonClass }: { detai
         type="button"
         aria-label={openLabel}
         onClick={() => ref.current?.showModal()}
-        className={`relative z-10 grid size-10 shrink-0 place-items-center rounded-button border focus-ring ${buttonClass}`}
+        className={`icon-grow relative z-10 grid size-10 shrink-0 place-items-center rounded-button border transition-colors duration-fast focus-ring ${buttonClass}`}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />

@@ -82,7 +82,6 @@ export const radius = {
   "card": "12px",
   "media": "12px",
   "code": "12px",
-  "bento-outer": "12px",
   "app-icon": "18.5%",
   "menu": "8px",
   "modal": "16px",

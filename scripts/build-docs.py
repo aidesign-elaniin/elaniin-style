@@ -791,7 +791,7 @@ dev_blocks = "\n".join([
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">React / Next.js</h4>' + code(ISO_REACT, "tsx") +
           '<h4 class="pt-4 font-display font-medium text-h4 text-text-primary">Rules</h4><ul class="space-y-3">' + iso_rules + "</ul>" +
           p("Exact geometry, the 15 rules, the timeline and the recipe for a new resource are in <code class=\"font-mono text-code text-text-primary\">references/isometric.md</code> inside the plugin.")),
-    block(15, "Specified components", p("Since v1.87.2 the skill ships every component of the design system, not only the tokens and the nav. Claude builds them from the spec: <code class=\"font-mono text-code text-text-primary\">references/components.md</code>.") +
+    block(15, "Specified components", p("Since v1.87.3 the skill ships every component of the design system, not only the tokens and the nav. Claude builds them from the spec: <code class=\"font-mono text-code text-text-primary\">references/components.md</code>.") +
           '<div class="border-b border-border-default">' +
           row("Navigation", "mega-menu (solutions, engagement, resources), nav with language switch and secondary button, mobile accordions.", "templates/site-starter/src/components/layout/") +
           row("Sections", "hero (centered | split), logo strip, audience routes, solutions grid + dialog, engagement models, cases, research, FAQ, closing CTA.", "templates/site-starter/src/components/sections/") +

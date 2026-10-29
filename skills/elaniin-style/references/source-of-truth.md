@@ -2,13 +2,14 @@
 
 El design system vive en el `DESIGN.md` del repositorio del sitio Elaniin 2027, **no en este plugin**.
 La skill replica sus tokens, componentes y reglas; si algo aquí contradice a ese archivo, gana ese archivo.
+Desde v1.87.3 el repo trae además `docs/SKILL-SYNC.md` y `docs/skill-sync/` (estado aprobado de la home, componentes, tokens, reglas y pendientes provisionales): **se compara siempre contra `DESIGN.md` Y contra esos archivos**, y se relee entera cada vez.
 
 | | |
 |---|---|
 | Repositorio | `https://github.com/roger-elaniin/elaniin-2027-website` |
-| Archivo | `DESIGN.md` (y `src/app/globals.css`, `src/components/ui/iso/`) |
-| Versión implementada por el plugin | **v1.87.2** |
-| Commit contra el que se sincronizó | `5fa8a6c` (28 oct 2026) |
+| Archivos | `DESIGN.md`, `docs/SKILL-SYNC.md`, `docs/skill-sync/{state-and-rules,components,skill-gaps}.md` (y `src/app/globals.css`, `src/components/ui/iso/`) |
+| Versión implementada por el plugin | **v1.87.3** |
+| Commit contra el que se sincronizó | `4f6d8de` (29 oct 2026) |
 
 ## Adoptado en v1.87
 
@@ -19,7 +20,7 @@ celda de 24 con el trazo dividido por 0.9, para conservar el peso de línea del 
 el mapa `ICONS` de `templates/iso-stack.js`). El `DESIGN.md` de la referencia aún los marca "to be validated applied": si la validación
 cambia algo, se ajusta aquí.
 
-## Adoptado en v1.87.2 (auditoría completa contra el DESIGN.md)
+## Adoptado en v1.87.3 (auditoría completa contra el DESIGN.md)
 
 Auditoría línea por línea del frontmatter y de las secciones 1 a 13 (28 oct 2026). **Las contradicciones se resolvieron a favor del DESIGN.md** ("si se contradice es porque cambió"): hover sin lift, scale ni glow
 (se retiran `spotlight`, `lift` y el `card-glow` que seguía al puntero); gradientes solo los de §2 regla 6 (vuelven `blue-steps`, `glow-stripes`, `section-glow`, `card-glow` en cards oscuras); targets ≥ 40 px (inputs 44); sin
@@ -52,9 +53,28 @@ autorización antes de publicar un cliente.
 
 **Pendiente de decisión de marca (igual que en la referencia):** isotipo y tagline sin aprobar (el plugin usa solo el logotipo); favicon provisional; el partner de Webflow del último badge del footer.
 
+## Provisional y retirado (v1.87.3; lo que el equipo aún no da por final)
+
+No lo des por final al generar. Lista de `docs/skill-sync/state-and-rules.md` §4 (16 puntos) en lo que toca a la skill:
+
+| Estado | Qué | Qué hace la skill |
+|---|---|---|
+| Provisional | favicon (cuadrado azul con círculo gris, **sin símbolo**) | `assets/favicon.svg`; se cambia cuando se apruebe el isotipo |
+| Pendiente | isotipo (nada aprobado) y tagline "Intelligent Software Company" (a dos palabras) | solo logotipo; sin tagline |
+| TEST (1280px) | propuestas del hero 1 a 3 y su selector `?hero=1..3`; hero `min-height` 100dvh − nav; glow de la ventana de navegador | `iso/scenes/hero-stack-plus.tsx`, `hero-modernization.tsx`; la propuesta 3 (ventana recortada) no se incluye |
+| TEST (1280px) | toggle de sector y panel de casos de las rutas; `card-glow`; tarjetas verticales del menú de Recursos; chips de resultado de los casos (ocultos) | implementados; marcados TEST en `components.md` |
+| Temporal | logos de clientes por región (world 4, sv 5) | marcadores; la cookie `region` queda como herramienta de prueba |
+| Sin destino | ancla `#method` (CTA secundaria del hero y nav "Blue Engine©") | apunta a una página aún inexistente; la compuerta rechaza `#` en un sitio entregado |
+| Sin construir | página dedicada de Blue Engine; FAQ fuera de la home (spec conservada) | `components.md` §5 y §6 son solo registro; la FAQ no va en la home |
+| Sin confirmar | insignia del partner de Webflow | último badge del footer; confirmar antes del lanzamiento |
+| Falta | `robots`, `og:image`, sitemap con una sola página; el sitio de revisión es `noindex` | `ALLOW_INDEXING` + `SITE_URL` en producción |
+| Pendiente | el hero "modernización" usa el ícono de nube de Lucide, no el oficial | sustituir por `CloudIcon` si la propuesta sobrevive |
+| Retirado | formulario de newsletter (v1.51.0), isologos y símbolo, wordmark gigante del footer, globo de red, tarjeta Elevate Blue del menú, glow del hero (v1.80.5), ícono "data" (v1.87.1), eyebrows y numeración decorativa, variante `engine` del glow | no existen en la skill; no se agregan por costumbre |
+
 ## Cómo actualizar
 
-1. Clona o actualiza el repositorio del sitio. **No compares solo el change log: repite la auditoría de frontmatter y de las secciones 1 a 13 contra la tabla de arriba** (así se quedó el plugin atrás antes: solo se adoptaba lo que cambiaba desde el último commit).
+1. Clona o actualiza el repositorio del sitio (`git pull`; no leas una copia vieja). Lee EN ESTE ORDEN: `docs/SKILL-SYNC.md`, `docs/skill-sync/state-and-rules.md`, `docs/skill-sync/components.md`, `DESIGN.md` (con su change log) y `docs/skill-sync/skill-gaps.md`. **No compares solo el change log: repite la auditoría de frontmatter y de las secciones 1 a 13 contra la tabla de arriba** (así se quedó el plugin atrás antes: solo se adoptaba lo que cambiaba desde el último commit).
 2. Aplica lo que sea genérico (tokens, utilities, reglas) a `templates/tokens.css` y a las referencias; `python3 scripts/build-docs.py` regenera las copias.
 3. Cambia la versión y el commit de esta tabla, y el encabezado de `SKILL.md`, `README.md` y `tokens.css`.
 4. `python3 scripts/check-design-source.py` dice si la referencia se movió desde el commit fijado (informativo; `--strict` sale con código 1).
+5. Lo que no está descrito en esos archivos no existe: no lo agregues por costumbre. Las listas "contiene exactamente" (footer, home) son cerradas. Si encuentras una contradicción entre `DESIGN.md`, la documentación y el código del sitio, repórtala al equipo del sitio: por regla de ellos no debería existir ninguna.

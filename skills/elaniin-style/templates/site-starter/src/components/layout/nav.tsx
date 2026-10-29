@@ -19,8 +19,10 @@ const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1
   - glass bar of 64px (`nav-bar`: white 80% under an 8px blur) that ADOPTS the color of the section under it. Sections with a
     dark background of their own declare data-nav-theme="blue" | "black"; this component sets data-theme / data-tone on the bar,
   - items are 40px pills (`nav-item`) with a subtle surface on hover; one primary CTA of height 40 on the right,
-  - below lg a 40px hamburger opens a real drawer: aria-expanded, focus moves in, Tab is trapped, Esc / scrim / link close it
-    and give the focus back, scroll is locked while open and it closes by itself when the viewport grows.
+  - below lg a 40px hamburger (Menu / X) opens a full-height white SHEET under the bar (DESIGN.md components.nav.mobile; not a side drawer): the menu items as accordions
+    (the first open by default), the plain links at h-14 in display h4, and at the bottom the language switch, the primary lg and the Blog secondary lg, full width. aria-expanded,
+    focus moves in, Tab is trapped, Esc / link click close it and give the focus back, scroll is locked while open and it closes by itself when the viewport grows. The bar stays
+    light while the sheet is open and the primary CTA stays visible in the header at every width.
 */
 export function Nav({ items, switcher, secondary }: { items: NavItem[]; switcher?: React.ReactNode; secondary?: { label: string; href: string } }) {
   const pathname = usePathname();
@@ -118,7 +120,7 @@ export function Nav({ items, switcher, secondary }: { items: NavItem[]; switcher
           <div className="ml-auto flex items-center gap-3">
             {switcher && <div className="hidden lg:block">{switcher}</div>}
             {secondary && (
-              <LinkButton href={secondary.href} s="md" v="secondary" className="hidden lg:inline-flex">
+              <LinkButton href={secondary.href} s="md" v="secondary" className="max-lg:hidden">
                 {secondary.label}
               </LinkButton>
             )}
@@ -130,83 +132,60 @@ export function Nav({ items, switcher, secondary }: { items: NavItem[]; switcher
               type="button"
               aria-controls="app-drawer"
               aria-expanded={open}
-              aria-label="Abrir menú"
-              onClick={() => setOpen(true)}
+              aria-label={open ? "Cerrar menú" : "Abrir menú"}
+              onClick={() => (open ? close() : setOpen(true))}
               className="nav-toggle focus-ring lg:hidden"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <path d="M4 7h16M4 12h16M4 17h16" />
+                {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
               </svg>
             </button>
           </div>
         </div>
       </header>
 
-      <div className="scrim lg:hidden" data-open={open} aria-hidden="true" onClick={() => close()} />
-      <aside
-        ref={drawer}
-        id="app-drawer"
-        data-open={open}
-        className="drawer flex flex-col border-r border-border-default bg-white lg:hidden"
-        aria-label="Principal"
-      >
-        <div className="flex h-16 items-center justify-between border-b border-border-default pl-6 pr-3">
-          <Logo className="h-6 w-auto" />
-          <button
-            type="button"
-            aria-label="Cerrar menú"
-            onClick={() => close()}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-button text-text-secondary transition-colors duration-base hover:bg-surface-subtle focus-ring"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          </button>
-        </div>
-        <nav className="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Principal móvil">
-          {items.map((r) =>
-            r.menu ? (
-              <details key={r.path} className="group">
-                <summary className="flex h-10 cursor-pointer list-none items-center justify-between rounded-button px-3 font-display text-body font-medium text-text-primary hover:bg-surface-subtle focus-ring">
+      {open && (
+        <nav ref={drawer} id="app-drawer" aria-label="Principal móvil" className="fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col overflow-y-auto border-t border-border-default bg-white lg:hidden">
+          <div className="flex-1 px-5 py-3">
+            {items.map((r, idx) =>
+              r.menu ? (
+                <details key={r.path} open={idx === 0} className="group border-b border-border-default">
+                  <summary className="flex h-14 cursor-pointer list-none items-center justify-between font-display text-h4 font-medium text-text-primary focus-ring">
+                    {r.title}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true" className="transition-transform duration-base group-open:rotate-180">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
+                  </summary>
+                  <ul className="pb-3">
+                    {[...(r.menu.rows ?? []), ...(r.menu.cards ?? [])].map((l) => (
+                      <li key={l.href}>
+                        <Link href={l.href} onClick={() => close(false)} className="flex h-10 items-center rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle focus-ring">
+                          {l.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : (
+                <Link key={r.path} href={r.path} onClick={() => close(false)} className="flex h-14 items-center border-b border-border-default font-display text-h4 font-medium text-text-primary focus-ring">
                   {r.title}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true" className="transition-transform duration-base group-open:rotate-180">
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
-                </summary>
-                <ul className="pb-2 pl-3">
-                  {[...(r.menu.rows ?? []), ...(r.menu.cards ?? [])].map((l) => (
-                    <li key={l.href}>
-                      <Link href={l.href} onClick={() => close(false)} className="flex h-10 items-center rounded-button px-3 text-body-sm text-text-secondary hover:bg-surface-subtle focus-ring">
-                        {l.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ) : (
-              <Link
-                key={r.path}
-                href={r.path}
-                onClick={() => close(false)}
-                className="flex h-10 items-center rounded-button px-3 font-display text-body font-medium text-text-primary transition-colors duration-base hover:bg-surface-subtle focus-ring"
-              >
-                {r.title}
-              </Link>
-            ),
-          )}
-        </nav>
-        <div className="flex flex-col gap-3 border-t border-border-default p-4">
-          {switcher}
-          {secondary && (
-            <LinkButton href={secondary.href} v="secondary" className="w-full">
-              {secondary.label}
+                </Link>
+              ),
+            )}
+          </div>
+          <div className="flex flex-col gap-3 border-t border-border-default p-5">
+            {switcher}
+            <LinkButton href={cta.href} className="w-full">
+              {cta.label}
             </LinkButton>
-          )}
-          <LinkButton href={cta.href} className="w-full">
-            {cta.label}
-          </LinkButton>
-        </div>
-      </aside>
+            {secondary && (
+              <LinkButton href={secondary.href} v="secondary" className="w-full">
+                {secondary.label}
+              </LinkButton>
+            )}
+          </div>
+        </nav>
+      )}
     </>
   );
 }

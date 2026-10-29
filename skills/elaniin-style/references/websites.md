@@ -9,16 +9,17 @@ Ritmo de superficies (blanco → grey → navy), hairlines como estructura, un s
 dominante por pieza.
 
 ```
-1. Nav              — 64px, hairline inferior, logo a la izq, links, CTA secundario.
-                      En móvil (<md) los links van en un **drawer** (`drawer md:hidden` +
-                      `scrim` + `templates/drawer.js`, `data-drawer-from="md"`) abierto por una
-                      hamburguesa de 40px junto al CTA; nunca dejar links inaccesibles.
+1. Nav              — 64px, hairline inferior, logo a la izq, links, hasta DOS CTA a la derecha: `Blog` (secundario md, oculto bajo 1024px)
+                      y el CTA de conversación (primario md, siempre visible). El sitio de Elaniin tiene CUATRO entradas (3 menús + About), selector EN | ES
+                      y mega-menús (`components.md` §1); un sitio genérico puede usar links simples. En móvil (<lg) la hamburguesa de 40px abre una **hoja** de
+                      alto completo bajo la barra (`sheet` + `templates/drawer.js`, sin scrim; acordeones en el sitio de Elaniin), no un drawer lateral;
+                      el drawer lateral queda para la sidebar de un dashboard. Nunca dejar links inaccesibles.
 2. Hero             — dos variantes oficiales. SPLIT: texto a la izquierda y recurso isométrico a la
-                      derecha desde 1024 px; por debajo todo centrado (lead máx. 40ch, h1 máx. 12ch);
+                      derecha desde 1024 px; por debajo todo centrado (lead máx. 40ch, h1 máx. 15ch);
                       ver `references/isometric.md`. CENTRADO: todo centrado, sin recurso visual.
                       Blanco. Display-xl 64px (máx. 4 líneas en cualquier ancho; split: 15ch), lead (56ch, máx. 2 líneas).
                       **CTAs (v1.77):** primario corto de ventas (`Let's talk`, con flecha, lleva a contacto) +
-                      secundario blanco con borde (`How we work`); en fila con gap 12px, apilados y a ancho
+                      secundario blanco con borde (`How we deliver`, lleva a cómo se entregan los proyectos); en fila con gap 12px, apilados y a ancho
                       completo bajo 768px. Acento del titular: `accent-flow` (1–2 palabras, degradado azul
                       que fluye; en reduced-motion queda en elevate-blue plano).
                       Fondo: **module field** (`module-field`, textura firma, obligatoria).
@@ -90,7 +91,7 @@ Cuando el usuario no provea copy, escribe en su idioma (EN o ES):
 - [ ] Spotlight reactivo + card glow + microinteracciones activos (y off con reduced-motion).
 - [ ] ≥1 living loop activo (pipeline CI u otro mockup en loop): pausa fuera de pantalla,
       estado final estático con reduced-motion.
-- [ ] Nav móvil: los links hidden <md están en un drawer que abre (hamburguesa 40px, Esc, scrim).
+- [ ] Nav móvil: los links hidden <lg están en una hoja bajo la barra que abre (hamburguesa 40px, Esc, foco atrapado).
 - [ ] Un solo CTA primario visible por viewport.
 - [ ] Ritmo de fondos alternado, no 10 secciones blancas seguidas.
 - [ ] Cero overflow: mobile sin recortes, CTAs full-width, grid colapsa a 1 col.

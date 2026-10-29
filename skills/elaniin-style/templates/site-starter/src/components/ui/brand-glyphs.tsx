@@ -8,14 +8,16 @@ import { siClaude, siGooglegemini, siInstagram, siPerplexity } from "simple-icon
   viewBox cropped to the glyph; masters in skills/elaniin-style/assets/icons/brand/) painted with the text color through a CSS mask.
 */
 const fromPackage = { instagram: siInstagram.path, claude: siClaude.path, gemini: siGooglegemini.path, perplexity: siPerplexity.path } as const;
-const fromFile = { linkedin: "/icons/linkedin.svg", chatgpt: "/icons/chatgpt.svg" } as const;
+const fromFile = { linkedin: "/icons/linkedin.svg", chatgpt: "/icons/chatgpt.svg", clutch: "/certification/clutch.svg" } as const;
+// Clutch has no glyph in the icon set: it is a tile with its own logo file (88x25), drawn as a one-color MASK 16px high so the red dot of the file is not shown.
+const wide = { clutch: 88 / 25 } as const;
 
 export type GlyphName = keyof typeof fromPackage | keyof typeof fromFile;
 
 export function Glyph({ name, size = 18 }: { name: GlyphName; size?: number }) {
   if (name in fromFile) {
     const url = `url(${asset(fromFile[name as keyof typeof fromFile])})`;
-    return <span aria-hidden="true" className="inline-block bg-current" style={{ width: size, height: size, maskImage: url, WebkitMaskImage: url, maskRepeat: "no-repeat", maskPosition: "center", maskSize: "contain" }} />;
+    return <span aria-hidden="true" className="inline-block bg-current" style={{ width: size * (wide[name as keyof typeof wide] ?? 1), height: size, maskImage: url, WebkitMaskImage: url, maskRepeat: "no-repeat", maskPosition: "center", maskSize: "contain" }} />;
   }
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

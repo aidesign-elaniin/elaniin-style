@@ -36,7 +36,7 @@ export function Hero({
   const delay = (i: number) => ({ "--i": i }) as CSSProperties;
   const split = variant === "split" && visual;
   return (
-    <section id="home" className="hero-fill relative isolate overflow-hidden section-y-statement">
+    <section id="home" className="hero-fill relative isolate overflow-hidden border-b border-border-default section-y-statement">
       <ModuleField />
       <div className={`container-site relative ${split ? "grid-page items-center gap-y-12" : "flex flex-col items-center text-center"}`}>
         <div className={split ? "col-span-12 flex min-w-0 flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left" : "flex min-w-0 flex-col items-center"}>

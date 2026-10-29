@@ -25,8 +25,8 @@ export function LogoStrip({ label, logos }: { label: string; logos: ClientLogo[]
     return () => clearInterval(id);
   }, [rotate]);
   return (
-    <section id="clients" className="border-y border-border-default">
-      <div className="container-site grid grid-cols-2 gap-px bg-border-default md:grid-cols-4 lg:grid-cols-5">
+    <section id="clients" className="border-b border-border-default">
+      <div className="container-site grid grid-cols-2 gap-px border-x border-border-default bg-border-default md:grid-cols-4 lg:grid-cols-5">
         <div className="col-span-2 flex items-center bg-white p-6 md:col-span-4 lg:col-span-1">
           <h2 className="max-w-heading font-display text-h4 font-medium text-text-primary">{label}</h2>
         </div>
@@ -34,7 +34,7 @@ export function LogoStrip({ label, logos }: { label: string; logos: ClientLogo[]
           const idx = rotate ? (tick + j) % logos.length : j % Math.max(logos.length, 1);
           const logo = logos[idx];
           return (
-            <div key={j} aria-hidden="true" className="group flex h-36 items-center justify-center bg-white p-6 transition-colors duration-fast hover:bg-surface-subtle" style={{ transitionDelay: `${j * STAGGER}ms` }}>
+            <div key={j} aria-hidden="true" className="group flex min-h-36 items-center justify-center bg-white p-6 transition-colors duration-fast hover:bg-surface-subtle" style={{ transitionDelay: `${j * STAGGER}ms` }}>
               <div key={idx} className="flex h-12 max-w-4/5 items-center text-text-secondary opacity-80 grayscale transition-opacity duration-300 group-hover:text-text-primary group-hover:opacity-100 group-hover:grayscale-0">
                 {logo?.node}
               </div>

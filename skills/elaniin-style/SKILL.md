@@ -23,11 +23,11 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 
 # Elaniin Style
 
-> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.87.2).
+> **EN** — This skill encodes the Elaniin 2027 design system (DESIGN.md v1.87.3).
 > Use it to design and build decks, dashboards & reports, websites & landings, and to
 > develop the Elaniin 2027 site. Always work in the user's language (EN or ES).
 >
-> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.87.2).
+> **ES** — Esta skill codifica el design system Elaniin 2027 (DESIGN.md v1.87.3).
 > Úsala para diseñar y construir decks, dashboards & reports, websites & landings, y
 > para desarrollar el sitio Elaniin 2027. Trabaja siempre en el idioma del usuario (EN o ES).
 
@@ -141,7 +141,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
 7. **Touch targets:** interactive elements ≥ 40px high (inputs 44px) with ≥ 8px between targets (DESIGN.md §8).
 8. **Language:** produce all UI copy in the user's language (EN or ES). Never mix. The templates ship with English demo copy and `<html lang="en">`: when the user writes in Spanish, translate every string AND set `lang="es"`.
 9. **Hover changes color, background or border only (DESIGN.md §7, non-negotiable).** 150ms,
-   standard easing. **No lift, no scale, no glow, no pointer spotlight, no `translateY` on press.**
+   standard easing. **No lift, no scale, no glow, no pointer spotlight, no `translateY` on press.** The ONLY named exception is the expand icon of the solution card, which scales to 110% on hover (`icon-grow`); the 4px arrow slides of links are a translate.
    A card's only hover is `card-hover` (border-default → border-strong). Motion shows structure
    (a grid assembling, a module placing) and never decorates. Liveliness comes from: the
    `module-field` pointer trail (hero and closing CTA of landings), scroll `reveal`/`rise`,
@@ -192,7 +192,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    `glass` panel (white 55% + blur) in the audience-routes section; (d) `card-glow` / `card-glow-quiet` INSIDE dark
    cards (Excellence Blue / Elaniin Black) only; (e) the flow of the hero accent words (`accent-flow`, the only
    gradient on text; lightest stop blue-400); (f) a soft blue glow behind the glass browser window of a hero
-   proposal; (g) inside an isometric resource: the 14px frost and the 3-unit halo of a pulse. Anything else
+   proposal; (g) the soft radial glows and masked radial fades of the solution looks (nav menu and solution cards); (h) inside an isometric resource: the 14px frost and the 3-unit halo of a pulse. Anything else
    (gradient backgrounds, blobs, neon, circuit lines, particles, a blue-violet gradient on dark) is a violation.
    The sticky top bar may use white 80% + `backdrop-blur` (8px). Nothing else.
 17. **Decks end with a closing slide and device frames hide their seams (non-negotiable).**
@@ -202,7 +202,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    The deck controls (counter, dots, "Full") sit in a bottom bar of their own, outside the canvas, so they stay readable on white slides.
 18. **Isometric resources follow the approved bar (non-negotiable).** A hero or section whose content
    is a structure (a stack, a flow, an architecture) may use an animated isometric resource, never as
-   decoration and never inside cards or lists (v1.86: it may also be drawn in the `dark` look on a dark surface, still no frost there). Use the kit (`templates/iso-stack.js` for HTML,
+   decoration; their main use is INSIDE cards (the solution cards, the route cells and the engagement cards, besides the hero stack) (v1.86: it may also be drawn in the `dark` look on a dark surface, still no frost there). Use the kit (`templates/iso-stack.js` for HTML,
    `templates/iso/` for React/Next): true isometric at 30°, inline SVG, frosted-glass slabs (14px frost),
    the defined color of each entity, fine textures, labels with the official Elaniin icons for software, AI and cloud (`assets/icons/`) and generic Lucide icons for anything else (never third-party
    brand logos), one 12s clock that runs only on screen, `iso-levitate` over a small shadow, reduced
@@ -220,8 +220,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    action group; `dark` is the equal-weight alternative, never both together), running-text links and tertiary
    buttons, focus ring, active/selected indicators (tab underline 2px, current nav item, selected row marker),
    on-state of controls (checkbox, radio, switch, slider), small icons and 6–8px dots, the brand tag and info
-   status, the first chart series and progress bars ≤4px, ONE highlighted word per headline (two on the Elaniin
-   home: the hero and BLUE ENGINE©, no other), the `blue-steps` motif, and the logotipo on the software slab of
+   status, the first chart series and progress bars ≤4px, ONE highlighted word per headline (the Elaniin home has ONE today: the hero accent; a second, BLUE ENGINE©, returns with its dedicated page), the `blue-steps` motif, and the logotipo on the software slab of
    the isometric hero. Forbidden: section or card backgrounds, whole headlines or paragraphs, any single element
    larger than ~120×120px (except buttons and `blue-steps`). Budget: well under 5% of the visible area at any scroll
    position. Never blue text on Excellence Blue (use `text-on-dark-accent #7B9BFF`); Dynamic Blue is never text.
@@ -239,8 +238,7 @@ Non-negotiables (full detail in `references/ux-a11y.md`):
    filled or multi-color icons, no abstract illustrations of people; photography is real people, real places,
    natural light, radius 12px; icons are stroke-based, `currentColor`, 1.5px, 24px grid. Large soft shadows only on
    product mockups (`product-frame`); `menu-panel` on dropdowns.
-24. **Section rhythm.** Alternate surfaces: white → subtle → white → dark band → white → subtle → footer. At most two
-   dark bands per page plus the footer, never two in a row, never more than one per narrative block. Composition is
+24. **Section rhythm.** Alternate surfaces (white → subtle → white → dark band → white → … → footer). There is no fixed number of dark bands: avoid two in a row, with ONE approved exception on the home (the black research band is followed directly by the blue closing CTA; the engagement models and the research band are separated by the cases). The Elaniin home order is: Nav, Hero, Clients, AudienceRoutes, Solutions, Engagement, Cases, Research, Cta, Footer (nothing else; the FAQ and Blue Engine are kept for other pages). Composition is
    asymmetric (headline left, support offset); full-bleed sections, boxed content; uneven spacing on purpose
    (96–128px between sections, 12–16px inside a block).
 25. **Animated mocks and counters.** Every loop runs only while on screen (`IntersectionObserver` / `useInView`),

@@ -3,7 +3,7 @@
 > Estilo aprobado como **barra de calidad** (DESIGN.md `motifs.isometric`, v1.50.0, hero del sitio
 > Elaniin 2027). Un recurso isométrico **explica cómo encajan las piezas** (un stack, un flujo, una
 > arquitectura). Alcance: heroes y secciones cuyo contenido es lo bastante complejo como para que una
-> imagen lo explique mejor que el texto. Nunca decoración, nunca dentro de cards o listas.
+> imagen lo explique mejor que el texto. Nunca decoración. Su uso principal es DENTRO de cards (las solution cards, las celdas de rutas y las cards de engagement; además del stack del hero) (DESIGN.md v1.87.3).
 > Las escenas de producto 2D (cases) significan "así se ve el producto"; el isométrico significa
 > "así encajan las piezas".
 
@@ -135,7 +135,7 @@ Logotipo: sesgo `matrix(cos30 −0.5 0 1 e f)` sobre la cara derecha de software
 <script src="iso-stack.js"></script>   <!-- o pega su contenido en un <script> al final del body -->
 ```
 El hero **split** (texto izquierda, recurso derecha desde 1024 px; centrado debajo; lead de máx. 40ch
-bajo 1024 px; `h1` de máx. 12ch) está en `templates/landing.html`. El hero centrado sigue siendo la otra
+bajo 1024 px; `h1` de máx. 15ch) está en `templates/landing.html`. El hero centrado sigue siendo la otra
 variante oficial cuando no hay recurso visual.
 
 **React / Next:**

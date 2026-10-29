@@ -1,6 +1,6 @@
 # Tokens / Tokens
 
-> Fuente única de verdad: `DESIGN.md` v1.87.2 del sitio Elaniin 2027.
+> Fuente única de verdad: `DESIGN.md` v1.87.3 del sitio Elaniin 2027.
 > Copia para proyectos: `templates/tokens.css`.
 
 ## Color
@@ -56,7 +56,7 @@ Tipos extra: `tag-sm` 11 px mono (tag pequeño oficial); `detail` 13 px mono nor
 `container-max 1280px` · `gutter 48/32/20` · `grid-gap 24/16` · `nav-height 64` · `section-y 96/72/56` · `section-y-statement 128/96/72` · `section-y-compact 64/48/40` · `card-padding 32/24`.
 
 ## Radius
-`button/input/tag/status-badge 6` · `card/media/code-block/bento-outer 12` · `menu 8` · `modal 16` · `tooltip 6` · `device 32` (solo marcos de teléfono de las escenas de casos) · `app-icon 18.5 %` (favicon provisional) · `module 2` (cuadritos decorativos, nunca más) · `full 9999` (SOLO puntos de estado, avatares e interruptores). Regla: botones y cards no son pills ni son filos; si cambias `radius.button` revisa `input` y `tag` (deben coincidir) y `card` (debe seguir mayor).
+`button/input/tag/status-badge 6` · `card/media/code 12` (las grillas hairline usan `radius.card`; `bento-outer` y `code-block` ya no existen) · `menu 8` · `modal 16` · `tooltip 6` · `device 32` (solo marcos de teléfono de las escenas de casos) · `app-icon 18.5 %` (favicon provisional) · `module 2` (cuadritos decorativos, nunca más) · `full 9999` (SOLO puntos de estado, avatares e interruptores). Regla: botones y cards no son pills ni son filos; si cambias `radius.button` revisa `input` y `tag` (deben coincidir) y `card` (debe seguir mayor).
 
 ## Shadow
 `card-rest` (hairline + 2px) · `menu` · `product` (elevado, para product shots) · `focus` (2px blanco + 4px elevate-blue) · `focus-on-dark` (2px excellence-blue + 4px `#7B9BFF`).

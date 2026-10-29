@@ -5,21 +5,21 @@ import { Tag } from "../ui/tag";
 /*
   Research (DESIGN.md components.research-grid / research-row / research-card): a clean list on an Elaniin Black band, hairlines in border-on-dark,
   links in text-on-dark-accent (Elevate Blue is only 3.1:1 on black). No gradients, no art. Header: title h1 white, no eyebrow, ONE lead paragraph,
-  a text link with arrow at the end. A row reads: title, then kind tag (small tag), then date and reading time in mono at tag-sm size.
+  a text link with arrow at the end (pb-14, 56px, between the header and the list; the band is followed directly by the closing CTA: the one approved dark-after-dark exception). A row (padding 32px vertical, 8px sides, 16 from 768, gap x 32 y 16) reads: title, then kind tag (small tag), then date and reading time in mono at tag-sm size.
   The whole row is one link (after:absolute). ResearchCard is for the blog index (three columns from 768px), not for the home.
 */
 export type Article = { id: string; kind: string; title: string; date: string; readTime: string; href: string };
 
 export function ResearchRow({ a }: { a: Article }) {
   return (
-    <li className="relative grid grid-cols-1 gap-3 border-b border-border-on-dark py-6 transition-colors duration-fast hover:bg-white/5 lg:grid-cols-12 lg:items-start lg:gap-6">
+    <li className="relative grid grid-cols-1 gap-x-8 gap-y-4 border-b border-border-on-dark px-2 py-8 transition-colors duration-fast hover:bg-white/5 md:px-4 lg:grid-cols-12 lg:items-start">
       <h3 className="min-w-0 max-w-narrow font-display text-h3 font-medium text-text-on-dark lg:col-span-7">
         <Link href={a.href} className="after:absolute after:inset-0 focus-ring-on-dark">
           {a.title}
         </Link>
       </h3>
       <div className="flex min-w-0 flex-col gap-2 lg:col-span-4">
-        <span className="tag tag-sm w-fit border-border-on-dark-strong bg-transparent text-text-on-dark-secondary">{a.kind}</span>
+        <span className="tag tag-sm tag-on-dark">{a.kind}</span>
         <span className="font-mono text-tag-sm uppercase tracking-wider text-text-on-dark-muted">
           {a.date} · {a.readTime}
         </span>
@@ -33,7 +33,7 @@ export function ResearchRow({ a }: { a: Article }) {
 
 export function ResearchList({ title, lead, action, items }: { title: string; lead: string; action: { label: string; href: string }; items: Article[] }) {
   return (
-    <section id="investigacion" data-nav-theme="black" className="dark-band-black section-y">
+    <section id="research" data-nav-theme="black" className="dark-band-black section-y">
       <div className="container-site">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="min-w-0">
@@ -45,7 +45,7 @@ export function ResearchList({ title, lead, action, items }: { title: string; le
             <ArrowIcon />
           </Link>
         </div>
-        <ul className="mt-12 border-t border-border-on-dark">
+        <ul className="mt-14 border-t border-border-on-dark">
           {items.map((a) => (
             <ResearchRow key={a.id} a={a} />
           ))}

@@ -7,7 +7,8 @@ import { Tag } from "../ui/tag";
 
 /*
   Cases (DESIGN.md components.cases-grid / case-card / case-media): proof first. Header + hairline grid of case cards.
-  Four cases in two rows that mirror each other: wide (7 cols) + narrow (5), then narrow + wide. Every card is the same size class:
+  Section 07 of the home: right after the engagement models and BEFORE the research band. White, border-y full-bleed and border-x on the container edges, 1px border-default lines via gap-px (the cases keep the hairline grid; the solutions cards no longer do).
+  Four cases in two rows that mirror each other: wide (7 cols) + narrow (5), then narrow + wide. Reveal staggered 80ms within a row. Every card is the same size class:
   stage 400px, title h3, result body-lg. The stage is a dark `case-media` with the animated blue glow (glow-media) and a product scene inside
   a SAFE AREA whose inset is the same on the four sides (24px below 768, 48 from 768, 32 from 1024, 44 from 1280); only phones may leave it through
   the bottom. Scenes are decorative mocks of the client product (aria-hidden); the result is also written in the card text.
@@ -17,7 +18,7 @@ export type CaseItem = {
   id: string;
   layout: "wide" | "narrow";
   client: string;
-  logo?: ReactNode; // the FULL-COLOR logo, ~18px high; a text placeholder if absent
+  logo?: ReactNode; // the FULL-COLOR logo, 32px high (h-8) on a white chip; a text placeholder if absent
   tags: string[]; // one or two, small size
   title: string;
   result: string;
@@ -41,7 +42,7 @@ export function CaseCard({ c }: { c: CaseItem }) {
       <CaseMedia>{c.scene}</CaseMedia>
       <div className="flex min-w-0 flex-1 flex-col pad-card">
         <div className="flex items-center justify-between gap-3">
-          <span className="inline-flex h-10 min-w-0 items-center rounded-tag border border-border-default bg-surface-subtle px-3 text-body-sm font-medium text-text-primary">{c.logo ?? c.client}</span>
+          <span className="inline-flex h-10 min-w-0 items-center rounded-tag border border-border-default bg-white px-3 text-body-sm font-medium text-text-primary">{c.logo ?? c.client}</span>
           <span className="flex gap-2">
             {c.tags.slice(0, 2).map((t) => (
               <Tag key={t} small>
@@ -65,7 +66,7 @@ export function CasesGrid({ title, lead, leadRest, action, items }: { title: str
   // wide + narrow, then narrow + wide: the span comes from the layout flag
   const span = (c: CaseItem) => (c.layout === "wide" ? "lg:col-span-7" : "lg:col-span-5");
   return (
-    <section id="casos" className="section-y-statement">
+    <section id="cases" className="border-y border-border-default section-y-statement">
       <div className="container-site">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="min-w-0">
@@ -79,10 +80,10 @@ export function CasesGrid({ title, lead, leadRest, action, items }: { title: str
             <ArrowIcon />
           </Link>
         </div>
-        <ul className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-bento-outer border border-border-default bg-border-default lg:grid-cols-12">
+        <ul className="mt-16 grid grid-cols-1 gap-px border-x border-border-default bg-border-default lg:grid-cols-12">
           {items.map((c, i) => (
             <li key={c.id} className={`min-w-0 col-span-1 ${span(c)}`}>
-              <Reveal i={i}>
+              <Reveal i={i % 2} step={80}>
                 <CaseCard c={c} />
               </Reveal>
             </li>

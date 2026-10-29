@@ -19,12 +19,12 @@ const links = [
 export default function NotFound() {
   return (
     <>
-      <section className="relative isolate overflow-hidden border-b border-border-default section-y">
+      <section className="relative isolate overflow-hidden border-b border-border-default section-y-statement">
         <ModuleField />
         <div className="container-site relative">
           <Tag>404</Tag>
           <h1 className="mt-6 max-w-hero font-display font-medium text-display-lg text-balance text-text-primary">Página no encontrada</h1>
-          <p className="mt-4 max-w-lead text-lead text-text-secondary">La dirección no existe o cambió de lugar.</p>
+          <p className="mt-4 max-w-note text-lead text-text-secondary">La dirección no existe o cambió de lugar.</p>
           <div className="mt-8 flex flex-col gap-3 md:flex-row md:items-center">
             <LinkButton href="/" className="max-md:w-full">
               Volver al inicio
@@ -36,7 +36,7 @@ export default function NotFound() {
         </div>
       </section>
       <div className="container-site border-x border-border-default p-0">
-        <ul className="grid grid-cols-1 divide-y divide-border-default md:grid-cols-3 md:divide-x md:divide-y-0">
+        <ul className="grid grid-cols-1 gap-px bg-border-default md:grid-cols-3">
           {links.map((l) => (
             <li key={l.href} className="min-w-0">
               <Link href={l.href} className="btn-arrow flex h-full flex-col bg-white pad-card transition-colors duration-fast hover:bg-surface-subtle focus-ring">
