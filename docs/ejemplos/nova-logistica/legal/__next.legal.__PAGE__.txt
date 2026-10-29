@@ -1,6 +1,6 @@
 2:"$Sreact.fragment"
 3:"/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/0umf92h1sb77c.js"
-4:"/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/2ugnu-cf414he.js"
+4:"/elaniin-style/ejemplos/nova-logistica/_next/static/chunks/0tmrsrnqwcujf.js"
 5:I[39756,["$3","$4"],"default"]
 6:I[37457,["$3","$4"],"default"]
 c:I[97367,["$3","$4"],"OutletBoundary"]
@@ -15,7 +15,7 @@ d:"$Sreact.suspense"
 9:X
 a:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":["$Lb",null,["$","$Lc",null,{"children":["$","$d",null,{"name":"Next.MetadataOutlet","children":"$@e"}]}]]}],"p":"$@f","v":null,"s":"$9"}}]]
 1:[["children",{"s":"legal","h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L6",null,{}]}]]}],"p":"$@7","v":"$8","s":"$9"},"c":"$Qa"}]]
-0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L11",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L13",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Nova Logística: mueve tu negocio sin que nada se detenga"}],["$","meta","1",{"name":"description","content":"Transporte, almacenaje y última milla con una sola operación, en Centroamérica."}],["$","link","2",{"rel":"icon","href":"/elaniin-style/ejemplos/nova-logistica/icon.svg?icon.0ne14uvvjt4ey.svg","sizes":"any","type":"image/svg+xml"}],["$","$L14","3",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@15","v":null,"s":"$9"}},"a":"$@16","u":"$@17","b":"vQayfR4fvRHokbzuLCxXv"}
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L11",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L13",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Nova Logística: mueve tu negocio sin que nada se detenga"}],["$","meta","1",{"name":"description","content":"Transporte, almacenaje y última milla con una sola operación, en Centroamérica."}],["$","link","2",{"rel":"icon","href":"/elaniin-style/ejemplos/nova-logistica/icon.svg?icon.0ne14uvvjt4ey.svg","sizes":"any","type":"image/svg+xml"}],["$","$L14","3",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@15","v":null,"s":"$9"}},"a":"$@16","u":"$@17","b":"nYJnXaHGLY-5OnXmelHhZ"}
 b:E{"digest":"NEXT_REDIRECT;replace;/legal/privacidad/;307;"}
 e:null
 17:true
